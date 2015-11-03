@@ -110,6 +110,7 @@
     <ClInclude Include="src\graphics\guis\panel.h" />
     <ClInclude Include="src\graphics\guis\textview.h" />
     <ClInclude Include="src\utils\uuid.h" />
+    <ClInclude Include="src\graphics\renderable4poly.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Performance4.psess" />

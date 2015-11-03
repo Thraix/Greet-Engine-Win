@@ -1,6 +1,7 @@
 #pragma once
 
 #include "renderable2d.h"
+#include "renderable4poly.h"
 #include "label.h"
 #include "buffers/batchindexbuffer.h"
 
@@ -32,13 +33,15 @@ namespace greet{ namespace graphics{
 		~BatchRenderer2D();
 		void begin() override;
 		void submit(const Renderable2D* renderable) override;
+		void submit(const Renderable4Poly* renderable) override;
 		void submit(math::vec2 pos, math::vec2 size, uint texID, math::vec2 texPos, math::vec2 texSize, uint color) override;
 		void submitString(const Label* label, bool shadow) override;
+		inline void BatchRenderer2D::draw(const math::vec2& ul, const math::vec2& ur, const math::vec2& dr, const math::vec2& dl, const math::vec2& texPos, const math::vec2& texSize, const float textureSlot, const uint color);
 		inline void draw(const math::vec2& pos, const math::vec2& size, const math::vec2& texPos, const math::vec2& texSize, const float textureSlot, const uint color);
+		float getTextureSlot(const GLuint texID);
 		void end() override;
 		void flush() override;
 	private:
 		void init();
-		float getTextureSlot(const GLuint texID);
 	};
 }}

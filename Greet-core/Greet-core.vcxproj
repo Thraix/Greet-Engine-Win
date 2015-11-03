@@ -158,6 +158,7 @@
     <ClInclude Include="src\graphics\guis\layout.h" />
     <ClInclude Include="src\graphics\guis\textview.h" />
     <ClInclude Include="src\graphics\renderable.h" />
+    <ClInclude Include="src\graphics\renderable4poly.h" />
     <ClInclude Include="src\graphics\shaders\shaderfactory.h" />
     <ClInclude Include="src\greetgl.h" />
     <ClInclude Include="src\greet_types.h" />

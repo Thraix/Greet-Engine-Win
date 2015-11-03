@@ -9,6 +9,7 @@
 #include <graphics\guis\panel.h>
 #include <graphics\guis\textview.h>
 #include <graphics\guis\button.h>
+#include <graphics\renderable4poly.h>
 
 using namespace greet;
 using namespace graphics;
@@ -45,11 +46,12 @@ public:
 		atlas32->addTexture("animation", "res/textures/animation.png");
 		atlas32->addTexture("animation2", "res/textures/animation.png");
 
+
 		BatchRenderer2D *batch = new BatchRenderer2D();
 		uilayer = new Layer(batch, ShaderFactory::LEDShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 2.0f, 0.0f, (float)m_window->getHeight() / 2.0f));
-
 		fps = new Label("", "default", math::vec2(10, 0), 0xffff00ff, 16);
 		uilayer->push(fps);
+		uilayer->push(new Renderable4Poly(math::vec2(100, 100), math::vec2(120, 110), math::vec2(210, 230), math::vec2(100, 220), 0xffffff00, new Sprite()));
 		m_window->setBackgroundColor(math::vec4(0.5f, 0.5f, 0.5f, 1.0f));
 		m_gui = new Panel(new BatchRenderer2D(),ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 2.0f, 0.0f, (float)m_window->getHeight() / 2.0f), math::vec2(10,10),math::vec2(120,100));
 		
@@ -89,8 +91,8 @@ public:
 	void render() override
 	{
 		//greet::managers::GameStateManager::render();
-		//uilayer->render();
 		m_gui->render();
+		uilayer->render();
 	}
 
 	void resize(int width, int height) override

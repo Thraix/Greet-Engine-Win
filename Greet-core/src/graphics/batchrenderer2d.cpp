@@ -67,6 +67,23 @@ namespace greet{ namespace graphics{
 		m_buffer = (VertexData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 	}
 
+	void BatchRenderer2D::submit(const Renderable4Poly* renderable)
+	{
+		const uint color = renderable->getColor();
+
+		const math::vec2& ul = renderable->getUL();
+		const math::vec2& ur = renderable->getUR();
+		const math::vec2& dr = renderable->getDR();
+		const math::vec2& dl = renderable->getDL();
+		const math::vec2& texPos = renderable->getTexPos();
+		const math::vec2& texSize = renderable->getTexSize();
+
+		const GLuint texID = renderable->getTexID();
+
+		float ts = getTextureSlot(texID);
+		draw(ul,ur,dr,dl, texPos, texSize, ts, color);
+	}
+
 	void BatchRenderer2D::submit(const Renderable2D* renderable)
 	{
 
@@ -99,6 +116,39 @@ namespace greet{ namespace graphics{
 	void BatchRenderer2D::submit(math::vec2 pos, math::vec2 size, uint texID, math::vec2 texPos, math::vec2 texSize, uint color)
 	{
 		draw(pos,size,texPos, texSize,getTextureSlot(texID),color);
+	}
+
+	void BatchRenderer2D::draw(const math::vec2& ul, const math::vec2& ur, const math::vec2& dr, const math::vec2& dl, const math::vec2& texPos, const math::vec2& texSize, const float textureSlot, const uint color)
+	{
+		m_buffer->vertex = *m_transformationBack*math::vec2(ul.x, ul.y);
+		m_buffer->texCoord = texPos;
+		m_buffer->texID = textureSlot;
+		m_buffer->color = color;
+		m_buffer->selfVertex = math::vec2(1, 0);
+		m_buffer++;
+
+		m_buffer->vertex = *m_transformationBack*math::vec2(ur.x, ur.y);
+		m_buffer->texCoord = math::vec2(texPos.x, texPos.y + texSize.y);
+		m_buffer->texID = textureSlot;
+		m_buffer->color = color;
+		m_buffer->selfVertex = math::vec2(1, 0);
+		m_buffer++;
+
+		m_buffer->vertex = *m_transformationBack*math::vec2(dr.x, dr.y);
+		m_buffer->texCoord = math::vec2(texPos.x + texSize.x, texPos.y + texSize.y);
+		m_buffer->texID = textureSlot;
+		m_buffer->color = color;
+		m_buffer->selfVertex = math::vec2(1, 0);
+		m_buffer++;
+
+		m_buffer->vertex = *m_transformationBack*math::vec2(dl.x, dl.y);
+		m_buffer->texCoord = math::vec2(texPos.x + texSize.x, texPos.y);
+		m_buffer->texID = textureSlot;
+		m_buffer->color = color;
+		m_buffer->selfVertex = math::vec2(1, 0);
+		m_buffer++;
+
+		m_ibo->addCount(6);
 	}
 
 	void BatchRenderer2D::draw(const math::vec2& pos, const math::vec2& size, const math::vec2& texPos, const math::vec2& texSize, const float textureSlot, const uint color)
@@ -134,6 +184,8 @@ namespace greet{ namespace graphics{
 
 		m_ibo->addCount(6);
 	}
+
+
 
 	float BatchRenderer2D::getTextureSlot(const GLuint texID)
 	{
