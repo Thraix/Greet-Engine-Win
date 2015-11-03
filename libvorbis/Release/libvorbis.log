@@ -1,0 +1,63 @@
+﻿Build started 2015-08-05 21:18:16.
+     1>Project "V:\pgrm\c++2\Greet\libvorbis\libvorbis.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TC /analyze- /errorReport:prompt ..\libraries\libvorbis\lib\analysis.c ..\libraries\libvorbis\lib\bitrate.c ..\libraries\libvorbis\lib\block.c ..\libraries\libvorbis\lib\codebook.c ..\libraries\libvorbis\lib\envelope.c ..\libraries\libvorbis\lib\floor0.c ..\libraries\libvorbis\lib\floor1.c ..\libraries\libvorbis\lib\info.c ..\libraries\libvorbis\lib\lookup.c ..\libraries\libvorbis\lib\lpc.c ..\libraries\libvorbis\lib\lsp.c ..\libraries\libvorbis\lib\mapping0.c ..\libraries\libvorbis\lib\mdct.c ..\libraries\libvorbis\lib\psy.c ..\libraries\libvorbis\lib\registry.c ..\libraries\libvorbis\lib\res0.c ..\libraries\libvorbis\lib\sharedbook.c ..\libraries\libvorbis\lib\smallft.c ..\libraries\libvorbis\lib\synthesis.c ..\libraries\libvorbis\lib\tone.c ..\libraries\libvorbis\lib\vorbisenc.c ..\libraries\libvorbis\lib\vorbisfile.c ..\libraries\libvorbis\lib\window.c
+         analysis.c
+     1>..\libraries\libvorbis\lib\analysis.c(21): fatal error C1083: Cannot open include file: 'ogg/ogg.h': No such file or directory
+         bitrate.c
+     1>..\libraries\libvorbis\lib\bitrate.c(21): fatal error C1083: Cannot open include file: 'ogg/ogg.h': No such file or directory
+         block.c
+     1>..\libraries\libvorbis\lib\block.c(24): fatal error C1083: Cannot open include file: 'ogg/ogg.h': No such file or directory
+         codebook.c
+     1>..\libraries\libvorbis\lib\codebook.c(21): fatal error C1083: Cannot open include file: 'ogg/ogg.h': No such file or directory
+         envelope.c
+     1>..\libraries\libvorbis\lib\envelope.c(22): fatal error C1083: Cannot open include file: 'ogg/ogg.h': No such file or directory
+         floor0.c
+     1>..\libraries\libvorbis\lib\floor0.c(21): fatal error C1083: Cannot open include file: 'ogg/ogg.h': No such file or directory
+         floor1.c
+     1>..\libraries\libvorbis\lib\floor1.c(21): fatal error C1083: Cannot open include file: 'ogg/ogg.h': No such file or directory
+         info.c
+     1>..\libraries\libvorbis\lib\info.c(24): fatal error C1083: Cannot open include file: 'ogg/ogg.h': No such file or directory
+         lookup.c
+     1>v:\pgrm\c++2\greet\libraries\libvorbis\lib\os.h(25): fatal error C1083: Cannot open include file: 'ogg/os_types.h': No such file or directory
+         lpc.c
+     1>v:\pgrm\c++2\greet\libraries\libvorbis\lib\os.h(25): fatal error C1083: Cannot open include file: 'ogg/os_types.h': No such file or directory
+         lsp.c
+     1>v:\pgrm\c++2\greet\libraries\libvorbis\lib\os.h(25): fatal error C1083: Cannot open include file: 'ogg/os_types.h': No such file or directory
+         mapping0.c
+     1>..\libraries\libvorbis\lib\mapping0.c(22): fatal error C1083: Cannot open include file: 'ogg/ogg.h': No such file or directory
+         mdct.c
+     1>..\libraries\libvorbis\lib\mdct.c(44): fatal error C1083: Cannot open include file: 'vorbis/codec.h': No such file or directory
+         psy.c
+     1>..\libraries\libvorbis\lib\psy.c(21): fatal error C1083: Cannot open include file: 'vorbis/codec.h': No such file or directory
+         registry.c
+     1>..\libraries\libvorbis\lib\registry.c(18): fatal error C1083: Cannot open include file: 'vorbis/codec.h': No such file or directory
+         res0.c
+     1>..\libraries\libvorbis\lib\res0.c(26): fatal error C1083: Cannot open include file: 'ogg/ogg.h': No such file or directory
+         sharedbook.c
+     1>..\libraries\libvorbis\lib\sharedbook.c(21): fatal error C1083: Cannot open include file: 'ogg/ogg.h': No such file or directory
+         smallft.c
+     1>v:\pgrm\c++2\greet\libraries\libvorbis\lib\smallft.h(21): fatal error C1083: Cannot open include file: 'vorbis/codec.h': No such file or directory
+         synthesis.c
+     1>..\libraries\libvorbis\lib\synthesis.c(19): fatal error C1083: Cannot open include file: 'ogg/ogg.h': No such file or directory
+         tone.c
+     1>..\libraries\libvorbis\lib\tone.c(18): warning C4013: 'alloca' undefined; assuming extern returning int
+     1>..\libraries\libvorbis\lib\tone.c(18): warning C4047: '=': 'double *' differs in levels of indirection from 'int'
+     1>..\libraries\libvorbis\lib\tone.c(19): warning C4047: '=': 'double *' differs in levels of indirection from 'int'
+     1>..\libraries\libvorbis\lib\tone.c(40): error C2065: 'M_PI': undeclared identifier
+     1>..\libraries\libvorbis\lib\tone.c(40): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+     1>..\libraries\libvorbis\lib\tone.c(41): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+     1>..\libraries\libvorbis\lib\tone.c(43): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+     1>..\libraries\libvorbis\lib\tone.c(44): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+         Compiling...
+         vorbisenc.c
+     1>..\libraries\libvorbis\lib\vorbisenc.c(22): fatal error C1083: Cannot open include file: 'vorbis/codec.h': No such file or directory
+         vorbisfile.c
+     1>..\libraries\libvorbis\lib\vorbisfile.c(24): fatal error C1083: Cannot open include file: 'vorbis/codec.h': No such file or directory
+         window.c
+     1>v:\pgrm\c++2\greet\libraries\libvorbis\lib\os.h(25): fatal error C1083: Cannot open include file: 'ogg/os_types.h': No such file or directory
+     1>Done Building Project "V:\pgrm\c++2\Greet\libvorbis\libvorbis.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:05.20

@@ -1,0 +1,29 @@
+AUDIO::
+
+GAMESTATES::
+	
+GRAPHICS::
+
+	GUI::
+		// Implement border render
+		// Add buttons as component
+		// Add texboxes as component
+		// Add radiobuttons as component
+		// Add checkboxes as component
+		// Add different layouts
+		// tab to next component
+	LAYERS::
+		
+	SHADERS::
+	
+INPUT::
+	// Create Keyboard and mouse class
+	// Add key mapping
+	// Add mouse mapping
+	// Add joystick mapping
+	// merge key and mouse mapping
+
+MATH::
+	
+UTILS::
+	

@@ -1,0 +1,17 @@
+<type="tab">
+	<name="Changes"/>
+	<type="tab">
+		<name="Graphics"/>
+		<type="todo">
+			<todo="Tell the game a controller has disconnected, See Window::update()"/>
+			<done="true"/>
+		</type>
+		<type="todo">
+			<todo="Tell the game a controller has connected, See Window::update()"/>
+			<done="true"/>
+		</type>
+	</type>
+</type>
+<type="tab">
+	<name="Fixes"/>
+</type>

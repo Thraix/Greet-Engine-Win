@@ -1,0 +1,58 @@
+﻿Build started 2015-08-05 21:20:36.
+     1>Project "V:\pgrm\c++2\Greet\libvorbis\libvorbis.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /Zi /nologo /W0 /WX- /sdl- /O2 /Ob2 /Oi /Ot /Oy- /GL /D _CRT_SECURE_NO_WARNINGS /D _USE_MATH_DEFINES /D _MBCS /Gm- /EHsc /MD /GS /Gy /arch:SSE2 /fp:fast /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\\" /Fd"V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\libvorbis.pdb" /Gd /TC /analyze- /errorReport:prompt ..\libraries\libvorbis\lib\analysis.c ..\libraries\libvorbis\lib\bitrate.c ..\libraries\libvorbis\lib\block.c ..\libraries\libvorbis\lib\codebook.c ..\libraries\libvorbis\lib\envelope.c ..\libraries\libvorbis\lib\floor0.c ..\libraries\libvorbis\lib\floor1.c ..\libraries\libvorbis\lib\info.c ..\libraries\libvorbis\lib\lookup.c ..\libraries\libvorbis\lib\lpc.c ..\libraries\libvorbis\lib\lsp.c ..\libraries\libvorbis\lib\mapping0.c ..\libraries\libvorbis\lib\mdct.c ..\libraries\libvorbis\lib\psy.c ..\libraries\libvorbis\lib\registry.c ..\libraries\libvorbis\lib\res0.c ..\libraries\libvorbis\lib\sharedbook.c ..\libraries\libvorbis\lib\smallft.c ..\libraries\libvorbis\lib\synthesis.c ..\libraries\libvorbis\lib\tone.c ..\libraries\libvorbis\lib\vorbisenc.c ..\libraries\libvorbis\lib\vorbisfile.c ..\libraries\libvorbis\lib\window.c
+         analysis.c
+         bitrate.c
+         block.c
+         codebook.c
+         envelope.c
+         floor0.c
+         floor1.c
+         info.c
+         lookup.c
+         lpc.c
+         lsp.c
+         mapping0.c
+         mdct.c
+         psy.c
+         registry.c
+         res0.c
+         sharedbook.c
+         smallft.c
+         synthesis.c
+         tone.c
+         Compiling...
+         vorbisenc.c
+         vorbisfile.c
+         window.c
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\Lib.exe /OUT:"V:\pgrm\c++2\Greet\libraries\libvorbis\bin\libvorbis.lib" /NOLOGO /LTCG V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\analysis.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\bitrate.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\block.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\codebook.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\envelope.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\floor0.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\floor1.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\info.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\lookup.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\lpc.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\lsp.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\mapping0.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\mdct.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\psy.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\registry.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\res0.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\sharedbook.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\smallft.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\synthesis.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\tone.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\vorbisenc.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\vorbisfile.obj
+         V:\pgrm\c++2\Greet\libraries\libvorbis\bin\intermediates\window.obj
+         libvorbis.vcxproj -> V:\pgrm\c++2\Greet\libraries\libvorbis\bin\libvorbis.lib
+     1>Done Building Project "V:\pgrm\c++2\Greet\libvorbis\libvorbis.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:10.13
