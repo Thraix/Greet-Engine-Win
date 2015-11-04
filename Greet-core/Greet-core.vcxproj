@@ -130,6 +130,8 @@
     <ClCompile Include="src\math\vec2.cpp" />
     <ClCompile Include="src\math\vec3.cpp" />
     <ClCompile Include="src\math\vec4.cpp" />
+    <ClCompile Include="src\physics\body.cpp" />
+    <ClCompile Include="src\physics\shape.cpp" />
     <ClCompile Include="src\utils\uuid.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +191,8 @@
     <ClInclude Include="src\math\vec2.h" />
     <ClInclude Include="src\math\vec3.h" />
     <ClInclude Include="src\math\vec4.h" />
+    <ClInclude Include="src\physics\body.h" />
+    <ClInclude Include="src\physics\shape.h" />
     <ClInclude Include="src\utils\fileutils.h" />
     <ClInclude Include="src\utils\log.h" />
     <ClInclude Include="src\utils\physics.h" />
