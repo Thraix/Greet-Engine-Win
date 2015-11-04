@@ -20,6 +20,8 @@ private:
 	Layer* uilayer;
 	Label* fps;
 	Panel* m_gui;
+	Renderable4Poly* m_poly1;
+	Renderable2D* m_poly2;
 public:
 
 public:
@@ -36,6 +38,7 @@ public:
 
 	void init() override
 	{
+		GREET_DEBUG("MAIN", math::vec2(3, 4).projected(math::vec2(2, 6)));
 		createWindow("Best Game Ever", 960, 540);
 
 		greet::managers::TextureManager::add(new Texture("res/textures/test.png", "test"));
@@ -48,10 +51,13 @@ public:
 
 
 		BatchRenderer2D *batch = new BatchRenderer2D();
-		uilayer = new Layer(batch, ShaderFactory::LEDShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 2.0f, 0.0f, (float)m_window->getHeight() / 2.0f));
+		uilayer = new Layer(batch, ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 2.0f, 0.0f, (float)m_window->getHeight() / 2.0f));
 		fps = new Label("", "default", math::vec2(10, 0), 0xffff00ff, 16);
 		uilayer->push(fps);
-		uilayer->push(new Renderable4Poly(math::vec2(100, 100), math::vec2(120, 110), math::vec2(210, 230), math::vec2(100, 220), 0xffffff00, new Sprite()));
+		m_poly1 = new Renderable4Poly(math::vec2(125, 125 - 35.36), math::vec2(125 + 35.36, 125), math::vec2(125, 125 + 35.36), math::vec2(125 - 35.36, 125), 0xffffff00, new Sprite());
+		m_poly2 = new Renderable2D(math::vec2(200, 200), math::vec2(50, 50), 0xffffff00, new Sprite());
+		uilayer->push(m_poly1);
+		uilayer->push(m_poly2);
 		m_window->setBackgroundColor(math::vec4(0.5f, 0.5f, 0.5f, 1.0f));
 		m_gui = new Panel(new BatchRenderer2D(),ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 2.0f, 0.0f, (float)m_window->getHeight() / 2.0f), math::vec2(10,10),math::vec2(120,100));
 		
@@ -84,6 +90,39 @@ public:
 	bool toggle = false;
 	void update(float timeElapsed) override
 	{
+		float dx = 0, dy = 0;
+		if (Window::isKeyDown(GLFW_KEY_A))
+		{
+			dx--;
+		}
+		if (Window::isKeyDown(GLFW_KEY_D))
+		{
+			dx++;
+		}
+		if (Window::isKeyDown(GLFW_KEY_W))
+		{
+			dy--;
+		}
+		if (Window::isKeyDown(GLFW_KEY_S))
+		{
+			dy++;
+		}
+		if (dx != 0 || dy != 0)
+		{
+			math::vec2 move(dx, dy);
+			move = move.normalize()*timeElapsed*100;
+			m_poly2->m_pos += move;
+			math::vec2 pos3 = m_poly2->m_pos;
+			math::vec2 pos4 = (m_poly2->m_pos + m_poly2->m_size);
+			if (Physics::BoxVsBox(m_poly1->getUL(), m_poly1->getUR(), m_poly1->getDR(), m_poly1->getDL(), pos3, math::vec2(pos4.x, pos3.y), pos4, math::vec2(pos3.x, pos4.y)))
+			{
+				m_poly2->m_color = 0xffff0000;
+			}
+			else
+			{
+				m_poly2->m_color = 0xff00ff00;
+			}
+		}
 		greet::managers::GameStateManager::update(timeElapsed);
 		m_gui->update(timeElapsed);
 	}

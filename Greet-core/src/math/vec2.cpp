@@ -25,6 +25,16 @@ namespace greet{
 		return x*x + y*y;
 	}
 
+	float vec2::dot(const math::vec2& vec) const 
+	{
+		return x*vec.x + y*vec.y;
+	}
+
+	vec2& vec2::projected(const math::vec2& vec)
+	{
+		return multiply(dot(vec) / lengthSQ());
+	}
+
 	vec2& vec2::normalize()
 	{
 		float len = length();
@@ -76,6 +86,34 @@ namespace greet{
 		return *this;
 	}
 
+	vec2& vec2::add(const float c)
+	{
+		x += c;
+		y += c;
+		return *this;
+	}
+
+	vec2& vec2::subtract(const float c)
+	{
+		x -= c;
+		y -= c;
+		return *this;
+	}
+
+	vec2& vec2::multiply(const float c)
+	{
+		x *= c;
+		y *= c;
+		return *this;
+	}
+
+	vec2& vec2::divide(const float c)
+	{
+		x /= c;
+		y /= c;
+		return *this;
+	}
+
 	bool vec2::compare(const vec2& other)
 	{
 		return x == other.x && y == other.y;
@@ -109,22 +147,22 @@ namespace greet{
 
 	vec2 operator+(const vec2& first, const float c)
 	{
-		return vec2(first.x+c, first.y+c);
+		return vec2(first.x, first.y).add(c);
 	}
 
 	vec2 operator-(const vec2& first, const float c)
 	{
-		return vec2(first.x-c, first.y-c);
+		return vec2(first.x, first.y).subtract(c);
 	}
 
 	vec2 operator*(const vec2&  first, const float c)
 	{
-		return vec2(first.x*c,first.y*c);
+		return vec2(first.x, first.y).multiply(c);
 	}
 
 	vec2 operator/(const vec2& first, const float c)
 	{
-		return vec2(first.x/c, first.y/c);
+		return vec2(first.x, first.y).divide(c);
 	}
 
 	vec2& vec2::operator+=(const vec2 &other)

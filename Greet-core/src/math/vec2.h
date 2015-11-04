@@ -14,6 +14,8 @@ namespace greet{
 
 		float length();
 		float lengthSQ();
+		float dot(const math::vec2& vec) const;
+		vec2& projected(const math::vec2& vec);
 		vec2& normalize();
 		vec2& rotate(const float deg);
 
@@ -21,6 +23,11 @@ namespace greet{
 		vec2& subtract(const vec2& other);
 		vec2& multiply(const vec2& other);
 		vec2& divide(const vec2& other);
+
+		vec2& add(const float other);
+		vec2& subtract(const float other);
+		vec2& multiply(const float other);
+		vec2& divide(const float other);
 
 		bool compare(const vec2& other);
 
@@ -41,10 +48,10 @@ namespace greet{
 		vec2& operator*=(const vec2 &other);
 		vec2& operator/=(const vec2 &other);
 
-		vec2& operator+=(const float other);
-		vec2& operator-=(const float other);
-		vec2& operator*=(const float other);
-		vec2& operator/=(const float other);
+		vec2& operator+=(const float c);
+		vec2& operator-=(const float c);
+		vec2& operator*=(const float c);
+		vec2& operator/=(const float c);
 
 		bool operator!=(const vec2 &other);
 		bool operator==(const vec2 &other);

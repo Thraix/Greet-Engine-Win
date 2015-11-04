@@ -9,9 +9,10 @@ namespace greet {namespace graphics {
 
 	class Renderable4Poly : public Renderable
 	{
+	public:
+		uint m_color;
 	protected:
 		Sprite* m_sprite;
-		uint m_color;
 		math::vec2 m_ul;
 		math::vec2 m_ur;
 		math::vec2 m_dr;
@@ -52,6 +53,11 @@ namespace greet {namespace graphics {
 		inline const math::vec2& getUR() const { return m_ur; }
 		inline const math::vec2& getDR() const { return m_dr; }
 		inline const math::vec2& getDL() const { return m_dl; }
+
+		inline void setUL(const math::vec2& ul) { m_ul = ul; }
+		inline void setUR(const math::vec2& ur) { m_ur = ur; }
+		inline void setDR(const math::vec2& dr) { m_dr = dr; }
+		inline void setDL(const math::vec2& dl) { m_dl = dl; }
 		inline Sprite& getSprite() const { return *m_sprite; }
 	};
 
