@@ -88,37 +88,44 @@ namespace greet{ namespace graphics{
 
 		const uint color = renderable->getColor();
 
-		const math::vec2& pos = renderable->getPos();
-		const math::vec2& size = renderable->getSize();
 		const math::vec2& texPos = renderable->getTexPos();
 		const math::vec2& texSize = renderable->getTexSize();
 
 		const GLuint texID = renderable->getTexID();
 
 		float ts = getTextureSlot(texID);
-
-		//pushMatrix(renderable->getTransformationMatrix());
-		draw(pos, size, texPos, texSize, ts, color);
-		//popMatrix();
+		const math::mat3& transformation = renderable->getTransform();
+		draw(transformation,texPos, texSize, ts, color);
 	}
 
 	void BatchRenderer2D::submitString(const Label* label, bool shadow)
 	{
 		float ts = getTextureSlot(label->getTextureID());
 		const std::vector<RenderableGlyph*> glyphs = label->getGlyphs();
-		uint color = shadow ? label->getShadowColor() : label->getColor();
-		pushMatrix(label->getTransformationMatrix());
+		math::mat3 transform;
+		uint color;
+		if (shadow)
+		{
+			transform = label->getShadowTransform();
+			color = label->getShadowColor();
+		}
+		else
+		{
+			transform = label->getTransform();
+			color = label->getColor();
+		}
+		pushMatrix(transform);
 		for (uint i = 0; i < glyphs.size(); i++)
 		{
 			const RenderableGlyph* glyph = glyphs[i];
-			draw(glyph->getPos(), glyph->getSize(), glyph->getTexPos(), glyph->getTexSize(), ts, color);
+			draw(glyph->getTransformation(), glyph->getTexPos(), glyph->getTexSize(), ts, color);
 		}
 		popMatrix();
 	}
 
-	void BatchRenderer2D::submit(math::vec2 pos, math::vec2 size, uint texID, math::vec2 texPos, math::vec2 texSize, uint color)
+	void BatchRenderer2D::submit(const math::mat3& transformation, uint texID, math::vec2 texPos, math::vec2 texSize, uint color)
 	{
-		draw(pos,size,texPos, texSize,getTextureSlot(texID),color);
+		draw(transformation,texPos, texSize,getTextureSlot(texID),color);
 	}
 
 	void BatchRenderer2D::draw(const math::vec2& ul, const math::vec2& ur, const math::vec2& dr, const math::vec2& dl, const math::vec2& texPos, const math::vec2& texSize, const float textureSlot, const uint color)
@@ -154,37 +161,37 @@ namespace greet{ namespace graphics{
 		m_ibo->addCount(6);
 	}
 
-	void BatchRenderer2D::draw(const math::vec2& pos, const math::vec2& size, const math::vec2& texPos, const math::vec2& texSize, const float textureSlot, const uint color)
+	void BatchRenderer2D::draw(const math::mat3& transformation, const math::vec2& texPos, const math::vec2& texSize, const float textureSlot, const uint color)
 	{
-
-		m_buffer->vertex = *m_transformationBack*pos;
+		pushMatrix(transformation);
+		m_buffer->vertex = *m_transformationBack*VERTEX_TOP_LEFT;
 		m_buffer->texCoord = texPos;
 		m_buffer->texID = textureSlot;
 		m_buffer->color = color;
-		m_buffer->selfVertex = math::vec2(0, 0);
+		m_buffer->selfVertex = VERTEX_TOP_LEFT;
 		m_buffer++;
 
-		m_buffer->vertex = *m_transformationBack*math::vec2(pos.x,pos.y+size.y);
+		m_buffer->vertex = *m_transformationBack*VERTEX_DOWN_LEFT;
 		m_buffer->texCoord = math::vec2(texPos.x, texPos.y + texSize.y);
 		m_buffer->texID = textureSlot;
 		m_buffer->color = color;
-		m_buffer->selfVertex = math::vec2(0, 1);
+		m_buffer->selfVertex = VERTEX_DOWN_LEFT;
 		m_buffer++;
 
-		m_buffer->vertex = *m_transformationBack*math::vec2(pos.x+size.x, pos.y + size.y);
+		m_buffer->vertex = *m_transformationBack*VERTEX_DOWN_RIGHT;
 		m_buffer->texCoord = math::vec2(texPos.x + texSize.x, texPos.y + texSize.y);
 		m_buffer->texID = textureSlot;
 		m_buffer->color = color;
-		m_buffer->selfVertex = math::vec2(1, 1);
+		m_buffer->selfVertex = VERTEX_DOWN_RIGHT;
 		m_buffer++;
 
-		m_buffer->vertex = *m_transformationBack*math::vec2(pos.x + size.x, pos.y);
+		m_buffer->vertex = *m_transformationBack*VERTEX_TOP_RIGHT;
 		m_buffer->texCoord = math::vec2(texPos.x + texSize.x, texPos.y);
 		m_buffer->texID = textureSlot;
 		m_buffer->color = color;
-		m_buffer->selfVertex = math::vec2(1, 0);
+		m_buffer->selfVertex = VERTEX_TOP_RIGHT;
 		m_buffer++;
-
+		popMatrix();
 		m_ibo->addCount(6);
 	}
 

@@ -25,22 +25,20 @@ namespace greet{ namespace graphics{
 	class Renderable2D : public Renderable
 	{
 	public:
-		math::vec2 m_pos;
-		math::vec2 m_size;
 		uint m_color;
-		math::mat3 m_transformation;
+		math::mat3 m_transform;
 	protected:
 		Sprite* m_sprite;
 	protected:
 
 	public:
-		Renderable2D(math::vec2 pos, math::vec2 size, uint color, Sprite* sprite,math::mat3 transformation = math::mat3())
-			: m_pos(pos), m_size(size), m_color(color), m_sprite(sprite), m_transformation(transformation)
+		Renderable2D(math::mat3 transform, uint color, Sprite* sprite)
+			: m_transform(transform), m_color(color), m_sprite(sprite)
 		{	
 
 		}
 		Renderable2D()
-			: m_pos(math::vec2(0, 0)), m_size(math::vec2(0, 0)), m_color(0xffffffff), m_sprite(new Sprite())
+			: m_transform(math::mat3()), m_color(0xffffffff), m_sprite(new Sprite())
 		{
 
 		}
@@ -65,9 +63,7 @@ namespace greet{ namespace graphics{
 		inline uint getColor() const { return m_color; }
 		inline const math::vec2& getTexPos() const { return m_sprite==NULL ? math::vec2(0,0) : m_sprite->getTexPos(); }
 		inline const math::vec2& getTexSize() const { return m_sprite == NULL ? math::vec2(1, 1) : m_sprite->getTexSize(); }
-		inline const math::vec2& getPos() const { return m_pos; }
-		inline const math::vec2& getSize() const { return m_size; }
-		inline const math::mat3& getTransformationMatrix() const { return m_transformation; }
+		inline const math::mat3& getTransform() const { return m_transform; }
 		inline Sprite& getSprite() const { return *m_sprite; }
 	};
 }}

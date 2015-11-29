@@ -33,6 +33,7 @@ namespace greet { namespace graphics {
 		GUI* m_parent;
 		std::vector<GUI*> m_children;
 		math::mat3 m_transformationMatrix;
+		math::mat3 m_transformation;
 
 		math::vec2 m_pos;
 		math::vec2 m_size;

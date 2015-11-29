@@ -8,6 +8,7 @@ namespace greet{ namespace graphics{
 		calibrateMatrices();
 		setColor(color);
 		setText(text);
+
 	}
 
 	Label::Label(std::string text, Font* font, math::vec2 pos, uint color, float size)
@@ -29,12 +30,8 @@ namespace greet{ namespace graphics{
 	{
 		if (render)
 		{
-			renderer->pushMatrix(m_shadowMatrix);
 			renderer->submitString(this, true);
-			renderer->popMatrix();
-			renderer->pushMatrix(m_matrix);
 			renderer->submitString(this, false);
-			renderer->popMatrix();
 		}
 	}
 	bool Label::update(float timeElapsed)
@@ -112,7 +109,7 @@ namespace greet{ namespace graphics{
 
 	void Label::calibrateMatrices()
 	{
-		m_matrix = math::mat3::translate(m_pos)*math::mat3::scale(m_size, m_size);
-		m_shadowMatrix = math::mat3::translate(m_pos + m_font->getPixelSize()*m_size)*math::mat3::scale(m_size, m_size);
+		m_transform = math::mat3::quad(m_pos,math::vec2(m_size, m_size));
+		m_shadowTransform = math::mat3::quad(m_pos+m_font->getPixelSize()*m_size,math::vec2(m_size, m_size));
 	}
 }}

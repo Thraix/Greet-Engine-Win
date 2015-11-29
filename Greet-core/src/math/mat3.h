@@ -22,6 +22,8 @@ namespace greet{ namespace math{
 
 		static mat3 identity();
 		static mat3 orthographic(float left, float right, float top, float bottom);
+		static mat3 quad(float x, float y, float width, float height);
+		static mat3 quad(const vec2& pos, const vec2& size);
 
 		static mat3 translate(const vec2& translation);
 		static mat3 scale(const vec2& scaling);

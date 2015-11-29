@@ -8,6 +8,8 @@ namespace greet{ namespace graphics {
 	private:
 		math::vec2 m_pos;
 		math::vec2 m_size;
+		math::mat3 m_transformation;
+
 		float m_xPos;
 		float m_width;
 
@@ -22,6 +24,7 @@ namespace greet{ namespace graphics {
 				m_pos = pos;
 				m_size = math::vec2(1,1);
 				m_glyph = glyph;
+				m_transformation = math::mat3::translate(pos);
 			}
 			~RenderableGlyph()
 			{
@@ -29,10 +32,11 @@ namespace greet{ namespace graphics {
 			}
 			inline float getXPos() const { return m_xPos; }
 			inline float getCharWidth() const { return m_width; }
-			inline const math::vec2& getPos() const { return m_pos; }
-			inline const math::vec2& getSize() const { return m_size; }
+			//inline const math::vec2& getPos() const { return m_pos; }
+			//inline const math::vec2& getSize() const { return m_size; }
 			inline const math::vec2& getTexPos() const { return m_glyph->getTexPos(); }
 			inline const math::vec2& getTexSize() const { return m_glyph->getTexSize(); }
+			inline const math::mat3& getTransformation() const { return m_transformation; }
 			inline float getPixelSize() const { return m_glyph->getPixelSize(); }
 	};
 }}

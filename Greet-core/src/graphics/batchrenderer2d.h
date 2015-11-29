@@ -18,6 +18,11 @@
 #define SHADER_COLOR_INDEX			0x03
 #define SHADER_SELF_VERTEX_INDEX	0x04
 
+#define VERTEX_TOP_LEFT				math::vec2(0,0)
+#define VERTEX_TOP_RIGHT			math::vec2(1,0)
+#define VERTEX_DOWN_RIGHT			math::vec2(1,1)
+#define VERTEX_DOWN_LEFT			math::vec2(0,1)
+
 namespace greet{ namespace graphics{
 	class BatchRenderer2D : public Renderer2D
 	{
@@ -28,16 +33,17 @@ namespace greet{ namespace graphics{
 		VertexData* m_buffer;
 
 		std::vector<GLuint> m_texSlots;
+
 	public:
 		BatchRenderer2D();
 		~BatchRenderer2D();
 		void begin() override;
 		void submit(const Renderable2D* renderable) override;
 		void submit(const Renderable4Poly* renderable) override;
-		void submit(math::vec2 pos, math::vec2 size, uint texID, math::vec2 texPos, math::vec2 texSize, uint color) override;
+		void submit(const math::mat3& transformation, uint texID, math::vec2 texPos, math::vec2 texSize, uint color) override;
 		void submitString(const Label* label, bool shadow) override;
 		inline void BatchRenderer2D::draw(const math::vec2& ul, const math::vec2& ur, const math::vec2& dr, const math::vec2& dl, const math::vec2& texPos, const math::vec2& texSize, const float textureSlot, const uint color);
-		inline void draw(const math::vec2& pos, const math::vec2& size, const math::vec2& texPos, const math::vec2& texSize, const float textureSlot, const uint color);
+		inline void draw(const math::mat3& transformation, const math::vec2& texPos, const math::vec2& texSize, const float textureSlot, const uint color);
 		float getTextureSlot(const GLuint texID);
 		void end() override;
 		void flush() override;

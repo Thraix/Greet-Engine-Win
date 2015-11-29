@@ -19,7 +19,7 @@ namespace greet { namespace graphics{
 	public:
 
 	public:
-		Animation(uint texID, uint texWidth, uint texHeight, uint color, math::vec2 texPos, math::vec2 texSize, float frameTimer, int images, bool horizontalRead);
+		Animation(uint texID, uint texWidth, uint texHeight, math::vec2 texPos, math::vec2 texSize, float frameTimer, int images, bool horizontalRead);
 		Animation(uint color);
 		Animation(const Sprite& sprite, float frameTimer, int images, bool horizontalRead);
 		~Animation();

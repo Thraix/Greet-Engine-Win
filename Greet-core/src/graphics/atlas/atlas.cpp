@@ -137,11 +137,11 @@ namespace greet { namespace graphics{
 				math::vec2 spritePos = spriteSize*math::vec2(x, y);
 				spritePos += texPos * spriteSize;
 				spriteSize *= texSize;
-				return new Sprite(m_texID, m_textureSize*texSize.x, m_textureSize*texSize.y, 0xffffffff, spritePos, spriteSize);
+				return new Sprite(m_texID, m_textureSize*texSize.x, m_textureSize*texSize.y, spritePos, spriteSize);
 			}
 		}
 		GREET_ERROR("ATLAS", "No texture found in Atlas: ", m_name.c_str(), "(", sheetName.c_str(), ")");
-		return new Sprite(m_texID, m_atlasSize, m_atlasSize, 0xffffffff, math::vec2(0, 0), math::vec2(1, 1));
+		return new Sprite(m_texID, m_atlasSize, m_atlasSize, math::vec2(0, 0), math::vec2(1, 1));
 	}
 
 	void Atlas::removeTexture(std::string textureName)

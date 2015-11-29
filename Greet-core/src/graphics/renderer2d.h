@@ -30,7 +30,7 @@ namespace greet{ namespace graphics{
 		virtual void begin(){}
 		virtual void submit(const Renderable2D *renderable) = 0;
 		virtual void submit(const Renderable4Poly* renderable) = 0;
-		virtual void submit(math::vec2 pos, math::vec2 size, uint texID, math::vec2 texPos, math::vec2 texSize, uint color) = 0;
+		virtual void submit(const math::mat3& transformation, uint texID, math::vec2 texPos, math::vec2 texSize, uint color) = 0;
 		virtual void submitString(const Label* label, bool shadow = false) = 0;
 		virtual void end(){}
 		virtual void flush() = 0;
@@ -54,12 +54,12 @@ namespace greet{ namespace graphics{
 			m_transformationBack = &m_transformationStack.back();
 		}
 
-		math::mat3 getMatrix()
+		const math::mat3& getMatrix()
 		{
 			return *m_transformationBack;
 		}
 
-		math::mat3 getMatrix(uint index)
+		const math::mat3& getMatrix(uint index)
 		{
 			if(index>=0&&index<m_transformationStack.size())
 				return m_transformationStack[index];

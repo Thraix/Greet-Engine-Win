@@ -4,7 +4,7 @@
 #include "renderable2d.h"
 
 namespace greet{ namespace graphics{
-	class Particle : public Renderable2D{
+	class Particle : public Renderable2D {
 		friend class ParticlePool;
 	private:
 		math::vec2 m_startPos;
@@ -13,6 +13,8 @@ namespace greet{ namespace graphics{
 		float m_frameTime;
 		math::vec2 m_velocity;
 		math::vec2 m_acceleration;
+		math::vec2 m_pos;
+		math::vec2 m_size;
 	private:
 		Particle();
 		bool update(float timeElapsed);

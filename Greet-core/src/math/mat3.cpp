@@ -38,6 +38,30 @@ namespace greet{ namespace math{
 		return result;
 	}
 
+	mat3 mat3::quad(float x, float y, float width, float height)
+	{
+		mat3 result(1.0f);
+
+		result.elements[6] = x;
+		result.elements[7] = y;
+		result.elements[0] = width;
+		result.elements[4] = height;
+
+		return result;
+	}
+
+	mat3 mat3::quad(const vec2& pos, const vec2& size)
+	{
+		mat3 result(1.0f);
+
+		result.elements[6] = pos.x;
+		result.elements[7] = pos.y;
+		result.elements[0] = size.x;
+		result.elements[4] = size.y;
+
+		return result;
+	}
+
 	mat3 mat3::translate(const vec2& translation)
 	{
 		mat3 result(1.0f);
@@ -82,8 +106,8 @@ namespace greet{ namespace math{
 	{
 		mat3 result(1.0f);
 		float r = toRadians(deg);
-		float s = sin(deg);
-		float c = cos(deg);
+		float s = sin(r);
+		float c = cos(r);
 
 		result.elements[0] =  c;
 		result.elements[1] =  s;
