@@ -25,6 +25,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvorbis", "libvorbis\libv
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libogg", "libogg\libogg.vcxproj", "{C187FBAF-8C28-4813-8963-B3469E799220}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Box2D", "Box2D\Box2D.vcxproj", "{705A333B-AB44-4186-BEDA-2ECEED0708D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -65,6 +67,14 @@ Global
 		{C187FBAF-8C28-4813-8963-B3469E799220}.Release|Win32.ActiveCfg = Release|Win32
 		{C187FBAF-8C28-4813-8963-B3469E799220}.Release|Win32.Build.0 = Release|Win32
 		{C187FBAF-8C28-4813-8963-B3469E799220}.Release|x64.ActiveCfg = Release|Win32
+		{705A333B-AB44-4186-BEDA-2ECEED0708D1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{705A333B-AB44-4186-BEDA-2ECEED0708D1}.Debug|Win32.Build.0 = Debug|Win32
+		{705A333B-AB44-4186-BEDA-2ECEED0708D1}.Debug|x64.ActiveCfg = Debug|x64
+		{705A333B-AB44-4186-BEDA-2ECEED0708D1}.Debug|x64.Build.0 = Debug|x64
+		{705A333B-AB44-4186-BEDA-2ECEED0708D1}.Release|Win32.ActiveCfg = Release|Win32
+		{705A333B-AB44-4186-BEDA-2ECEED0708D1}.Release|Win32.Build.0 = Release|Win32
+		{705A333B-AB44-4186-BEDA-2ECEED0708D1}.Release|x64.ActiveCfg = Release|x64
+		{705A333B-AB44-4186-BEDA-2ECEED0708D1}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

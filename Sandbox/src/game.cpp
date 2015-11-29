@@ -1,5 +1,7 @@
 #include "game.h"
 #include <managers\atlasmanager.h>
+
+
 Game::Game(int players) :
 	GameState(new greet::graphics::BatchRenderer2D(), greet::graphics::ShaderFactory::GradientShader(), greet::math::mat3::orthographic(-32, 32, -18, 18)),
 	m_ball(new Ball(new greet::graphics::Animation(0xffffffff), -0.5f, -0.5f, 1, 1)),
@@ -8,6 +10,7 @@ Game::Game(int players) :
 	m_score("0 : 0", "default", greet::math::vec2(480 / 2.0f, 0), 0xffff00ff, 32),
 	m_noPlayers("Not enough players in game.", "default", greet::math::vec2(480 / 2.0f, 270 / 2.0f), 0xffffff00, 16)
 {
+
 }
 
 Game::~Game()

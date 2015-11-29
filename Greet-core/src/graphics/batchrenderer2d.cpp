@@ -40,7 +40,6 @@ namespace greet{ namespace graphics{
 		glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid*)offsetof(VertexData, VertexData::color));
 		glVertexAttribPointer(SHADER_SELF_VERTEX_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)offsetof(VertexData, VertexData::selfVertex));
 		glBindBuffer(GL_ARRAY_BUFFER,0);
-		
 
 		//Generate all the indices at runtime
 		GLuint *indices = new GLuint[RENDERER_INDICES_SIZE];
@@ -98,7 +97,9 @@ namespace greet{ namespace graphics{
 
 		float ts = getTextureSlot(texID);
 
+		//pushMatrix(renderable->getTransformationMatrix());
 		draw(pos, size, texPos, texSize, ts, color);
+		//popMatrix();
 	}
 
 	void BatchRenderer2D::submitString(const Label* label, bool shadow)
@@ -106,11 +107,13 @@ namespace greet{ namespace graphics{
 		float ts = getTextureSlot(label->getTextureID());
 		const std::vector<RenderableGlyph*> glyphs = label->getGlyphs();
 		uint color = shadow ? label->getShadowColor() : label->getColor();
+		pushMatrix(label->getTransformationMatrix());
 		for (uint i = 0; i < glyphs.size(); i++)
 		{
 			const RenderableGlyph* glyph = glyphs[i];
 			draw(glyph->getPos(), glyph->getSize(), glyph->getTexPos(), glyph->getTexSize(), ts, color);
 		}
+		popMatrix();
 	}
 
 	void BatchRenderer2D::submit(math::vec2 pos, math::vec2 size, uint texID, math::vec2 texPos, math::vec2 texSize, uint color)

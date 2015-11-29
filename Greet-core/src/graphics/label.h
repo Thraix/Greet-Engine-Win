@@ -19,6 +19,7 @@ namespace greet{ namespace graphics{
 		math::vec2 m_pos;
 		int m_texID;
 		Font* m_font;
+		math::mat3 m_transformation = math::mat3();
 
 		std::vector<RenderableGlyph*> m_glyphs;
 
@@ -48,6 +49,7 @@ namespace greet{ namespace graphics{
 		inline const uint getColor() const { return m_color; }
 		inline const uint getShadowColor() const { return m_shadowColor; }
 		inline float getSize() { return m_size; }
+		inline const math::mat3& getTransformationMatrix() const { return m_transformation; }
 		inline const Font &getFont() { return *m_font; }
 	};
 }}
