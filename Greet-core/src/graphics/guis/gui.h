@@ -32,8 +32,8 @@ namespace greet { namespace graphics {
 
 		GUI* m_parent;
 		std::vector<GUI*> m_children;
-		math::mat3 m_transformationMatrix;
-		math::mat3 m_transformation;
+		math::Transform m_guiMatrix;
+		math::Transform m_transform;
 
 		math::vec2 m_pos;
 		math::vec2 m_size;
@@ -86,7 +86,7 @@ namespace greet { namespace graphics {
 		inline math::vec2 getPos() const { return m_pos; }
 		inline math::vec2 getSize() const { return m_size; }
 
-		inline const math::mat3& getTranformationMatrix() const { return m_transformationMatrix; }
+		inline const math::Transform& getGuiMatrix() const { return m_guiMatrix; }
 
 		inline uint getBackgroundColor() const { return m_bgColor; }
 		inline uint getForegroundColor() const { return m_fgColor; }

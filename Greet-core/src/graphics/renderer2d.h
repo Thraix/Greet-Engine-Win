@@ -30,7 +30,7 @@ namespace greet{ namespace graphics{
 		virtual void begin(){}
 		virtual void submit(const Renderable2D *renderable) = 0;
 		virtual void submit(const Renderable4Poly* renderable) = 0;
-		virtual void submit(const math::mat3& transformation, uint texID, math::vec2 texPos, math::vec2 texSize, uint color) = 0;
+		virtual void submit(const math::Transform& transformation, uint texID, math::vec2 texPos, math::vec2 texSize, uint color) = 0;
 		virtual void submitString(const Label* label, bool shadow = false) = 0;
 		virtual void end(){}
 		virtual void flush() = 0;

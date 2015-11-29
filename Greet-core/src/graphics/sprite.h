@@ -31,7 +31,7 @@ namespace greet{ namespace graphics{
 		inline uint getTextureID() const { return m_texID; }
 
 		inline Sprite* fromSpriteSheet(math::vec2 texPos, math::vec2 texSize) const { return new Sprite(m_texID, m_width*texSize.x, m_height*texSize.y, m_texPos + texPos*m_texSize, m_texSize*texSize); }
-		virtual inline const math::vec2 &getTexPos() const { return m_texPos; }
-		inline const math::vec2 &getTexSize() const { return m_texSize; }
+		virtual inline const math::vec2& getTexPos() const { return m_texPos; }
+		inline const math::vec2& getTexSize() const { return m_texSize; }
 	};
 }}

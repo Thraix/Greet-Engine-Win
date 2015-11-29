@@ -88,13 +88,13 @@ namespace greet{ namespace graphics{
 
 		const uint color = renderable->getColor();
 
-		const math::vec2& texPos = renderable->getTexPos();
-		const math::vec2& texSize = renderable->getTexSize();
+		const math::vec2 texPos = renderable->getTexPos();
+		const math::vec2 texSize = renderable->getTexSize();
 
 		const GLuint texID = renderable->getTexID();
 
 		float ts = getTextureSlot(texID);
-		const math::mat3& transformation = renderable->getTransform();
+		const math::Transform& transformation = renderable->getTransform();
 		draw(transformation,texPos, texSize, ts, color);
 	}
 
@@ -118,14 +118,14 @@ namespace greet{ namespace graphics{
 		for (uint i = 0; i < glyphs.size(); i++)
 		{
 			const RenderableGlyph* glyph = glyphs[i];
-			draw(glyph->getTransformation(), glyph->getTexPos(), glyph->getTexSize(), ts, color);
+			draw(glyph->getTransform(), glyph->getTexPos(), glyph->getTexSize(), ts, color);
 		}
 		popMatrix();
 	}
 
-	void BatchRenderer2D::submit(const math::mat3& transformation, uint texID, math::vec2 texPos, math::vec2 texSize, uint color)
+	void BatchRenderer2D::submit(const math::Transform& transform, uint texID, math::vec2 texPos, math::vec2 texSize, uint color)
 	{
-		draw(transformation,texPos, texSize,getTextureSlot(texID),color);
+		draw(transform,texPos, texSize,getTextureSlot(texID),color);
 	}
 
 	void BatchRenderer2D::draw(const math::vec2& ul, const math::vec2& ur, const math::vec2& dr, const math::vec2& dl, const math::vec2& texPos, const math::vec2& texSize, const float textureSlot, const uint color)
@@ -161,9 +161,9 @@ namespace greet{ namespace graphics{
 		m_ibo->addCount(6);
 	}
 
-	void BatchRenderer2D::draw(const math::mat3& transformation, const math::vec2& texPos, const math::vec2& texSize, const float textureSlot, const uint color)
+	void BatchRenderer2D::draw(const math::Transform& transform, const math::vec2& texPos, const math::vec2& texSize, const float textureSlot, const uint color)
 	{
-		pushMatrix(transformation);
+		pushMatrix(transform.getMatrix());
 		m_buffer->vertex = *m_transformationBack*VERTEX_TOP_LEFT;
 		m_buffer->texCoord = texPos;
 		m_buffer->texID = textureSlot;

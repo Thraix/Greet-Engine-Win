@@ -26,19 +26,19 @@ namespace greet{ namespace graphics{
 	{
 	public:
 		uint m_color;
-		math::mat3 m_transform;
+		math::Transform m_transform;
 	protected:
 		Sprite* m_sprite;
 	protected:
 
 	public:
-		Renderable2D(math::mat3 transform, uint color, Sprite* sprite)
+		Renderable2D(math::Transform transform, uint color, Sprite* sprite)
 			: m_transform(transform), m_color(color), m_sprite(sprite)
 		{	
 
 		}
 		Renderable2D()
-			: m_transform(math::mat3()), m_color(0xffffffff), m_sprite(new Sprite())
+			: m_transform(math::Transform()), m_color(0xffffffff), m_sprite(new Sprite())
 		{
 
 		}
@@ -63,7 +63,7 @@ namespace greet{ namespace graphics{
 		inline uint getColor() const { return m_color; }
 		inline const math::vec2& getTexPos() const { return m_sprite==NULL ? math::vec2(0,0) : m_sprite->getTexPos(); }
 		inline const math::vec2& getTexSize() const { return m_sprite == NULL ? math::vec2(1, 1) : m_sprite->getTexSize(); }
-		inline const math::mat3& getTransform() const { return m_transform; }
+		inline const math::Transform& getTransform() const { return m_transform; }
 		inline Sprite& getSprite() const { return *m_sprite; }
 	};
 }}

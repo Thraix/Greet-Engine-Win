@@ -115,6 +115,7 @@
     <ClInclude Include="src\graphics\renderable4poly.h" />
     <ClInclude Include="src\physics\shape.h" />
     <ClInclude Include="src\physics\body.h" />
+    <ClInclude Include="src\math\transform.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Performance4.psess" />

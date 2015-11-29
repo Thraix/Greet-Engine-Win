@@ -50,12 +50,12 @@ public:
 		atlas32->addTexture("animation2", "res/textures/animation.png");
 		atlas32->addTexture("grass", "res/textures/test3.png");
 
-		Sprite* sp = new Sprite(greet::managers::TextureManager::get("test")->getTexID(),16,16, math::vec2(0, 0), math::vec2(1, 1));
+		
 		BatchRenderer2D *batch = new BatchRenderer2D();
 		uilayer = new Layer(batch, ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 2.0f, 0.0f, (float)m_window->getHeight() / 2.0f));
 		fps = new Label("", "default", math::vec2(10, 0), 0xffff00ff, 16);
 		uilayer->push(fps);
-		m_poly2 = new Renderable2D(math::mat3::translate(200, 200)*math::mat3::rotate(45)*math::mat3::translate(-25,-25)*math::mat3::scale(50, 50), 0xffffff00, sp);
+		m_poly2 = new Renderable2D(math::mat3::quad(200,200,50,50), 0xffffffff, atlas32->getSpriteFromSheet("animation",math::vec2(0,0), math::vec2(0.25, 0.25)));
 		uilayer->push(m_poly2);
 		m_window->setBackgroundColor(math::vec4(0.5f, 0.5f, 0.5f, 1.0f));
 		m_gui = new Panel(new BatchRenderer2D(),ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 2.0f, 0.0f, (float)m_window->getHeight() / 2.0f), math::vec2(10,10),math::vec2(120,100));
@@ -106,6 +106,7 @@ public:
 		{
 			dy++;
 		}
+		m_poly2->m_transform.init().translate(200,200).rotate(frame).translate(-25,-25).scale(50,50);
 		m_gui->update(timeElapsed);
 	}
 

@@ -7,7 +7,7 @@ namespace greet { namespace graphics {
 	bool GUI::s_mouseUsed;
 
 	GUI::GUI(math::vec2 pos, math::vec2 size)
-		: m_transformationMatrix(math::mat3::translate(pos)), m_pos(pos), m_size(size),m_transformation(math::mat3::translate(pos)*math::mat3::scale(size))
+		: m_guiMatrix(math::Transform().translate(pos)), m_pos(pos), m_size(size),m_transform(math::Transform().translate(pos).scale(size))
 	{
 		GLint texIDs[32];
 		for (int i = 0; i < 32; i++)
@@ -65,9 +65,9 @@ namespace greet { namespace graphics {
 	void GUI::submit(Renderer2D* renderer) const
 	{
 		if(m_renderbackground)
-			renderer->submit(m_transformation,0, math::vec2(0, 0), math::vec2(1, 1),m_bgColor);
+			renderer->submit(m_transform,0, math::vec2(0, 0), math::vec2(1, 1),m_bgColor);
 		submitComponents(renderer);
-		renderer->pushMatrix(m_transformationMatrix);
+		renderer->pushMatrix(m_guiMatrix.getMatrix());
 		uint size = m_children.size();
 		for (uint i = 0; i < size; i++)
 			m_children[i]->submit(renderer);
@@ -122,7 +122,7 @@ namespace greet { namespace graphics {
 	//Updates the transformation matrix to the current position
 	void GUI::updateMatrix()
 	{
-		m_transformationMatrix = math::mat3::translate(m_pos);
+		m_guiMatrix.init().translate(m_pos);
 	}
 
 	void GUI::setDefaults(Font * font)

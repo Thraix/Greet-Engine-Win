@@ -40,10 +40,10 @@ namespace greet{ namespace graphics{
 		void begin() override;
 		void submit(const Renderable2D* renderable) override;
 		void submit(const Renderable4Poly* renderable) override;
-		void submit(const math::mat3& transformation, uint texID, math::vec2 texPos, math::vec2 texSize, uint color) override;
+		void submit(const math::Transform& transformation, uint texID, math::vec2 texPos, math::vec2 texSize, uint color) override;
 		void submitString(const Label* label, bool shadow) override;
-		inline void BatchRenderer2D::draw(const math::vec2& ul, const math::vec2& ur, const math::vec2& dr, const math::vec2& dl, const math::vec2& texPos, const math::vec2& texSize, const float textureSlot, const uint color);
-		inline void draw(const math::mat3& transformation, const math::vec2& texPos, const math::vec2& texSize, const float textureSlot, const uint color);
+		inline void draw(const math::vec2& ul, const math::vec2& ur, const math::vec2& dr, const math::vec2& dl, const math::vec2& texPos, const math::vec2& texSize, const float textureSlot, const uint color);
+		inline void draw(const math::Transform& transformation, const math::vec2& texPos, const math::vec2& texSize, const float textureSlot, const uint color);
 		float getTextureSlot(const GLuint texID);
 		void end() override;
 		void flush() override;

@@ -59,7 +59,12 @@ namespace greet {namespace graphics{namespace ShaderFactory {
 		"	{\n"
 		"		int tid = int(fs_in.texID - 0.5);\n"
 		"		color *= texture(textures[tid], fs_in.texCoord);\n"
+		"		//color = vec4(fs_in.texCoord.xy,0.0,1.0);\n"
 		"	}\n"
+		"	//else\n"
+		"	//{\n"
+		"	//	color = vec4(1.0,1.0,1.0,1.0);\n"
+		"	//}\n"
 		"}\n"
 	};
 
