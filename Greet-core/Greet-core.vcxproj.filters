@@ -44,8 +44,6 @@
     <ClCompile Include="src\graphics\guis\textview.cpp" />
     <ClCompile Include="src\graphics\guis\button.cpp" />
     <ClCompile Include="src\utils\uuid.cpp" />
-    <ClCompile Include="src\physics\body.cpp" />
-    <ClCompile Include="src\physics\shape.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ext\gorilla-audio\common\gc_common.h" />
@@ -113,9 +111,9 @@
     <ClInclude Include="src\graphics\guis\textview.h" />
     <ClInclude Include="src\utils\uuid.h" />
     <ClInclude Include="src\graphics\renderable4poly.h" />
-    <ClInclude Include="src\physics\shape.h" />
-    <ClInclude Include="src\physics\body.h" />
     <ClInclude Include="src\math\transform.h" />
+    <ClInclude Include="src\graphics\layers\b2layer.h" />
+    <ClInclude Include="src\entity\entity.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Performance4.psess" />

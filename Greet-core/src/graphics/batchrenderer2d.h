@@ -23,6 +23,7 @@
 #define VERTEX_DOWN_RIGHT			math::vec2(1,1)
 #define VERTEX_DOWN_LEFT			math::vec2(0,1)
 
+
 namespace greet{ namespace graphics{
 	class BatchRenderer2D : public Renderer2D
 	{

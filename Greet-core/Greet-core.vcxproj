@@ -40,16 +40,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)libraries\FreeImage\include;$(SolutionDir)libraries\GLFW\include;$(SolutionDir)libraries\GLEW\include;$(SolutionDir)libraries\libogg\include;$(SolutionDir)libraries\libvorbis\include;$(SolutionDir)libraries\OpenAL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)libraries\GLFW\lib-vc2013;$(SolutionDir)libraries\FreeImage\lib;$(SolutionDir)libraries\GLEW\lib;$(SolutionDir)libraries\OpenAL\libs\Win32;$(SolutionDir)libraries\libogg\bin;$(SolutionDir)libraries\libvorbis\bin;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)libraries\FreeImage\include;$(SolutionDir)libraries\GLFW\include;$(SolutionDir)libraries\GLEW\include;$(SolutionDir)libraries\libogg\include;$(SolutionDir)libraries\libvorbis\include;$(SolutionDir)libraries\OpenAL\include;$(SolutionDir)libraries\Box2D\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)libraries\GLFW\lib-vc2013;$(SolutionDir)libraries\FreeImage\lib;$(SolutionDir)libraries\GLEW\lib;$(SolutionDir)libraries\OpenAL\libs\Win32;$(SolutionDir)libraries\libogg\bin;$(SolutionDir)libraries\libvorbis\bin;$(SolutionDir)libraries\Box2D\bin</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\$(Configuration)\Intermediate\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\$(Configuration)\Intermediate\</IntDir>
-    <IncludePath>$(SolutionDir)libraries\FreeImage\include;$(SolutionDir)libraries\GLFW\include;$(SolutionDir)libraries\GLEW\include;$(SolutionDir)libraries\libogg\include;$(SolutionDir)libraries\libvorbis\include;$(SolutionDir)libraries\OpenAL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)libraries\GLFW\lib-vc2013;$(SolutionDir)libraries\FreeImage\lib;$(SolutionDir)libraries\GLEW\lib;$(SolutionDir)libraries\OpenAL\libs\Win32;$(SolutionDir)libraries\libogg\bin;$(SolutionDir)libraries\libvorbis\bin;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)libraries\FreeImage\include;$(SolutionDir)libraries\GLFW\include;$(SolutionDir)libraries\GLEW\include;$(SolutionDir)libraries\libogg\include;$(SolutionDir)libraries\libvorbis\include;$(SolutionDir)libraries\OpenAL\include;$(SolutionDir)libraries\Box2D\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)libraries\GLFW\lib-vc2013;$(SolutionDir)libraries\FreeImage\lib;$(SolutionDir)libraries\GLEW\lib;$(SolutionDir)libraries\OpenAL\libs\Win32;$(SolutionDir)libraries\libogg\bin;$(SolutionDir)libraries\libvorbis\bin;$(SolutionDir)libraries\Box2D\bin</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -130,8 +130,6 @@
     <ClCompile Include="src\math\vec2.cpp" />
     <ClCompile Include="src\math\vec3.cpp" />
     <ClCompile Include="src\math\vec4.cpp" />
-    <ClCompile Include="src\physics\body.cpp" />
-    <ClCompile Include="src\physics\shape.cpp" />
     <ClCompile Include="src\utils\uuid.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -144,10 +142,12 @@
     <ClInclude Include="ext\gorilla-audio\ga_internal.h" />
     <ClInclude Include="src\audio\channel.h" />
     <ClInclude Include="src\audio\sound.h" />
+    <ClInclude Include="src\entity\entity.h" />
     <ClInclude Include="src\gamestates\gamestate.h" />
     <ClInclude Include="src\graphics\animation.h" />
     <ClInclude Include="src\graphics\atlas\atlas.h" />
     <ClInclude Include="src\graphics\batchrenderer2d.h" />
+    <ClInclude Include="src\graphics\layers\b2layer.h" />
     <ClInclude Include="src\graphics\buffers\batchindexbuffer.h" />
     <ClInclude Include="src\graphics\buffers\buffer.h" />
     <ClInclude Include="src\graphics\buffers\indexbuffer.h" />
@@ -192,8 +192,6 @@
     <ClInclude Include="src\math\vec2.h" />
     <ClInclude Include="src\math\vec3.h" />
     <ClInclude Include="src\math\vec4.h" />
-    <ClInclude Include="src\physics\body.h" />
-    <ClInclude Include="src\physics\shape.h" />
     <ClInclude Include="src\utils\fileutils.h" />
     <ClInclude Include="src\utils\log.h" />
     <ClInclude Include="src\utils\physics.h" />

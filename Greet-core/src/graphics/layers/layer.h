@@ -17,8 +17,8 @@ namespace greet { namespace graphics{
 		Layer(Renderer2D* renderer, Shader* shader, math::mat3 projectionMatrix);
 		virtual ~Layer();
 		void push(Renderable* renderable);
-		void render() const;
-		void update(float timeElapsed);
+		virtual void render() const;
+		virtual void update(float timeElapsed);
 		void setProjectionMatrix(math::mat3 projectionMatrix);
 		inline Shader* getShader() const { return m_shader; }
 		inline uint size() const { return m_renderables.size(); }
