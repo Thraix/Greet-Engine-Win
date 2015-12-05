@@ -96,6 +96,7 @@
     <ClCompile Include="ext\gorilla-audio\ga_stream.c" />
     <ClCompile Include="src\audio\channel.cpp" />
     <ClCompile Include="src\audio\sound.cpp" />
+    <ClCompile Include="src\entity\entity.cpp" />
     <ClCompile Include="src\gamestates\gamestate.cpp" />
     <ClCompile Include="src\graphics\animation.cpp" />
     <ClCompile Include="src\graphics\atlas\atlas.cpp" />
@@ -147,7 +148,7 @@
     <ClInclude Include="src\graphics\animation.h" />
     <ClInclude Include="src\graphics\atlas\atlas.h" />
     <ClInclude Include="src\graphics\batchrenderer2d.h" />
-    <ClInclude Include="src\graphics\layers\b2layer.h" />
+    <ClInclude Include="src\graphics\layers\box2dlayer.h" />
     <ClInclude Include="src\graphics\buffers\batchindexbuffer.h" />
     <ClInclude Include="src\graphics\buffers\buffer.h" />
     <ClInclude Include="src\graphics\buffers\indexbuffer.h" />

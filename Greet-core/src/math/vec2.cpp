@@ -15,6 +15,12 @@ namespace greet{
 		this->y = y;
 	}
 
+	vec2::vec2(const b2Vec2& vec)
+	{
+		this->x = vec.x;
+		this->y = vec.y;
+	}
+
 	float vec2::length()
 	{
 		return sqrt(x*x + y*y);
@@ -28,6 +34,13 @@ namespace greet{
 	float vec2::dot(const math::vec2& vec) const 
 	{
 		return x*vec.x + y*vec.y;
+	}
+
+	vec2& vec2::abs()
+	{
+		x = x < 0 ? -x : x;
+		y = y < 0 ? -y : y;
+		return *this;
 	}
 
 	vec2& vec2::projected(const math::vec2& vec)
@@ -163,6 +176,11 @@ namespace greet{
 	vec2 operator/(const vec2& first, const float c)
 	{
 		return vec2(first.x, first.y).divide(c);
+	}
+
+	vec2& vec2::operator=(const b2Vec2 &other)
+	{
+		return vec2(other.x,other.y);
 	}
 
 	vec2& vec2::operator+=(const vec2 &other)

@@ -2,6 +2,7 @@
 
 #include "math_func.h"
 #include <iostream>
+#include <Box2D\Common\b2Math.h>
 
 namespace greet{
 	namespace math{
@@ -11,10 +12,12 @@ namespace greet{
 		float x, y;
 		vec2();
 		vec2(float x, float y);
+		vec2(const b2Vec2& vec);
 
 		float length();
 		float lengthSQ();
 		float dot(const math::vec2& vec) const;
+		vec2& abs();
 		vec2& projected(const math::vec2& vec);
 		vec2& normalize();
 		vec2& rotate(const float deg);
@@ -42,6 +45,8 @@ namespace greet{
 		friend vec2 operator-(const vec2& first, const float c);
 		friend vec2 operator*(const vec2& first, const float c);
 		friend vec2 operator/(const vec2& first, const float c);
+		
+		vec2& operator=(const b2Vec2& other);
 
 		vec2& operator+=(const vec2 &other);
 		vec2& operator-=(const vec2 &other);
@@ -52,6 +57,7 @@ namespace greet{
 		vec2& operator-=(const float c);
 		vec2& operator*=(const float c);
 		vec2& operator/=(const float c);
+
 
 		bool operator!=(const vec2 &other);
 		bool operator==(const vec2 &other);

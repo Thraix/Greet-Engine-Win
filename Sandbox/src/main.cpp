@@ -11,6 +11,9 @@
 #include <graphics\renderable4poly.h>
 #include <graphics\batchrenderer2d.h>
 #include <graphics\shaders\shaderfactory.h>
+#include <graphics\layers\box2dlayer.h>
+#include <entity\entity.h>
+
 using namespace greet;
 using namespace graphics;
 
@@ -22,6 +25,8 @@ private:
 	Panel* m_gui;
 	Renderable4Poly* m_poly1;
 	Renderable2D* m_poly2;
+	Box2DLayer* layer;
+
 public:
 
 public:
@@ -75,7 +80,10 @@ public:
 
 		m_gui->push(tv);
 		m_gui->push(button);
-
+		b2World* world = new b2World(b2Vec2(0,0));
+		entity::Entity* e = new entity::Entity(math::vec2(200,200),math::vec2(50,50),world);
+		e->m_body->SetAngularVelocity(1);
+		layer = new Box2DLayer(new BatchRenderer2D(),ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 2.0f, 0.0f, (float)m_window->getHeight() / 2.0f),world);
 	}
 	static void press(Button* button) { GREET_DEBUG("MAIN", "top kek press"); }
 	static void release(Button* button) { GREET_DEBUG("MAIN", "top kek release"); }
@@ -115,6 +123,7 @@ public:
 		//greet::managers::GameStateManager::render();
 		m_gui->render();
 		uilayer->render();
+		layer->render();
 	}
 
 	void resize(int width, int height) override
