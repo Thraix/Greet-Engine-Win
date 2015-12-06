@@ -4,9 +4,10 @@
 #include <Box2D\Box2D.h>
 #include <Box2D\Dynamics\b2Body.h>
 #include <Box2D\Dynamics\b2World.h>
+#include <graphics\renderable2d.h>
 
 namespace greet { namespace entity{
-	class Entity
+	class Entity : public graphics::Renderable2D
 	{
 	public:
 
@@ -15,9 +16,9 @@ namespace greet { namespace entity{
 		b2Body* m_body;
 
 	public:
-		Entity(math::vec2 position,math::vec2 size, b2World* world);
-		void update(float timeElapsed);
-		const void createBody(math::vec2 pos, math::vec2 size, b2World* world);
+		Entity(math::vec2 position,math::vec2 size, uint color, graphics::Sprite* sprite,b2World* world);
+		bool update(float timeElapsed);
+		void createBody(math::vec2 pos, math::vec2 size, b2World* world);
 
 		inline const math::vec2& getPosition() const { return m_position; }
 		inline const math::vec2& getSize() const { return m_size; }

@@ -1,8 +1,10 @@
 #pragma once
 
-#include "math_func.h"
+#define _USE_MATH_DEFINES
+
 #include <iostream>
 #include <Box2D\Common\b2Math.h>
+#include <math.h>
 
 namespace greet{
 	namespace math{
@@ -61,6 +63,11 @@ namespace greet{
 
 		bool operator!=(const vec2 &other);
 		bool operator==(const vec2 &other);
+
+		inline float toRadians(float degrees)
+		{
+			return degrees * ((float)M_PI / 180.0f);
+		}
 	};
 
 }}

@@ -26,6 +26,9 @@ private:
 	Renderable4Poly* m_poly1;
 	Renderable2D* m_poly2;
 	Box2DLayer* layer;
+	entity::Entity* e;
+	entity::Entity* e2;
+	b2World* world;
 
 public:
 
@@ -57,11 +60,11 @@ public:
 
 		
 		BatchRenderer2D *batch = new BatchRenderer2D();
-		uilayer = new Layer(batch, ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 2.0f, 0.0f, (float)m_window->getHeight() / 2.0f));
+		uilayer = new Layer(batch, ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 20.0f, 0.0f, (float)m_window->getHeight() / 20.0f));
 		fps = new Label("", "default", math::vec2(10, 0), 0xffff00ff, 16);
 		uilayer->push(fps);
 		m_poly2 = new Renderable2D(math::mat3::quad(200,200,50,50), 0xffffffff, atlas32->getSpriteFromSheet("animation",math::vec2(0,0), math::vec2(0.25, 0.25)));
-		uilayer->push(m_poly2);
+		//uilayer->push(m_poly2);
 		m_window->setBackgroundColor(math::vec4(0.5f, 0.5f, 0.5f, 1.0f));
 		m_gui = new Panel(new BatchRenderer2D(),ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 2.0f, 0.0f, (float)m_window->getHeight() / 2.0f), math::vec2(10,10),math::vec2(120,100));
 		
@@ -80,10 +83,29 @@ public:
 
 		m_gui->push(tv);
 		m_gui->push(button);
-		b2World* world = new b2World(b2Vec2(0,0));
-		entity::Entity* e = new entity::Entity(math::vec2(200,200),math::vec2(50,50),world);
-		e->m_body->SetAngularVelocity(1);
-		layer = new Box2DLayer(new BatchRenderer2D(),ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 2.0f, 0.0f, (float)m_window->getHeight() / 2.0f),world);
+		world = new b2World(b2Vec2(0,0));
+		e = new entity::Entity(math::vec2(20, 20), math::vec2(5, 5), 0x00ffffff, new Sprite(), world);
+		e2 = new entity::Entity(math::vec2(10, 10), math::vec2(5, 5), 0x00ffffff, new Sprite(), world);
+		//e->m_body->SetAngularVelocity(60);
+		layer = new Box2DLayer(new BatchRenderer2D(),ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 20.0f, 0.0f, (float)m_window->getHeight() / 20.0f),world);
+		uilayer->push(e);
+		uilayer->push(e2);
+
+
+
+		b2BodyDef def;
+		def.type = b2_staticBody;
+		def.position.Set(15, 15);
+		def.userData = this;
+		b2Body* m_body = world->CreateBody(&def);
+		b2PolygonShape shape;
+		shape.SetAsBox(10 / 2.0f, 10 / 2.0f);
+		b2FixtureDef fixtureDef;
+		fixtureDef.shape = &shape;
+		fixtureDef.density = 100.0f;
+		fixtureDef.friction = 93.0f;
+		m_body->CreateFixture(&fixtureDef);
+
 	}
 	static void press(Button* button) { GREET_DEBUG("MAIN", "top kek press"); }
 	static void release(Button* button) { GREET_DEBUG("MAIN", "top kek release"); }
@@ -114,7 +136,14 @@ public:
 		{
 			dy++;
 		}
-		m_poly2->m_transform.init().translate(200,200).rotate(frame).translate(-25,-25).scale(50,50);
+		e2->m_body->SetLinearVelocity(b2Vec2(dx*10, dy * 10));
+		int32 velocityIterations = 6;
+		int32 positionIterations = 2;
+		world->Step(timeElapsed, velocityIterations, positionIterations);
+		e->update(timeElapsed);
+		e2->update(timeElapsed);
+
+		layer->update(timeElapsed);
 		m_gui->update(timeElapsed);
 	}
 
@@ -128,7 +157,7 @@ public:
 
 	void resize(int width, int height) override
 	{
-		uilayer->setProjectionMatrix(math::mat3::orthographic(0, (float)width/2.0f, 0, (float)height / 2.0f));
+		uilayer->setProjectionMatrix(math::mat3::orthographic(0, (float)width/20.0f, 0, (float)height / 20.0f));
 	}
 
 	void joystickConnect(unsigned int joystick, bool connect) override
