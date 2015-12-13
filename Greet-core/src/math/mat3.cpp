@@ -109,10 +109,24 @@ namespace greet{ namespace math{
 		float s = sin(r);
 		float c = cos(r);
 
-		result.elements[0] =  c;
-		result.elements[1] =  s;
+		result.elements[0] = c;
+		result.elements[1] = s;
 		result.elements[3] = -s;
-		result.elements[4] =  c;
+		result.elements[4] = c;
+
+		return result;
+	}
+
+	mat3 mat3::rotateR(float rad)
+	{
+		mat3 result(1.0f);
+		float s = sin(rad);
+		float c = cos(rad);
+
+		result.elements[0] = c;
+		result.elements[1] = s;
+		result.elements[3] = -s;
+		result.elements[4] = c;
 
 		return result;
 	}

@@ -58,6 +58,12 @@ namespace greet { namespace math{
 			return *this;
 		}
 
+		Transform& rotateR(float rad)
+		{
+			m_matrix *= mat3::rotateR(rad);
+			return *this;
+		}
+
 		Transform& shear(float x, float y)
 		{
 			m_matrix *= mat3::shear(x, y);

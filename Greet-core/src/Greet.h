@@ -2,10 +2,12 @@
 
 #include <graphics/window.h>
 #include <utils/timer.h>
+#include <listeners\listeners.h>
 
 namespace greet{
 
-	class Greet
+
+	class Greet : public listener::WindowListener, public listener::JoystickStateListener
 	{
 	protected:
 		graphics::Window* m_window;
@@ -27,10 +29,9 @@ namespace greet{
 		void createWindow(const char* title, int width, int height)
 		{
 			m_window = new graphics::Window(title, width, height);
-			graphics::Window::setUserPointer(m_window,this);
-			graphics::Window::setResizeCallback(m_window, &resize_callback);
-			graphics::Window::setJoystickCallback(m_window, &joystick_state_callback);
-			graphics::Window::setWindowFocusCallback(m_window, &window_focus_callback);
+			m_window->addResizeCallback(this);
+			m_window->addJoystickCallback(this);
+			m_window->addWindowFocusCallback(this);
 		}
 
 
@@ -38,30 +39,12 @@ namespace greet{
 		virtual void tick() = 0;
 		virtual void update(float elapsedTime) = 0;
 		virtual void render() = 0;
-		virtual void resize(int width, int height){}
-		virtual void joystickConnect(uint joystick, bool connect){}
+		virtual void windowResize(int width, int height){}
+		virtual void joystickState(uint joystick, bool connect){}
 		virtual void windowFocus(bool focused) {}
 
 		const uint getFPS() const { return m_fps; }
 		const uint getUPS() const { return m_fps; }
-
-		static void resize_callback(graphics::Window* window, int width, int height)
-		{
-			Greet* greet = (Greet*)graphics::Window::getUserPointer(window);
-			greet->resize(width,height);
-		}
-
-		static void joystick_state_callback(graphics::Window* window, uint joystick, unsigned char state)
-		{
-			Greet* greet = (Greet*)graphics::Window::getUserPointer(window);
-			greet->joystickConnect(joystick, state == JOYSTICK_STATE_CONNECTED);
-		}
-
-		static void window_focus_callback(graphics::Window* window, int state)
-		{
-			Greet* greet = (Greet*)graphics::Window::getUserPointer(window);
-			greet->windowFocus(state==GL_TRUE);
-		}
 
 	public:
 		void start()

@@ -19,9 +19,12 @@ namespace greet { namespace graphics{
 		void push(Renderable* renderable);
 		virtual void render() const;
 		virtual void update(float timeElapsed);
+		virtual void viewportResize(float x, float y, float width, float height) {}
+		virtual void windowResize(int width, int height) {}
 		void setProjectionMatrix(math::mat3 projectionMatrix);
 		inline Shader* getShader() const { return m_shader; }
 		inline uint size() const { return m_renderables.size(); }
+
 		
 	protected:
 		virtual void setUniforms() const {}

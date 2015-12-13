@@ -22,7 +22,7 @@ namespace greet { namespace graphics {
 				math::vec4 rectangle = math::getRectangle(b);
 				if (rectangle.z != 0 && rectangle.w != 0)
 				{
-					math::Transform t = math::Transform().translate(b->GetPosition()).rotate(b->GetAngle()).translate(-rectangle.z/2.0f, -rectangle.w/2.0f).scale(rectangle.z,rectangle.w);
+					math::Transform t = math::Transform().translate(b->GetPosition()).rotateR(b->GetAngle()).translate(-rectangle.z/2.0f, -rectangle.w/2.0f).scale(rectangle.z,rectangle.w);
 					push(new Renderable2D(t, 0xffffffff, NULL));
 				}
 			}
@@ -39,7 +39,7 @@ namespace greet { namespace graphics {
 				math::vec4 rectangle = math::getRectangle(b);
 				if (rectangle.z != 0 && rectangle.w != 0)
 				{
-					math::Transform t = math::Transform().translate(b->GetPosition()).rotate(b->GetAngle()).translate(-rectangle.z / 2.0f, -rectangle.w / 2.0f).scale(rectangle.z, rectangle.w);
+					math::Transform t = math::Transform().translate(b->GetPosition()).rotateR(b->GetAngle()).translate(-rectangle.z / 2.0f, -rectangle.w / 2.0f).scale(rectangle.z, rectangle.w);
 					((Renderable2D*)m_renderables[i])->m_transform = t;
 				}
 			}
@@ -48,7 +48,7 @@ namespace greet { namespace graphics {
 				math::vec4 rectangle = math::getRectangle(b);
 				if (rectangle.z != 0 && rectangle.w != 0)
 				{
-					math::Transform t = math::Transform().translate(b->GetPosition()).rotate(b->GetAngle()).translate(-rectangle.z / 2.0f, -rectangle.w / 2.0f).scale(rectangle.z, rectangle.w);
+					math::Transform t = math::Transform().translate(b->GetPosition()).rotateR(b->GetAngle()).translate(-rectangle.z / 2.0f, -rectangle.w / 2.0f).scale(rectangle.z, rectangle.w);
 					push(new Renderable2D(t, 0xffffffff, NULL));
 				}
 			}

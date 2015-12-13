@@ -10,6 +10,7 @@
 #include <greetgl.h>
 #include <greet_types.h>
 #include <utils\uuid.h>
+#include <listeners\listeners.h>
 
 #define MAX_KEYS			1024
 #define MAX_MOUSEBUTTONS	32
@@ -32,9 +33,9 @@ namespace greet { namespace graphics {
 	class Window
 	{
 	private:
-		WINDOW_RESIZE f_windowResize;
-		JOYSTICK_STATE f_joystickState;
-		WINDOW_FOCUS f_windowFocus;
+		std::vector<listener::WindowResizeListener*> f_windowResize;
+		std::vector<listener::WindowFocusListener*> f_windowFocus;
+		std::vector<listener::JoystickStateListener*> f_joystickState;
 		void* m_pointer;
 		friend struct GLFWwindow;
 		const char *m_title;
@@ -71,6 +72,9 @@ namespace greet { namespace graphics {
 		void tick();
 
 		void setBackgroundColor(math::vec4 color);
+		void addResizeCallback(listener::WindowResizeListener* listenter);
+		void addWindowFocusCallback(listener::WindowFocusListener* listener);
+		void addJoystickCallback(listener::JoystickStateListener* listener);
 
 		inline math::vec4 getBackgroundColor() const { return m_bgColor; }
 		inline int getWidth() const { return m_width; };
@@ -99,9 +103,6 @@ namespace greet { namespace graphics {
 		inline static void* getUserPointer(Window* window) { return window->m_pointer; }
 
 		static void setUserPointer(Window* window, void* pointer);
-		static void setResizeCallback(Window* window, WINDOW_RESIZE windowResize);
-		static void setJoystickCallback(Window* window, JOYSTICK_STATE joystickState);
-		static void setWindowFocusCallback(Window* window, WINDOW_FOCUS windowFocus);
 
 	};
 }}

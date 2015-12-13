@@ -3,7 +3,7 @@
 #include "guis/gui.h"
 
 namespace greet { namespace graphics {
-
+	using namespace listener;
 	std::vector<input::Joystick> Window::m_joysticks;
 	bool Window::m_curKeys[MAX_KEYS];
 	bool Window::m_curMouseButtons[MAX_MOUSEBUTTONS];
@@ -169,12 +169,13 @@ namespace greet { namespace graphics {
 
 	void Window::tick()
 	{
-		for (int sec = 0; sec < MAX_JOYSTICKS; sec++)
-			if (!m_joysticks[sec].m_connected)
+		for (int i = 0; i < MAX_JOYSTICKS; i++)
+			if (!m_joysticks[i].m_connected)
 		{
-			if (m_joysticks[sec].checkConnect())
+			if (m_joysticks[i].checkConnect())
 			{
-				f_joystickState(this, sec, JOYSTICK_STATE_CONNECTED);
+				for (uint j = 0;j < f_joystickState.size();j++)
+					f_joystickState[i]->joystickState(i, JOYSTICK_STATE_CONNECTED);
 			}
 		}
 	}
@@ -190,9 +191,10 @@ namespace greet { namespace graphics {
 				if (m_joysticks[i].m_connected)
 				{
 					m_joysticks[i].update();
-					if (!m_joysticks[i].m_connected&&m_joysticks[i].m_wasConnected&&f_joystickState!=NULL)
+					if (f_joystickState.size()>0&&!m_joysticks[i].m_connected&&m_joysticks[i].m_wasConnected)
 					{
-						f_joystickState(this, i, JOYSTICK_STATE_DISCONNECTED);
+						for (uint j = 0;j < f_joystickState.size();j++)
+							f_joystickState[j]->joystickState(j, JOYSTICK_STATE_DISCONNECTED);
 					}
 				}
 			}
@@ -212,14 +214,29 @@ namespace greet { namespace graphics {
 		glClearColor(color.x, color.y, color.z, color.w);
 	}
 
+	void Window::addResizeCallback(WindowResizeListener* listener)
+	{
+		f_windowResize.push_back(listener);
+	}
+
+	void Window::addWindowFocusCallback(WindowFocusListener* listener)
+	{
+		f_windowFocus.push_back(listener);
+	}
+
+	void Window::addJoystickCallback(JoystickStateListener* listener)
+	{
+		f_joystickState.push_back(listener);
+	}
+
 	void Window::window_resize(GLFWwindow *window, int width, int height)
 	{
 		glViewport(0, 0, width, height);
 		Window *win = (Window*)glfwGetWindowUserPointer(window);
 		win->m_width = width;
 		win->m_height = height;
-		if (win->f_windowResize != NULL)
-			win->f_windowResize(win,width,height);
+		for (uint i = 0;i < win->f_windowResize.size();i++)
+			win->f_windowResize[i]->windowResize(width,height);
 	}
 
 	void Window::key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
@@ -244,32 +261,13 @@ namespace greet { namespace graphics {
 	{
 		Window *win = (Window*)glfwGetWindowUserPointer(window);
 		win->m_focus = state == GL_TRUE;
-		if(win->f_windowFocus!=NULL)
-			win->f_windowFocus(win,state);
+		for (uint i = 0;i < win->f_windowFocus.size();i++)
+			win->f_windowFocus[i]->windowFocus(state);
 		if (!win->m_focus){
 			for (int i = 0; i < MAX_JOYSTICKS; i++)
 			{
 				win->m_joysticks[i].clearInput();
 			}
 		}
-	}
-
-	void Window::setUserPointer(Window* window, void* pointer)
-	{
-		window->m_pointer = pointer;
-	}
-
-	void Window::setResizeCallback(Window* window, WINDOW_RESIZE windowResize)
-	{
-		window->f_windowResize = windowResize;
-	}
-
-	void Window::setJoystickCallback(Window* window, JOYSTICK_STATE joystickState)
-	{
-		window->f_joystickState = joystickState;
-	}
-	void Window::setWindowFocusCallback(Window* window, WINDOW_FOCUS windowFocus)
-	{
-		window->f_windowFocus = windowFocus;
 	}
 }}

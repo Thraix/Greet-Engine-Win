@@ -45,6 +45,7 @@
     <ClCompile Include="src\graphics\guis\button.cpp" />
     <ClCompile Include="src\utils\uuid.cpp" />
     <ClCompile Include="src\entity\entity.cpp" />
+    <ClCompile Include="src\camera\camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ext\gorilla-audio\common\gc_common.h" />
@@ -115,6 +116,12 @@
     <ClInclude Include="src\math\transform.h" />
     <ClInclude Include="src\entity\entity.h" />
     <ClInclude Include="src\graphics\layers\box2dlayer.h" />
+    <ClInclude Include="src\camera\camera.h" />
+    <ClInclude Include="src\listeners\windowresize.h" />
+    <ClInclude Include="src\listeners\windowfocus.h" />
+    <ClInclude Include="src\listeners\listeners.h" />
+    <ClInclude Include="src\listeners\joystickstate.h" />
+    <ClInclude Include="src\listeners\windowlistener.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Performance4.psess" />

@@ -132,6 +132,7 @@
     <ClCompile Include="src\math\vec3.cpp" />
     <ClCompile Include="src\math\vec4.cpp" />
     <ClCompile Include="src\utils\uuid.cpp" />
+    <ClCompile Include="src\camera\camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ext\gorilla-audio\common\gc_common.h" />
@@ -166,6 +167,11 @@
     <ClInclude Include="src\greetgl.h" />
     <ClInclude Include="src\greet_types.h" />
     <ClInclude Include="src\input\joystick.h" />
+    <ClInclude Include="src\listeners\joystickstate.h" />
+    <ClInclude Include="src\listeners\listeners.h" />
+    <ClInclude Include="src\listeners\windowfocus.h" />
+    <ClInclude Include="src\listeners\windowlistener.h" />
+    <ClInclude Include="src\listeners\windowresize.h" />
     <ClInclude Include="src\managers\atlasmanager.h" />
     <ClInclude Include="src\managers\channelmanager.h" />
     <ClInclude Include="src\managers\gamestatemanager.h" />
@@ -201,6 +207,7 @@
     <ClInclude Include="src\utils\imageutils.h" />
     <ClInclude Include="src\utils\timer.h" />
     <ClInclude Include="src\utils\uuid.h" />
+    <ClInclude Include="src\camera\camera.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Performance4.psess" />

@@ -22,7 +22,6 @@ namespace greet { namespace graphics{
 
 		for (uint i = 0; i < m_renderables.size(); i++)
 			delete m_renderables[i];
-		
 	}
 
 	void Layer::push(Renderable* renderable)

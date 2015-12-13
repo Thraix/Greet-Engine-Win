@@ -13,6 +13,7 @@
 #include <graphics\shaders\shaderfactory.h>
 #include <graphics\layers\box2dlayer.h>
 #include <entity\entity.h>
+#include <camera\camera.h>
 
 using namespace greet;
 using namespace graphics;
@@ -20,12 +21,10 @@ using namespace graphics;
 class Core : public greet::Greet
 {
 private:
-	Layer* uilayer;
 	Label* fps;
 	Panel* m_gui;
 	Renderable4Poly* m_poly1;
 	Renderable2D* m_poly2;
-	Box2DLayer* layer;
 	entity::Entity* e;
 	entity::Entity* e2;
 	b2World* world;
@@ -40,13 +39,13 @@ public:
 
 	~Core()
 	{
-		delete uilayer;
-		delete m_gui;
+		camera::Camera::destroyCamera();
 	}
 
 	void init() override
 	{
 		createWindow("Best Game Ever", 960, 540);
+		camera::Camera::initCamera(m_window);
 
 		greet::managers::TextureManager::add(new Texture("res/textures/test.png", "test"));
 		greet::managers::TextureManager::add(new Texture("res/textures/animation.png", "animation"));
@@ -60,7 +59,7 @@ public:
 
 		
 		BatchRenderer2D *batch = new BatchRenderer2D();
-		uilayer = new Layer(batch, ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 20.0f, 0.0f, (float)m_window->getHeight() / 20.0f));
+		Layer* uilayer = new Layer(batch, ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 20.0f, 0.0f, (float)m_window->getHeight() / 20.0f));
 		fps = new Label("", "default", math::vec2(10, 0), 0xffff00ff, 16);
 		uilayer->push(fps);
 		m_poly2 = new Renderable2D(math::mat3::quad(200,200,50,50), 0xffffffff, atlas32->getSpriteFromSheet("animation",math::vec2(0,0), math::vec2(0.25, 0.25)));
@@ -84,14 +83,15 @@ public:
 		m_gui->push(tv);
 		m_gui->push(button);
 		world = new b2World(b2Vec2(0,0));
-		e = new entity::Entity(math::vec2(20, 20), math::vec2(5, 5), 0x00ffffff, new Sprite(), world);
-		e2 = new entity::Entity(math::vec2(10, 10), math::vec2(5, 5), 0x00ffffff, new Sprite(), world);
+		e = new entity::Entity(math::vec2(20, 20), math::vec2(5, 5), 0xffff00ff, new Sprite(), world);
+		e2 = new entity::Entity(math::vec2(10, 10), math::vec2(5, 5), 0xffff00ff, new Sprite(), world);
 		//e->m_body->SetAngularVelocity(60);
-		layer = new Box2DLayer(new BatchRenderer2D(),ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 20.0f, 0.0f, (float)m_window->getHeight() / 20.0f),world);
+		Layer* layer = new Box2DLayer(new BatchRenderer2D(),ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 20.0f, 0.0f, (float)m_window->getHeight() / 20.0f),world);
 		uilayer->push(e);
 		uilayer->push(e2);
 
-
+		camera::Camera::getInstance()->addLayer(uilayer, 0);
+		camera::Camera::getInstance()->addLayer(layer, 1);
 
 		b2BodyDef def;
 		def.type = b2_staticBody;
@@ -105,7 +105,7 @@ public:
 		fixtureDef.density = 100.0f;
 		fixtureDef.friction = 93.0f;
 		m_body->CreateFixture(&fixtureDef);
-
+		camera::Camera::getInstance()->setViewport(0, 0, 500, 500*9/16);
 	}
 	static void press(Button* button) { GREET_DEBUG("MAIN", "top kek press"); }
 	static void release(Button* button) { GREET_DEBUG("MAIN", "top kek release"); }
@@ -143,7 +143,7 @@ public:
 		e->update(timeElapsed);
 		e2->update(timeElapsed);
 
-		layer->update(timeElapsed);
+		camera::Camera::getInstance()->update(timeElapsed);
 		m_gui->update(timeElapsed);
 	}
 
@@ -151,20 +151,27 @@ public:
 	{
 		//greet::managers::GameStateManager::render();
 		m_gui->render();
-		uilayer->render();
-		layer->render();
+		camera::Camera::getInstance()->render();
 	}
 
-	void resize(int width, int height) override
+	void windowResize(int width, int height) override
 	{
-		uilayer->setProjectionMatrix(math::mat3::orthographic(0, (float)width/20.0f, 0, (float)height / 20.0f));
+		//camera::Camera::getInstance()->getLayer(0)->setProjectionMatrix(math::mat3::orthographic(0, (float)width / 20.0f, 0, (float)height / 20.0f));
+		//camera::Camera::getInstance()->getLayer(1)->setProjectionMatrix(math::mat3::orthographic(0, (float)width / 20.0f, 0, (float)height / 20.0f));
+		camera::Camera::getInstance()->setViewport(0, 0, width/2, height/2);
 	}
 
-	void joystickConnect(unsigned int joystick, bool connect) override
+	void joystickState(unsigned int joystick, bool connect) override
 	{
 		
 	}
 
+};
+
+struct test
+{
+	test(uint i) :m(i){ }
+	uint m;
 };
 
 int main()

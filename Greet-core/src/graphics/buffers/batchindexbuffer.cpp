@@ -18,18 +18,18 @@ namespace greet {namespace graphics {
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, amount * sizeof(GLuint), data, GL_DYNAMIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
-
+	
 	BatchIndexBuffer::~BatchIndexBuffer()
 	{
 		glDeleteBuffers(1,&m_bufferID);
 	}
 
-	void BatchIndexBuffer::enable()
+	void BatchIndexBuffer::enable() const
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_bufferID);
 	}
 
-	void BatchIndexBuffer::disable()
+	void BatchIndexBuffer::disable() const
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}

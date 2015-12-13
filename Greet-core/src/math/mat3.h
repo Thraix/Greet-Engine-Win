@@ -32,6 +32,7 @@ namespace greet{ namespace math{
 		static mat3 translate(const float& x, const float& y);
 		static mat3 scale(const float& x, const float& y);
 		static mat3 rotate(float deg);
+		static mat3 rotateR(float rad);
 		static mat3 shear(const float& x, const float& y);
 
 		mat3& inverse();
