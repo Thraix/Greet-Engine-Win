@@ -19,7 +19,6 @@ namespace greet{ namespace graphics{
 		math::vec2 texCoord;
 		float texID;
 		uint color;
-		math::vec2 selfVertex;
 	};
 
 	class Renderable2D : public Renderable

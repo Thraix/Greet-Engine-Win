@@ -70,6 +70,21 @@ namespace greet{
 		return *this;
 	}
 
+	vec2& vec2::rotateR(const float rad)
+	{
+		float c = cos(rad);
+		float s = sin(rad);
+
+		float tempX = x*c - y*s;
+		float tempY = x*s + y*c;
+		x = tempX;
+		y = tempY;
+
+		return *this;
+	}
+
+
+
 
 	vec2& vec2::add(const vec2& other)
 	{

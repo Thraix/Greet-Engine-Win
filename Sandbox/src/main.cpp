@@ -9,7 +9,7 @@
 #include <graphics\guis\textview.h>
 #include <graphics\guis\button.h>
 #include <graphics\renderable4poly.h>
-#include <graphics\batchrenderer2d.h>
+#include <graphics\batchrenderer.h>
 #include <graphics\shaders\shaderfactory.h>
 #include <graphics\layers\box2dlayer.h>
 #include <entity\entity.h>
@@ -58,14 +58,14 @@ public:
 		atlas32->addTexture("grass", "res/textures/test3.png");
 
 		
-		BatchRenderer2D *batch = new BatchRenderer2D();
-		Layer* uilayer = new Layer(batch, ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 20.0f, 0.0f, (float)m_window->getHeight() / 20.0f));
+		BatchRenderer *batch = new BatchRenderer();
+		Layer* uilayer = new Layer(batch, ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 2.0f, 0.0f, (float)m_window->getHeight() / 2.0f));
 		fps = new Label("", "default", math::vec2(10, 0), 0xffff00ff, 16);
 		uilayer->push(fps);
 		m_poly2 = new Renderable2D(math::mat3::quad(200,200,50,50), 0xffffffff, atlas32->getSpriteFromSheet("animation",math::vec2(0,0), math::vec2(0.25, 0.25)));
 		//uilayer->push(m_poly2);
 		m_window->setBackgroundColor(math::vec4(0.5f, 0.5f, 0.5f, 1.0f));
-		m_gui = new Panel(new BatchRenderer2D(),ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 2.0f, 0.0f, (float)m_window->getHeight() / 2.0f), math::vec2(10,10),math::vec2(120,100));
+		m_gui = new Panel(new BatchRenderer(),ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 2.0f, 0.0f, (float)m_window->getHeight() / 2.0f), math::vec2(10,10),math::vec2(120,100));
 		
 		m_gui->setBackgroundColor(0xff6666ff);
 
@@ -86,12 +86,11 @@ public:
 		e = new entity::Entity(math::vec2(20, 20), math::vec2(5, 5), 0xffff00ff, new Sprite(), world);
 		e2 = new entity::Entity(math::vec2(10, 10), math::vec2(5, 5), 0xffff00ff, new Sprite(), world);
 		//e->m_body->SetAngularVelocity(60);
-		Layer* layer = new Box2DLayer(new BatchRenderer2D(),ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 20.0f, 0.0f, (float)m_window->getHeight() / 20.0f),world);
-		uilayer->push(e);
-		uilayer->push(e2);
+		Layer* gamelayer = new Layer(new BatchRenderer(), ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 20.0f, 0.0f, (float)m_window->getHeight() / 20.0f));
+		gamelayer->push(e);
+		gamelayer->push(e2);
 
-		camera::Camera::getInstance()->addLayer(uilayer, 0);
-		camera::Camera::getInstance()->addLayer(layer, 1);
+		Layer* layer = new Box2DLayer(ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 20.0f, 0.0f, (float)m_window->getHeight() / 20.0f),world);
 
 		b2BodyDef def;
 		def.type = b2_staticBody;
@@ -99,20 +98,27 @@ public:
 		def.userData = this;
 		b2Body* m_body = world->CreateBody(&def);
 		b2PolygonShape shape;
-		shape.SetAsBox(10 / 2.0f, 10 / 2.0f);
+		uint vert = 6;
+		b2Vec2* vecs = math::getPoly(vert,5,true);
+
+		shape.Set(vecs,vert);
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &shape;
 		fixtureDef.density = 100.0f;
 		fixtureDef.friction = 93.0f;
 		m_body->CreateFixture(&fixtureDef);
-		camera::Camera::getInstance()->setViewport(0, 0, 500, 500*9/16);
+		gamelayer->push(new RenderablePoly(math::vec2(15,15),math::b2Vec2ToVec2(vecs,vert), vert, 0xff00ffff));
+		camera::Camera::getInstance()->addLayer(gamelayer, 0);
+		//camera::Camera::getInstance()->addLayer(layer, 1);
+		camera::Camera::getInstance()->addLayer(uilayer, 2);
+		camera::Camera::getInstance()->setViewport(0, 0, 1280, 1280*9/16);
 	}
 	static void press(Button* button) { GREET_DEBUG("MAIN", "top kek press"); }
 	static void release(Button* button) { GREET_DEBUG("MAIN", "top kek release"); }
 
 	void tick() override
 	{
-		fps->setText(utils::getTime()+" | "+std::to_string(getFPS()) + " fps");
+		fps->setText(std::to_string(getFPS()) + " fps");
 	}
 	float frame = 0;
 	bool toggle = false;
@@ -156,9 +162,9 @@ public:
 
 	void windowResize(int width, int height) override
 	{
-		//camera::Camera::getInstance()->getLayer(0)->setProjectionMatrix(math::mat3::orthographic(0, (float)width / 20.0f, 0, (float)height / 20.0f));
-		//camera::Camera::getInstance()->getLayer(1)->setProjectionMatrix(math::mat3::orthographic(0, (float)width / 20.0f, 0, (float)height / 20.0f));
-		camera::Camera::getInstance()->setViewport(0, 0, width/2, height/2);
+		camera::Camera::getInstance()->getLayer(0)->setProjectionMatrix(math::mat3::orthographic(0, (float)width / 20.0f, 0, (float)height / 20.0f));
+		camera::Camera::getInstance()->getLayer(1)->setProjectionMatrix(math::mat3::orthographic(0, (float)width / 20.0f, 0, (float)height / 20.0f));
+		//camera::Camera::getInstance()->setViewport(0, 0, width, height* 9 / 16);
 	}
 
 	void joystickState(unsigned int joystick, bool connect) override

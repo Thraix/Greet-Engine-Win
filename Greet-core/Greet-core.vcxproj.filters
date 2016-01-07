@@ -10,7 +10,6 @@
     <ClCompile Include="src\audio\channel.cpp" />
     <ClCompile Include="src\audio\sound.cpp" />
     <ClCompile Include="src\graphics\animation.cpp" />
-    <ClCompile Include="src\graphics\batchrenderer2d.cpp" />
     <ClCompile Include="src\graphics\buffers\batchindexbuffer.cpp" />
     <ClCompile Include="src\graphics\buffers\buffer.cpp" />
     <ClCompile Include="src\graphics\buffers\indexbuffer.cpp" />
@@ -46,6 +45,8 @@
     <ClCompile Include="src\utils\uuid.cpp" />
     <ClCompile Include="src\entity\entity.cpp" />
     <ClCompile Include="src\camera\camera.cpp" />
+    <ClCompile Include="src\graphics\batchrenderersquare.cpp" />
+    <ClCompile Include="src\graphics\batchrenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ext\gorilla-audio\common\gc_common.h" />
@@ -58,7 +59,6 @@
     <ClInclude Include="src\audio\channel.h" />
     <ClInclude Include="src\audio\sound.h" />
     <ClInclude Include="src\graphics\animation.h" />
-    <ClInclude Include="src\graphics\batchrenderer2d.h" />
     <ClInclude Include="src\graphics\buffers\batchindexbuffer.h" />
     <ClInclude Include="src\graphics\buffers\buffer.h" />
     <ClInclude Include="src\graphics\buffers\indexbuffer.h" />
@@ -122,6 +122,9 @@
     <ClInclude Include="src\listeners\listeners.h" />
     <ClInclude Include="src\listeners\joystickstate.h" />
     <ClInclude Include="src\listeners\windowlistener.h" />
+    <ClInclude Include="src\graphics\batchrenderersquare.h" />
+    <ClInclude Include="src\graphics\batchrenderer.h" />
+    <ClInclude Include="src\graphics\renderablepoly.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Performance4.psess" />

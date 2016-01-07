@@ -1,13 +1,13 @@
-#include "batchrenderer2d.h"
+#include "BatchRendererSquare.h"
 
 namespace greet{ namespace graphics{
 
-	BatchRenderer2D::BatchRenderer2D()
+	BatchRendererSquare::BatchRendererSquare()
 	{
 		init();
 	}
 
-	BatchRenderer2D::~BatchRenderer2D()
+	BatchRendererSquare::~BatchRendererSquare()
 	{
 		delete m_ibo;
 		glDeleteBuffers(1, &m_vbo);
@@ -18,7 +18,7 @@ namespace greet{ namespace graphics{
 		}
 	}
 
-	void BatchRenderer2D::init()
+	void BatchRendererSquare::init()
 	{
 		glGenVertexArrays(1,&m_vao);
 		glGenBuffers(1,&m_vbo);
@@ -32,13 +32,11 @@ namespace greet{ namespace graphics{
 		glEnableVertexAttribArray(SHADER_TEXCOORD_INDEX);
 		glEnableVertexAttribArray(SHADER_TEXID_INDEX);
 		glEnableVertexAttribArray(SHADER_COLOR_INDEX);
-		glEnableVertexAttribArray(SHADER_SELF_VERTEX_INDEX);
 
 		glVertexAttribPointer(SHADER_VERTEX_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)offsetof(VertexData, VertexData::vertex));
 		glVertexAttribPointer(SHADER_TEXCOORD_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)offsetof(VertexData, VertexData::texCoord));
 		glVertexAttribPointer(SHADER_TEXID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, VertexData::texID)));
 		glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid*)offsetof(VertexData, VertexData::color));
-		glVertexAttribPointer(SHADER_SELF_VERTEX_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)offsetof(VertexData, VertexData::selfVertex));
 		glBindBuffer(GL_ARRAY_BUFFER,0);
 
 		//Generate all the indices at runtime
@@ -60,13 +58,13 @@ namespace greet{ namespace graphics{
 		glBindVertexArray(0);
 	}
 
-	void BatchRenderer2D::begin()
+	void BatchRendererSquare::begin()
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
 		m_buffer = (VertexData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 	}
 
-	void BatchRenderer2D::submit(const Renderable4Poly* renderable)
+	void BatchRendererSquare::submit(const Renderable4Poly* renderable)
 	{
 		const uint color = renderable->getColor();
 
@@ -83,7 +81,12 @@ namespace greet{ namespace graphics{
 		draw(ul,ur,dr,dl, texPos, texSize, ts, color);
 	}
 
-	void BatchRenderer2D::submit(const Renderable2D* renderable)
+	void submit(const RenderablePoly* renderable)
+	{
+		GREET_WARN("BATCHRENDERERSQUARE", "RenderablePoly is not supported in BatchRendererSquare");
+	}
+
+	void BatchRendererSquare::submit(const Renderable2D* renderable)
 	{
 
 		const uint color = renderable->getColor();
@@ -98,7 +101,7 @@ namespace greet{ namespace graphics{
 		draw(transformation,texPos, texSize, ts, color);
 	}
 
-	void BatchRenderer2D::submitString(const Label* label, bool shadow)
+	void BatchRendererSquare::submitString(const Label* label, bool shadow)
 	{
 		float ts = getTextureSlot(label->getTextureID());
 		const std::vector<RenderableGlyph*> glyphs = label->getGlyphs();
@@ -123,73 +126,65 @@ namespace greet{ namespace graphics{
 		popMatrix();
 	}
 
-	void BatchRenderer2D::submit(const math::Transform& transform, uint texID, math::vec2 texPos, math::vec2 texSize, uint color)
+	void BatchRendererSquare::submit(const math::Transform& transform, uint texID, math::vec2 texPos, math::vec2 texSize, uint color)
 	{
 		draw(transform,texPos, texSize,getTextureSlot(texID),color);
 	}
 
-	void BatchRenderer2D::draw(const math::vec2& ul, const math::vec2& ur, const math::vec2& dr, const math::vec2& dl, const math::vec2& texPos, const math::vec2& texSize, const float textureSlot, const uint color)
+	void BatchRendererSquare::draw(const math::vec2& ul, const math::vec2& ur, const math::vec2& dr, const math::vec2& dl, const math::vec2& texPos, const math::vec2& texSize, const float textureSlot, const uint color)
 	{
 		m_buffer->vertex = *m_transformationBack*math::vec2(ul.x, ul.y);
 		m_buffer->texCoord = texPos;
 		m_buffer->texID = textureSlot;
 		m_buffer->color = color;
-		m_buffer->selfVertex = math::vec2(1, 0);
 		m_buffer++;
 
 		m_buffer->vertex = *m_transformationBack*math::vec2(ur.x, ur.y);
 		m_buffer->texCoord = math::vec2(texPos.x, texPos.y + texSize.y);
 		m_buffer->texID = textureSlot;
 		m_buffer->color = color;
-		m_buffer->selfVertex = math::vec2(1, 0);
 		m_buffer++;
 
 		m_buffer->vertex = *m_transformationBack*math::vec2(dr.x, dr.y);
 		m_buffer->texCoord = math::vec2(texPos.x + texSize.x, texPos.y + texSize.y);
 		m_buffer->texID = textureSlot;
 		m_buffer->color = color;
-		m_buffer->selfVertex = math::vec2(1, 0);
 		m_buffer++;
 
 		m_buffer->vertex = *m_transformationBack*math::vec2(dl.x, dl.y);
 		m_buffer->texCoord = math::vec2(texPos.x + texSize.x, texPos.y);
 		m_buffer->texID = textureSlot;
 		m_buffer->color = color;
-		m_buffer->selfVertex = math::vec2(1, 0);
 		m_buffer++;
 
 		m_ibo->addCount(6);
 	}
 
-	void BatchRenderer2D::draw(const math::Transform& transform, const math::vec2& texPos, const math::vec2& texSize, const float textureSlot, const uint color)
+	void BatchRendererSquare::draw(const math::Transform& transform, const math::vec2& texPos, const math::vec2& texSize, const float textureSlot, const uint color)
 	{
 		pushMatrix(transform.getMatrix());
 		m_buffer->vertex = *m_transformationBack*VERTEX_TOP_LEFT;
 		m_buffer->texCoord = texPos;
 		m_buffer->texID = textureSlot;
 		m_buffer->color = color;
-		m_buffer->selfVertex = VERTEX_TOP_LEFT;
 		m_buffer++;
 
 		m_buffer->vertex = *m_transformationBack*VERTEX_DOWN_LEFT;
 		m_buffer->texCoord = math::vec2(texPos.x, texPos.y + texSize.y);
 		m_buffer->texID = textureSlot;
 		m_buffer->color = color;
-		m_buffer->selfVertex = VERTEX_DOWN_LEFT;
 		m_buffer++;
 
 		m_buffer->vertex = *m_transformationBack*VERTEX_DOWN_RIGHT;
 		m_buffer->texCoord = math::vec2(texPos.x + texSize.x, texPos.y + texSize.y);
 		m_buffer->texID = textureSlot;
 		m_buffer->color = color;
-		m_buffer->selfVertex = VERTEX_DOWN_RIGHT;
 		m_buffer++;
 
 		m_buffer->vertex = *m_transformationBack*VERTEX_TOP_RIGHT;
 		m_buffer->texCoord = math::vec2(texPos.x + texSize.x, texPos.y);
 		m_buffer->texID = textureSlot;
 		m_buffer->color = color;
-		m_buffer->selfVertex = VERTEX_TOP_RIGHT;
 		m_buffer++;
 		popMatrix();
 		m_ibo->addCount(6);
@@ -197,7 +192,7 @@ namespace greet{ namespace graphics{
 
 
 
-	float BatchRenderer2D::getTextureSlot(const GLuint texID)
+	float BatchRendererSquare::getTextureSlot(const GLuint texID)
 	{
 		float ts = 0.0f;
 		if (texID > 0)
@@ -228,13 +223,13 @@ namespace greet{ namespace graphics{
 		return ts;
 	}
 
-	void BatchRenderer2D::end()
+	void BatchRendererSquare::end()
 	{
 		glUnmapBuffer(GL_ARRAY_BUFFER);
 		glBindBuffer(GL_ARRAY_BUFFER,0);
 	}
 
-	void BatchRenderer2D::flush()
+	void BatchRendererSquare::flush()
 	{
 		for (uint i = 0; i < m_texSlots.size(); i++)
 		{

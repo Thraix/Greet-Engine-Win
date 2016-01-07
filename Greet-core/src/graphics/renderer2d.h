@@ -10,6 +10,7 @@ namespace greet{ namespace graphics{
 	class Renderable;
 	class Renderable2D;
 	class Renderable4Poly;
+	class RenderablePoly;
 	class Label;
 
 	class Renderer2D
@@ -29,6 +30,7 @@ namespace greet{ namespace graphics{
 
 		virtual void begin(){}
 		virtual void submit(const Renderable2D *renderable) = 0;
+		virtual void submit(const RenderablePoly *renderable) = 0;
 		virtual void submit(const Renderable4Poly* renderable) = 0;
 		virtual void submit(const math::Transform& transformation, uint texID, math::vec2 texPos, math::vec2 texSize, uint color) = 0;
 		virtual void submitString(const Label* label, bool shadow = false) = 0;

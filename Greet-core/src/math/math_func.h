@@ -21,6 +21,35 @@ namespace greet{ namespace math{
 		return degrees * ((float)M_PI / 180.0f);
 	}
 
+	inline vec2* getVertices(b2Body* body)
+	{
+		const b2Fixture* f = body->GetFixtureList();
+
+		if (f->GetType() == b2Shape::e_polygon)
+		{
+			b2PolygonShape* shape = (b2PolygonShape*)f->GetShape();
+			vec2* vertices = new vec2[shape->GetVertexCount()];
+			for (uint i = 0; i < shape->GetVertexCount(); i++)
+			{
+				vertices[i] = math::vec2(shape->GetVertex(i)).rotateR(body->GetAngle());
+			}
+			return vertices;
+		}
+		return NULL;
+	}
+
+	inline uint getVertexCount(b2Body* body)
+	{
+		const b2Fixture* f = body->GetFixtureList();
+
+		if (f->GetType() == b2Shape::e_polygon)
+		{
+			b2PolygonShape* shape = (b2PolygonShape*)f->GetShape();
+			return shape->GetVertexCount();
+		}
+		return 0;
+	}
+
 	inline vec4 getRectangle(b2Body* body)
 	{
 		const b2Fixture* f = body->GetFixtureList();
@@ -50,5 +79,35 @@ namespace greet{ namespace math{
 			}
 		}
 		return math::vec4(0, 0, 0, 0);
+	}
+
+	inline b2Vec2* getPoly(uint vertices, float size, bool min = true, float rotation = 0)
+	{
+
+		b2Vec2* triangle = new b2Vec2[vertices];
+		float rad = 2 * M_PI / vertices;
+
+		if (vertices % 2 == 0)
+			rotation += rad / 2;
+		if (!min)
+			size = size / sin(M_PI * (vertices - 2) / (float)vertices / 2.0f);
+
+		for (uint i = 0; i < vertices; i++)
+		{
+			math::vec2 v = math::vec2(0, -size).rotateR(rotation + rad*i);
+			triangle[i] = b2Vec2(v.x, v.y);
+		}
+		return triangle;
+	}
+
+	inline vec2* b2Vec2ToVec2(b2Vec2* vecs, uint vertexCount)
+	{
+		vec2* vec = new vec2[vertexCount];
+
+		for (uint i = 0; i < vertexCount; i++)
+		{
+			vec[i] = math::vec2(vecs[i]);
+		}
+		return vec;
 	}
 }}

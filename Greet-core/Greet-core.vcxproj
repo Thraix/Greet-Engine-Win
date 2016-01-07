@@ -41,7 +41,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(SolutionDir)libraries\FreeImage\include;$(SolutionDir)libraries\GLFW\include;$(SolutionDir)libraries\GLEW\include;$(SolutionDir)libraries\libogg\include;$(SolutionDir)libraries\libvorbis\include;$(SolutionDir)libraries\OpenAL\include;$(SolutionDir)libraries\Box2D\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)libraries\GLFW\lib-vc2013;$(SolutionDir)libraries\FreeImage\lib;$(SolutionDir)libraries\GLEW\lib;$(SolutionDir)libraries\OpenAL\libs\Win32;$(SolutionDir)libraries\libogg\bin;$(SolutionDir)libraries\libvorbis\bin;$(SolutionDir)libraries\Box2D\bin</LibraryPath>
+    <LibraryPath>$(SolutionDir)libraries\GLFW\lib-vc2013;$(SolutionDir)libraries\FreeImage\lib;$(SolutionDir)libraries\GLEW\lib;$(SolutionDir)libraries\OpenAL\libs\Win32;$(SolutionDir)libraries\libogg\bin;$(SolutionDir)libraries\libvorbis\bin;$(SolutionDir)libraries\Box2D\binDebug</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\$(Configuration)\Intermediate\</IntDir>
   </PropertyGroup>
@@ -100,7 +100,8 @@
     <ClCompile Include="src\gamestates\gamestate.cpp" />
     <ClCompile Include="src\graphics\animation.cpp" />
     <ClCompile Include="src\graphics\atlas\atlas.cpp" />
-    <ClCompile Include="src\graphics\batchrenderer2d.cpp" />
+    <ClCompile Include="src\graphics\batchrenderer.cpp" />
+    <ClCompile Include="src\graphics\batchrenderersquare.cpp" />
     <ClCompile Include="src\graphics\buffers\batchindexbuffer.cpp" />
     <ClCompile Include="src\graphics\buffers\buffer.cpp" />
     <ClCompile Include="src\graphics\buffers\indexbuffer.cpp" />
@@ -148,7 +149,8 @@
     <ClInclude Include="src\gamestates\gamestate.h" />
     <ClInclude Include="src\graphics\animation.h" />
     <ClInclude Include="src\graphics\atlas\atlas.h" />
-    <ClInclude Include="src\graphics\batchrenderer2d.h" />
+    <ClInclude Include="src\graphics\batchrenderer.h" />
+    <ClInclude Include="src\graphics\batchrenderersquare.h" />
     <ClInclude Include="src\graphics\layers\box2dlayer.h" />
     <ClInclude Include="src\graphics\buffers\batchindexbuffer.h" />
     <ClInclude Include="src\graphics\buffers\buffer.h" />
@@ -163,6 +165,7 @@
     <ClInclude Include="src\graphics\guis\textview.h" />
     <ClInclude Include="src\graphics\renderable.h" />
     <ClInclude Include="src\graphics\renderable4poly.h" />
+    <ClInclude Include="src\graphics\renderablepoly.h" />
     <ClInclude Include="src\graphics\shaders\shaderfactory.h" />
     <ClInclude Include="src\greetgl.h" />
     <ClInclude Include="src\greet_types.h" />

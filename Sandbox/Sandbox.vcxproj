@@ -41,7 +41,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(SolutionDir)libraries\FreeImage\include;$(SolutionDir)libraries\GLFW\include;$(SolutionDir)libraries\GLEW\include;$(SolutionDir)libraries\libogg\include;$(SolutionDir)libraries\libvorbis\include;$(SolutionDir)libraries\OpenAL\include;$(SolutionDir)libraries\Box2D\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)libraries\libogg\bin;$(SolutionDir)libraries\OpenAL\libs\Win32;$(SolutionDir)libraries\FreeImage\lib;$(SolutionDir)libraries\GLEW\lib;$(SolutionDir)libraries\GLFW\lib-vc2013;$(SolutionDir)libraries\libvorbis\bin;$(SolutionDir)libraries\Box2D\bin;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)libraries\libogg\bin;$(SolutionDir)libraries\OpenAL\libs\Win32;$(SolutionDir)libraries\FreeImage\lib;$(SolutionDir)libraries\GLEW\lib;$(SolutionDir)libraries\GLFW\lib-vc2013;$(SolutionDir)libraries\libvorbis\bin;$(SolutionDir)libraries\Box2D\binDebug;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\$(Configuration)\Intermediate\</IntDir>
     <SourcePath>$(SourcePath)</SourcePath>

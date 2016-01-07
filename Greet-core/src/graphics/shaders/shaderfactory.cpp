@@ -10,7 +10,6 @@ namespace greet {namespace graphics{namespace ShaderFactory {
 		"layout(location = 1) in vec2 texCoord;\n"
 		"layout(location = 2) in float texID;\n"
 		"layout(location = 3) in vec4 color;\n"
-		"layout(location = 4) in vec2 selfVertex;\n"
 		"\n"
 		"uniform mat3 pr_matrix;\n"
 		"uniform mat3 ml_matrix = mat3(1.0);\n"
@@ -31,7 +30,6 @@ namespace greet {namespace graphics{namespace ShaderFactory {
 		"	vs_out.texCoord = vec2(texCoord.x, 1 - texCoord.y);\n"
 		"	vs_out.texID = texID;\n"
 		"	vs_out.color = vec4(color.z, color.y, color.x, color.w);\n"
-		"	vs_out.coord = selfVertex;"
 		"}\n"
 	};
 
@@ -47,7 +45,6 @@ namespace greet {namespace graphics{namespace ShaderFactory {
 		"	float texID;\n"
 		"	vec2 texCoord;\n"
 		"	vec4 color;\n"
-		"	vec2 coord;\n"
 		"} fs_in;\n"
 		"\n"
 		"uniform sampler2D textures[32];\n"
@@ -68,35 +65,6 @@ namespace greet {namespace graphics{namespace ShaderFactory {
 		"}\n"
 	};
 
-	const char *gradient_shader_frag =
-	{
-		"#version 330 core\n"
-		"\n"
-		"layout(location = 0) out vec4 color;\n"
-		"\n"
-		"in DATA\n"
-		"{\n"
-		"	vec2 pos;\n"
-		"	float texID;\n"
-		"	vec2 texCoord;\n"
-		"	vec4 color;\n"
-		"	vec2 coord;\n"
-		"} fs_in;\n"
-		"\n"
-		"uniform sampler2D textures[32];\n"
-		"\n"
-		"void main()\n"
-		"{\n"
-		"	color = fs_in.color;\n"
-		"	if (fs_in.texID>0.0)\n"
-		"	{\n"
-		"		int tid = int(fs_in.texID - 0.5);\n"
-		"		color *= texture(textures[tid], fs_in.texCoord);\n"
-		"	}\n"
-		"	color = vec4(color.rgb*(fs_in.coord.y*0.2+0.8),color.a);\n"
-		"}\n"
-	};
-
 	const char *debug_shader_frag =
 	{
 		"#version 330 core\n"
@@ -109,7 +77,6 @@ namespace greet {namespace graphics{namespace ShaderFactory {
 		"	float texID;\n"
 		"	vec2 texCoord;\n"
 		"	vec4 color;\n"
-		"	vec2 coord;\n"
 		"} fs_in;\n"
 		"\n"
 		"uniform sampler2D textures[32];\n"
@@ -132,7 +99,6 @@ namespace greet {namespace graphics{namespace ShaderFactory {
 		"	float texID;\n"
 		"	vec2 texCoord;\n"
 		"	vec4 color;\n"
-		"	vec2 coord;\n"
 		"} fs_in;\n"
 		"\n"
 		"uniform sampler2D textures[32];\n"
@@ -169,7 +135,6 @@ namespace greet {namespace graphics{namespace ShaderFactory {
 		"	float texID;\n"
 		"	vec2 texCoord;\n"
 		"	vec4 color;\n"
-		"	vec2 coord;\n"
 		"} fs_in;\n"
 		"\n"
 		"uniform sampler2D textures[32];\n"
@@ -206,10 +171,5 @@ namespace greet {namespace graphics{namespace ShaderFactory {
 	Shader* DebugShader()
 	{
 		return Shader::fromSource("debugShader", default_shader_vert, debug_shader_frag);
-	}
-
-	Shader* GradientShader()
-	{
-		return Shader::fromSource("gradientShader", default_shader_vert, gradient_shader_frag);
 	}
 }}}

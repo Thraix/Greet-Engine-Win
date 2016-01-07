@@ -14,16 +14,16 @@ namespace greet { namespace graphics {
 
 
 	public:
-		Box2DLayer(Renderer2D* renderer, Shader* shader, math::mat3 projectionMatrix, b2World* world)
-			:Layer(renderer,shader,projectionMatrix), m_world(world)
+		Box2DLayer(Shader* shader, math::mat3 projectionMatrix, b2World* world)
+			:Layer(new BatchRenderer(),shader,projectionMatrix), m_world(world)
 		{
 			for (b2Body* b = m_world->GetBodyList();b;b = b->GetNext())
 			{
-				math::vec4 rectangle = math::getRectangle(b);
-				if (rectangle.z != 0 && rectangle.w != 0)
+				math::vec2* vertices = math::getVertices(b);
+				if (vertices != NULL)
 				{
-					math::Transform t = math::Transform().translate(b->GetPosition()).rotateR(b->GetAngle()).translate(-rectangle.z/2.0f, -rectangle.w/2.0f).scale(rectangle.z,rectangle.w);
-					push(new Renderable2D(t, 0xffffffff, NULL));
+					uint vertexCount = math::getVertexCount(b);
+					push(new RenderablePoly(math::vec2(b->GetPosition()),vertices,vertexCount, 0xffffffff));
 				}
 			}
 		}
@@ -36,20 +36,20 @@ namespace greet { namespace graphics {
 			b2Body* b = m_world->GetBodyList();
 			for (;b && i < renderables;i++,b = b->GetNext())
 			{
-				math::vec4 rectangle = math::getRectangle(b);
-				if (rectangle.z != 0 && rectangle.w != 0)
+				math::vec2* vertices = math::getVertices(b);
+				if (vertices != NULL)
 				{
-					math::Transform t = math::Transform().translate(b->GetPosition()).rotateR(b->GetAngle()).translate(-rectangle.z / 2.0f, -rectangle.w / 2.0f).scale(rectangle.z, rectangle.w);
-					((Renderable2D*)m_renderables[i])->m_transform = t;
+					((RenderablePoly*)m_renderables[i])->setVertices(vertices,math::getVertexCount(b));
+					((RenderablePoly*)m_renderables[i])->m_position = math::vec2(b->GetPosition());
 				}
 			}
 			for (;b; b = b->GetNext())
 			{
-				math::vec4 rectangle = math::getRectangle(b);
-				if (rectangle.z != 0 && rectangle.w != 0)
+				math::vec2* vertices = math::getVertices(b);
+				if (vertices != NULL)
 				{
-					math::Transform t = math::Transform().translate(b->GetPosition()).rotateR(b->GetAngle()).translate(-rectangle.z / 2.0f, -rectangle.w / 2.0f).scale(rectangle.z, rectangle.w);
-					push(new Renderable2D(t, 0xffffffff, NULL));
+					uint vertexCount = math::getVertexCount(b);
+					push(new RenderablePoly(math::vec2(b->GetPosition()),vertices, vertexCount, 0xffffffff));
 				}
 			}
 		}

@@ -23,6 +23,7 @@ namespace greet{
 		vec2& projected(const math::vec2& vec);
 		vec2& normalize();
 		vec2& rotate(const float deg);
+		vec2& rotateR(const float rad);
 
 		vec2& add(const vec2& other);
 		vec2& subtract(const vec2& other);

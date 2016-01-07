@@ -10,6 +10,7 @@
 #include <Windows.h>
 #include <greet_types.h>
 #include <math\maths.h>
+#include <Box2D\Box2D.h>
 
 #define GREET_LOG_LEVEL_FATAL 0
 #define GREET_LOG_LEVEL_ERROR 1
@@ -83,6 +84,20 @@ namespace greet {
 
 		template <>
 		static char* to_string<const math::vec2>(const math::vec2 & t)
+		{
+			std::string res = "vec2(" + std::to_string(t.x) + "," + std::to_string(t.y) + ")";
+			return strcpy(to_string_buffer, res.c_str());
+		}
+
+		template <>
+		static char* to_string<b2Vec2>(b2Vec2 & t)
+		{
+			std::string res = "vec2(" + std::to_string(t.x) + "," + std::to_string(t.y) + ")";
+			return strcpy(to_string_buffer, res.c_str());
+		}
+
+		template <>
+		static char* to_string<const b2Vec2>(const b2Vec2 & t)
 		{
 			std::string res = "vec2(" + std::to_string(t.x) + "," + std::to_string(t.y) + ")";
 			return strcpy(to_string_buffer, res.c_str());
