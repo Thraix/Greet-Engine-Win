@@ -1,32 +1,25 @@
 #pragma once
 
-#include <graphics\window.h>
-#include <vector>
+#include <string>
 #include <random>
-#include <ctime>
-
-namespace greet {namespace utils {
-
-
-	class UUID 
+#include <time.h>
+#include <greet_types.h>
+namespace greet { namespace utils {
+	class UUID
 	{
-		friend graphics::Window;
-	private:
-		uint m_current;
-		std::vector<uint> m_usedUUID;
-
-		UUID();
-		~UUID() { }
-
-	public:
-		uint getUUID();
-	public:
-		static UUID* getInstance() { return s_instance; }
-	private:
-
-		static UUID* s_instance;
-
-		static void init();
-		static void cleanUp();
+		private:
+			UUID* INSTANCE;
+		
+		public:
+			uint128 getUUID() const;
+				
+		private:
+			UUID();
+			unsigned long long randomLong() const;
+			uint128 randomInt128() const;
+		public:
+			static void init();
+			static void destroy();
+			static const UUID& getInstance() const;	
 	};
 }}

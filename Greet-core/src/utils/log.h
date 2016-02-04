@@ -11,6 +11,7 @@
 #include <greet_types.h>
 #include <math\maths.h>
 #include <Box2D\Box2D.h>
+#include <utils\utils.h>
 
 #define GREET_LOG_LEVEL_FATAL 0
 #define GREET_LOG_LEVEL_ERROR 1
@@ -73,6 +74,17 @@ namespace greet {
 		static char* to_string<const bool>(const bool & t)
 		{
 			return t ? "true" : "false";
+		}
+
+		template <> 
+		static uint128 to_string<const uint128>(const uint128 & t)
+		{
+			std::string res = "";
+			for(int i = 120; i >= 0; i-=8)
+			{
+				result += byteToHex((byte)(t >> i));
+			}
+			return strcpy(to_string_buffer,res.c_str());
 		}
 		 
 		template <>

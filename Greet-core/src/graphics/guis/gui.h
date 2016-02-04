@@ -52,7 +52,7 @@ namespace greet { namespace graphics {
 		bool m_renderbackground;
 
 
-		uint m_uuid;
+		uint128 m_uuid;
 
 		static Font* s_defaultFont;
 		static bool s_mouseUsed;
@@ -90,7 +90,7 @@ namespace greet { namespace graphics {
 
 		inline uint getBackgroundColor() const { return m_bgColor; }
 		inline uint getForegroundColor() const { return m_fgColor; }
-		inline uint getUUID() const { return m_uuid; }
+		inline uint128 getUUID() const { return m_uuid; }
 
 		inline bool isEnabled() const { return m_enabled; }
 		inline bool isSelected() const { return m_selected; }

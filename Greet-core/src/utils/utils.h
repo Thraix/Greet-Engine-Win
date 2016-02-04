@@ -185,4 +185,8 @@ namespace greet {namespace utils{
 			return result;
 		}
 	}
+	inline std::string byteToHex(byte b)
+	{
+		return std::string(&dec16_to_hex(b/16))+std::string(&dec16_to_hex(b%16));
+	}
 }}
