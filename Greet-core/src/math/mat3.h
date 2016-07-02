@@ -1,6 +1,9 @@
+#pragma once
+
 #include "vec2.h"
 #include "vec3.h"
 #include "math_func.h"
+#include <string.h>
 
 namespace greet{ namespace math{
 	struct mat3
@@ -8,7 +11,10 @@ namespace greet{ namespace math{
 		union
 		{
 			float elements[3 * 3];
-			vec3 columns[3];
+			struct
+			{
+				vec3 columns[3];
+			};
 		};
 
 		mat3();

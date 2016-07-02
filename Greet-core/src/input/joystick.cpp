@@ -26,7 +26,7 @@ namespace greet { namespace input {
 				clearInput();
 				return;
 			}
-			GREET_ASSERT((count == GLFW_JOYSTICK_AXES), "JOYSTICK", "CONTROLLER NOT SUPPORTED. INVALID AMOUNT OF AXES, found ", count, ", wanted ", GLFW_JOYSTICK_AXES, ".");
+			ASSERT((count == GLFW_JOYSTICK_AXES), "JOYSTICK", "CONTROLLER NOT SUPPORTED. INVALID AMOUNT OF AXES, found ", count, ", wanted ", GLFW_JOYSTICK_AXES, ".");
 			m_leftStick = math::vec2(axes[0], axes[1]);
 			if (m_leftStick.length()<m_calibrateLeft)
 				m_leftStick = math::vec2(0, 0);
@@ -42,7 +42,7 @@ namespace greet { namespace input {
 				clearInput();
 				return;
 			}
-			GREET_ASSERT((count == GLFW_JOYSTICK_BUTTONS), "JOYSTICK", "CONTROLLER NOT SUPPORTED. INVALID AMOUNT OF BUTTONS, found ", count, ", wanted ", GLFW_JOYSTICK_BUTTONS, ".");
+			ASSERT((count == GLFW_JOYSTICK_BUTTONS), "JOYSTICK", "CONTROLLER NOT SUPPORTED. INVALID AMOUNT OF BUTTONS, found ", count, ", wanted ", GLFW_JOYSTICK_BUTTONS, ".");
 
 			for (int i = 0; i < GLFW_JOYSTICK_BUTTONS;i++)
 			{
@@ -86,7 +86,7 @@ namespace greet { namespace input {
 	{
 		if (buttoncode >= GLFW_JOYSTICK_BUTTONS)
 		{
-			GREET_ERROR("JOYSTICK", "Joystick button could not be found: ", buttoncode);
+			LOG_ERROR("JOYSTICK", "Joystick button could not be found: ", buttoncode);
 			return false;
 		}
 		return true;

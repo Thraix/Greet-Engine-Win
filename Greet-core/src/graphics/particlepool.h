@@ -1,5 +1,5 @@
 #pragma once
-
+#if 0
 #include "particle.h"
 #include <list>
 
@@ -21,3 +21,5 @@ namespace greet { namespace graphics{
 		uint freeParticles() const;
 	};
 }}
+
+#endif

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <math\maths.h>
+#include "mat3.h"
 
 namespace greet { namespace math{
 	class Transform
@@ -17,9 +17,9 @@ namespace greet { namespace math{
 		}
 
 		Transform(mat3 matrix)
-			: m_matrix(matrix)
-		{
 
+		{
+			m_matrix = matrix;
 		}
 
 		Transform& init(float diagonal = 1)

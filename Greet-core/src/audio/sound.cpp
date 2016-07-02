@@ -1,20 +1,21 @@
 #include "sound.h"
-#include <managers\soundmanager.h>
+
+#include "soundmanager.h"
 
 namespace greet { namespace audio{
 	
 	Sound::Sound(const std::string& filename, const std::string& name, std::string channelName)
-		: m_name(name), m_channel(managers::ChannelManager::get(channelName)), m_playing(false)
+		: m_name(name), m_channel(ChannelManager::get(channelName)), m_playing(false)
 	{
-		std::vector<std::string> split = utils::split_string(filename,'.');
+		std::vector<std::string> split = utils::split_string(filename,".");
 		if (split.size() < 2){
-			GREET_ERROR("SOUND","Invalid file name: ", filename.c_str());
+			LOG_ERROR("SOUND","Invalid file name: ", filename.c_str());
 			return;
 		}
 		m_sound = gau_load_sound_file(("res/sounds/" + filename).c_str(), split.back().c_str());
 		if (m_sound == nullptr)
 		{
-			GREET_ERROR("SOUND", "Could not load file: ", filename.c_str());
+			LOG_ERROR("SOUND", "Could not load file: ", filename.c_str());
 			return;
 		}
 
@@ -34,7 +35,7 @@ namespace greet { namespace audio{
 	void Sound::play()
 	{ 
 		gc_int32 quit = 0;
-		m_handle = gau_create_handle_sound(managers::SoundManager::m_mixer, m_sound, &destroy_on_finish, &quit, NULL);
+		m_handle = gau_create_handle_sound(SoundManager::m_mixer, m_sound, &destroy_on_finish, &quit, NULL);
 		m_handle->sound = this;
 		refreshChannel();
 		m_playing = true;
@@ -44,7 +45,7 @@ namespace greet { namespace audio{
 	void Sound::loop()
 	{
 		gc_int32 quit = 0;
-		m_handle = gau_create_handle_sound(managers::SoundManager::m_mixer, m_sound, &loop_on_finish, &quit, NULL);
+		m_handle = gau_create_handle_sound(SoundManager::m_mixer, m_sound, &loop_on_finish, &quit, NULL);
 		m_handle->sound = this;
 		m_playing = false;
 		refreshChannel();
@@ -89,13 +90,13 @@ namespace greet { namespace audio{
 		ga_handle_setParamf(m_handle, GA_HANDLE_PARAM_PAN, m_channel->getPan());
 	}
 
-	void destroy_on_finish(ga_Handle* in_handle, void* in_context)
+	void Sound::destroy_on_finish(ga_Handle* in_handle, void* in_context)
 	{
 		ga_handle_destroy(in_handle);
 		((Sound*)in_handle->sound)->stop();
 	}
 
-	void loop_on_finish(ga_Handle* in_handle, void* in_context)
+	void Sound::loop_on_finish(ga_Handle* in_handle, void* in_context)
 	{
 		Sound* sound = (Sound*)in_handle->sound;
 		sound->loop();

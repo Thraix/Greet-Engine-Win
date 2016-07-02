@@ -1,5 +1,4 @@
 #include "shader.h"
-#include <utils/log.h>
 #include "shaderfactory.h"
 namespace greet { namespace graphics {
 	Shader::Shader(const char *vertPath, const char *fragPath)
@@ -37,7 +36,7 @@ namespace greet { namespace graphics {
 			glGetShaderiv(vertex, GL_INFO_LOG_LENGTH, &length);
 			std::vector<char> error(length);
 			glGetShaderInfoLog(vertex, length, &length, &error[0]);
-			GREET_ERROR("SHADER","Failed to compile vertex Shader!\n", &error[0]);
+			LOG_ERROR("SHADER","Failed to compile vertex Shader!\n", &error[0]);
 			glDeleteShader(vertex);
 			return ShaderFactory::DefaultShader()->m_shaderID;
 		}
@@ -53,7 +52,13 @@ namespace greet { namespace graphics {
 			glGetShaderiv(fragment, GL_INFO_LOG_LENGTH, &length);
 			std::vector<char> error(length);
 			glGetShaderInfoLog(fragment, length, &length, &error[0]);
-			GREET_ERROR("SHADER","Failed to compile fragment Shader!\n", &error[0]);
+			LOG_ERROR("SHADER","Failed to compile fragment Shader!\n", &error[0]);
+			for (char c : error)
+			{
+				std::cout << c;
+			}
+			std::cout << std::endl;
+			std::cout << &error << std::endl;
 			glDeleteShader(fragment);
 			return ShaderFactory::DefaultShader()->m_shaderID;
 		}
@@ -73,6 +78,11 @@ namespace greet { namespace graphics {
 	GLuint Shader::getUniformLocation(const GLchar *name) const
 	{
 		return glGetUniformLocation(m_shaderID,name);
+	}
+
+	void Shader::setUniformBoolean(const GLchar *name, bool value) const
+	{
+		glUniform1f(getUniformLocation(name), value ? 1.0f : 0.0f);
 	}
 
 	void Shader::setUniform1f(const GLchar *name, float value) const
@@ -115,12 +125,17 @@ namespace greet { namespace graphics {
 		glUniformMatrix3fv(getUniformLocation(name), 1, GL_FALSE, value.elements);
 	}
 
+	void Shader::setUniformMat4(const GLchar *name, const math::mat4 &value) const
+	{
+		glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, value.elements);
+	}
+
 	void Shader::enable() const
 	{
 		glUseProgram(m_shaderID);
 	}
 
-	void Shader::disable() const
+	void Shader::disable()
 	{
 		glUseProgram(0);
 	}

@@ -10,12 +10,12 @@ namespace greet { namespace camera {
 		m_window->addResizeCallback(this);
 	}
 
-	Camera::~Camera()
-	{
-		for (std::vector<LayerIndex*>::iterator li = m_layers.begin();li != m_layers.end();++li)
+		Camera::~Camera()
 		{
-			delete (*li);
-		}
+			for (std::vector<LayerIndex*>::iterator li = m_layers.begin();li != m_layers.end();++li)
+			{
+				delete (*li);
+			}
 		m_layers.clear();
 	}
 
@@ -65,7 +65,7 @@ namespace greet { namespace camera {
 			l = m_layers[i];
 			if (l->index == layerIndex)
 			{
-				GREET_ERROR("CAMERA", "The given layer is already occupied. Consider removing or changing layer: ",layerIndex);
+				LOG_ERROR("CAMERA", "The given layer is already occupied. Consider removing or changing layer: ",layerIndex);
 				return;
 			}
 			if (l->index > layerIndex)
@@ -103,7 +103,7 @@ namespace greet { namespace camera {
 				return l->layer;
 			}
 		}
-		GREET_ERROR("CAMERA", "No such layer in camera: ", layerIndex);
+		LOG_ERROR("CAMERA", "No such layer in camera: ", layerIndex);
 		return NULL;
 	}
 
@@ -114,14 +114,14 @@ namespace greet { namespace camera {
 	// Inits the static camera
 	void Camera::initCamera(graphics::Window* window)
 	{
-		GREET_INFO("CAMERA", "Initializing camera.");
+		LOG_INFO("CAMERA", "Initializing camera.");
 		Camera::instance = new Camera(window);
 	}
 
 	// Destroys the static camera
 	void Camera::destroyCamera()
 	{
-		GREET_INFO("CAMERA", "Destroying camera.");
+		LOG_INFO("CAMERA", "Destroying camera.");
 		delete Camera::instance;
 	}
 

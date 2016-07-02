@@ -1,9 +1,9 @@
 #pragma once
 
-#include <greetgl.h>
+#include <internal/greetgl.h>
 #include "buffer.h"
 #include <vector>
-#include <greet_types.h>
+#include <internal/greet_types.h>
 
 namespace greet { namespace graphics {
 

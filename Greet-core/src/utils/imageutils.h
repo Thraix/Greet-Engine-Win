@@ -1,11 +1,33 @@
 #pragma once
 
-#include <utils/log.h>
-#include <FreeImage.h>
+#include <logging/logger.h>
+#include <internal/greetgl.h>
 #include <iostream>
-#include <greet_types.h>
+#include <internal/greet_types.h>
+#include <graphics/textures/imagefactory.h>
+#include <fstream>
 
 namespace greet {namespace utils{
+	
+	inline void printImage(BYTE* bits, uint width, uint height, uint bpp)
+	{
+		bpp = bpp >> 3;
+		for (uint y = 0;y<height;y++)
+		{
+			BYTE* pixel = (BYTE*)bits;
+			for (uint x = 0;x<width;x++)
+			{
+				std::string s = "pixel(" + utils::toString(x) + "," + utils::toString(y) + ")";
+				s += "(" + utils::toString((uint)pixel[FI_RGBA_RED]) + ",";
+				s += utils::toString((uint)pixel[FI_RGBA_GREEN]) + ",";
+				s += utils::toString((uint)pixel[FI_RGBA_BLUE]) + ")";
+				pixel += bpp;
+				LOG_INFO(s);
+			}
+			bits += bpp*width;
+		}
+	}
+
 	inline BYTE* loadImage(const char* filepath, uint* width, uint* height, uint* bpp)
 	{
 		FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
@@ -19,16 +41,16 @@ namespace greet {namespace utils{
 
 		if (fif == FIF_UNKNOWN)
 		{
-			GREET_ERROR("IMAGEUTILS","FreeImage file format is not supported: ", filepath);
-			return nullptr;
+			LOG_ERROR("IMAGEUTILS","FreeImage file format is not supported or file not exist:", filepath);
+			return graphics::ImageFactory::getBadFormatImage(width,height,bpp);
 		}
 
 		if (FreeImage_FIFSupportsReading(fif))
 			dib = FreeImage_Load(fif, filepath);
 		if (!dib)
 		{
-			GREET_ERROR("IMAGEUTILS", "FreeImage file Cannot be read: ", filepath);
-			return nullptr;
+			LOG_ERROR("IMAGEUTILS", "FreeImage file Cannot be read:", filepath);
+			return graphics::ImageFactory::getCantReadImage(width,height,bpp);
 		}
 
 
@@ -37,13 +59,33 @@ namespace greet {namespace utils{
 		*width = FreeImage_GetWidth(dib);
 		*height = FreeImage_GetHeight(dib);
 		*bpp = FreeImage_GetBPP(dib);
+		if (*bpp != 24 && *bpp != 32)
+		{
+			LOG_ERROR("IMAGEUTILS", "Bits per pixel is not valid (24 or 32):", filepath);
+			delete[] bits;
+			return graphics::ImageFactory::getBadBPPImage(width,height,bpp);
+		}
 
-		int size = *width* *height * *bpp / 8;
+		//printImage(bits,*width, *height, *bpp);
+		//return graphics::ImageFactory::getBadBPPImage(width, height, bpp);
+
+		int size = (*width) * (*height) * (*bpp >> 3);
 		BYTE* result = new BYTE[size];
-
 		memcpy(result,bits,size);
-
 		FreeImage_Unload(dib);
+		//delete[] bits;
 		return result;
+	}
+
+	inline void saveImageBytes(const char* filepath, const char* output)
+	{
+		uint width,height,bpp;
+		BYTE* bits = loadImage(filepath,&width,&height,&bpp);
+
+		std::ofstream fout;
+		fout.open(output, std::ios_base::binary | std::ios_base::out);
+		fout.write((char*) &bits, width*height*bpp/8);
+
+		fout.close();
 	}
 }}

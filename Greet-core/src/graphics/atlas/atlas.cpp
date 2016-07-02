@@ -4,9 +4,9 @@ namespace greet { namespace graphics{
 	Atlas::Atlas(std::string atlasName, uint atlasSize, uint textureSize)
 		:m_name(atlasName), m_atlasSize(atlasSize), m_textureSize(textureSize), m_texturesSide(m_atlasSize / m_textureSize), m_textures((m_atlasSize / m_textureSize)*(m_atlasSize / m_textureSize))
 	{
-		GREET_ASSERT(m_atlasSize > m_textureSize, "ATLAS", "Atlas size must be greater than the textures sizes: ", m_name.c_str());
-		GREET_ASSERT(!(m_atlasSize == 0) && !(m_atlasSize & (m_atlasSize - 1)),"ATLAS", "Atlas size must be a power of two: ", m_name.c_str());
-		GREET_ASSERT(!(m_textureSize == 0) && !(m_textureSize & (m_textureSize - 1)), "ATLAS", "Texture size must be a power of two: ", m_name.c_str());
+		ASSERT(m_atlasSize > m_textureSize, "ATLAS", "Atlas size must be greater than the textures sizes: ", m_name.c_str());
+		ASSERT(!(m_atlasSize == 0) && !(m_atlasSize & (m_atlasSize - 1)),"ATLAS", "Atlas size must be a power of two: ", m_name.c_str());
+		ASSERT(!(m_textureSize == 0) && !(m_textureSize & (m_textureSize - 1)), "ATLAS", "Texture size must be a power of two: ", m_name.c_str());
 		uint bits = m_atlasSize * m_atlasSize * 4;
 
 		m_bits = new BYTE[bits];
@@ -52,7 +52,7 @@ namespace greet { namespace graphics{
 		uint textures = m_atlasSize / m_textureSize;
 		if (m_textureNames.size() >= textures*textures)
 		{
-			GREET_ERROR("ATLAS","There is no more room in the Atlas. Increase size or create a new one. ", m_name.c_str());
+			LOG_ERROR("ATLAS","There is no more room in the Atlas. Increase size or create a new one. ", m_name.c_str());
 			return false;
 		}
 		uint width;
@@ -61,7 +61,7 @@ namespace greet { namespace graphics{
 		BYTE* bits = utils::loadImage(filePath.c_str(), &width, &height,&bpp);
 		if (width != m_textureSize || height != m_textureSize)
 		{
-			GREET_ERROR("ATLAS","The given textures size is not valid: ",name.c_str()," (",width,",",height,")");
+			LOG_ERROR("ATLAS","The given textures size is not valid: ",name.c_str()," (",width,",",height,")");
 			return false;
 		}
 		addTexture(bits,bpp,name);
@@ -89,7 +89,7 @@ namespace greet { namespace graphics{
 		}
 		if (x == m_texturesSide || y == m_texturesSide)
 		{
-			GREET_ERROR("ATLAS", "There is no more room in the Atlas. Increase size or create a new one. ", m_name.c_str());
+			LOG_ERROR("ATLAS", "There is no more room in the Atlas. Increase size or create a new one. ", m_name.c_str());
 			return;
 		}
 
@@ -140,7 +140,7 @@ namespace greet { namespace graphics{
 				return new Sprite(m_texID, m_textureSize*texSize.x, m_textureSize*texSize.y, spritePos, spriteSize);
 			}
 		}
-		GREET_ERROR("ATLAS", "No texture found in Atlas: ", m_name.c_str(), "(", sheetName.c_str(), ")");
+		LOG_ERROR("ATLAS", "No texture found in Atlas: ", m_name.c_str(), "(", sheetName.c_str(), ")");
 		return new Sprite(m_texID, m_atlasSize, m_atlasSize, math::vec2(0, 0), math::vec2(1, 1));
 	}
 

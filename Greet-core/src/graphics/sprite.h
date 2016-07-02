@@ -1,7 +1,7 @@
 #pragma once
 
-#include <greet_types.h>
-#include <math\maths.h>
+#include <internal/greet_types.h>
+#include <math/maths.h>
 
 namespace greet{ namespace graphics{
 	class Sprite
@@ -26,6 +26,8 @@ namespace greet{ namespace graphics{
 
 		}
 		
+		virtual ~Sprite() {}
+
 		virtual bool update(float timeElapsed) { return false; }
 
 		inline uint getTextureID() const { return m_texID; }

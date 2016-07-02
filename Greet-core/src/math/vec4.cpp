@@ -64,12 +64,6 @@ namespace greet{
 		return x == other.x && y == other.y && z == other.z && w == other.w;
 	}
 
-	std::ostream& operator<<(std::ostream& stream, const vec4 &vec)
-	{
-		stream << "vec4(" << vec.x << ", " << vec.y << ", " << vec.z << ", " << vec.w << ")";
-		return stream;
-	}
-
 	vec4& operator+(vec4 first, const vec4 &second)
 	{
 		return first.add(second);

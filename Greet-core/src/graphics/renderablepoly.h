@@ -1,3 +1,5 @@
+#pragma once
+
 #include "renderable.h"
 
 
@@ -19,6 +21,11 @@ namespace greet { namespace graphics {
 
 		}
 
+		~RenderablePoly()
+		{
+			delete[] m_vertices;
+		}
+
 		void setVertices(math::vec2* vertices, uint vertexCount)
 		{
 			m_vertices = vertices;
@@ -36,8 +43,13 @@ namespace greet { namespace graphics {
 			return true;
 		}
 
+		void setPosition(const math::vec2& position) override { m_position = position; }
 		inline const math::vec2& getPosition() const { return m_position; }
-		inline const uint getColor() const { return m_color; }
+		void setColor(uint color) override { m_color = color; }
+		inline uint getColor() const override { return m_color; }
+		void setSize(const math::vec2& size) override { }
+		inline const math::vec2& getSize() const override { return math::vec2(1,1);}
+
 		inline const math::vec2* getVertices() const { return m_vertices; }
 		inline const uint getVertexCount() const { return m_vertexCount; }
 	};

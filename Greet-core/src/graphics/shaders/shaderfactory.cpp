@@ -11,7 +11,7 @@ namespace greet {namespace graphics{namespace ShaderFactory {
 		"layout(location = 2) in float texID;\n"
 		"layout(location = 3) in vec4 color;\n"
 		"\n"
-		"uniform mat3 pr_matrix;\n"
+		"uniform mat3 pr_matrix = mat3(1.0);\n"
 		"uniform mat3 ml_matrix = mat3(1.0);\n"
 		"\n"
 		"out DATA\n"
@@ -20,7 +20,6 @@ namespace greet {namespace graphics{namespace ShaderFactory {
 		"	float texID;\n"
 		"	vec2 texCoord;\n"
 		"	vec4 color;\n"
-		"	vec2 coord;\n"
 		"} vs_out;\n"
 		"\n"
 		"void main()\n"
@@ -58,10 +57,6 @@ namespace greet {namespace graphics{namespace ShaderFactory {
 		"		color *= texture(textures[tid], fs_in.texCoord);\n"
 		"		//color = vec4(fs_in.texCoord.xy,0.0,1.0);\n"
 		"	}\n"
-		"	//else\n"
-		"	//{\n"
-		"	//	color = vec4(1.0,1.0,1.0,1.0);\n"
-		"	//}\n"
 		"}\n"
 	};
 
@@ -83,7 +78,7 @@ namespace greet {namespace graphics{namespace ShaderFactory {
 		"\n"
 		"void main()\n"
 		"{\n"
-		"	color = vec4(fs_in.coord,1.0,1.0);"
+		"	color = vec4(fs_in.texCoord.xy,0.0,1.0);\n"
 		"}\n"
 	};
 

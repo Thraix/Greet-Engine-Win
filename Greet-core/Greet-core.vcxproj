@@ -40,7 +40,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)libraries\FreeImage\include;$(SolutionDir)libraries\GLFW\include;$(SolutionDir)libraries\GLEW\include;$(SolutionDir)libraries\libogg\include;$(SolutionDir)libraries\libvorbis\include;$(SolutionDir)libraries\OpenAL\include;$(SolutionDir)libraries\Box2D\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)libraries\freetype\include;$(SolutionDir)libraries\FreeImage\include;$(SolutionDir)libraries\GLFW\include;$(SolutionDir)libraries\GLEW\include;$(SolutionDir)libraries\libogg\include;$(SolutionDir)libraries\gorilla\include;$(SolutionDir)libraries\libvorbis\include;$(SolutionDir)libraries\OpenAL\include;$(SolutionDir)libraries\Box2D\include;$(VC_IncludePath);$(ProjectDir)ext\gorilla;$(ProjectDir)ext\freetype-gl;$(ProjectDir)ext\freetype\include;$(WindowsSDK_IncludePath);$(ProjectDir)ext/freetype/include;$(SolutionDir)freetype/include</IncludePath>
     <LibraryPath>$(SolutionDir)libraries\GLFW\lib-vc2013;$(SolutionDir)libraries\FreeImage\lib;$(SolutionDir)libraries\GLEW\lib;$(SolutionDir)libraries\OpenAL\libs\Win32;$(SolutionDir)libraries\libogg\bin;$(SolutionDir)libraries\libvorbis\bin;$(SolutionDir)libraries\Box2D\binDebug</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\$(Configuration)\Intermediate\</IntDir>
@@ -48,7 +48,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\$(Configuration)\Intermediate\</IntDir>
-    <IncludePath>$(SolutionDir)libraries\FreeImage\include;$(SolutionDir)libraries\GLFW\include;$(SolutionDir)libraries\GLEW\include;$(SolutionDir)libraries\libogg\include;$(SolutionDir)libraries\libvorbis\include;$(SolutionDir)libraries\OpenAL\include;$(SolutionDir)libraries\Box2D\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)libraries\FreeImage\include;$(SolutionDir)libraries\GLFW\include;$(SolutionDir)libraries\GLEW\include;$(SolutionDir)libraries\libogg\include;$(SolutionDir)libraries\gorilla\include;$(SolutionDir)libraries\libvorbis\include;$(SolutionDir)libraries\OpenAL\include;$(SolutionDir)libraries\Box2D\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)ext/freetype/include;$(ProjectDir)ext\gorilla;$(SolutionDir)freetype/include;$(SolutionDir)libraries\freetype\include</IncludePath>
     <LibraryPath>$(SolutionDir)libraries\GLFW\lib-vc2013;$(SolutionDir)libraries\FreeImage\lib;$(SolutionDir)libraries\GLEW\lib;$(SolutionDir)libraries\OpenAL\libs\Win32;$(SolutionDir)libraries\libogg\bin;$(SolutionDir)libraries\libvorbis\bin;$(SolutionDir)libraries\Box2D\bin</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -56,7 +56,7 @@
       <WarningLevel>Level2</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;FT2_BUILD_LIBRARY;WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <AdditionalIncludeDirectories>$(SolutionDir)Greet-core\src\</AdditionalIncludeDirectories>
     </ClCompile>
@@ -88,93 +88,138 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ext\gorilla-audio\common\gc_common.c" />
-    <ClCompile Include="ext\gorilla-audio\common\gc_thread.c" />
-    <ClCompile Include="ext\gorilla-audio\devices\ga_openal.c" />
-    <ClCompile Include="ext\gorilla-audio\ga.c" />
-    <ClCompile Include="ext\gorilla-audio\gau.c" />
-    <ClCompile Include="ext\gorilla-audio\ga_stream.c" />
     <ClCompile Include="src\audio\channel.cpp" />
+    <ClCompile Include="src\audio\channelmanager.cpp" />
     <ClCompile Include="src\audio\sound.cpp" />
+    <ClCompile Include="src\audio\soundmanager.cpp" />
+    <ClCompile Include="src\camera\camera.cpp" />
     <ClCompile Include="src\entity\entity.cpp" />
+    <ClCompile Include="src\event\event.cpp" />
     <ClCompile Include="src\gamestates\gamestate.cpp" />
     <ClCompile Include="src\graphics\animation.cpp" />
     <ClCompile Include="src\graphics\atlas\atlas.cpp" />
-    <ClCompile Include="src\graphics\batchrenderer.cpp" />
-    <ClCompile Include="src\graphics\batchrenderersquare.cpp" />
+    <ClCompile Include="src\graphics\atlas\atlasmanager.cpp" />
+    <ClCompile Include="src\graphics\gui\slider.cpp" />
+    <ClCompile Include="src\graphics\models\camera.cpp" />
+    <ClCompile Include="src\graphics\models\meshfactory.cpp" />
+    <ClCompile Include="src\graphics\renderers\batchrenderer.cpp" />
     <ClCompile Include="src\graphics\buffers\batchindexbuffer.cpp" />
     <ClCompile Include="src\graphics\buffers\buffer.cpp" />
     <ClCompile Include="src\graphics\buffers\indexbuffer.cpp" />
     <ClCompile Include="src\graphics\buffers\vertexarray.cpp" />
-    <ClCompile Include="src\graphics\font.cpp" />
-    <ClCompile Include="src\graphics\guis\button.cpp" />
-    <ClCompile Include="src\graphics\guis\gui.cpp" />
-    <ClCompile Include="src\graphics\guis\panel.cpp" />
-    <ClCompile Include="src\graphics\guis\layout.cpp" />
-    <ClCompile Include="src\graphics\guis\textview.cpp" />
-    <ClCompile Include="src\graphics\label.cpp" />
+    <ClCompile Include="src\graphics\fonts\font.cpp" />
+    <ClCompile Include="src\graphics\fonts\fontmanager.cpp" />
+    <ClCompile Include="src\graphics\framebufferobject.cpp" />
+    <ClCompile Include="src\graphics\gui\border.cpp" />
+    <ClCompile Include="src\graphics\gui\frame.cpp" />
+    <ClCompile Include="src\graphics\gui\gui.cpp" />
+    <ClCompile Include="src\graphics\gui\label.cpp" />
+    <ClCompile Include="src\graphics\gui\panel.cpp" />
+    <ClCompile Include="src\graphics\layers\box2dlayer.cpp" />
     <ClCompile Include="src\graphics\layers\group.cpp" />
     <ClCompile Include="src\graphics\layers\layer.cpp" />
+    <ClCompile Include="src\graphics\layers\layer3d.cpp" />
+    <ClCompile Include="src\graphics\models\entitymodel.cpp" />
+    <ClCompile Include="src\graphics\models\modelformat.cpp" />
+    <ClCompile Include="src\graphics\models\material.cpp" />
+    <ClCompile Include="src\graphics\models\materialmodel.cpp" />
+    <ClCompile Include="src\graphics\models\mesh.cpp" />
+    <ClCompile Include="src\graphics\particle.cpp" />
     <ClCompile Include="src\graphics\particlepool.cpp" />
+    <ClCompile Include="src\graphics\renderers\batchrenderer3d.cpp" />
+    <ClCompile Include="src\graphics\renderers\renderer3d.cpp" />
     <ClCompile Include="src\graphics\shaders\shader.cpp" />
     <ClCompile Include="src\graphics\shaders\shaderfactory.cpp" />
-    <ClCompile Include="src\input\joystick.cpp" />
-    <ClCompile Include="src\managers\atlasmanager.cpp" />
-    <ClCompile Include="src\managers\channelmanager.cpp" />
-    <ClCompile Include="src\managers\gamestatemanager.cpp" />
-    <ClCompile Include="src\managers\soundmanager.cpp" />
-    <ClCompile Include="src\managers\fontmanager.cpp" />
-    <ClCompile Include="src\graphics\particle.cpp" />
-    <ClCompile Include="src\graphics\texture.cpp" />
+    <ClCompile Include="src\graphics\textures\imagefactory.cpp" />
+    <ClCompile Include="src\graphics\textures\texture.cpp" />
+    <ClCompile Include="src\graphics\textures\texturemanager.cpp" />
     <ClCompile Include="src\graphics\window.cpp" />
-    <ClCompile Include="src\managers\texturemanager.cpp" />
+    <ClCompile Include="src\input\joystick.cpp" />
+    <ClCompile Include="src\internal\app.cpp" />
+    <ClCompile Include="src\managers\gamestatemanager.cpp" />
     <ClCompile Include="src\math\mat3.cpp" />
+    <ClCompile Include="src\math\mat4.cpp" />
+    <ClCompile Include="src\math\quaternion.cpp" />
     <ClCompile Include="src\math\vec2.cpp" />
     <ClCompile Include="src\math\vec3.cpp" />
     <ClCompile Include="src\math\vec4.cpp" />
     <ClCompile Include="src\utils\uuid.cpp" />
-    <ClCompile Include="src\camera\camera.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ext\gorilla-audio\common\gc_common.h" />
-    <ClInclude Include="ext\gorilla-audio\common\gc_thread.h" />
-    <ClInclude Include="ext\gorilla-audio\common\gc_types.h" />
-    <ClInclude Include="ext\gorilla-audio\devices\ga_openal.h" />
-    <ClInclude Include="ext\gorilla-audio\ga.h" />
-    <ClInclude Include="ext\gorilla-audio\gau.h" />
-    <ClInclude Include="ext\gorilla-audio\ga_internal.h" />
     <ClInclude Include="src\audio\channel.h" />
+    <ClInclude Include="src\audio\channelmanager.h" />
     <ClInclude Include="src\audio\sound.h" />
+    <ClInclude Include="src\audio\soundmanager.h" />
+    <ClInclude Include="src\camera\camera.h" />
     <ClInclude Include="src\entity\entity.h" />
+    <ClInclude Include="src\event\event.h" />
+    <ClInclude Include="src\event\mouseevent.h" />
     <ClInclude Include="src\gamestates\gamestate.h" />
     <ClInclude Include="src\graphics\animation.h" />
     <ClInclude Include="src\graphics\atlas\atlas.h" />
-    <ClInclude Include="src\graphics\batchrenderer.h" />
+    <ClInclude Include="src\graphics\atlas\atlasmanager.h" />
+    <ClInclude Include="src\graphics\models\meshfactory.h" />
+    <ClInclude Include="src\graphics\renderers\batchrenderer.h" />
+    <ClInclude Include="src\graphics\renderers\batchrenderer3d.h" />
     <ClInclude Include="src\graphics\batchrenderersquare.h" />
-    <ClInclude Include="src\graphics\layers\box2dlayer.h" />
     <ClInclude Include="src\graphics\buffers\batchindexbuffer.h" />
     <ClInclude Include="src\graphics\buffers\buffer.h" />
     <ClInclude Include="src\graphics\buffers\indexbuffer.h" />
     <ClInclude Include="src\graphics\buffers\vertexarray.h" />
     <ClInclude Include="src\graphics\font.h" />
+    <ClInclude Include="src\graphics\fonts\font.h" />
+    <ClInclude Include="src\graphics\fonts\fontmanager.h" />
+    <ClInclude Include="src\graphics\framebufferobject.h" />
     <ClInclude Include="src\graphics\guis\button.h" />
     <ClInclude Include="src\graphics\guis\gui.h" />
     <ClInclude Include="src\graphics\guis\panel.h" />
     <ClInclude Include="src\graphics\guis\text.h" />
     <ClInclude Include="src\graphics\guis\layout.h" />
     <ClInclude Include="src\graphics\guis\textview.h" />
+    <ClInclude Include="src\graphics\gui\border.h" />
+    <ClInclude Include="src\graphics\gui\frame.h" />
+    <ClInclude Include="src\graphics\gui\gui.h" />
+    <ClInclude Include="src\graphics\gui\label.h" />
+    <ClInclude Include="src\graphics\gui\panel.h" />
+    <ClInclude Include="src\graphics\layers\box2dlayer.h" />
+    <ClInclude Include="src\graphics\layers\group.h" />
+    <ClInclude Include="src\graphics\layers\layer.h" />
+    <ClInclude Include="src\graphics\layers\layer3d.h" />
+    <ClInclude Include="src\graphics\models\camera.h" />
+    <ClInclude Include="src\graphics\models\entitymodel.h" />
+    <ClInclude Include="src\graphics\models\modelformat.h" />
+    <ClInclude Include="src\graphics\models\Light.h" />
+    <ClInclude Include="src\graphics\models\Material.h" />
+    <ClInclude Include="src\graphics\models\MaterialModel.h" />
+    <ClInclude Include="src\graphics\models\mesh.h" />
+    <ClInclude Include="src\graphics\particle.h" />
+    <ClInclude Include="src\graphics\particlepool.h" />
     <ClInclude Include="src\graphics\renderable.h" />
+    <ClInclude Include="src\graphics\renderable2d.h" />
     <ClInclude Include="src\graphics\renderable4poly.h" />
     <ClInclude Include="src\graphics\renderablepoly.h" />
+    <ClInclude Include="src\graphics\renderers\renderer.h" />
+    <ClInclude Include="src\graphics\renderers\renderer2d.h" />
+    <ClInclude Include="src\graphics\renderers\renderer3d.h" />
+    <ClInclude Include="src\graphics\shaders\shader.h" />
     <ClInclude Include="src\graphics\shaders\shaderfactory.h" />
-    <ClInclude Include="src\greetgl.h" />
-    <ClInclude Include="src\greet_types.h" />
+    <ClInclude Include="src\graphics\gui\slider.h" />
+    <ClInclude Include="src\graphics\sprite.h" />
+    <ClInclude Include="src\graphics\textures\imagefactory.h" />
+    <ClInclude Include="src\graphics\textures\texture.h" />
+    <ClInclude Include="src\graphics\textures\texturemanager.h" />
+    <ClInclude Include="src\graphics\window.h" />
     <ClInclude Include="src\input\joystick.h" />
+    <ClInclude Include="src\internal\app.h" />
+    <ClInclude Include="src\internal\greetgl.h" />
+    <ClInclude Include="src\internal\greet_types.h" />
     <ClInclude Include="src\listeners\joystickstate.h" />
     <ClInclude Include="src\listeners\listeners.h" />
     <ClInclude Include="src\listeners\windowfocus.h" />
     <ClInclude Include="src\listeners\windowlistener.h" />
     <ClInclude Include="src\listeners\windowresize.h" />
+    <ClInclude Include="src\logging\loggable.h" />
+    <ClInclude Include="src\logging\logger.h" />
     <ClInclude Include="src\managers\atlasmanager.h" />
     <ClInclude Include="src\managers\channelmanager.h" />
     <ClInclude Include="src\managers\gamestatemanager.h" />
@@ -182,38 +227,34 @@
     <ClInclude Include="src\managers\fontmanager.h" />
     <ClInclude Include="src\graphics\glyph.h" />
     <ClInclude Include="src\graphics\label.h" />
-    <ClInclude Include="src\graphics\layers\group.h" />
-    <ClInclude Include="src\graphics\layers\layer.h" />
-    <ClInclude Include="src\graphics\particle.h" />
-    <ClInclude Include="src\graphics\particlepool.h" />
-    <ClInclude Include="src\graphics\renderable2d.h" />
     <ClInclude Include="src\graphics\renderableglyph.h" />
-    <ClInclude Include="src\graphics\renderer2d.h" />
-    <ClInclude Include="src\graphics\shaders\shader.h" />
-    <ClInclude Include="src\graphics\sprite.h" />
     <ClInclude Include="src\graphics\texture.h" />
-    <ClInclude Include="src\graphics\window.h" />
-    <ClInclude Include="src\greet.h" />
     <ClInclude Include="src\managers\texturemanager.h" />
     <ClInclude Include="src\math\mat3.h" />
+    <ClInclude Include="src\math\mat4.h" />
     <ClInclude Include="src\math\maths.h" />
     <ClInclude Include="src\math\math_func.h" />
+    <ClInclude Include="src\math\quaternion.h" />
     <ClInclude Include="src\math\transform.h" />
     <ClInclude Include="src\math\vec2.h" />
     <ClInclude Include="src\math\vec3.h" />
     <ClInclude Include="src\math\vec4.h" />
+    <ClInclude Include="src\utils\colorutils.h" />
     <ClInclude Include="src\utils\fileutils.h" />
+    <ClInclude Include="src\utils\imageutils.h" />
     <ClInclude Include="src\utils\log.h" />
+    <ClInclude Include="src\utils\logutils.h" />
+    <ClInclude Include="src\utils\objutils.h" />
     <ClInclude Include="src\utils\physics.h" />
     <ClInclude Include="src\utils\stringutils.h" />
-    <ClInclude Include="src\utils\utils.h" />
-    <ClInclude Include="src\utils\imageutils.h" />
     <ClInclude Include="src\utils\timer.h" />
+    <ClInclude Include="src\utils\utils.h" />
     <ClInclude Include="src\utils\uuid.h" />
-    <ClInclude Include="src\camera\camera.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\GreetWorkspace\GreetEngine\greet-core\src\graphics\textures\frame.bin" />
     <None Include="..\Performance4.psess" />
+    <None Include="src\graphics\textures\frame.bin" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

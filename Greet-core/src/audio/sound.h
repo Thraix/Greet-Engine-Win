@@ -1,12 +1,12 @@
 #pragma once
 
 #include <string>
-#include <utils/log.h>
+#include <logging/logger.h>
+#include "channelmanager.h"
 #include "channel.h"
-#include <managers/channelmanager.h>
 
-#include "../../ext/gorilla-audio/ga.h"
-#include "../../ext/gorilla-audio/gau.h"
+#include <ga.h>
+#include <gau.h>
 
 namespace greet{ namespace audio{
 
@@ -35,7 +35,7 @@ namespace greet{ namespace audio{
 		inline const std::string& getName() const { return m_name; }
 		inline const bool isPlaying() const { return m_playing; }
 
-		friend void destroy_on_finish(ga_Handle* in_handle, void* in_context);
-		friend void loop_on_finish(ga_Handle* in_handle, void* in_context);
+		static void destroy_on_finish(ga_Handle* in_handle, void* in_context);
+		static void loop_on_finish(ga_Handle* in_handle, void* in_context);
 	};
 }}

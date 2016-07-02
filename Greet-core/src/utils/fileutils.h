@@ -1,14 +1,34 @@
 #pragma once
 
+#include <stdio.h>  /* defines FILENAME_MAX */
+#ifdef _WIN32
+#include <direct.h>
+#define GetCurrentDir _getcwd
+#else
+#include <unistd.h>
+#define GetCurrentDir getcwd
+#endif
+
 #include <string>
-#include <utils/log.h>
+#include <logging/logger.h>
 namespace greet { namespace utils{
+
+	inline std::string print_working_directory()
+	{
+		char cCurrentPath[FILENAME_MAX];
+
+		if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath))){
+			LOG_ERROR("CANNOT PRINT WORKING DIRECTORY");
+		}
+		LOG_INFO(cCurrentPath);
+	}
+
 	inline std::string read_file(const char* filepath)
 	{
 		FILE *file = fopen(filepath, "rt");
 		if (!file)
 		{
-			GREET_ERROR("FILEUTILS","File could not be read: ", filepath);
+			LOG_ERROR("FILEUTILS","File could not be read: ", filepath);
 			return "";
 		}
 		fseek(file, 0, SEEK_END);
@@ -22,6 +42,7 @@ namespace greet { namespace utils{
 		delete[] data;
 		return result;
 	}
+
 	inline void write_file(const char* filepath, std::string write)
 	{
 		FILE *file = fopen(filepath,"wt");

@@ -36,6 +36,11 @@ namespace greet{
 		return x*vec.x + y*vec.y;
 	}
 
+	float vec2::cross(const math::vec2& vec) const
+	{
+		return x * vec.y - y * vec.x;
+	}
+
 	vec2& vec2::abs()
 	{
 		x = x < 0 ? -x : x;
@@ -147,12 +152,6 @@ namespace greet{
 		return x == other.x && y == other.y;
 	}
 
-	std::ostream& operator<<(std::ostream& stream, const vec2 &vec)
-	{
-		stream << "vec2(" << vec.x << ", " << vec.y << ")";
-		return stream;
-	}
-
 	vec2 operator+(const vec2& first, const vec2 &second)
 	{
 		return vec2(first.x,first.y).add(second);
@@ -191,11 +190,6 @@ namespace greet{
 	vec2 operator/(const vec2& first, const float c)
 	{
 		return vec2(first.x, first.y).divide(c);
-	}
-
-	vec2& vec2::operator=(const b2Vec2 &other)
-	{
-		return vec2(other.x,other.y);
 	}
 
 	vec2& vec2::operator+=(const vec2 &other)

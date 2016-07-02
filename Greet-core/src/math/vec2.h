@@ -1,16 +1,21 @@
 #pragma once
 
-#define _USE_MATH_DEFINES
+#ifndef _USE_MATH_DEFINES
+	#define _USE_MATH_DEFINES
+#endif
 
 #include <iostream>
-#include <Box2D\Common\b2Math.h>
+#include <Box2D/Common/b2Math.h>
 #include <math.h>
+#include <logging/loggable.h>
+#include <utils/logutils.h>
 
-namespace greet{
-	namespace math{
+namespace greet{ namespace math{
 	
-	struct vec2
+	//struct vec2
+	class vec2
 	{
+	public:
 		float x, y;
 		vec2();
 		vec2(float x, float y);
@@ -19,6 +24,7 @@ namespace greet{
 		float length();
 		float lengthSQ();
 		float dot(const math::vec2& vec) const;
+		float cross(const math::vec2& vec) const;
 		vec2& abs();
 		vec2& projected(const math::vec2& vec);
 		vec2& normalize();
@@ -37,8 +43,6 @@ namespace greet{
 
 		bool compare(const vec2& other);
 
-		friend std::ostream& operator<<(std::ostream& stream, const vec2 &vec);
-
 		friend vec2 operator+(const vec2& first, const vec2 &second);
 		friend vec2 operator-(const vec2& first, const vec2 &second);
 		friend vec2 operator*(const vec2& first, const vec2 &second);
@@ -49,8 +53,6 @@ namespace greet{
 		friend vec2 operator*(const vec2& first, const float c);
 		friend vec2 operator/(const vec2& first, const float c);
 		
-		vec2& operator=(const b2Vec2& other);
-
 		vec2& operator+=(const vec2 &other);
 		vec2& operator-=(const vec2 &other);
 		vec2& operator*=(const vec2 &other);
@@ -64,6 +66,8 @@ namespace greet{
 
 		bool operator!=(const vec2 &other);
 		bool operator==(const vec2 &other);
+
+		//std::string toString() const override { return "vec2("+utils::toString(x)+","+utils::toString(y)+")";}
 
 		inline float toRadians(float degrees)
 		{

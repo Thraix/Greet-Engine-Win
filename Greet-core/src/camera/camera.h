@@ -1,8 +1,10 @@
-#include <greet_types.h>
-#include <greetgl.h>
-#include <graphics\layers\layer.h>
-#include <graphics\window.h>
-#include <listeners\windowresize.h>
+#pragma once
+
+#include <internal/greet_types.h>
+#include <internal/greetgl.h>
+#include <graphics/layers/layer.h>
+#include <graphics/window.h>
+#include <listeners/windowresize.h>
 
 namespace greet { namespace camera {
 

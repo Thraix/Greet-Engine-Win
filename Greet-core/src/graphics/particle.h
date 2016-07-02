@@ -1,6 +1,6 @@
 #pragma once
 
-#include <math\vec2.h>
+#include <math/vec2.h>
 #include "renderable2d.h"
 
 namespace greet{ namespace graphics{

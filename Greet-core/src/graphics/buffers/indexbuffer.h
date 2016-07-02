@@ -1,6 +1,6 @@
 #pragma once
 
-#include <greetgl.h>
+#include <internal/greetgl.h>
 
 namespace greet {namespace graphics {
 	class IndexBuffer

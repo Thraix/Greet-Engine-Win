@@ -24,7 +24,7 @@ namespace greet { namespace graphics{
 			delete m_renderables[i];
 	}
 
-	void Layer::push(Renderable* renderable)
+	void Layer::add(Renderable* renderable)
 	{
 		m_renderables.push_back(renderable);
 	}

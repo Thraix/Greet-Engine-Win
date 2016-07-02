@@ -40,15 +40,15 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)libraries\FreeImage\include;$(SolutionDir)libraries\GLFW\include;$(SolutionDir)libraries\GLEW\include;$(SolutionDir)libraries\libogg\include;$(SolutionDir)libraries\libvorbis\include;$(SolutionDir)libraries\OpenAL\include;$(SolutionDir)libraries\Box2D\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)libraries\libogg\bin;$(SolutionDir)libraries\OpenAL\libs\Win32;$(SolutionDir)libraries\FreeImage\lib;$(SolutionDir)libraries\GLEW\lib;$(SolutionDir)libraries\GLFW\lib-vc2013;$(SolutionDir)libraries\libvorbis\bin;$(SolutionDir)libraries\Box2D\binDebug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)libraries\FreeImage\include;$(SolutionDir)libraries\GLFW\include;$(SolutionDir)libraries\GLEW\include;$(SolutionDir)libraries\libogg\include;$(SolutionDir)libraries\gorilla\include;$(SolutionDir)libraries\libvorbis\include;$(SolutionDir)libraries\OpenAL\include;$(SolutionDir)libraries\Box2D\include;$(SolutionDir)libraries\freetype\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)libraries\gorilla\bin;$(SolutionDir)libraries\libogg\bin;$(SolutionDir)libraries\OpenAL\libs\Win32;$(SolutionDir)libraries\FreeImage\lib;$(SolutionDir)libraries\GLEW\lib;$(SolutionDir)libraries\GLFW\lib;$(SolutionDir)bin\$(Configuration);$(SolutionDir)libraries\libvorbis\bin;$(SolutionDir)libraries\Box2D\binDebug;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\$(Configuration)\Intermediate\</IntDir>
     <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)libraries\FreeImage\include;$(SolutionDir)libraries\GLFW\include;$(SolutionDir)libraries\GLEW\include;$(SolutionDir)libraries\libogg\include;$(SolutionDir)libraries\libvorbis\include;$(SolutionDir)libraries\OpenAL\include;$(SolutionDir)libraries\Box2D\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)libraries\libogg\bin;$(SolutionDir)libraries\OpenAL\libs\Win32;$(SolutionDir)libraries\FreeImage\lib;$(SolutionDir)libraries\GLEW\lib;$(SolutionDir)libraries\GLFW\lib-vc2013;$(SolutionDir)libraries\libvorbis\bin;$(SolutionDir)libraries\Box2D\bin;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)libraries\FreeImage\include;$(SolutionDir)libraries\GLFW\include;$(SolutionDir)libraries\GLEW\include;$(SolutionDir)libraries\libogg\include;$(SolutionDir)libraries\gorilla\include;$(SolutionDir)libraries\libvorbis\include;$(SolutionDir)libraries\OpenAL\include;$(SolutionDir)libraries\Box2D\include;$(SolutionDir)libraries\freetype\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)libraries\gorilla\bin;$(SolutionDir)libraries\libogg\bin;$(SolutionDir)libraries\OpenAL\libs\Win32;$(SolutionDir)libraries\FreeImage\lib;$(SolutionDir)libraries\GLEW\lib;$(SolutionDir)libraries\GLFW\lib;$(SolutionDir)bin\$(Configuration);$(SolutionDir)libraries\libvorbis\bin;$(SolutionDir)libraries\Box2D\bin;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\$(Configuration)\Intermediate\</IntDir>
     <SourcePath>$(SourcePath)</SourcePath>
@@ -63,7 +63,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;FreeImage.lib;OpenAL32.lib;libogg.lib;libvorbis.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>FreeImage.lib;glfw3.lib;glew32s.lib;OpenGL32.lib;OpenAL32.lib;libogg.lib;libvorbis.lib;Box2D.lib;gorilla.lib;Greet-core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -84,22 +84,22 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;FreeImage.lib;OpenAL32.lib;libogg.lib;libvorbis.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;OpenAL32.lib;libogg.lib;libvorbis.lib;Box2D.lib;gorilla.lib;Greet-core.lib;FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Greet-core\Greet-core.vcxproj">
-      <Project>{1852e022-cded-44ba-bd38-27fc5ad916e6}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="res\textures\bittest.png" />
     <Image Include="res\textures\test.png" />
     <Image Include="res\textures\test2.png" />
     <Image Include="res\textures\test3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\freetype\freetype.vcxproj">
+      <Project>{ed17e7dc-e86a-47b7-a4b2-d3a09ec2e896}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,22 +1,24 @@
 #pragma once
 
-#include <math\maths.h>
-#include <Box2D\Box2D.h>
-#include <Box2D\Dynamics\b2Body.h>
-#include <Box2D\Dynamics\b2World.h>
-#include <graphics\renderable2d.h>
+#include <math/maths.h>
+#include <Box2D/Box2D.h>
+#include <Box2D/Dynamics/b2Body.h>
+#include <Box2D/Dynamics/b2World.h>
+#include <graphics/renderablepoly.h>
+#include <math/math_func.h>
 
 namespace greet { namespace entity{
-	class Entity : public graphics::Renderable2D
+
+	class Entity : public graphics::RenderablePoly
 	{
 	public:
 
 		math::vec2 m_size;
-		math::vec2 m_position;
 		b2Body* m_body;
 
 	public:
-		Entity(math::vec2 position,math::vec2 size, uint color, graphics::Sprite* sprite,b2World* world);
+		Entity(const math::vec2& position, const math::vec2& size, uint color, b2World* world);
+		virtual ~Entity();
 		bool update(float timeElapsed);
 		void createBody(math::vec2 pos, math::vec2 size, b2World* world);
 

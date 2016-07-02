@@ -1,9 +1,9 @@
 #pragma once
 
 #include <vector>
-#include <gamestates\gamestate.h>
-#include <utils/log.h>
-#include <greet_types.h>
+#include <gamestates/gamestate.h>
+#include <logging/logger.h>
+#include <internal/greet_types.h>
 
 namespace greet { namespace managers {
 	class GameStateManager

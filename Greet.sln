@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Greet-core", "Greet-core\Greet-core.vcxproj", "{1852E022-CDED-44BA-BD38-27FC5AD916E6}"
 EndProject
@@ -12,6 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Performance3.psess = Performance3.psess
 		Performance4.psess = Performance4.psess
 		Performance5.psess = Performance5.psess
+		Performance6.psess = Performance6.psess
+		Performance7.psess = Performance7.psess
+		Performance8.psess = Performance8.psess
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{A1F7F965-3BDD-40A9-B968-8AA3B69FCA2B}"
@@ -27,7 +30,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libogg", "libogg\libogg.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Box2D", "Box2D\Box2D.vcxproj", "{705A333B-AB44-4186-BEDA-2ECEED0708D1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "freetype", "freetype\freetype.vcxproj", "{ED17E7DC-E86A-47B7-A4B2-D3A09EC2E896}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gorilla", "gorilla\gorilla.vcxproj", "{3A021202-FEDD-42D4-AFAC-BCC9100ABADF}"
+EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		Debug|x64 = Debug|x64
@@ -75,6 +85,22 @@ Global
 		{705A333B-AB44-4186-BEDA-2ECEED0708D1}.Release|Win32.Build.0 = Release|Win32
 		{705A333B-AB44-4186-BEDA-2ECEED0708D1}.Release|x64.ActiveCfg = Release|x64
 		{705A333B-AB44-4186-BEDA-2ECEED0708D1}.Release|x64.Build.0 = Release|x64
+		{ED17E7DC-E86A-47B7-A4B2-D3A09EC2E896}.Debug|Win32.ActiveCfg = Debug|Win32
+		{ED17E7DC-E86A-47B7-A4B2-D3A09EC2E896}.Debug|Win32.Build.0 = Debug|Win32
+		{ED17E7DC-E86A-47B7-A4B2-D3A09EC2E896}.Debug|x64.ActiveCfg = Debug|x64
+		{ED17E7DC-E86A-47B7-A4B2-D3A09EC2E896}.Debug|x64.Build.0 = Debug|x64
+		{ED17E7DC-E86A-47B7-A4B2-D3A09EC2E896}.Release|Win32.ActiveCfg = Release|x64
+		{ED17E7DC-E86A-47B7-A4B2-D3A09EC2E896}.Release|Win32.Build.0 = Release|x64
+		{ED17E7DC-E86A-47B7-A4B2-D3A09EC2E896}.Release|x64.ActiveCfg = Release|x64
+		{ED17E7DC-E86A-47B7-A4B2-D3A09EC2E896}.Release|x64.Build.0 = Release|x64
+		{3A021202-FEDD-42D4-AFAC-BCC9100ABADF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3A021202-FEDD-42D4-AFAC-BCC9100ABADF}.Debug|Win32.Build.0 = Debug|Win32
+		{3A021202-FEDD-42D4-AFAC-BCC9100ABADF}.Debug|x64.ActiveCfg = Debug|x64
+		{3A021202-FEDD-42D4-AFAC-BCC9100ABADF}.Debug|x64.Build.0 = Debug|x64
+		{3A021202-FEDD-42D4-AFAC-BCC9100ABADF}.Release|Win32.ActiveCfg = Release|Win32
+		{3A021202-FEDD-42D4-AFAC-BCC9100ABADF}.Release|Win32.Build.0 = Release|Win32
+		{3A021202-FEDD-42D4-AFAC-BCC9100ABADF}.Release|x64.ActiveCfg = Release|x64
+		{3A021202-FEDD-42D4-AFAC-BCC9100ABADF}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

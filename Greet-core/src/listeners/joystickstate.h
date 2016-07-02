@@ -1,6 +1,6 @@
 #pragma once
 
-#include <greet_types.h>
+#include <internal/greet_types.h>
 
 namespace greet {
 	namespace listener {

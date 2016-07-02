@@ -1,31 +1,28 @@
 #pragma once
-
+#include <chrono>
 namespace greet { namespace utils{
 	class Timer
 	{
 	private:
-		LARGE_INTEGER m_start;
+		std::chrono::time_point<std::chrono::system_clock> m_start;
+		std::chrono::time_point<std::chrono::system_clock> m_end;
 		double m_frequency;
 	public:
 		Timer()
 		{
-			LARGE_INTEGER frequency;
-			QueryPerformanceFrequency(&frequency);
-			m_frequency = 1.0 / frequency.QuadPart;
-			QueryPerformanceCounter(&m_start);
+			m_start = std::chrono::system_clock::now();
 		}
 
 		void reset()
 		{
-			QueryPerformanceCounter(&m_start);
+			m_start = std::chrono::system_clock::now();
 		}
 
-		float elapsed()
-		{
-			LARGE_INTEGER current;
-			QueryPerformanceCounter(&current);
-			unsigned __int64 cycles = current.QuadPart - m_start.QuadPart;
-			return (float)(cycles * m_frequency);
+		double elapsed()
+		{	
+			m_end = std::chrono::system_clock::now();		
+			std::chrono::duration<double> elapsed = m_end - m_start;
+			return elapsed.count();
 		}
 	};
 }}

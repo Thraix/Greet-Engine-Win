@@ -5,10 +5,10 @@
 #include <math.h>
 #include <math/vec4.h>
 #include <math/vec2.h>
-#include <Box2D\Dynamics\b2Body.h>
-#include <Box2D\Dynamics\b2Fixture.h>
-#include <Box2D\Collision\Shapes\b2PolygonShape.h>
-#include <greet_types.h>
+#include <Box2D/Dynamics/b2Body.h>
+#include <Box2D/Dynamics/b2Fixture.h>
+#include <Box2D/Collision/Shapes/b2PolygonShape.h>
+#include <internal/greet_types.h>
 #include <iostream>
 
 
@@ -18,7 +18,7 @@ namespace greet{ namespace math{
 
 	inline float toRadians(float degrees)
 	{
-		return degrees * ((float)M_PI / 180.0f);
+		return (float)(degrees * M_PI * 0.005555555f);
 	}
 
 	inline vec2* getVertices(b2Body* body)
@@ -98,6 +98,18 @@ namespace greet{ namespace math{
 			triangle[i] = b2Vec2(v.x, v.y);
 		}
 		return triangle;
+	}
+
+	inline b2Vec2* getRectangle(const math::vec2& size)
+	{
+
+		b2Vec2* rectangle = new b2Vec2[4];
+		float rad = (float)(M_PI / 2.0);
+		rectangle[0] = b2Vec2(-size.x/2.0f,-size.y/2.0f);
+		rectangle[1] = b2Vec2(+size.x/2.0f,-size.y/2.0f);
+		rectangle[2] = b2Vec2(+size.x/2.0f,+size.y/2.0f);
+		rectangle[3] = b2Vec2(-size.x/2.0f,+size.y/2.0f);
+		return rectangle;
 	}
 
 	inline vec2* b2Vec2ToVec2(b2Vec2* vecs, uint vertexCount)

@@ -1,6 +1,6 @@
 #include "channel.h"
 
-#include <managers/soundmanager.h>
+#include "soundmanager.h"
 
 namespace greet{ namespace audio{
 

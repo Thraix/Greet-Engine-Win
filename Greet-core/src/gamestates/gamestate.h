@@ -1,6 +1,6 @@
 #pragma once
 
-#include <graphics\layers\layer.h>
+#include <graphics/layers/layer.h>
 
 namespace greet { namespace managers { class GameStateManager; } }
 

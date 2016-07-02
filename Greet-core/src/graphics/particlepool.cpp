@@ -1,3 +1,5 @@
+#if 0
+
 #include "particlepool.h"
 
 namespace greet { namespace graphics{
@@ -55,7 +57,7 @@ namespace greet { namespace graphics{
 			m_usedParticles++;
 			return true;
 		}
-		GREET_WARN("PARTICLEPOOL","Could not find an unused particle");
+		LOG_WARNING("PARTICLEPOOL","Could not find an unused particle");
 		return false;
 
 		/*Particle* particle = m_particles.back();
@@ -75,3 +77,5 @@ namespace greet { namespace graphics{
 		return m_particles-m_usedParticles;
 	}
 }}
+
+#endif

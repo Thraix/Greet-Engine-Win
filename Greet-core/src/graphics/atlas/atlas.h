@@ -1,8 +1,9 @@
 #pragma once
 
-#include <graphics\texture.h>
-#include <graphics\sprite.h>
+#include <graphics/textures/texture.h>
+#include <graphics/sprite.h>
 #include <list>
+#include <vector>
 
 namespace greet{ namespace graphics {
 	class Atlas

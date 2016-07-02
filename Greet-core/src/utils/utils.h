@@ -1,8 +1,7 @@
 #pragma once
 
-#include <iostream>
 #include <ctime>
-#include <greet_types.h>
+#include <internal/greet_types.h>
 
 namespace greet {namespace utils{
 
@@ -17,20 +16,22 @@ namespace greet {namespace utils{
 		std::string res = "";
 		if (hour < 10)
 			res += "0";
-		res += std::to_string(hour)+":";
+		res += toString(hour)+":";
 		if (min < 10)
 			res += "0";
-		res += std::to_string(min);
+		res += toString(min);
 		return res;
 	}
 
-	inline uint vec4ToInt(math::vec4 vec)
+	inline byte* getBytesFromString(const std::string& s)
 	{
-		uint red = (int)(vec.x * 255);
-		uint green = (int)(vec.y * 255);
-		uint blue = (int)(vec.z * 255);
-		uint alpha = (int)(vec.w * 255);
-		return (alpha << 24) + (red << 16) + (green << 8) + blue;
+		std::cout << s << std::endl;
+		byte* bytes = new byte[s.length()];
+		for(uint i = 0;i<s.length();i++)
+		{
+			bytes[i] = s[i];
+		}
+		return bytes;
 	}
 
 	inline uint HSVtoARGB(float hue, float sat, float val)
@@ -88,7 +89,7 @@ namespace greet {namespace utils{
 		return r;
 	}
 
-	inline uint hex16_to_dec(char c)
+	inline uint hex16_to_dec(const char c)
 	{
 		switch (c)
 		{
@@ -180,7 +181,7 @@ namespace greet {namespace utils{
 			int size = hex.length();
 			for (int i = 0; i < size; i++)
 			{
-				result += hex16_to_dec(hex.at(i)) << ((size - i) * 4 - 4);
+				result += hex16_to_dec(hex[i]) << ((size - i) * 4 - 4);
 			}
 			return result;
 		}

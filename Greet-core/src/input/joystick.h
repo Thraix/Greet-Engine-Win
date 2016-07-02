@@ -1,10 +1,10 @@
 #pragma once
 
 #include <vector>
-#include <greetgl.h>
-#include <utils/log.h>
-#include <greet_types.h>
-#include <math\maths.h>
+#include <internal/greetgl.h>
+#include <logging/logger.h>
+#include <internal/greet_types.h>
+#include <math/maths.h>
 
 #ifndef MAX_JOYSTICKS 
 	#define MAX_JOYSTICKS 4
