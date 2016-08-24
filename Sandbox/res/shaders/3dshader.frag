@@ -19,9 +19,10 @@ uniform float reflectivity = 1;
 
 void main()
 {
+	out_color = vec4(0.6f,0.6f,0.6f,1.0f);//vert_color;
 	if(hasTexture > 0.5)
 	{
-		out_color = texture(textureSampler,vert_texCoord);
+		out_color *= texture(textureSampler,vert_texCoord);
 		if(out_color.a < 0.1)
 			discard;
 	}
@@ -43,9 +44,16 @@ void main()
 	float dampedFactor = pow(specularFactor,shadeDamper);
 
 	vec3 finalSpecular = dampedFactor  * reflectivity * light_color;
-	out_color *= vert_color*vec4(diffuse,1.0f);
+	out_color *= vec4(diffuse,1.0f);
 	out_color += vec4(finalSpecular,0.0);
+
+	//float luminance = (out_color.r + out_color.g + out_color.b)/3.0;
+	//out_color.rgb = floor(luminance * 4.0)/4.0 * fogColor;
+
 	out_color = mix(vec4(fogColor.xyz,1.0),vec4(out_color.rgb,1.0),visibility);
 	//out_color = vec4(finalSpecular.xyz,1.0);
-	//out_color = vec4(out_color.rgb*visibility,1.0);
+	out_color = vec4(out_color.rgb*visibility,1.0);
+	//out_color.a = 1.0f;
+	//out_color = vec4(surfaceNormal,1.0f);
+
 }

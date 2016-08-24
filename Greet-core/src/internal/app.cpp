@@ -1,6 +1,7 @@
 #include "app.h"
 #include <chrono>
 #include <thread>
+#include <drivers/driverdispatcher.h>
 
 namespace greet { namespace internal {
 	using namespace graphics;
@@ -22,7 +23,7 @@ namespace greet { namespace internal {
 		Window::addResizeCallback(this);
 		Window::addJoystickCallback(this);
 		Window::addWindowFocusCallback(this);
-		initialized = true;
+		m_initialized = true;
 	}
 
 	void App::start()
@@ -39,7 +40,7 @@ namespace greet { namespace internal {
 
 	void App::run()
 	{
-		if (!initialized)
+		if (!m_initialized)
 		{
 			LOG_FATAL("Window is not initalized, set it in App::createWindow");
 			return;
@@ -61,10 +62,11 @@ namespace greet { namespace internal {
 			double elapsed = m_timer->elapsed();
 			if (elapsed - updateTimer >= updateTick)
 			{
-				update(updateTick);
+				drivers::DriverDispatcher::update(updateTick);
+				update(elapsed - updateTimer);
 				Window::update();
 				updates++;
-				updateTimer += updateTick;
+				updateTimer += elapsed - updateTimer;
 			}
 			if (elapsed - renderTimer >= frameCap)
 			{

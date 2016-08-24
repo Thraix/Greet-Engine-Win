@@ -1,5 +1,5 @@
+#if 0
 #include "camera.h"
-
 namespace greet { namespace camera {
 
 	Camera* Camera::instance;
@@ -131,3 +131,4 @@ namespace greet { namespace camera {
 		return Camera::instance;
 	}
 }}
+#endif

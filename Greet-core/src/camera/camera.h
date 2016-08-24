@@ -1,3 +1,4 @@
+#if 0
 #pragma once
 
 #include <internal/greet_types.h>
@@ -44,3 +45,4 @@ namespace greet { namespace camera {
 
 	};
 }}
+#endif

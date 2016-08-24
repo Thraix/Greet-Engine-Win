@@ -1,7 +1,0 @@
-﻿  mapping0.c
-c:\users\hakan\documents\greet - kopia\libraries\libvorbis\lib\mapping0.c(277): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\hakan\documents\greet - kopia\libraries\libvorbis\lib\mapping0.c(317): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\hakan\documents\greet - kopia\libraries\libvorbis\lib\mapping0.c(334): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\hakan\documents\greet - kopia\libraries\libvorbis\lib\mapping0.c(390): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\hakan\documents\greet - kopia\libraries\libvorbis\lib\mapping0.c(685): error C4703: potentially uninitialized local pointer variable 'mag_memo' used
-c:\users\hakan\documents\greet - kopia\libraries\libvorbis\lib\mapping0.c(685): error C4703: potentially uninitialized local pointer variable 'mag_sort' used

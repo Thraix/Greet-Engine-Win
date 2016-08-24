@@ -15,7 +15,7 @@ namespace greet { namespace internal {
 		uint m_fps;
 		uint m_ups;
 		double frameCap = 0;
-		bool initialized = false;
+		bool m_initialized = false;
 	protected:
 		App();
 

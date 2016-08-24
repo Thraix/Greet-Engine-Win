@@ -3,7 +3,38 @@
 #include <ctime>
 #include <internal/greet_types.h>
 
+#define BIT(x) 1 << x
+
 namespace greet {namespace utils{
+
+	template<typename Base, typename T>
+	inline bool instanceof(const T *ptr) {
+		return dynamic_cast<const Base*>(ptr) != nullptr;
+	}
+
+	inline float roundDown(float numToRound, float multiple)
+	{
+		if (multiple == 0)
+			return 0;
+		return ((int)(numToRound / multiple))*multiple;
+	}
+
+	inline float roundUp(float numToRound, float multiple)
+	{
+		if (multiple == 0)
+			return 0;
+		float ans = ((int)(numToRound / multiple))*multiple;
+		return ans < numToRound ? ans + multiple : ans;
+	}
+
+	inline float roundClose(float numToRound, float multiple)
+	{
+		if (multiple == 0)
+			return 0;
+		float down = ((int)(numToRound / multiple))*multiple;
+		float up = down < numToRound ? down + multiple : down;
+		return (numToRound - down) < (up - numToRound) ? down : up;
+	}
 
 	inline std::string getTime()
 	{

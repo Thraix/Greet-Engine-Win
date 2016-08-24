@@ -1,7 +1,7 @@
 #include "event.h"
 
 namespace greet { namespace event {
-	Event::Event(Type type)
+	Event::Event(EventType type)
 		:m_type(type)
 	{
 

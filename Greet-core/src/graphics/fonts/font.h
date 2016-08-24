@@ -30,6 +30,7 @@ namespace greet{ namespace graphics{
 		inline uint getDataSize() const { return m_datasize;}
 		inline float getSize() const {return m_size;}
 		inline uint getAtlasID() const {return m_atlas->id;}
+		float getWidthOfText(const std::string& text) const;
 		inline const math::vec2& getScale() const {return m_scale;}
 		void setScale(const math::vec2& scale) { m_scale = scale;}
 	};

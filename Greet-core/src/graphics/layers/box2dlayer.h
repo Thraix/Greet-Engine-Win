@@ -8,7 +8,7 @@
 #include <graphics/renderers/batchrenderer.h>
 
 namespace greet { namespace graphics {
-	class Box2DLayer : public Layer
+	class Box2DLayer : public Layer<Renderable>
 	{
 	public:
 		b2World* m_world;

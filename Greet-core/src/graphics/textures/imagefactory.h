@@ -1,7 +1,7 @@
 #pragma once
 #include <logging/logger.h>
 #include <FreeImage.h>
-#include <internal/greet_types.h>]]
+#include <internal/greet_types.h>
 #include <utils/utils.h>
 
 namespace greet { namespace graphics { namespace ImageFactory {

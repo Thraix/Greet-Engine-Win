@@ -15,8 +15,11 @@ namespace greet { namespace graphics{
 		Group(const math::mat3& transform);
 		virtual ~Group();
 		virtual void add(Renderable* renderable);
-		bool update(float timeElapsed);
-		void submit(Renderer2D* renderer) const override;
+		virtual bool update(float timeElapsed);
+		virtual void begin(Renderer2D* renderer) const override;
+		virtual void submit(Renderer2D* renderer) const override;
+		virtual void end(Renderer2D* renderer) const override;
+
 		void setEnable(bool enable) { Group::enable = enable;}
 		void setTransformationMatrix(math::mat3 transformationMatrix) {m_transformationMatrix = transformationMatrix;}
 

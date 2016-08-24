@@ -1,7 +1,9 @@
 #include "layer.h"
 
-namespace greet { namespace graphics{
-	Layer::Layer(Renderer2D* renderer, Shader* shader, math::mat3 projectionMatrix)
+namespace greet { namespace graphics {
+
+	template<class T>
+	Layer<T>::Layer(Renderer2D* renderer, Shader* shader, math::mat3 projectionMatrix)
 		: m_renderer(renderer), m_shader(shader), m_projectionMatrix(projectionMatrix)
 	{
 		GLint texIDs[32];
@@ -15,7 +17,8 @@ namespace greet { namespace graphics{
 		m_shader->disable();
 	}
 
-	Layer::~Layer()
+	template<class T>
+	Layer<T>::~Layer()
 	{
 		delete m_shader;
 		delete m_renderer;
@@ -24,32 +27,40 @@ namespace greet { namespace graphics{
 			delete m_renderables[i];
 	}
 
-	void Layer::add(Renderable* renderable)
+	template<class T>
+	void Layer<T>::add(T* renderable)
 	{
 		m_renderables.push_back(renderable);
 	}
 
-	void Layer::render() const
+	template<class T>
+	void Layer<T>::render() const
 	{
 		m_shader->enable();
 		setUniforms();
 		m_renderer->begin();
 		uint size = m_renderables.size();
 		for (uint i = 0; i < size; i++)
+		{
+			m_renderables[i]->begin(m_renderer);
 			m_renderables[i]->submit(m_renderer);
+			m_renderables[i]->end(m_renderer);
+		}
 		m_renderer->end();
 		m_renderer->flush();
 		m_shader->disable();
 	}
 
-	void Layer::update(float timeElapsed)
+	template<class T>
+	void Layer<T>::update(float timeElapsed)
 	{
 		uint size = m_renderables.size();
 		for (uint i = 0; i < size; i++)
 			m_renderables[i]->update(timeElapsed);
 	}
 
-	void Layer::setProjectionMatrix(math::mat3 projectionMatrix)
+	template<class T>
+	void Layer<T>::setProjectionMatrix(math::mat3 projectionMatrix)
 	{
 		 m_projectionMatrix = projectionMatrix; 
 		 m_shader->enable();

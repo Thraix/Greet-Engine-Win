@@ -19,6 +19,8 @@
 #define SHADER_TEXCOORD_INDEX		0x01
 #define SHADER_TEXID_INDEX			0x02
 #define SHADER_COLOR_INDEX			0x03
+#define SHADER_MASK_TEXCOORD_INDEX	0x04
+#define SHADER_MASK_TEXID_INDEX		0x05
 
 namespace greet {namespace graphics{
 
@@ -42,13 +44,16 @@ namespace greet {namespace graphics{
 		void begin() override;
 		void submit(const Renderable2D* renderable) override;
 		void submit(const RenderablePoly* renderable) override;
-		void submit(const math::Transform& transformation, uint texID, math::vec2 texPos, math::vec2 texSize, uint color) override;
-		void submit(const math::vec2& position,const math::vec2& size, uint texID, math::vec2 texPos, math::vec2 texSize, uint color) override;
+		void submit(const math::Transform& transform, uint texID, math::vec2 texPos, math::vec2 texSize, uint color, uint maskTexId, const math::vec2& maskTexPos, const math::vec2& maskTexSize) override;
+		void submit(const math::vec2& position, const math::vec2& size, uint texID, math::vec2 texPos, math::vec2 texSize, uint color, uint maskTexId, const math::vec2& maskTexPos, const math::vec2& maskTexSize) override;
 		void submitString(const std::string& text, const math::vec2& position, Font* font, const uint& color) override;
-		inline void draw(const math::Transform& transformation, const math::vec2& texPos, const math::vec2& texSize, const uint textureSlot, const uint color);
-		inline void draw(const math::vec2& position,const math::vec2& size, const math::vec2& texPos, const math::vec2& texSize, const uint textureSlot, const uint color);
+		inline void draw(const math::Transform& transform, const math::vec2& texPos, const math::vec2& texSize, const uint textureSlot, const uint& color, const uint& maskTexSlot, const math::vec2& maskTexPos, const math::vec2& maskTexSize);
+		inline void draw(const math::vec2& position, const math::vec2& size, const math::vec2& texPos, const math::vec2& texSize, const uint textureSlot, const uint color, const uint& maskTexSlot, const math::vec2& maskTexPos, const math::vec2& maskTexSize);
 		inline void draw(const math::vec2& position, const math::vec2* vertices, const uint amount, const uint color);
-		inline void appendVertexBuffer(const math::vec2& position, const math::vec2& texCoord, const uint& texID, const uint& color);
+		inline void drawRect(const math::vec2& position, const math::vec2& size, const uint& color) override;
+		inline void fillRect(const math::vec2& position, const math::vec2& size, const uint& color) override;
+		inline void fillRect(const math::vec2& position, const math::vec2& size, const uint& color, const Sprite* mask) override;
+		inline void appendVertexBuffer(const math::vec2& position, const math::vec2& texCoord, const uint& texID, const uint& color, const uint& maskTexId, const math::vec2& maskTexCoord);
 		uint getTextureSlot(const GLuint texID);
 		void end() override;
 		void flush() override;

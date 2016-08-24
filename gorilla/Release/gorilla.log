@@ -1,9 +1,0 @@
-﻿  gc_common.c
-  gc_thread.c
-  ga_openal.c
-src\devices\ga_openal.c(5): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-src\devices\ga_openal.c(80): warning C4047: '!=': 'gc_uint32 *' differs in levels of indirection from 'unsigned int'
-  ga.c
-  gau.c
-  ga_stream.c
-  gorilla.vcxproj -> D:\Programming\Greet\Release\gorilla.lib

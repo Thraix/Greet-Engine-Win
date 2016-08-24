@@ -6,10 +6,6 @@ namespace greet { namespace graphics {
 
 	std::vector<input::Joystick> Window::joysticks;
 	bool Window::focus;
-	bool Window::curKeys[MAX_KEYS];
-	bool Window::curMouseButtons[MAX_MOUSEBUTTONS];
-	bool Window::pasKeys[MAX_KEYS];
-	bool Window::pasMouseButtons[MAX_MOUSEBUTTONS];
 	math::vec2 Window::mousePos;
 	math::vec2 Window::mousePosPixel;
 	uint Window::width;
@@ -17,6 +13,8 @@ namespace greet { namespace graphics {
 	std::string Window::title;
 	GLFWwindow *Window::window;
 	math::vec4 Window::bgColor;
+	bool Window::mouseButtonDown[MAX_MOUSEBUTTONS];
+	bool Window::isMouseButtonDown;
 
 
 	std::vector<listener::WindowResizeListener*> Window::windowResize;
@@ -32,11 +30,7 @@ namespace greet { namespace graphics {
 		Window::height = height;
 
 		audio::SoundManager::init();
-		memset(curKeys, false, MAX_KEYS);
-		memset(pasKeys, false, MAX_KEYS);
-		memset(curMouseButtons, false, MAX_MOUSEBUTTONS);
-		memset(curMouseButtons, false, MAX_MOUSEBUTTONS);
-
+		memset(mouseButtonDown,false,MAX_MOUSEBUTTONS);
 		for (int i = 0; i < MAX_JOYSTICKS; i++)
 		{
 			joysticks.push_back(input::Joystick(i, 0.3f, 0.3f));
@@ -62,7 +56,7 @@ namespace greet { namespace graphics {
 		ASSERT(glfwInit(),"Failed to initialize GLFW!");
 		window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
 		ASSERT(window,"Failed to initialize window!");
-		//glfwSetInputMode(m_window,GLFW_CURSOR,GLFW_CURSOR_HIDDEN);
+		glfwSetInputMode(window,GLFW_CURSOR,GLFW_CURSOR_HIDDEN);
 		//glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		glfwMakeContextCurrent(window);
 
@@ -90,74 +84,6 @@ namespace greet { namespace graphics {
 		LOG_INFO("WINDOW", "GLFW Version:   ", glfwGetVersionString());
 		checkJoysticks();
 		return true;
-	}
-
-	bool Window::keyExists(uint keycode)
-	{
-		if (keycode >= MAX_KEYS)
-		{
-			LOG_WARNING("WINDOW", "Key could not be found: ", keycode);
-			return false;
-		}
-		return true;
-	}
-
-	bool Window::isKeyPressed(uint keycode)
-	{
-		if (keyExists(keycode))
-			return curKeys[keycode] && !pasKeys[keycode];
-		else
-			return false;
-	}
-
-	bool Window::isKeyReleased(uint keycode)
-	{
-		if (keyExists(keycode))
-			return !curKeys[keycode] && pasKeys[keycode];
-		else
-			return false;
-	}
-
-	bool Window::isKeyDown(uint keycode)
-	{
-		if (keyExists(keycode))
-			return curKeys[keycode];
-		else
-			return false;
-	}
-
-	bool Window::mouseButtonExists(uint keycode)
-	{
-		if (keycode >= MAX_MOUSEBUTTONS)
-		{
-			LOG_WARNING("WINDOW", "Mouse button could not be found: ", keycode);
-			return false;
-		}
-		return true;
-	}
-
-	bool Window::isMouseButtonPressed(uint button)
-	{
-		if (mouseButtonExists(button))
-			return curMouseButtons[button] && !pasMouseButtons[button];
-		else
-			return false;
-	}
-
-	bool Window::isMouseButtonReleased(uint button)
-	{
-		if (mouseButtonExists(button))
-			return !curMouseButtons[button] && pasMouseButtons[button];
-		else
-			return false;
-	}
-
-	bool Window::isMouseButtonDown(uint button)
-	{
-		if (mouseButtonExists(button))
-			return curMouseButtons[button];
-		else
-			return false;
 	}
 
 	bool Window::closed()
@@ -192,8 +118,6 @@ namespace greet { namespace graphics {
 
 	void Window::update()
 	{
-		memcpy(pasKeys, curKeys, MAX_KEYS);
-		memcpy(pasMouseButtons, curMouseButtons, MAX_MOUSEBUTTONS);
 		if (focus){
 			for (int i = 0; i < MAX_JOYSTICKS; i++)
 			{
@@ -228,14 +152,30 @@ namespace greet { namespace graphics {
 		windowResize.push_back(listener);
 	}
 
+	void Window::removeResizeCallback(WindowResizeListener* listener)
+	{
+
+		windowResize.erase(std::remove(windowResize.begin(), windowResize.end(), listener));
+	}
+
 	void Window::addWindowFocusCallback(WindowFocusListener* listener)
 	{
 		windowFocus.push_back(listener);
 	}
 
+	void Window::removeWindowFocusCallback(WindowFocusListener* listener)
+	{
+		windowFocus.erase(std::remove(windowFocus.begin(), windowFocus.end(), listener));
+	}
+
 	void Window::addJoystickCallback(JoystickStateListener* listener)
 	{
 		joystickState.push_back(listener);
+	}
+
+	void Window::removeJoystickCallback(JoystickStateListener* listener)
+	{
+		joystickState.erase(std::remove(joystickState.begin(), joystickState.end(), listener));
 	}
 
 	void Window::window_resize(GLFWwindow *window, int width, int height)
@@ -249,16 +189,30 @@ namespace greet { namespace graphics {
 
 	void Window::key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
 	{
-		curKeys[key] = action != GLFW_RELEASE;
+		if (action == GLFW_RELEASE)
+			event::EventDispatcher::onKeyReleased(event::KeyReleasedEvent(key));
+		else if(action == GLFW_PRESS)
+			event::EventDispatcher::onKeyPressed(event::KeyPressedEvent(key));
 	}
 
 	void Window::mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 	{
-		curMouseButtons[button] = action != GLFW_RELEASE;
+		mouseButtonDown[action] = action == GLFW_PRESS;
+		if (action == GLFW_RELEASE)
+			event::EventDispatcher::onMouseReleased(event::MouseReleasedEvent(mousePosPixel.x,mousePosPixel.y,button));
+		else if (action == GLFW_PRESS)
+			event::EventDispatcher::onMousePressed(event::MousePressedEvent(mousePosPixel.x, mousePosPixel.y, button));
+		isMouseButtonDown = mouseButtonDown[action];
+		if(!isMouseButtonDown)
+			for (uint i = 0;i < MAX_MOUSEBUTTONS;i++)
+				if (mouseButtonDown[i])
+					isMouseButtonDown = true;
+
 	}
 
 	void Window::mouse_position_callback(GLFWwindow* window, double xpos, double ypos)
 	{
+		event::EventDispatcher::onMouseMoved(event::MouseMovedEvent(xpos,ypos, xpos - mousePosPixel.x, ypos - mousePosPixel.y,isMouseButtonDown));
 		mousePos = math::vec2(xpos / width, 1.0f-(ypos / height))*2.0f - 1.0f;
 		mousePosPixel = math::vec2(xpos, ypos);
 	}

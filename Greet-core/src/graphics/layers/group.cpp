@@ -2,15 +2,17 @@
 
 namespace greet { namespace graphics{
 	
+
 	Group::Group(const math::vec2& position)
+		: m_transformationMatrix(math::mat3::translate(position))
 	{
-		m_transformationMatrix = math::mat3::translate(position);
+		enable = true;
 	}
 	
 	Group::Group(const math::mat3& transform)
 		:m_transformationMatrix(transform)
 	{
-
+		enable = true;
 	}
 
 	Group::~Group()
@@ -30,19 +32,31 @@ namespace greet { namespace graphics{
 		bool update = false;
 		if (enable)
 			for (uint i = 0; i < m_renderables.size(); i++)
-				update = m_renderables[i]->update(timeElapsed) || update;
+				update |= m_renderables[i]->update(timeElapsed);
 		return update;
+	}
+
+	void Group::begin(Renderer2D* renderer) const
+	{
+		if (render)
+			renderer->pushMatrix(m_transformationMatrix);
 	}
 	
 	void Group::submit(Renderer2D* renderer) const
 	{
 		if (render)
-		{
-			renderer->pushMatrix(m_transformationMatrix);
 			for (uint i = 0; i < m_renderables.size(); i++)
+			{
+				m_renderables[i]->begin(renderer);
 				m_renderables[i]->submit(renderer);
+				m_renderables[i]->end(renderer);
+			}
+	}
+
+	void Group::end(Renderer2D* renderer) const
+	{
+		if (render)
 			renderer->popMatrix();
-		}
 	}
 
 }}

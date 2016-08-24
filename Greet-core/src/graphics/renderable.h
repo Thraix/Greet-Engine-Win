@@ -18,7 +18,10 @@ namespace greet { namespace graphics {
 		{
 
 		}
+		virtual void begin(Renderer2D* renderer) const {}
 		virtual void submit(Renderer2D* renderer) const = 0;
+		virtual void end(Renderer2D* renderer) const {}
+
 		virtual bool update(float timeElapsed) = 0;
 
 		virtual void setColor(uint color) = 0;

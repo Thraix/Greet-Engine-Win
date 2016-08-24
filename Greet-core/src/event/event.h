@@ -4,19 +4,21 @@ namespace greet { namespace event{
 	class Event
 	{
 	public:
-		enum Type {
+		enum EventType {
 			MOUSE_PRESSED,
 			MOUSE_RELEASED,
-			MOUSE_MOVED
+			MOUSE_MOVED,
+			KEY_PRESSED,
+			KEY_RELEASED
 		};
 
 	private:
-		Type m_type;
+		EventType m_type;
 
 	protected:
-		Event(Type type);
+		Event(EventType type);
 	public:
-		inline const Type& getType() const { return m_type; }
+		inline const EventType& getType() const { return m_type; }
 
 	};
 }}

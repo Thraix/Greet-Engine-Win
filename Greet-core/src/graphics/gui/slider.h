@@ -2,26 +2,39 @@
 
 #include <graphics/gui/gui.h>
 #include <utils/colorutils.h>
-
-#define SLIDER_WIDTH 7
-#define SLIDER_HEIGHT 30
-#define SLIDER_WIDTH_2 (SLIDER_WIDTH-1)/2
+#include <graphics/fonts/fontmanager.h>
+#include <drivers/rectdriver.h>
+#include <drivers/driverdispatcher.h>
+#include <drivers/driveradapter.h>
 
 namespace greet { namespace graphics {
 
 	class Slider : public GUI
 	{
 	private:
-		uint m_pos;
+		int m_pos;
 		float m_stepSize;
-		Renderable2D* m_slider;
-		Renderable2D* m_sliderLine;
+		float m_startValue;
+		float m_endValue;
+		uint m_sliderColor;
+		bool m_holdSlider;
+		Font* m_sliderFont;
+		bool m_inSlider;
+
+		math::vec2 m_sliderSize;
+
 	public:
-		Slider(const math::vec2& position, const float& width, float stepSize);
+		Slider(const math::vec2& position, const math::vec2& size, float start, float end, float stepSize);
 		void setStepSize(float stepSize) { m_stepSize = stepSize; }
+
+		void render(Renderer2D* renderer) const override;
+		bool onMoved(const event::MouseMovedEvent& event, math::vec2 relativeMousePos) override;
+		bool onPressed(const event::MousePressedEvent& event, math::vec2 relativeMousePos) override;
+		bool onReleased(const event::MouseReleasedEvent& event, math::vec2 relativeMousePos) override;
 		inline float getStepSize() const { return m_stepSize; }
-		inline float getSliderPos() const { return m_stepSize * m_pos / (m_background->getSize().x - SLIDER_WIDTH); }
-		math::vec2 getOffsetTL() const override { return math::vec2(SLIDER_WIDTH_2, 0); }
-		math::vec2 getOffsetBR() const { return math::vec2(SLIDER_WIDTH_2, 0); }
+		inline float getSliderPos() const { return m_stepSize * m_pos / (m_size.x - m_sliderSize.x); }
+		inline float getValue() const { return utils::roundClose((m_pos / (m_size.x - 1))*(m_endValue - m_startValue) + m_startValue,m_stepSize); }
+		inline float getPosFromValue() const { return (getValue() - m_startValue) / (m_endValue - m_startValue)*(m_size.x - 1); }
+		inline bool isInsideSlider(const math::vec2& pos) const;
 	};
 }}

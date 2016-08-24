@@ -242,12 +242,12 @@ int main()
 
 #else
 
-#include <camera\camera.h>
 #include <internal\app.h>
 #include <entity\entity.h>
 #include <graphics\gui\frame.h>
 #include <graphics\gui\panel.h>
 #include <graphics\gui\slider.h>
+#include <graphics\gui\button.h>
 #include <graphics\atlas\atlasmanager.h>
 #include <graphics\renderers/batchrenderer.h>
 #include <graphics\shaders\shaderfactory.h>
@@ -260,14 +260,24 @@ int main()
 #include <utils/objutils.h>
 #include <math/math_func.h>
 #include <graphics/models/light.h>
+#include <event/keylistener.h>
+#include <event/mouselistener.h>
+
+#include <utils/dialogbox.h>
+#include <drivers/driverdispatcher.h>
+#include <drivers/lineardriver.h>
+#include <drivers/driveradapter.h>
+
+#include <graphics/layers/guilayer.h>
 
 using namespace greet;
 using namespace graphics;
 using namespace audio;
 using namespace model;
 using namespace utils;
+using namespace event;
 
-class Core : public greet::internal::App
+class Core : public greet::internal::App, public greet::event::KeyListener, public greet::event::MouseListener
 {
 
 private:
@@ -284,9 +294,16 @@ private:
 	std::vector<EntityModel> models;
 
 	Camera* camera;
-	Layer* uilayer;
+	Layer<Renderable>* uilayer;
+	GUILayer* guilayer;
+	Slider* slider;
 	Frame* frame;
+	Button* button;
 	Label* fps;
+	Renderable2D* cursor;
+	Renderable2D* driverTest;
+
+
 public:
 
 	Core::~Core()
@@ -296,14 +313,22 @@ public:
 		delete modelMaterial2;
 		delete model2;
 		delete renderer3d;
+		delete uilayer;
+		delete guilayer;
 	}
 
 	void init()
 	{
+		EventDispatcher::addKeyListener(DISPATCHER_GUI+1, *this);
+		EventDispatcher::addMouseListener(DISPATCHER_GUI + 1, *this);
 		createWindow("Best Game Ever", 960, 540);
 		setFrameCap(144);
 		TextureManager::add(new Texture("res/textures/skybox.png", "skybox"));
 		TextureManager::add(new Texture("res/textures/stallTexture.png", "stall"));
+		TextureManager::add(new Texture("res/textures/cursor.png", "cursor"));
+		TextureManager::add(new Texture("res/textures/mask.png", "mask"));
+		TextureManager::add(new Texture("res/textures/mask2.png", "mask2"));
+
 		camera = new Camera(math::vec3(0,0,0));
 		renderer3d = new BatchRenderer3D(Window::getWidth(), Window::getHeight(), *camera,70,0.1f,100.0f);
 
@@ -343,14 +368,23 @@ public:
 
 		FontManager::add(new Font("Anonymous Pro.ttf", "anonymous", 72));
 
-		uilayer = new Layer(new BatchRenderer(), ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)Window::getWidth(), 0.0f, (float)Window::getHeight()));
+		uilayer = new Layer<Renderable>(new BatchRenderer(), ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)Window::getWidth(), 0.0f, (float)Window::getHeight()));
 		uint colorPink = ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(300 /360.0f, 3));
-		fps = new Label("144 fps", math::vec2(10, 60), "anonymous", 72, ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(120 / 360.0f, 9)));
-		Slider* slider = new Slider(math::vec2(10,100),200,100);
-		frame = new Frame(math::vec2(10, 10), math::vec2(500, 500),"FPS Frame");
-		frame->add(fps);
+		fps = new Label("144 fps", math::vec2(50, 300), "anonymous", 72, ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(120 / 360.0f, 9)));
+		cursor = new Renderable2D(math::vec2(0,0),math::vec2(32,32),0xffffffff,new Sprite(TextureManager::get("cursor")->getTexID(),32,32, math::vec2(0, 0), math::vec2(1, 1)), new Sprite(TextureManager::get("mask")->getTexID(),256,256,math::vec2(0,0),math::vec2(1,1)));
+		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(driverTest->m_position.x, -20, 0.5f, true, new drivers::DriverAdapter()));
+
+		guilayer = new GUILayer(new BatchRenderer(),ShaderFactory::DefaultShader());
+		slider = new Slider(math::vec2(10,100),math::vec2(200,30),0,255,1);
+		button = new Button(math::vec2(10,120+30),math::vec2(100,40),"Test");
+		frame = new Frame(math::vec2(10, 10), math::vec2(500, 500),"GUI Frame");
+		uilayer->add(fps);
 		frame->add(slider);
-		uilayer->add(frame);
+		frame->add(button);
+		guilayer->add(frame);
+
+		uilayer->add(cursor);
+		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(frame->m_position.x, 100, 5, true, new drivers::DriverAdapter()));
 
 		renderer3d->submit(model);
 		renderer3d->submit(model2);
@@ -359,7 +393,6 @@ public:
 		//{
 		//	renderer3d->submit(&models[i]);
 		//}
-
 	}
 
 	float random()
@@ -373,23 +406,11 @@ public:
 		fps->text = s;
 	}
 
+	float hue = 0;
+
 	void update(float elapsedTime)
 	{
-		if (Window::isKeyPressed(GLFW_KEY_F5))
-		{
-			Shader* modelShader = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
-			Shader* modelShader2 = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
-			modelMaterial->setShader(modelShader);
-			modelMaterial2->setShader(modelShader2);
-			Light* l = new Light(math::vec3(25, 25, 12.5), 0xffffffff);
-			modelShader->enable();
-			l->setToUniform(modelShader, "light");
-			modelShader->disable();
-			modelShader2->enable();
-			l->setToUniform(modelShader2, "light");
-			modelShader2->disable();
-			delete l;
-		}
+		//fps->text = utils::toString(slider->getValue());
 		if(Window::isJoystickConnected(0))
 		{
 			input::Joystick& joystick = Window::getJoystick(0);
@@ -416,10 +437,6 @@ public:
 				camera->position.y -= 0.2;
 			}
 		}
-		else
-		{
-		
-		}
 		//model->rotate(elapsedTime*100, elapsedTime * 100, elapsedTime * 100);
 		model->update(elapsedTime);
 		model2->update(elapsedTime);
@@ -428,12 +445,72 @@ public:
 		{
 			models[i].update(elapsedTime);
 		}
+		uilayer->update(elapsedTime);
+		guilayer->update(elapsedTime);
+		hue += elapsedTime / 3.0f;
+		while (hue >= 1)
+			hue--;
+		cursor->m_color = ColorUtils::vec3ToColorHex(ColorUtils::HSVtoRGB(hue, 1, 1));
 	}
-	void render() {
+
+	bool onPressed(const KeyPressedEvent& e) const override
+	{
+		if (e.getButton() == GLFW_KEY_F5)
+		{
+			Shader* modelShader = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
+			Shader* modelShader2 = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
+			modelMaterial->setShader(modelShader);
+			modelMaterial2->setShader(modelShader2);
+			Light* l = new Light(math::vec3(25, 25, 12.5), 0xffffffff);
+			modelShader->enable();
+			l->setToUniform(modelShader, "light");
+			modelShader->disable();
+			modelShader2->enable();
+			l->setToUniform(modelShader2, "light");
+			modelShader2->disable();
+			delete l;
+		}
+		return false;
+	}
+
+	bool onReleased(const KeyReleasedEvent& e)  const override
+	{
+		return false;
+	}
+
+	bool onPressed(const MousePressedEvent& e) const  override
+	{
+		return false;
+	}
+
+	bool onReleased(const MouseReleasedEvent& e)  const  override
+	{
+		return false;
+	}
+
+	bool onMoved(const MouseMovedEvent& e)  const override
+	{
+		cursor->setPosition(math::vec2(e.getX(), e.getY()));
+
+		return false;
+	}
+
+	void render()
+	{
 		renderer3d->begin();
 		renderer3d->flush();
 		renderer3d->end();
+		guilayer->render();
 		uilayer->render();
+	}
+	
+	void windowResize(int width, int height) override
+	{
+		//camera::Camera::getInstance()->getLayer(0)->setProjectionMatrix(math::mat3::orthographic(0, (float)width / 20.0f, 0, (float)height / 20.0f)*math::mat3::translate((width - 960) / 40.0f, (height - 540) / 40.0f));
+		//camera::Camera::getInstance()->getLayer(1)->setProjectionMatrix(math::mat3::orthographic(0, (float)width / 20.0f, 0, (float)height / 20.0f)*math::mat3::translate((width - 960) / 40.0f, (height - 540) / 40.0f));
+		//camera::Camera::getInstance()->getLayer(2)->setProjectionMatrix(math::mat3::orthographic(0, (float)width, 0, (float)height)*math::mat3::translate((width - 960) / 2, (height - 540) / 2));
+		//camera::Camera::getInstance()->setViewport(0, 0, width, height* 9 / 16);
+		uilayer->setProjectionMatrix(math::mat3::orthographic(0,Window::getWidth(),0,Window::getHeight()));
 	}
 };
 

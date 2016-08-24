@@ -13,25 +13,31 @@ namespace greet { namespace utils { namespace ColorUtils {
 	inline math::vec3 HSVtoRGB(float h, float s, float v)
 	{
 		float c = v * s;
-		uint h6 = (uint)(h * 6) % 6;
-		float x = c * (1 - fabs(h6 % 2 - 1));
-		float m = v - c;
+		float h6f = h*6.0f;
+		uint h6 = (uint)h6f;
+
+		float f = h6f - h6;
+
+		float p = v * (1 - s);
+		float q = v * (1 - s * f);
+		float t = v * (1 - s * (1 - f));
+
 		switch (h6)
 		{
 		case 0:
-			return math::vec3(c + m, x + m, m);
+			return math::vec3(v, t, p);
 		case 1:
-			return math::vec3(x + m, c + m, m);
+			return math::vec3(q, v, p);
 		case 2:
-			return math::vec3(m, c + m, x + m);
+			return math::vec3(p, v, t);
 		case 3:
-			return math::vec3(m, x + m, c + m);
+			return math::vec3(p, q, v);
 		case 4:
-			return math::vec3(x + m, m, c + m);
+			return math::vec3(t, p, v);
 		case 5:
-			return math::vec3(c + m, m, x + m);
+			return math::vec3(v, p, q);
 		default:
-			return math::vec3(m, m, m);
+			return math::vec3(c, c, c);
 		}
 	}
 
@@ -89,7 +95,7 @@ namespace greet { namespace utils { namespace ColorUtils {
 
 	inline math::vec3 getMaterialColor(float hue, int level)
 	{
-		float p = powf(1.0-COLOR_UTILS_MODIFIER, level);
+		float p = powf(1.0f-COLOR_UTILS_MODIFIER, level);
 		return HSVtoRGB(hue,p,p);
 	}
 }}}

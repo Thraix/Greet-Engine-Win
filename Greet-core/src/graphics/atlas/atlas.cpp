@@ -137,7 +137,7 @@ namespace greet { namespace graphics{
 				math::vec2 spritePos = spriteSize*math::vec2(x, y);
 				spritePos += texPos * spriteSize;
 				spriteSize *= texSize;
-				return new Sprite(m_texID, m_textureSize*texSize.x, m_textureSize*texSize.y, spritePos, spriteSize);
+				return new Sprite(m_texID, (uint)(m_textureSize*texSize.x), (uint)(m_textureSize*texSize.y), spritePos, spriteSize);
 			}
 		}
 		LOG_ERROR("ATLAS", "No texture found in Atlas: ", m_name.c_str(), "(", sheetName.c_str(), ")");

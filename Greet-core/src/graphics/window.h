@@ -13,9 +13,11 @@
 #include <internal/greet_types.h>
 #include <utils/uuid.h>
 #include <listeners/listeners.h>
+#include <event\eventdispatcher.h>
+#include <algorithm>
 
 #define MAX_KEYS			1024
-#define MAX_MOUSEBUTTONS	4
+#define MAX_MOUSEBUTTONS	32
 
 #define BUTTON_STATE_PRESSED	0x0
 #define BUTTON_STATE_RELEASED	0x1
@@ -48,12 +50,8 @@ namespace greet { namespace graphics {
 		static std::vector<input::Joystick> joysticks;
 	
 		static bool focus;
-		
-		static bool curKeys[MAX_KEYS];
-		static bool pasKeys[MAX_KEYS];
-
-		static bool curMouseButtons[MAX_MOUSEBUTTONS];
-		static bool pasMouseButtons[MAX_MOUSEBUTTONS];
+		static bool mouseButtonDown[MAX_MOUSEBUTTONS];
+		static bool isMouseButtonDown;
 		static math::vec2 mousePos;
 		static math::vec2 mousePosPixel;
 	private:
@@ -81,24 +79,15 @@ namespace greet { namespace graphics {
 
 		static void setBackgroundColor(math::vec4 color);
 		static void addResizeCallback(listener::WindowResizeListener* listenter);
+		static void removeResizeCallback(listener::WindowResizeListener* listener);
 		static void addWindowFocusCallback(listener::WindowFocusListener* listener);
+		static void removeWindowFocusCallback(listener::WindowFocusListener* listener);
 		static void addJoystickCallback(listener::JoystickStateListener* listener);
+		static void removeJoystickCallback(listener::JoystickStateListener* listener);
 
 		inline static math::vec4 getBackgroundColor() { return bgColor; }
 		inline static int getWidth() { return width; };
 		inline static int getHeight() { return height; };
-
-		//Key functions
-		static bool keyExists(uint keycode);
-		static bool isKeyPressed(uint keycode);
-		static bool isKeyReleased(uint keycode);
-		static bool isKeyDown(uint keycode);
-
-		//Mouse Button functions
-		static bool mouseButtonExists(uint keycode);
-		static bool isMouseButtonPressed(uint button);
-		static bool isMouseButtonReleased(uint button);
-		static bool isMouseButtonDown(uint button);
 
 		//Mouse Positions
 		inline static math::vec2 getMousePos(math::mat3 transform) { return transform.inverse()*mousePos; }
@@ -108,8 +97,8 @@ namespace greet { namespace graphics {
 		inline static math::vec2 getMousePosPixel() { return mousePosPixel; }
 		inline static float getMouseXPixel() { return mousePosPixel.x; }
 		inline static float getMouseYPixel() { return mousePosPixel.y; }
-		inline static input::Joystick &getJoystick(uint joystick){ ASSERT(joystick < 4, "WINDOW","Invalid Joystick. Ranges from 0-3: ", joystick); return joysticks[joystick]; }
-		inline static bool isJoystickConnected(uint joystick){ ASSERT(joystick < 4, "WINDOW", "Invalid Joystick. Ranges from 0-3: ", joystick); return joysticks[joystick].m_connected; }
+		inline static input::Joystick &getJoystick(uint joystick){ ASSERT(joystick < GLFW_JOYSTICKS, "WINDOW","Invalid Joystick. Ranges from 0-3: ", joystick); return joysticks[joystick]; }
+		inline static bool isJoystickConnected(uint joystick){ ASSERT(joystick < GLFW_JOYSTICKS, "WINDOW", "Invalid Joystick. Ranges from 0-3: ", joystick); return joysticks[joystick].m_connected; }
 
 
 		inline static void* getUserPointer(Window* window) { return window->pointer; }

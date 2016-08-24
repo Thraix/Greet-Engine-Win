@@ -19,6 +19,8 @@ namespace greet{ namespace graphics{
 		math::vec2 texCoord;
 		float texID;
 		uint color;
+		math::vec2 maskTexCoord;
+		float maskTexID;
 	};
 
 	class Renderable2D : public Renderable
@@ -29,17 +31,18 @@ namespace greet{ namespace graphics{
 		math::vec2 m_size;
 	protected:
 		Sprite* m_sprite;
+		Sprite* m_mask;
 	protected:
 
 	public:
-		Renderable2D(const math::vec2& position,const math::vec2& size, uint color, Sprite* sprite)
-			: m_position(position),m_size(size), m_color(color), m_sprite(sprite)
+		Renderable2D(const math::vec2& position,const math::vec2& size, uint color, Sprite* sprite, Sprite* mask)
+			: m_position(position),m_size(size), m_color(color), m_sprite(sprite), m_mask(mask)
 		{	
 
 		}
 		
 		Renderable2D()
-			: m_position(math::vec2(0,0)),m_size(math::vec2(1,1)), m_color(0xffffffff), m_sprite(new Sprite())
+			: m_position(math::vec2(0, 0)), m_size(math::vec2(1, 1)), m_color(0xffffffff), m_sprite(new Sprite()), m_mask(new Sprite())
 		{
 
 		}
@@ -64,12 +67,18 @@ namespace greet{ namespace graphics{
 
 		virtual bool update(float timeElapsed) override 
 		{ 
-			return m_sprite->update(timeElapsed); 
+			if(m_sprite)
+				return m_sprite->update(timeElapsed); 
+			return false;
 		}
 
-		inline uint getTexID() const { return m_sprite==NULL ? 0 : m_sprite->getTextureID(); }
-		inline const math::vec2& getTexPos() const { return m_sprite==NULL ? math::vec2(0,0) : m_sprite->getTexPos(); }
+		inline uint getTexID() const { return m_sprite == NULL ? 0 : m_sprite->getTextureID(); }
+		inline uint getMaskTexID() const { return m_sprite == NULL ? 0 : m_mask->getTextureID(); }
+		inline const math::vec2& getTexPos() const { return m_sprite == NULL ? math::vec2(0, 0) : m_sprite->getTexPos(); }
 		inline const math::vec2& getTexSize() const { return m_sprite == NULL ? math::vec2(1, 1) : m_sprite->getTexSize(); }
+		inline const math::vec2& getMaskTexPos() const { return m_sprite == NULL ? math::vec2(0, 0) : m_mask->getTexPos(); }
+		inline const math::vec2& getMaskTexSize() const { return m_sprite == NULL ? math::vec2(1, 1) : m_mask->getTexSize(); }
 		inline Sprite& getSprite() const { return *m_sprite; }
+		inline Sprite& getMask() const { return *m_mask; }
 	};
 }}
