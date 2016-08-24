@@ -92,14 +92,22 @@
     <ClCompile Include="src\audio\channelmanager.cpp" />
     <ClCompile Include="src\audio\sound.cpp" />
     <ClCompile Include="src\audio\soundmanager.cpp" />
-    <ClCompile Include="src\camera\camera.cpp" />
+    <ClCompile Include="src\drivers\driver.cpp" />
+    <ClCompile Include="src\drivers\driverdispatcher.cpp" />
+    <ClCompile Include="src\drivers\lineardriver.cpp" />
+    <ClCompile Include="src\drivers\rectdriver.cpp" />
     <ClCompile Include="src\entity\entity.cpp" />
     <ClCompile Include="src\event\event.cpp" />
+    <ClCompile Include="src\event\eventdispatcher.cpp" />
+    <ClCompile Include="src\event\keylistener.cpp" />
+    <ClCompile Include="src\event\mouselistener.cpp" />
     <ClCompile Include="src\gamestates\gamestate.cpp" />
     <ClCompile Include="src\graphics\animation.cpp" />
     <ClCompile Include="src\graphics\atlas\atlas.cpp" />
     <ClCompile Include="src\graphics\atlas\atlasmanager.cpp" />
+    <ClCompile Include="src\graphics\gui\button.cpp" />
     <ClCompile Include="src\graphics\gui\slider.cpp" />
+    <ClCompile Include="src\graphics\layers\guilayer.cpp" />
     <ClCompile Include="src\graphics\models\camera.cpp" />
     <ClCompile Include="src\graphics\models\meshfactory.cpp" />
     <ClCompile Include="src\graphics\renderers\batchrenderer.cpp" />
@@ -117,7 +125,6 @@
     <ClCompile Include="src\graphics\gui\panel.cpp" />
     <ClCompile Include="src\graphics\layers\box2dlayer.cpp" />
     <ClCompile Include="src\graphics\layers\group.cpp" />
-    <ClCompile Include="src\graphics\layers\layer.cpp" />
     <ClCompile Include="src\graphics\layers\layer3d.cpp" />
     <ClCompile Include="src\graphics\models\entitymodel.cpp" />
     <ClCompile Include="src\graphics\models\modelformat.cpp" />
@@ -143,6 +150,7 @@
     <ClCompile Include="src\math\vec2.cpp" />
     <ClCompile Include="src\math\vec3.cpp" />
     <ClCompile Include="src\math\vec4.cpp" />
+    <ClCompile Include="src\utils\dialogbox.cpp" />
     <ClCompile Include="src\utils\uuid.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -150,14 +158,28 @@
     <ClInclude Include="src\audio\channelmanager.h" />
     <ClInclude Include="src\audio\sound.h" />
     <ClInclude Include="src\audio\soundmanager.h" />
-    <ClInclude Include="src\camera\camera.h" />
+    <ClInclude Include="src\drivers\driver1.h" />
+    <ClInclude Include="src\drivers\driver2.h" />
+    <ClInclude Include="src\drivers\driver4.h" />
+    <ClInclude Include="src\drivers\driveradapter.h" />
+    <ClInclude Include="src\drivers\driverdispatcher.h" />
+    <ClInclude Include="src\drivers\driverlistener.h" />
+    <ClInclude Include="src\drivers\lineardriver.h" />
+    <ClInclude Include="src\drivers\rectdriver.h" />
     <ClInclude Include="src\entity\entity.h" />
     <ClInclude Include="src\event\event.h" />
+    <ClInclude Include="src\event\eventdispatcher.h" />
+    <ClInclude Include="src\event\keyevent.h" />
+    <ClInclude Include="src\event\keylistener.h" />
     <ClInclude Include="src\event\mouseevent.h" />
+    <ClInclude Include="src\event\mouselistener.h" />
     <ClInclude Include="src\gamestates\gamestate.h" />
     <ClInclude Include="src\graphics\animation.h" />
     <ClInclude Include="src\graphics\atlas\atlas.h" />
     <ClInclude Include="src\graphics\atlas\atlasmanager.h" />
+    <ClInclude Include="src\graphics\gui\button.h" />
+    <ClInclude Include="src\graphics\gui\ltrb.h" />
+    <ClInclude Include="src\graphics\layers\guilayer.h" />
     <ClInclude Include="src\graphics\models\meshfactory.h" />
     <ClInclude Include="src\graphics\renderers\batchrenderer.h" />
     <ClInclude Include="src\graphics\renderers\batchrenderer3d.h" />
@@ -215,6 +237,7 @@
     <ClInclude Include="src\internal\greet_types.h" />
     <ClInclude Include="src\listeners\joystickstate.h" />
     <ClInclude Include="src\listeners\listeners.h" />
+    <ClInclude Include="src\listeners\onclicklistener.h" />
     <ClInclude Include="src\listeners\windowfocus.h" />
     <ClInclude Include="src\listeners\windowlistener.h" />
     <ClInclude Include="src\listeners\windowresize.h" />
@@ -239,7 +262,9 @@
     <ClInclude Include="src\math\vec2.h" />
     <ClInclude Include="src\math\vec3.h" />
     <ClInclude Include="src\math\vec4.h" />
+    <ClInclude Include="src\drivers\driver.h" />
     <ClInclude Include="src\utils\colorutils.h" />
+    <ClInclude Include="src\utils\dialogbox.h" />
     <ClInclude Include="src\utils\fileutils.h" />
     <ClInclude Include="src\utils\imageutils.h" />
     <ClInclude Include="src\utils\log.h" />
@@ -254,6 +279,7 @@
   <ItemGroup>
     <None Include="..\..\GreetWorkspace\GreetEngine\greet-core\src\graphics\textures\frame.bin" />
     <None Include="..\Performance4.psess" />
+    <None Include="ClassDiagram.cd" />
     <None Include="src\graphics\textures\frame.bin" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
