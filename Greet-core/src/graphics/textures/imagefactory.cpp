@@ -45,7 +45,7 @@ namespace greet { namespace graphics{ namespace ImageFactory
 		bits -= add;
 		return bits;
 	}
-
+#if 0
 	BYTE* getFrameImage(uint* width, uint* height, uint* bpp)
 	{
 		const char* c = {
@@ -63,4 +63,5 @@ namespace greet { namespace graphics{ namespace ImageFactory
 		return b;
 
 	}
+#endif
 }}}

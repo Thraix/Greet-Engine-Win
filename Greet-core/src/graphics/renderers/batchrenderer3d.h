@@ -6,6 +6,7 @@
 #include <graphics/models/camera.h>
 #include <utils/objutils.h>
 #include <graphics/textures/texturemanager.h>
+#include <graphics/textures/cubemap.h>
 
 namespace greet { namespace graphics {
 
@@ -26,26 +27,28 @@ namespace greet { namespace graphics {
 		const model::Camera& m_camera;
 		float m_renderDistance;
 		std::vector<BatchRenderer3DMap*> m_map;
+		float m_near;
+		float m_far;
 
 		// Skybox
-		model::Material* skyboxMaterial;
-		model::MaterialModel* skybox;
-
+		Shader* m_skyboxShader;
+		model::Mesh* m_skyboxMesh;
+		CubeMap* m_skybox;
 	public:
-		BatchRenderer3D(float width, float height, const model::Camera& camera, float fov, float near, float far)
-			: m_renderDistance(far), m_projectionMatrix(math::mat4::projectionMatrix(width / height, fov, near, far)), m_camera(camera)
+		BatchRenderer3D(float width, float height, const model::Camera& camera, float fov, float near, float far, CubeMap* skybox)
+			: m_renderDistance(far), m_projectionMatrix(math::mat4::projectionMatrix(width / height, fov, near, far)), m_camera(camera), m_skybox(skybox),m_near(near),m_far(far)
 		{
-			Shader* skyboxShader = new Shader("res/shaders/skybox.vert", "res/shaders/skybox.frag"); // TODO: CHANGE TO SHADERFACTORY SKYBOX SHADER
-			model::Mesh* skyboxMesh = utils::loadObj("res/objs/cube.obj.gobj"); // TODO: CHANGE TO MESHFACTORY CUBE
-			skyboxMesh->setClockwiseRender(true);
-			skyboxMaterial = new model::Material(skyboxShader, TextureManager::get("skybox"));
-			skybox = new model::MaterialModel(skyboxMesh, *skyboxMaterial);
+			m_skyboxShader = new Shader("res/shaders/skybox.vert", "res/shaders/skybox.frag"); // TODO: CHANGE TO SHADERFACTORY SKYBOX SHADER
+			m_skyboxMesh = utils::loadObj("res/objs/cube.obj.gobj"); // TODO: CHANGE TO MESHFACTORY CUBE
+			m_skyboxMesh->setClockwiseRender(true);
+			
 		}
 
 		virtual ~BatchRenderer3D()
 		{
-			delete skybox;
-			delete skyboxMaterial;
+
+			//delete skybox;
+			//delete skyboxMaterial;
 		}
 
 		void submit(const model::EntityModel* model);

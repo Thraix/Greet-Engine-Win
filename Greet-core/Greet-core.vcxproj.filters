@@ -65,6 +65,7 @@
     <ClCompile Include="src\graphics\layers\guilayer.cpp" />
     <ClCompile Include="src\graphics\gui\button.cpp" />
     <ClCompile Include="src\drivers\rectdriver.cpp" />
+    <ClCompile Include="src\graphics\textures\cubemap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\font.h" />
@@ -189,6 +190,8 @@
     <ClInclude Include="src\drivers\driver2.h" />
     <ClInclude Include="src\drivers\driver4.h" />
     <ClInclude Include="src\listeners\onclicklistener.h" />
+    <ClInclude Include="src\utils\errorhandler.h" />
+    <ClInclude Include="src\graphics\textures\cubemap.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Performance4.psess" />

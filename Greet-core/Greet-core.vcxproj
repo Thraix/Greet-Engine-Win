@@ -137,6 +137,7 @@
     <ClCompile Include="src\graphics\renderers\renderer3d.cpp" />
     <ClCompile Include="src\graphics\shaders\shader.cpp" />
     <ClCompile Include="src\graphics\shaders\shaderfactory.cpp" />
+    <ClCompile Include="src\graphics\textures\cubemap.cpp" />
     <ClCompile Include="src\graphics\textures\imagefactory.cpp" />
     <ClCompile Include="src\graphics\textures\texture.cpp" />
     <ClCompile Include="src\graphics\textures\texturemanager.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="src\graphics\shaders\shaderfactory.h" />
     <ClInclude Include="src\graphics\gui\slider.h" />
     <ClInclude Include="src\graphics\sprite.h" />
+    <ClInclude Include="src\graphics\textures\cubemap.h" />
     <ClInclude Include="src\graphics\textures\imagefactory.h" />
     <ClInclude Include="src\graphics\textures\texture.h" />
     <ClInclude Include="src\graphics\textures\texturemanager.h" />
@@ -265,6 +267,7 @@
     <ClInclude Include="src\drivers\driver.h" />
     <ClInclude Include="src\utils\colorutils.h" />
     <ClInclude Include="src\utils\dialogbox.h" />
+    <ClInclude Include="src\utils\errorhandler.h" />
     <ClInclude Include="src\utils\fileutils.h" />
     <ClInclude Include="src\utils\imageutils.h" />
     <ClInclude Include="src\utils\log.h" />

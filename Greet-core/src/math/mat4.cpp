@@ -67,6 +67,7 @@ namespace greet {
 			result.elements[_2_2] = (far + near) / (near - far);
 			result.elements[_3_2] = 2 * (far * near) / (near - far);
 			result.elements[_2_3] = -1;
+			result.elements[_3_3] = 0;
 
 			return result;
 		}
@@ -75,18 +76,18 @@ namespace greet {
 		{
 			return 
 				math::mat4::translate(position) *
-				math::mat4::rotate(rotation.x, math::vec3(1, 0, 0)) *
-				math::mat4::rotate(rotation.y, math::vec3(0, 1, 0)) *
-				math::mat4::rotate(rotation.z, math::vec3(0, 0, 1)) *
+				math::mat4::rotateX(rotation.x) *
+				math::mat4::rotateY(rotation.y) *
+				math::mat4::rotateZ(rotation.z) *
 				math::mat4::scale(scale);
 		}
 
 		mat4 mat4::viewMatrix(math::vec3 position, math::vec3 rotation)
 		{
 			return
-				math::mat4::rotate(rotation.x, math::vec3(1, 0, 0)) *
-				math::mat4::rotate(rotation.y, math::vec3(0, 1, 0)) *
-				math::mat4::rotate(rotation.z, math::vec3(0, 0, 1)) *
+				math::mat4::rotateX(rotation.x) *
+				math::mat4::rotateY(rotation.y) *
+				math::mat4::rotateZ(rotation.z) *
 				math::mat4::translate(-position.x, -position.y, -position.z);
 		}
 
@@ -130,6 +131,55 @@ namespace greet {
 			result.elements[_1_1] = y;
 			result.elements[_2_2] = z;
 
+			return result;
+		}
+
+		mat4 mat4::rotateX(float deg)
+		{
+			return rotateRX(toRadians(deg));
+		}
+
+		mat4 mat4::rotateY(float deg)
+		{
+			return rotateRY(toRadians(deg));
+		}
+
+		mat4 mat4::rotateZ(float deg)
+		{
+			return rotateRZ(toRadians(deg));
+		}
+		mat4 mat4::rotateRX(float rad)
+		{
+			mat4 result(1.0f);
+			float c = cos(rad);
+			float s = sin(rad);
+			result.elements[_1_1] = c;
+			result.elements[_2_1] = -s;
+			result.elements[_1_2] = s;
+			result.elements[_2_2] = c;
+			return result;
+		}
+
+		mat4 mat4::rotateRY(float rad)
+		{
+			mat4 result(1.0f);
+			float c = cos(rad);
+			float s = sin(rad);
+			result.elements[_0_0] = c;
+			result.elements[_0_2] = -s;
+			result.elements[_2_0] = s;
+			result.elements[_2_2] = c;
+			return result;
+		}
+		mat4 mat4::rotateRZ(float rad)
+		{
+			mat4 result(1.0f);
+			float c = cos(rad);
+			float s = sin(rad);
+			result.elements[_0_0] = c;
+			result.elements[_1_0] = -s;
+			result.elements[_0_1] = s;
+			result.elements[_1_1] = c;
 			return result;
 		}
 

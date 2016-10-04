@@ -6,6 +6,7 @@
 #include <utils/fileutils.h>
 #include <iostream>
 #include <vector>
+#include <utils/errorhandler.h>
 
 namespace greet { namespace graphics {
 	class Shader

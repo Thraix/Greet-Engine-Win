@@ -39,6 +39,14 @@ namespace greet {
 
 			static mat4 translate(const float& x, const float& y, const float& z);
 			static mat4 scale(const float& x, const float& y, const float& z);
+
+			static mat4 rotateX(float deg);
+			static mat4 rotateY(float deg);
+			static mat4 rotateZ(float deg);
+
+			static mat4 rotateRX(float rad);
+			static mat4 rotateRY(float rad);
+			static mat4 rotateRZ(float rad);
 			static mat4 rotate(float deg, const vec3& axis);
 			static mat4 rotateR(float rad, const vec3& axis);
 

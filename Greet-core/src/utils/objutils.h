@@ -202,6 +202,7 @@ namespace greet { namespace utils {
 		if (!file)
 		{
 			LOG_ERROR("OBJUTILS", "Obj could not be read:", filename);
+			ErrorHandle::setErrorCode(GREET_ERROR_GOBJ_READ);
 			return errorModel();
 		}
 		uint pointer = 0;
@@ -214,6 +215,7 @@ namespace greet { namespace utils {
 		{
 			fclose(file);
 			LOG_ERROR("OBJUTILS", "File format not supported, if you are using obj you need to compile it to gobj:", filename);
+			ErrorHandle::setErrorCode(GREET_ERROR_GOBJ_FORMAT);
 			return errorModel();
 		}
 		memset(data, 0, 5);
@@ -222,6 +224,7 @@ namespace greet { namespace utils {
 		{
 			fclose(file);
 			LOG_ERROR("OBJUTILS", "File format not supported, if you are using obj you need to compile it to gobj:",filename);
+			ErrorHandle::setErrorCode(GREET_ERROR_GOBJ_FORMAT);
 			return errorModel();
 		}
 		delete[] data;
@@ -238,6 +241,7 @@ namespace greet { namespace utils {
 		{
 			fclose(file);
 			LOG_ERROR("OBJUTILS","GOBJ file could not be read:",filename);
+			ErrorHandle::setErrorCode(GREET_ERROR_GOBJ_READ);
 			return errorModel();
 		}
 		float* vertices = new float[vertexCount * 3];

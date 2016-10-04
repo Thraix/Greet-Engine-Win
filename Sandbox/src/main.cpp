@@ -303,7 +303,6 @@ private:
 	Renderable2D* cursor;
 	Renderable2D* driverTest;
 
-
 public:
 
 	Core::~Core()
@@ -330,7 +329,7 @@ public:
 		TextureManager::add(new Texture("res/textures/mask2.png", "mask2"));
 
 		camera = new Camera(math::vec3(0,0,0));
-		renderer3d = new BatchRenderer3D(Window::getWidth(), Window::getHeight(), *camera,70,0.1f,100.0f);
+		renderer3d = new BatchRenderer3D(Window::getWidth(), Window::getHeight(), *camera,70,0.001f,100.0f, new CubeMap("res/textures/skybox-top.png","res/textures/skybox-bottom.png","res/textures/skybox-left.png","res/textures/skybox-right.png","res/textures/skybox-front.png","res/textures/skybox-back.png"));
 
 		Shader* modelShader = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
 		Shader* lightSourceShader = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");

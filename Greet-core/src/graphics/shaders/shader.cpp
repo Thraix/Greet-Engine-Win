@@ -1,6 +1,7 @@
-#include "shader.h"
 #include "shaderfactory.h"
-namespace greet { namespace graphics {
+#include "shader.h"
+namespace greet {
+	namespace graphics {
 	Shader::Shader(const char *vertPath, const char *fragPath)
 		:m_name(vertPath), m_vertPath(vertPath), m_fragPath(fragPath)
 	{
@@ -38,6 +39,8 @@ namespace greet { namespace graphics {
 			glGetShaderInfoLog(vertex, length, &length, &error[0]);
 			LOG_ERROR("SHADER","Failed to compile vertex Shader!\n", &error[0]);
 			glDeleteShader(vertex);
+			using namespace utils;
+			ErrorHandle::setErrorCode(GREET_ERROR_SHADER_VERTEX);
 			return ShaderFactory::DefaultShader()->m_shaderID;
 		}
 
@@ -60,6 +63,8 @@ namespace greet { namespace graphics {
 			std::cout << std::endl;
 			std::cout << &error << std::endl;
 			glDeleteShader(fragment);
+			using namespace utils;
+			ErrorHandle::setErrorCode(GREET_ERROR_SHADER_FRAGMENT);
 			return ShaderFactory::DefaultShader()->m_shaderID;
 		}
 

@@ -6,6 +6,7 @@
 #include <internal/greet_types.h>
 #include <graphics/textures/imagefactory.h>
 #include <fstream>
+#include <utils/errorhandler.h>
 
 namespace greet {namespace utils{
 	
@@ -28,6 +29,28 @@ namespace greet {namespace utils{
 		}
 	}
 
+	inline BYTE* flipImage(BYTE*& bits, uint width, uint height, uint bpp)
+	{
+		bpp = bpp >> 3;
+		BYTE* result = new BYTE[width*height*bpp];
+		result += bpp*width*height;
+		BYTE* row = (BYTE*)bits;
+		for (uint y = 0;y < height;y++)
+		{
+			for (uint x = 0;x < width;x++)
+			{
+				result -= bpp;
+				memcpy(result,row,bpp);
+
+				row += bpp;
+			}
+		}
+
+		delete[] bits;
+		bits = result;
+		return bits;
+	}
+
 	inline BYTE* loadImage(const char* filepath, uint* width, uint* height, uint* bpp)
 	{
 		FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
@@ -42,6 +65,7 @@ namespace greet {namespace utils{
 		if (fif == FIF_UNKNOWN)
 		{
 			LOG_ERROR("IMAGEUTILS","FreeImage file format is not supported or file not exist:", filepath);
+			ErrorHandle::setErrorCode(GREET_ERROR_IMAGE_FORMAT);
 			return graphics::ImageFactory::getBadFormatImage(width,height,bpp);
 		}
 
@@ -50,6 +74,7 @@ namespace greet {namespace utils{
 		if (!dib)
 		{
 			LOG_ERROR("IMAGEUTILS", "FreeImage file Cannot be read:", filepath);
+			ErrorHandle::setErrorCode(GREET_ERROR_IMAGE_READ);
 			return graphics::ImageFactory::getCantReadImage(width,height,bpp);
 		}
 
@@ -62,6 +87,7 @@ namespace greet {namespace utils{
 		if (*bpp != 24 && *bpp != 32)
 		{
 			LOG_ERROR("IMAGEUTILS", "Bits per pixel is not valid (24 or 32):", filepath);
+			ErrorHandle::setErrorCode(GREET_ERROR_IMAGE_BPP);
 			delete[] bits;
 			return graphics::ImageFactory::getBadBPPImage(width,height,bpp);
 		}
