@@ -335,18 +335,18 @@ public:
 		Shader* lightSourceShader = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
 		Shader* modelShader2 = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
 
-		Mesh* lightSourceMesh = utils::loadObj("res/objs/cube.obj.gobj");
+		Mesh* lightSourceMesh = utils::loadObj("res/objs/cube.obj");
 		lightSourceMaterial = new Material(lightSourceShader, TextureManager::get("skybox"));
 		MaterialModel* lightSourceModelMaterial = new MaterialModel(lightSourceMesh, *lightSourceMaterial);
 		lightSource = new EntityModel(*lightSourceModelMaterial, math::vec3(25, 25, 12.5), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
 
-		Mesh* modelMesh = utils::loadObj("res/objs/stall.obj.gobj");
+		Mesh* modelMesh = utils::loadObj("res/objs/stall.obj");
 		modelMaterial = new Material(modelShader, TextureManager::get("stall"));
 		modelMaterial->setReflectivity(0.1)->setShineDamper(1);
 		MaterialModel* modelModelMaterial = new MaterialModel(modelMesh, *modelMaterial);
 		model = new EntityModel(*modelModelMaterial, math::vec3(0.0f, 0.0f, -25), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
 
-		Mesh* modelMesh2 = utils::loadObj("res/objs/dragon.obj.gobj");
+		Mesh* modelMesh2 = utils::loadObj("res/objs/dragon.obj");
 		modelMaterial2 = new Material(modelShader2, NULL);
 		MaterialModel* modelModelMaterial2 = new MaterialModel(modelMesh2, *modelMaterial2);
 		model2 = new EntityModel(*modelModelMaterial2, math::vec3(10.0f, 0.0f, -25), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
@@ -406,10 +406,23 @@ public:
 	}
 
 	float hue = 0;
+	math::vec3 velocityPos;
+	math::vec3 velocityNeg;
+	math::vec2 rotationPos;
+	math::vec2 rotationNeg;
 
 	void update(float elapsedTime)
 	{
 		//fps->text = utils::toString(slider->getValue());
+		math::vec2 velocityY = math::vec2(velocityPos.x-velocityNeg.x, velocityPos.z-velocityNeg.z);
+		if (velocityY.lengthSQ() != 0)
+		{
+			velocityY = velocityY.rotate(camera->yaw).normalize()*0.2;
+			camera->position += math::vec3(velocityY.x, 0, velocityY.y);
+		}
+		camera->position.y += velocityPos.y - velocityNeg.y;
+		camera->pitch += rotationPos.x - rotationNeg.x;
+		camera->yaw += rotationPos.y - rotationNeg.y;
 		if(Window::isJoystickConnected(0))
 		{
 			input::Joystick& joystick = Window::getJoystick(0);
@@ -452,7 +465,7 @@ public:
 		cursor->m_color = ColorUtils::vec3ToColorHex(ColorUtils::HSVtoRGB(hue, 1, 1));
 	}
 
-	bool onPressed(const KeyPressedEvent& e) const override
+	bool onPressed(const KeyPressedEvent& e) override
 	{
 		if (e.getButton() == GLFW_KEY_F5)
 		{
@@ -469,25 +482,107 @@ public:
 			modelShader2->disable();
 			delete l;
 		}
+
+		if (e.getButton() == GLFW_KEY_W)
+		{
+			velocityNeg.z = 0.2;
+		}
+		if (e.getButton() == GLFW_KEY_S)
+		{
+			velocityPos.z = 0.2;
+		}
+		if (e.getButton() == GLFW_KEY_D)
+		{
+			velocityPos.x = 0.2;
+		}
+		if (e.getButton() == GLFW_KEY_A)
+		{
+			velocityNeg.x = 0.2;
+		}
+		float rotSpeed = 1;
+		if (e.getButton() == GLFW_KEY_LEFT)
+		{
+			rotationNeg.y = rotSpeed;
+		}
+		if (e.getButton() == GLFW_KEY_RIGHT)
+		{
+			rotationPos.y = rotSpeed;
+		}
+		if (e.getButton() == GLFW_KEY_UP)
+		{
+			rotationNeg.x = rotSpeed;
+		}
+		if (e.getButton() == GLFW_KEY_DOWN)
+		{
+			rotationPos.x = rotSpeed;
+		}
+		if (e.getButton() == GLFW_KEY_LEFT_SHIFT)
+		{
+			velocityPos.y = 0.2;
+		}
+		if (e.getButton() == GLFW_KEY_SPACE)
+		{
+			velocityPos.y = 0.2;
+		}
 		return false;
 	}
 
-	bool onReleased(const KeyReleasedEvent& e)  const override
+	bool onReleased(const KeyReleasedEvent& e)  override
+	{
+		if (e.getButton() == GLFW_KEY_W)
+		{
+			velocityNeg.z = 0;
+		}
+		if (e.getButton() == GLFW_KEY_S)
+		{
+			velocityPos.z = 0;
+		}
+		if (e.getButton() == GLFW_KEY_D)
+		{
+			velocityPos.x = 0;
+		}
+		if (e.getButton() == GLFW_KEY_A)
+		{
+			velocityNeg.x = 0;
+		}
+		if (e.getButton() == GLFW_KEY_LEFT)
+		{
+			rotationNeg.y = 0;
+		}
+		if (e.getButton() == GLFW_KEY_RIGHT)
+		{
+			rotationPos.y = 0;
+		}
+		if (e.getButton() == GLFW_KEY_UP)
+		{
+			rotationNeg.x = 0;
+		}
+		if (e.getButton() == GLFW_KEY_DOWN)
+		{
+			rotationPos.x = 0;
+		}
+		if (e.getButton() == GLFW_KEY_LEFT_SHIFT)
+		{
+			velocityNeg.y = 0;
+		}
+		if (e.getButton() == GLFW_KEY_SPACE)
+		{
+			velocityPos.y = 0;
+		}
+		return false;
+	}
+
+	bool onPressed(const MousePressedEvent& e)  override
 	{
 		return false;
 	}
 
-	bool onPressed(const MousePressedEvent& e) const  override
+	bool onReleased(const MouseReleasedEvent& e) override
 	{
 		return false;
 	}
 
-	bool onReleased(const MouseReleasedEvent& e)  const  override
-	{
-		return false;
-	}
-
-	bool onMoved(const MouseMovedEvent& e)  const override
+	bool onMoved(const MouseMovedEvent& e) override
 	{
 		cursor->setPosition(math::vec2(e.getX(), e.getY()));
 
@@ -499,7 +594,7 @@ public:
 		renderer3d->begin();
 		renderer3d->flush();
 		renderer3d->end();
-		guilayer->render();
+		//guilayer->render();
 		uilayer->render();
 	}
 	

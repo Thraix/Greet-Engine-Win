@@ -39,7 +39,7 @@ namespace greet { namespace graphics {
 			: m_renderDistance(far), m_projectionMatrix(math::mat4::projectionMatrix(width / height, fov, near, far)), m_camera(camera), m_skybox(skybox),m_near(near),m_far(far)
 		{
 			m_skyboxShader = new Shader("res/shaders/skybox.vert", "res/shaders/skybox.frag"); // TODO: CHANGE TO SHADERFACTORY SKYBOX SHADER
-			m_skyboxMesh = utils::loadObj("res/objs/cube.obj.gobj"); // TODO: CHANGE TO MESHFACTORY CUBE
+			m_skyboxMesh = utils::loadObj("res/objs/cube.obj"); // TODO: CHANGE TO MESHFACTORY CUBE
 			m_skyboxMesh->setClockwiseRender(true);
 			
 		}

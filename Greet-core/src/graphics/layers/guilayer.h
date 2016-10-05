@@ -15,11 +15,11 @@ namespace greet { namespace graphics {
 		GUILayer(Renderer2D* renderer, Shader* shader);
 		virtual ~GUILayer();
 
-		bool onPressed(const event::KeyPressedEvent& e) const override;
-		bool onReleased(const event::KeyReleasedEvent& e)  const override;
-		bool onPressed(const event::MousePressedEvent& e) const override;
-		bool onReleased(const event::MouseReleasedEvent& e)  const override;
-		bool onMoved(const event::MouseMovedEvent& e)  const override;
+		bool onPressed(const event::KeyPressedEvent& e) override;
+		bool onReleased(const event::KeyReleasedEvent& e) override;
+		bool onPressed(const event::MousePressedEvent& e) override;
+		bool onReleased(const event::MouseReleasedEvent& e) override;
+		bool onMoved(const event::MouseMovedEvent& e) override;
 		void windowResize(int width, int height) override;
 	};
 

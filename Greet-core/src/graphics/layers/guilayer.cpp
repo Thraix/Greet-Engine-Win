@@ -24,18 +24,18 @@ namespace greet { namespace graphics {
 		EventDispatcher::removeMouseListener(*this);
 	}
 
-	bool GUILayer::onPressed(const event::KeyPressedEvent& e) const
+	bool GUILayer::onPressed(const event::KeyPressedEvent& e)
 	{
 		
 		return false;
 	}
 
-	bool GUILayer::onReleased(const event::KeyReleasedEvent& e)  const
+	bool GUILayer::onReleased(const event::KeyReleasedEvent& e)
 	{
 		return false;
 	}
 
-	bool GUILayer::onPressed(const event::MousePressedEvent& e) const
+	bool GUILayer::onPressed(const event::MousePressedEvent& e)
 	{
 
 		bool pressed = false;
@@ -48,7 +48,7 @@ namespace greet { namespace graphics {
 		return pressed;
 	}
 
-	bool GUILayer::onReleased(const event::MouseReleasedEvent& e)  const
+	bool GUILayer::onReleased(const event::MouseReleasedEvent& e)
 	{
 		bool released = false;
 		math::vec2 relativePos;
@@ -60,7 +60,7 @@ namespace greet { namespace graphics {
 		return released;
 	}
 
-	bool GUILayer::onMoved(const event::MouseMovedEvent& e)  const
+	bool GUILayer::onMoved(const event::MouseMovedEvent& e)
 	{
 		bool moved = false;
 		math::vec2 relativePos;
