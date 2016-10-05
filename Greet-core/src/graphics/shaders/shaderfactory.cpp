@@ -168,6 +168,37 @@ namespace greet {namespace graphics{namespace ShaderFactory {
 		"}\n"
 	};
 
+	const char *skybox_shader_vert
+	{
+		"#version 330 core\n"
+		"layout(location = 0) in vec3 position;\n"
+		"out vec3 vert_texCoord;\n"
+		"uniform mat4 transformationMatrix;\n"
+		"uniform mat4 projectionMatrix;\n"
+		"uniform mat4 viewMatrix;\n"
+		"void main()\n"
+		"{\n"
+		"	gl_Position = (projectionMatrix * viewMatrix *  vec4(position,1.0f));\n"
+		"	vert_texCoord = position;\n"
+		"}\n"
+	};
+
+	const char *skybox_shader_frag
+	{
+		"#version 330 core\n"
+
+		"in vec3 vert_texCoord;\n"
+
+		"out vec4 out_color;\n"
+
+		"uniform samplerCube textureSampler;\n"
+
+		"void main()\n"
+		"{\n"
+		"	out_color = texture(textureSampler,vert_texCoord);\n"
+		"}\n"
+	};
+
 	Shader* LEDShader()
 	{
 		return Shader::fromSource("LEDShader", default_shader_vert, led_shader_frag);
@@ -185,5 +216,10 @@ namespace greet {namespace graphics{namespace ShaderFactory {
 	Shader* DebugShader()
 	{
 		return Shader::fromSource("debugShader", default_shader_vert, debug_shader_frag);
+	}
+	
+	Shader* SkyboxShader()
+	{
+		return Shader::fromSource("skyboxShader", skybox_shader_vert, skybox_shader_frag);
 	}
 }}}

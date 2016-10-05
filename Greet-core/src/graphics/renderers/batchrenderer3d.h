@@ -6,7 +6,8 @@
 #include <graphics/models/camera.h>
 #include <utils/objutils.h>
 #include <graphics/textures/texturemanager.h>
-#include <graphics/textures/cubemap.h>
+#include <graphics/skybox.h>
+#include <graphics/models/meshfactory.h>
 
 namespace greet { namespace graphics {
 
@@ -31,24 +32,18 @@ namespace greet { namespace graphics {
 		float m_far;
 
 		// Skybox
-		Shader* m_skyboxShader;
-		model::Mesh* m_skyboxMesh;
-		CubeMap* m_skybox;
+		Skybox* m_skybox;
 	public:
-		BatchRenderer3D(float width, float height, const model::Camera& camera, float fov, float near, float far, CubeMap* skybox)
+		BatchRenderer3D(float width, float height, const model::Camera& camera, float fov, float near, float far, Skybox* skybox)
 			: m_renderDistance(far), m_projectionMatrix(math::mat4::projectionMatrix(width / height, fov, near, far)), m_camera(camera), m_skybox(skybox),m_near(near),m_far(far)
 		{
-			m_skyboxShader = new Shader("res/shaders/skybox.vert", "res/shaders/skybox.frag"); // TODO: CHANGE TO SHADERFACTORY SKYBOX SHADER
-			m_skyboxMesh = utils::loadObj("res/objs/cube.obj.gobj"); // TODO: CHANGE TO MESHFACTORY CUBE 
-			m_skyboxMesh->setClockwiseRender(true);
 			
 		}
 
 		virtual ~BatchRenderer3D()
 		{
-
-			//delete skybox;
-			//delete skyboxMaterial;
+			
+			delete m_skybox;
 		}
 
 		void submit(const model::EntityModel* model);

@@ -329,14 +329,15 @@ public:
 		TextureManager::add(new Texture("res/textures/mask2.png", "mask2"));
 
 		camera = new Camera(math::vec3(0,0,0));
-		renderer3d = new BatchRenderer3D(Window::getWidth(), Window::getHeight(), *camera,70,0.001f,100.0f, new CubeMap("res/textures/skybox-top.png","res/textures/skybox-bottom.png","res/textures/skybox-left.png","res/textures/skybox-right.png","res/textures/skybox-front.png","res/textures/skybox-back.png"));
+		Skybox* skybox = new Skybox(new CubeMap("res/textures/skybox-top.png","res/textures/skybox-bottom.png","res/textures/skybox-left.png","res/textures/skybox-right.png","res/textures/skybox-front.png","res/textures/skybox-back.png"));
+		renderer3d = new BatchRenderer3D(Window::getWidth(), Window::getHeight(), *camera,70,0.001f,100.0f, skybox);
 
 		Shader* modelShader = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
 		Shader* lightSourceShader = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
 		Shader* modelShader2 = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
 
-		Mesh* lightSourceMesh = utils::loadObj("res/objs/cube.obj.gobj");
-		lightSourceMaterial = new Material(lightSourceShader, TextureManager::get("skybox"));
+		Mesh* lightSourceMesh = model::MeshFactory::tetrahedron(0,0,0,10);
+		lightSourceMaterial = new Material(lightSourceShader, NULL);
 		MaterialModel* lightSourceModelMaterial = new MaterialModel(lightSourceMesh, *lightSourceMaterial);
 		lightSource = new EntityModel(*lightSourceModelMaterial, math::vec3(25, 25, 12.5), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
 
@@ -351,15 +352,16 @@ public:
 		MaterialModel* modelModelMaterial2 = new MaterialModel(modelMesh2, *modelMaterial2);
 		model2 = new EntityModel(*modelModelMaterial2, math::vec3(10.0f, 0.0f, -25), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
 
-		for (uint i = 0;i < 2000;i++)
-		{
-			models.push_back(EntityModel(*modelModelMaterial, math::vec3(random()*100, random() * 100, random() * 100), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(random() * 360, random() * 360, random() * 360)));
-		}
+		//for (uint i = 0;i < 2000;i++)
+		//{
+		//	models.push_back(EntityModel(*modelModelMaterial, math::vec3(random()*100, random() * 100, random() * 100), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(random() * 360, random() * 360, random() * 360)));
+		//}
 
 		Light* l = new Light(math::vec3(25, 25,12.5), 0xffffffff);
 		modelShader->enable();
 		l->setToUniform(modelShader, "light");
 		modelShader->disable();
+
 		modelShader2->enable();
 		l->setToUniform(modelShader2, "light");
 		modelShader2->disable();
@@ -453,10 +455,10 @@ public:
 		model->update(elapsedTime);
 		model2->update(elapsedTime);
 		lightSource->update(elapsedTime);
-		for (uint i = 0;i < 2000;i++)
-		{
-			models[i].update(elapsedTime);
-		}
+		//for (uint i = 0;i < 2000;i++)
+		//{
+		//	models[i].update(elapsedTime);
+		//}
 		uilayer->update(elapsedTime);
 		guilayer->update(elapsedTime);
 		hue += elapsedTime / 3.0f;

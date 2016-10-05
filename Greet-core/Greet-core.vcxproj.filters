@@ -66,6 +66,7 @@
     <ClCompile Include="src\graphics\gui\button.cpp" />
     <ClCompile Include="src\drivers\rectdriver.cpp" />
     <ClCompile Include="src\graphics\textures\cubemap.cpp" />
+    <ClCompile Include="src\graphics\skybox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\font.h" />
@@ -192,6 +193,7 @@
     <ClInclude Include="src\listeners\onclicklistener.h" />
     <ClInclude Include="src\utils\errorhandler.h" />
     <ClInclude Include="src\graphics\textures\cubemap.h" />
+    <ClInclude Include="src\graphics\skybox.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Performance4.psess" />

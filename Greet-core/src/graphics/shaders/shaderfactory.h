@@ -8,4 +8,5 @@ namespace greet { namespace graphics{ namespace ShaderFactory {
 	Shader* DefaultShader();
 	Shader* DebugShader();
 	Shader* BasicLightShader();
+	Shader* SkyboxShader();
 }}}

@@ -20,7 +20,6 @@ namespace greet { namespace model {
 		uint m_iboId;
 		uint m_vertexCount;
 		uint m_indexCount;
-		uint m_attributesCount;
 		bool m_clockwise = false;
 
 	public:

@@ -18,7 +18,10 @@ namespace greet { namespace model {
 
 		// Attributes 
 		addAttribute(MESH_VERTICES_LOCATION, 3, vertices); // vertices
-														// Unbind
+
+		glVertexAttrib4f(MESH_COLORS_LOCATION,1.0f,1.0f,1.0f,1.0f);
+
+		// Unbind
 		glBindVertexArray(0);
 	}
 

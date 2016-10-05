@@ -137,6 +137,7 @@
     <ClCompile Include="src\graphics\renderers\renderer3d.cpp" />
     <ClCompile Include="src\graphics\shaders\shader.cpp" />
     <ClCompile Include="src\graphics\shaders\shaderfactory.cpp" />
+    <ClCompile Include="src\graphics\skybox.cpp" />
     <ClCompile Include="src\graphics\textures\cubemap.cpp" />
     <ClCompile Include="src\graphics\textures\imagefactory.cpp" />
     <ClCompile Include="src\graphics\textures\texture.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="src\graphics\shaders\shader.h" />
     <ClInclude Include="src\graphics\shaders\shaderfactory.h" />
     <ClInclude Include="src\graphics\gui\slider.h" />
+    <ClInclude Include="src\graphics\skybox.h" />
     <ClInclude Include="src\graphics\sprite.h" />
     <ClInclude Include="src\graphics\textures\cubemap.h" />
     <ClInclude Include="src\graphics\textures\imagefactory.h" />
