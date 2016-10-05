@@ -2,40 +2,11 @@
 
 namespace greet { namespace model {
 
-	Mesh::Mesh(const float* vertices, const float* normals, const float* texCoords, const uint* colors, uint vertexCount, const uint* indices, uint indexCount)
-	{
-
-		init(vertices, normals, texCoords, colors, vertexCount, indices, indexCount);
-	}
-
-	Mesh::Mesh(const float* vertices, const float* normals, const uint* colors, uint vertexCount, const uint* indices, uint indexCount)
-	{
-		float* texCoords = new float[vertexCount * 2];
-		memset(texCoords, 1.0f, vertexCount * 2 * sizeof(float));
-		init(vertices, normals, texCoords, colors, vertexCount, indices, indexCount);
-	}
-
-	Mesh::Mesh(const float* vertices, const float* normals, const float* texCoords, uint color, uint vertexCount, const uint* indices, uint indexCount)
-	{
-		uint* colors = new uint[vertexCount];
-		memset(colors, color, vertexCount*sizeof(uint));
-		init(vertices, normals, texCoords, colors, vertexCount, indices, indexCount);
-	}
-
-	Mesh::Mesh(const float* vertices, const float* normals, uint color, uint vertexCount, const uint* indices, uint indexCount)
-	{
-		float* texCoords = new float[vertexCount * 2];
-		memset(texCoords, 0.0f, vertexCount * 2 * sizeof(float));
-		uint* colors = new uint[vertexCount];
-		memset(colors, color, vertexCount*sizeof(uint));
-		init(vertices, normals, texCoords, colors, vertexCount, indices, indexCount);
-	}
-
-	void Mesh::init(const float* vertices, const float* normals, const float* texCoords, const uint* colors, uint vertexCount, const uint* indices, uint indexCount)
+	Mesh::Mesh(const float* vertices, uint vertexCount, const uint* indices, uint indexCount)
 	{
 		m_vertexCount = vertexCount;
 		m_indexCount = indexCount;
-		
+
 		// VAO
 		glGenVertexArrays(1, &m_vaoId);
 		glBindVertexArray(m_vaoId);
@@ -45,21 +16,17 @@ namespace greet { namespace model {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(uint), indices, GL_STATIC_DRAW);
 
-		// Attributes
-		addAttribute(3, vertices); // vertices
-		addAttribute(2, texCoords); // texCoords
-		addAttribute(4, colors); // colors
-		addAttribute(3, normals); // normals
-
-		// Unbind
+		// Attributes 
+		addAttribute(MESH_VERTICES_LOCATION, 3, vertices); // vertices
+														// Unbind
 		glBindVertexArray(0);
 	}
 
 	Mesh::~Mesh()
 	{
-		for (uint vbo : m_vbos)
+		for (auto it = m_vbos.begin();it != m_vbos.end(); it++)
 		{
-			glDeleteBuffers(1,&vbo);
+			glDeleteBuffers(1,&it->second);
 		}
 		m_vbos.clear();
 		glDeleteBuffers(1,&m_iboId);
@@ -87,40 +54,60 @@ namespace greet { namespace model {
 
 	void Mesh::enableAttributes() const
 	{
-		for (int i = 0;i < m_attributesCount;i++)
+		for (auto it = m_vbos.begin();it != m_vbos.end(); it++)
 		{
-			glEnableVertexAttribArray(i);
+			glEnableVertexAttribArray(it->first);
 		}	
 	}
 
 	void Mesh::disableAttributes() const
 	{
-		for (int i = m_attributesCount-1;i >= 0;i--)
+		for (auto it = m_vbos.begin();it != m_vbos.end(); it++)
 		{
-			glDisableVertexAttribArray(i);
+			glDisableVertexAttribArray(it->first);
 		}
 	}
 
-	void Mesh::addAttribute(uint attributeSize, const float* data)
+	void Mesh::addAttribute(uint location, uint attributeSize, const float* data)
 	{
+
+		if (m_vbos.find(location) != m_vbos.end())
+		{
+			// TODO: ERROR CODE
+			return;
+		}
+		glBindVertexArray(m_vaoId);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId);
 		uint vbo;
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		m_vbos.push_back(vbo); // Needed to delete vbo when deleting mesh
+		m_vbos.emplace(location, vbo); // Needed to delete vbo when deleting mesh
 		glBufferData(GL_ARRAY_BUFFER, m_vertexCount * sizeof(float) * attributeSize, data, GL_STATIC_DRAW);
-		glVertexAttribPointer(m_attributesCount++, attributeSize, GL_FLOAT, false, 0, 0);
+		glVertexAttribPointer(location, attributeSize, GL_FLOAT, false, 0, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
 	}
 
-	void Mesh::addAttribute(uint attributeSize, const uint* data)
+	void Mesh::addAttribute(uint location, uint attributeSize, const uint* data)
 	{
+
+		if (m_vbos.find(location) != m_vbos.end())
+		{
+			// TODO: ERROR CODE
+			return;
+		}
+		glBindVertexArray(m_vaoId);
 		uint vbo;
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		m_vbos.push_back(vbo); // Needed to delete vbo when deleting mesh
+		m_vbos.emplace(location, vbo); // Needed to delete vbo when deleting mesh
 		glBufferData(GL_ARRAY_BUFFER, m_vertexCount * sizeof(byte) * attributeSize, data, GL_STATIC_DRAW);
-		glVertexAttribPointer(m_attributesCount++, attributeSize, GL_UNSIGNED_BYTE, GL_TRUE, 0, 0);
+		glVertexAttribPointer(location, attributeSize, GL_UNSIGNED_BYTE, GL_TRUE, 0, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
+
 	}
 
 }}

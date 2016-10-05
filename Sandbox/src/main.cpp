@@ -335,18 +335,18 @@ public:
 		Shader* lightSourceShader = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
 		Shader* modelShader2 = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
 
-		Mesh* lightSourceMesh = utils::loadObj("res/objs/cube.obj");
+		Mesh* lightSourceMesh = utils::loadObj("res/objs/cube.obj.gobj");
 		lightSourceMaterial = new Material(lightSourceShader, TextureManager::get("skybox"));
 		MaterialModel* lightSourceModelMaterial = new MaterialModel(lightSourceMesh, *lightSourceMaterial);
 		lightSource = new EntityModel(*lightSourceModelMaterial, math::vec3(25, 25, 12.5), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
 
-		Mesh* modelMesh = utils::loadObj("res/objs/stall.obj");
+		Mesh* modelMesh = utils::loadObj("res/objs/stall.obj.gobj");
 		modelMaterial = new Material(modelShader, TextureManager::get("stall"));
 		modelMaterial->setReflectivity(0.1)->setShineDamper(1);
 		MaterialModel* modelModelMaterial = new MaterialModel(modelMesh, *modelMaterial);
 		model = new EntityModel(*modelModelMaterial, math::vec3(0.0f, 0.0f, -25), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
 
-		Mesh* modelMesh2 = utils::loadObj("res/objs/dragon.obj");
+		Mesh* modelMesh2 = utils::loadObj("res/objs/dragon.obj.gobj");
 		modelMaterial2 = new Material(modelShader2, NULL);
 		MaterialModel* modelModelMaterial2 = new MaterialModel(modelMesh2, *modelMaterial2);
 		model2 = new EntityModel(*modelModelMaterial2, math::vec3(10.0f, 0.0f, -25), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
@@ -518,7 +518,7 @@ public:
 		}
 		if (e.getButton() == GLFW_KEY_LEFT_SHIFT)
 		{
-			velocityPos.y = 0.2;
+			velocityNeg.y = 0.2;
 		}
 		if (e.getButton() == GLFW_KEY_SPACE)
 		{
@@ -566,7 +566,7 @@ public:
 			velocityNeg.y = 0;
 		}
 		if (e.getButton() == GLFW_KEY_SPACE)
-		{
+		{ 
 			velocityPos.y = 0;
 		}
 		return false;
