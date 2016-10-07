@@ -4,20 +4,29 @@ namespace greet { namespace model { namespace MeshFactory {
 	
 	math::vec3 calculateNormal(math::vec3 p1, math::vec3 p2, math::vec3 p3)
 	{
-		math::vec3 v1 = p3 - p1;
-		math::vec3 v2 = p2 - p1;
-		return v1.cross(v2);
+		// Calculate a normal of 3 points in space
+		math::vec3 v1 = p2 - p1;
+		math::vec3 v2 = p3 - p1;
+		math::vec3 normal = v1.cross(v2);
+		return normal;
 	}
 
 	float* calculateNormals(float* vertices, uint vertexCount, uint* indices, uint indexCount)
 	{
 		float* normals = new float[vertexCount*3];
+		memset(normals, 0, vertexCount * 3 * sizeof(float));
+		math::vec3 faceNormal;
+		math::vec3 p1,p2,p3;
 		for (int i = 0;i < indexCount;i += 3)
 		{
-			math::vec3 faceNormal = calculateNormal(((math::vec3*)vertices)[indices[i]], ((math::vec3*)vertices)[indices[i]], ((math::vec3*)vertices)[indices[i + 2]]);
+			p1 = ((math::vec3*)vertices)[indices[i]];
+			p2 = ((math::vec3*)vertices)[indices[i+1]];
+			p3 = ((math::vec3*)vertices)[indices[i+2]];
+			faceNormal = calculateNormal(p1,p2,p3);
+			//LOG_INFO(p1.x,p1.y,p2.z,p2.x,p2.y,p2.z,p3.x,p3.y,p3.z);
 			((math::vec3*)normals)[indices[i]] += faceNormal;
 			((math::vec3*)normals)[indices[i+1]] += faceNormal;
-			((math::vec3*)normals)[indices[i+1]] += faceNormal;
+			((math::vec3*)normals)[indices[i+2]] += faceNormal;
 		}
 		for (int i = 0;i < vertexCount;i++)
 		{
@@ -52,33 +61,33 @@ namespace greet { namespace model { namespace MeshFactory {
 		float halfWidth = width / 2.0f;
 		float halfLength = length / 2.0f;
 		float halfHeight = height / 2.0f;
-		((math::vec3*)vertices)[0]  = math::vec3(x+halfWidth, y-halfHeight, z-halfLength);
-		((math::vec3*)vertices)[1]  = math::vec3(x+halfWidth, y+halfHeight, z-halfLength);
-		((math::vec3*)vertices)[2]  = math::vec3(x+halfWidth, y+halfHeight, z+halfLength);
-		((math::vec3*)vertices)[3]  = math::vec3(x+halfWidth, y-halfHeight, z+halfLength);
+		((math::vec3*)vertices)[0]  = math::vec3(x-halfWidth, y-halfHeight, z-halfLength);
+		((math::vec3*)vertices)[1]  = math::vec3(x-halfWidth, y+halfHeight, z-halfLength);
+		((math::vec3*)vertices)[2]  = math::vec3(x-halfWidth, y+halfHeight, z+halfLength);
+		((math::vec3*)vertices)[3]  = math::vec3(x-halfWidth, y-halfHeight, z+halfLength);
 
-		((math::vec3*)vertices)[4]  = math::vec3(x-halfWidth, y-halfHeight, z-halfLength);
-		((math::vec3*)vertices)[5]  = math::vec3(x-halfWidth, y+halfHeight, z-halfLength);
-		((math::vec3*)vertices)[6]  = math::vec3(x-halfWidth, y+halfHeight, z+halfLength);
-		((math::vec3*)vertices)[7]  = math::vec3(x-halfWidth, y-halfHeight, z+halfLength);
+		((math::vec3*)vertices)[4]  = math::vec3(x+halfWidth, y-halfHeight, z-halfLength);
+		((math::vec3*)vertices)[5]  = math::vec3(x+halfWidth, y+halfHeight, z-halfLength);
+		((math::vec3*)vertices)[6]  = math::vec3(x+halfWidth, y+halfHeight, z+halfLength);
+		((math::vec3*)vertices)[7]  = math::vec3(x+halfWidth, y-halfHeight, z+halfLength);
 
 		float normals[8 * 3];
-		((math::vec3*)normals)[0] = math::vec3( 1.0f, -1.0f, -1.0f);
-		((math::vec3*)normals)[1] = math::vec3( 1.0f,  1.0f, -1.0f);
-		((math::vec3*)normals)[2] = math::vec3( 1.0f,  1.0f,  1.0f);
-		((math::vec3*)normals)[3] = math::vec3( 1.0f, -1.0f,  1.0f);
-		((math::vec3*)normals)[4] = math::vec3(-1.0f, -1.0f, -1.0f);
-		((math::vec3*)normals)[5] = math::vec3(-1.0f,  1.0f, -1.0f);
-		((math::vec3*)normals)[6] = math::vec3(-1.0f,  1.0f,  1.0f);
-		((math::vec3*)normals)[7] = math::vec3(-1.0f, -1.0f,  1.0f);
+		((math::vec3*)normals)[0] = math::vec3(-1.0f, -1.0f, -1.0f);
+		((math::vec3*)normals)[1] = math::vec3(-1.0f,  1.0f, -1.0f);
+		((math::vec3*)normals)[2] = math::vec3(-1.0f,  1.0f,  1.0f);
+		((math::vec3*)normals)[3] = math::vec3(-1.0f, -1.0f,  1.0f);
+		((math::vec3*)normals)[4] = math::vec3( 1.0f, -1.0f, -1.0f);
+		((math::vec3*)normals)[5] = math::vec3( 1.0f,  1.0f, -1.0f);
+		((math::vec3*)normals)[6] = math::vec3( 1.0f,  1.0f,  1.0f);
+		((math::vec3*)normals)[7] = math::vec3( 1.0f, -1.0f,  1.0f);
 	
 		uint indices[36] = {
-			 0, 1, 2, 0, 2, 3,
-			 3, 2, 6, 3, 6, 7,
+			 0, 2, 1, 0, 3, 2,
+			 3, 6, 2, 3, 7, 6,
 			 7, 5, 6, 7, 4, 5,
 			 4, 1, 5, 4, 0, 1,
-			 2, 1, 5, 2, 6, 5,
-			 3, 4, 0, 3, 7, 4 };
+			 2, 5, 1, 2, 6, 5,
+			 3, 0, 4, 3, 4, 7 };
 
 		Mesh* mesh = new Mesh(vertices,8,indices,36);
 		mesh->addAttribute(MESH_NORMALS_LOCATION, 3, normals);

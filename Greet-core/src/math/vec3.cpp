@@ -25,9 +25,9 @@ namespace greet{
 
 	vec3 vec3::cross(const vec3& vec) const
 	{
-		float x_ = y * z - z * y;
-		float y_ = z * x - x * z;
-		float z_ = x * y - y * x;
+		float x_ = y * vec.z - z * vec.y;
+		float y_ = z * vec.x - x * vec.z;
+		float z_ = x * vec.y - y * vec.x;
 		return vec3(x_, y_, z_);
 	}
 

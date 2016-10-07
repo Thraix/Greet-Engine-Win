@@ -20,7 +20,7 @@ uniform float reflectivity = 1;
 void main()
 {
 	out_color = vert_color;
-	//out_color *= vec4(0.8f,0.8f,0.8f,1.0f);
+	out_color *= vec4(0.6f,0.6f,0.6f,1.0f);
 	if(hasTexture > 0.5)
 	{
 		out_color *= texture(textureSampler,vert_texCoord);

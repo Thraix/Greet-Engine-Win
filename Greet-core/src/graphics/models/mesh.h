@@ -20,6 +20,7 @@ namespace greet { namespace model {
 		uint m_iboId;
 		uint m_vertexCount;
 		uint m_indexCount;
+		bool m_culling = true;
 		bool m_clockwise = false;
 
 	public:
@@ -34,8 +35,14 @@ namespace greet { namespace model {
 
 		inline void setClockwiseRender(bool clockwise) { m_clockwise = clockwise; }
 		inline bool isClockwiseRender() const { return m_clockwise; }
+
+		inline void setEnableCulling(bool culling) { m_culling = culling; }
+		inline bool isEnableCulling() const { return m_culling; }
+
 		void addAttribute(uint location, uint attributeSize, const float* data);
 		void addAttribute(uint location, uint attributeSize, const uint* data);
+		void setDefaultAttribute4f(uint location, const math::vec4& data);
+		void setDefaultAttribute3f(uint location, const math::vec3& data);
 	private:
 		void enableAttributes() const;
 		void disableAttributes() const;

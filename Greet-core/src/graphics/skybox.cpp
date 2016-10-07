@@ -6,6 +6,7 @@ namespace greet { namespace graphics {
 	{
 		m_shader = ShaderFactory::SkyboxShader();
 		m_mesh = model::MeshFactory::cube(0,0,0,1,1,1);
+		m_mesh->setClockwiseRender(true);
 	}
 
 	Skybox::~Skybox()

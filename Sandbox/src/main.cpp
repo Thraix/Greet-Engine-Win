@@ -283,11 +283,13 @@ class Core : public greet::internal::App, public greet::event::KeyListener, publ
 private:
 	BatchRenderer3D* renderer3d;
 	Material* modelMaterial;
+	Material* stallMaterial;
 
-	EntityModel* lightSource;
-	EntityModel* model;
-	EntityModel* model2;
+	EntityModel* stall;
+	EntityModel* dragon;
 	EntityModel* grid;
+	EntityModel* cube;
+	EntityModel* tetrahedron;
 
 	std::vector<EntityModel> models;
 
@@ -306,8 +308,11 @@ public:
 	Core::~Core()
 	{
 		delete modelMaterial;
-		delete model;
-		delete model2;
+		delete stall;
+		delete dragon;
+		delete grid;
+		delete cube;
+		delete tetrahedron;
 		delete renderer3d;
 		delete uilayer;
 		delete guilayer;
@@ -335,26 +340,41 @@ public:
 			map[i] = rand() / (float)RAND_MAX;
 		}
 
+
 		Shader* modelShader = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
+		Shader* stallShader = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
+
 		modelMaterial = new Material(modelShader, NULL);
-		Mesh* lightSourceMesh = model::MeshFactory::grid(0, 0, 0, 10, 10, 10, 10, map,10);
-		MaterialModel* lightSourceModelMaterial = new MaterialModel(lightSourceMesh, *modelMaterial);
-		lightSource = new EntityModel(*lightSourceModelMaterial, math::vec3(0, 0, 0), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
+		stallMaterial = new Material(stallShader,TextureManager::get("stall"));
 
-		Mesh* modelMesh = utils::loadObj("res/objs/stall.obj.gobj");
-		modelMaterial = new Material(modelShader, TextureManager::get("stall"));
-		//modelMaterial->setReflectivity(0.1)->setShineDamper(1);
-		MaterialModel* modelModelMaterial = new MaterialModel(modelMesh, *modelMaterial);
-		model = new EntityModel(*modelModelMaterial, math::vec3(0.0f, 0.0f, -25), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
-
-		Mesh* modelMesh2 = utils::loadObj("res/objs/dragon.obj.gobj");
-		MaterialModel* modelModelMaterial2 = new MaterialModel(modelMesh2, *modelMaterial);
-		model2 = new EntityModel(*modelModelMaterial2, math::vec3(10.0f, 0.0f, -25), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
-		
-
-		Mesh* gridMesh = model::MeshFactory::grid(0,0,0,100,100,100,100,map,10);
+		Mesh* gridMesh = model::MeshFactory::grid(0, 0, 0, 10, 10, 10, 10, map,1);
+		//gridMesh->setDefaultAttribute4f(MESH_COLORS_LOCATION, math::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+		gridMesh->setEnableCulling(false);
 		MaterialModel* gridModelMaterial = new MaterialModel(gridMesh, *modelMaterial);
-		grid = new EntityModel(*gridModelMaterial, math::vec3(0, 0, 0), math::vec3(1, 1, 1), math::vec3(0, 0, 0));
+		grid = new EntityModel(*gridModelMaterial, math::vec3(0, 0, 0), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
+
+		Mesh* cubeMesh = model::MeshFactory::cube(0,0,0,10,10,10);
+		MaterialModel* cubeModelMaterial = new MaterialModel(cubeMesh, *modelMaterial);
+		cube = new EntityModel(*cubeModelMaterial, math::vec3(30, 0, 0), math::vec3(1, 1, 1), math::vec3(0, 0, 0));
+
+		Mesh* tetrahedronMesh = model::MeshFactory::tetrahedron(0,0,0,10);
+		MaterialModel* tetrahedronModelMaterial = new MaterialModel(tetrahedronMesh, *modelMaterial);
+		tetrahedron = new EntityModel(*tetrahedronModelMaterial, math::vec3(30, 0, 10), math::vec3(1, 1, 1), math::vec3(0, 0, 0));
+
+		Mesh* stallMesh = utils::loadObj("res/objs/stall.obj.gobj");
+		stallMaterial->setReflectivity(0.1)->setShineDamper(1);
+		MaterialModel* stallModelMaterial = new MaterialModel(stallMesh, *stallMaterial);
+		stall = new EntityModel(*stallModelMaterial, math::vec3(0.0f, 0.0f, -25), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
+
+		Mesh* dragonMesh = utils::loadObj("res/objs/dragon.obj.gobj");
+		MaterialModel* dragonModelMaterial = new MaterialModel(dragonMesh, *modelMaterial);
+		dragon = new EntityModel(*dragonModelMaterial, math::vec3(10.0f, 0.0f, -25), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
+		
+		//Mesh* gridMesh = model::MeshFactory::cube(0,0,0,10,10,10);
+		//gridMesh->setEnableCulling(false);
+		//MaterialModel* gridModelMaterial = new MaterialModel(gridMesh, *modelMaterial);
+		//grid = new EntityModel(*gridModelMaterial, math::vec3(0, 0, 0), math::vec3(1, 1, 1), math::vec3(0, 0, 0));
+
 		//for (uint i = 0;i < 2000;i++)
 		//{
 		//	models.push_back(EntityModel(*modelModelMaterial, math::vec3(random()*100, random() * 100, random() * 100), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(random() * 360, random() * 360, random() * 360)));
@@ -379,7 +399,7 @@ public:
 		slider = new Slider(math::vec2(10,100),math::vec2(200,30),0,255,1);
 		button = new Button(math::vec2(10,120+30),math::vec2(100,40),"Test");
 		frame = new Frame(math::vec2(10, 10), math::vec2(500, 500),"GUI Frame");
-		uilayer->add(fps);
+		//uilayer->add(fps);
 		frame->add(slider);
 		frame->add(button);
 		guilayer->add(frame);
@@ -387,10 +407,11 @@ public:
 		uilayer->add(cursor);
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(frame->m_position.x, 100, 5, true, new drivers::DriverAdapter()));
 
-		renderer3d->submit(model);
-		renderer3d->submit(model2);
-		renderer3d->submit(lightSource);
+		renderer3d->submit(stall);
+		renderer3d->submit(dragon);
 		renderer3d->submit(grid);
+		renderer3d->submit(cube);
+		renderer3d->submit(tetrahedron);
 		//for (uint i = 0;i < 2000;i++)
 		//{
 		//	renderer3d->submit(&models[i]);
@@ -453,9 +474,9 @@ public:
 			}
 		}
 		//model->rotate(elapsedTime*100, elapsedTime * 100, elapsedTime * 100);
-		model->update(elapsedTime);
-		model2->update(elapsedTime);
-		lightSource->update(elapsedTime);
+		//model->update(elapsedTime);
+		//model2->update(elapsedTime);
+		//lightSource->update(elapsedTime);
 		//for (uint i = 0;i < 2000;i++)
 		//{
 		//	models[i].update(elapsedTime);

@@ -20,7 +20,7 @@ namespace greet { namespace model {
 		inline const MaterialModel& getMaterialModel() const { return m_model; }
 		inline const math::mat4& getTransformationMatrix() const { return m_transformationMatrix; }
 		void update(float timeElapsed);
-
+		void updateTransformation();
 		void move(float dx, float dy, float dz) { m_position.x += dx;m_position.y = dy; m_position.z = dz; m_hasChanged = true; }
 		void scale(float x, float y, float z) { m_scale.x += x;m_scale.y += y; m_scale.z += z; m_hasChanged = true; }
 		void rotate(float x, float y, float z) { m_rotation.x += x;m_rotation.y += y; m_rotation.z += z; m_hasChanged = true; }

@@ -18,7 +18,8 @@ namespace greet { namespace model {
 
 		// Attributes 
 		addAttribute(MESH_VERTICES_LOCATION, 3, vertices); // vertices
-
+		
+		// Set default color to white
 		glVertexAttrib4f(MESH_COLORS_LOCATION,1.0f,1.0f,1.0f,1.0f);
 
 		// Unbind
@@ -43,6 +44,15 @@ namespace greet { namespace model {
 
 	void Mesh::bind() const
 	{
+		if (m_culling)
+		{	
+			glEnable(GL_CULL_FACE);
+			glFrontFace(m_clockwise ? GL_CW : GL_CCW);
+		}
+		else
+		{
+			glDisable(GL_CULL_FACE);
+		}
 		glBindVertexArray(m_vaoId);
 		enableAttributes();
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId);
@@ -53,6 +63,7 @@ namespace greet { namespace model {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		disableAttributes();
 		glBindVertexArray(0);
+		glDisable(GL_CULL_FACE);
 	}
 
 	void Mesh::enableAttributes() const
@@ -112,5 +123,17 @@ namespace greet { namespace model {
 		glBindVertexArray(0);
 
 	}
+	void Mesh::setDefaultAttribute4f(uint location, const math::vec4& data)
+	{
+		glBindVertexArray(m_vaoId);
+		glVertexAttrib4f(location,data.x,data.y,data.z,data.w);
+		glBindVertexArray(0);	
+	}
 
+	void Mesh::setDefaultAttribute3f(uint location, const math::vec3& data)
+	{
+		glBindVertexArray(m_vaoId);
+		glVertexAttrib3f(location,data.x,data.y,data.z);
+		glBindVertexArray(0);
+	}
 }}

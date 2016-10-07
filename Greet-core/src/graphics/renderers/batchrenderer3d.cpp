@@ -33,7 +33,6 @@ namespace greet { namespace graphics {
 	void BatchRenderer3D::flush() const
 	{
 		glDepthRange(m_near, m_far);
-		glEnable(GL_CULL_FACE);
 		const math::mat4& viewMatrix = math::mat4::viewMatrix(m_camera.position, math::vec3(m_camera.pitch, m_camera.yaw, m_camera.roll));
 		for (BatchRenderer3DMap* map : m_map)
 		{
@@ -41,7 +40,6 @@ namespace greet { namespace graphics {
 			map->m_material.getMaterial().getShader().setUniformMat4("projectionMatrix", m_projectionMatrix);
 			map->m_material.getMaterial().getShader().setUniformMat4("viewMatrix", viewMatrix);
 			const Mesh& mesh = map->m_material.getMesh();
-			glFrontFace(mesh.isClockwiseRender() ? GL_CW : GL_CCW);
 			mesh.bind();
 			for (const EntityModel* model : map->m_models)
 			{
@@ -51,7 +49,6 @@ namespace greet { namespace graphics {
 			mesh.unbind();
 			map->m_material.getMaterial().unbind();
 		}
-		glDisable(GL_CULL_FACE);
 	}
 
 	void BatchRenderer3D::end()
