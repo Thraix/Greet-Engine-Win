@@ -33,5 +33,4 @@ namespace greet { namespace graphics {
 		m_map->disable();
 		m_shader->disable();
 	}
-
 }}

@@ -20,7 +20,7 @@ uniform float reflectivity = 1;
 void main()
 {
 	out_color = vert_color;
-	out_color *= vec4(0.8f,0.8f,0.8f,1.0f);
+	//out_color *= vec4(0.8f,0.8f,0.8f,1.0f);
 	if(hasTexture > 0.5)
 	{
 		out_color *= texture(textureSampler,vert_texCoord);
@@ -32,7 +32,7 @@ void main()
 	vec3 unitLightVector = normalize(toLightVector);
 
 	float nDot = dot(unitNormal, unitLightVector);
-	float brightness = max(nDot,0.2);
+	float brightness = max(nDot,0.5);
 	vec3 diffuse = light_color * brightness;
 
 	vec3 unitVectorToCamera = normalize(toCameraVector);
@@ -55,6 +55,6 @@ void main()
 	//out_color = vec4(finalSpecular.xyz,1.0);
 	//out_color = vec4(out_color.rgb*visibility,1.0);
 	//out_color.a = 1.0f;
-	//out_color = vec4(surfaceNormal,1.0f);
+	//out_color = vec4(surfaceNormal*0.5f+0.5f,1.0f);
 
 }

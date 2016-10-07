@@ -10,10 +10,11 @@ out vec3 surfaceNormal;
 out vec3 toLightVector;
 out vec3 toCameraVector;
 out float visibility;
+
 uniform mat4 transformationMatrix;
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
-uniform vec3 light_position = vec3(0.0,0.0,0.0);
+uniform vec3 light_position = vec3(0.0,0.0,-10.0);
 
 const float density = 0.007;
 const float gradient = 1.5;

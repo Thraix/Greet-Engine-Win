@@ -282,14 +282,12 @@ class Core : public greet::internal::App, public greet::event::KeyListener, publ
 
 private:
 	BatchRenderer3D* renderer3d;
-	Material* lightSourceMaterial;
-	EntityModel* lightSource;
-
 	Material* modelMaterial;
-	EntityModel* model;
 
-	Material* modelMaterial2;
+	EntityModel* lightSource;
+	EntityModel* model;
 	EntityModel* model2;
+	EntityModel* grid;
 
 	std::vector<EntityModel> models;
 
@@ -309,7 +307,6 @@ public:
 	{
 		delete modelMaterial;
 		delete model;
-		delete modelMaterial2;
 		delete model2;
 		delete renderer3d;
 		delete uilayer;
@@ -332,26 +329,32 @@ public:
 		Skybox* skybox = new Skybox(new CubeMap("res/textures/skybox-top.png","res/textures/skybox-bottom.png","res/textures/skybox-left.png","res/textures/skybox-right.png","res/textures/skybox-front.png","res/textures/skybox-back.png"));
 		renderer3d = new BatchRenderer3D(Window::getWidth(), Window::getHeight(), *camera,70,0.001f,100.0f, skybox);
 
-		Shader* modelShader = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
-		Shader* lightSourceShader = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
-		Shader* modelShader2 = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
+		float* map = new float[101 * 101];
+		for (int i = 0;i < 101 * 101;i++)
+		{
+			map[i] = rand() / (float)RAND_MAX;
+		}
 
-		Mesh* lightSourceMesh = model::MeshFactory::tetrahedron(0,0,0,10);
-		lightSourceMaterial = new Material(lightSourceShader, NULL);
-		MaterialModel* lightSourceModelMaterial = new MaterialModel(lightSourceMesh, *lightSourceMaterial);
-		lightSource = new EntityModel(*lightSourceModelMaterial, math::vec3(25, 25, 12.5), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
+		Shader* modelShader = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
+		modelMaterial = new Material(modelShader, NULL);
+		Mesh* lightSourceMesh = model::MeshFactory::grid(0, 0, 0, 10, 10, 10, 10, map,10);
+		MaterialModel* lightSourceModelMaterial = new MaterialModel(lightSourceMesh, *modelMaterial);
+		lightSource = new EntityModel(*lightSourceModelMaterial, math::vec3(0, 0, 0), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
 
 		Mesh* modelMesh = utils::loadObj("res/objs/stall.obj.gobj");
 		modelMaterial = new Material(modelShader, TextureManager::get("stall"));
-		modelMaterial->setReflectivity(0.1)->setShineDamper(1);
+		//modelMaterial->setReflectivity(0.1)->setShineDamper(1);
 		MaterialModel* modelModelMaterial = new MaterialModel(modelMesh, *modelMaterial);
 		model = new EntityModel(*modelModelMaterial, math::vec3(0.0f, 0.0f, -25), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
 
 		Mesh* modelMesh2 = utils::loadObj("res/objs/dragon.obj.gobj");
-		modelMaterial2 = new Material(modelShader2, NULL);
-		MaterialModel* modelModelMaterial2 = new MaterialModel(modelMesh2, *modelMaterial2);
+		MaterialModel* modelModelMaterial2 = new MaterialModel(modelMesh2, *modelMaterial);
 		model2 = new EntityModel(*modelModelMaterial2, math::vec3(10.0f, 0.0f, -25), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
+		
 
+		Mesh* gridMesh = model::MeshFactory::grid(0,0,0,100,100,100,100,map,10);
+		MaterialModel* gridModelMaterial = new MaterialModel(gridMesh, *modelMaterial);
+		grid = new EntityModel(*gridModelMaterial, math::vec3(0, 0, 0), math::vec3(1, 1, 1), math::vec3(0, 0, 0));
 		//for (uint i = 0;i < 2000;i++)
 		//{
 		//	models.push_back(EntityModel(*modelModelMaterial, math::vec3(random()*100, random() * 100, random() * 100), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(random() * 360, random() * 360, random() * 360)));
@@ -361,10 +364,7 @@ public:
 		modelShader->enable();
 		l->setToUniform(modelShader, "light");
 		modelShader->disable();
-
-		modelShader2->enable();
-		l->setToUniform(modelShader2, "light");
-		modelShader2->disable();
+	
 		delete l;
 
 		FontManager::add(new Font("Anonymous Pro.ttf", "anonymous", 72));
@@ -390,6 +390,7 @@ public:
 		renderer3d->submit(model);
 		renderer3d->submit(model2);
 		renderer3d->submit(lightSource);
+		renderer3d->submit(grid);
 		//for (uint i = 0;i < 2000;i++)
 		//{
 		//	renderer3d->submit(&models[i]);
@@ -472,16 +473,11 @@ public:
 		if (e.getButton() == GLFW_KEY_F5)
 		{
 			Shader* modelShader = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
-			Shader* modelShader2 = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
 			modelMaterial->setShader(modelShader);
-			modelMaterial2->setShader(modelShader2);
 			Light* l = new Light(math::vec3(25, 25, 12.5), 0xffffffff);
 			modelShader->enable();
 			l->setToUniform(modelShader, "light");
 			modelShader->disable();
-			modelShader2->enable();
-			l->setToUniform(modelShader2, "light");
-			modelShader2->disable();
 			delete l;
 		}
 
