@@ -12,19 +12,20 @@ namespace greet { namespace graphics {
 	class Shader
 	{
 	private:
-		const char *m_name;
-		const char *m_vertPath;
-		const char *m_fragPath;
-		const char *m_vertSrc;
-		const char *m_fragSrc;
+		std::string m_name;
+		std::string m_vertPath;
+		std::string m_fragPath;
+		std::string m_vertSrc;
+		std::string m_fragSrc;
 		GLuint m_shaderID;
 
 	private:
 		GLuint load();
 		GLuint getUniformLocation(const GLchar *name) const;
 	public:
-		Shader(const char *vertPath, const char *fragPath);
-		Shader(const char *name, const char *vertSrc, const char *fragSrc);
+		Shader(const std::string& vertPath, const std::string& fragPath);
+		Shader(const std::string& name, const std::string& vertSrc, const std::string& fragSrc);
+
 		~Shader();
 		void enable() const;
 		

@@ -2,19 +2,19 @@
 #include "shader.h"
 namespace greet {
 	namespace graphics {
-	Shader::Shader(const char *vertPath, const char *fragPath)
-		:m_name(vertPath), m_vertPath(vertPath), m_fragPath(fragPath)
-	{
 
-		std::string vertSourceString = utils::read_file(m_vertPath);
-		std::string fragSourceString = utils::read_file(m_fragPath);
-		m_vertSrc = vertSourceString.c_str();
-		m_fragSrc = fragSourceString.c_str();
+	Shader::Shader(const std::string& vertPath, const std::string& fragPath)
+		: m_name(vertPath), m_vertPath(vertPath), m_fragPath(fragPath)
+	{
+		std::string vertSourceString = utils::read_file(m_vertPath.c_str());
+		std::string fragSourceString = utils::read_file(m_fragPath.c_str());
+		m_vertSrc = vertSourceString;
+		m_fragSrc = fragSourceString;
 
 		m_shaderID = load();
 	}
 
-	Shader::Shader(const char *name, const char *vertSrc, const char *fragSrc)
+	Shader::Shader(const std::string& name, const std::string& vertSrc, const std::string& fragSrc)
 		: m_name(name), m_vertSrc(vertSrc), m_fragSrc(fragSrc)
 	{
 		m_shaderID = load();
@@ -25,8 +25,8 @@ namespace greet {
 		GLuint program = glCreateProgram();
 		GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
 		GLuint fragment = glCreateShader(GL_FRAGMENT_SHADER);
-
-		glShaderSource(vertex, 1, &m_vertSrc, NULL);
+		const char* vSrc = m_vertSrc.c_str();
+		glShaderSource(vertex, 1, &vSrc, NULL);
 		glCompileShader(vertex);
 
 		GLint resultVert;
@@ -44,7 +44,8 @@ namespace greet {
 			return ShaderFactory::DefaultShader()->m_shaderID;
 		}
 
-		glShaderSource(fragment, 1, &m_fragSrc, NULL);
+		const char* fSrc = m_fragSrc.c_str();
+		glShaderSource(fragment, 1, &fSrc, NULL);
 		glCompileShader(fragment);
 
 		GLint resultFrag;
