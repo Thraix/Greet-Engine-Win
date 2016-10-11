@@ -10,10 +10,12 @@
 #define GREET_ERROR_GOBJ_READ		BIT(4)
 #define GREET_ERROR_SHADER_VERTEX	BIT(5)
 #define GREET_ERROR_SHADER_FRAGMENT	BIT(6)
+#define GREET_ERROR_SHADER_GEOMETRY	BIT(7)
 
 namespace greet { namespace utils { namespace ErrorHandle {
 
 	static uint errorCode;
 	static void setErrorCode(uint errorCode) { ErrorHandle::errorCode |= errorCode; };
 	static uint getErrorCode() { return errorCode;  }
+	static void resetErrorCode() { ErrorHandle::errorCode == 0; }
 }}}

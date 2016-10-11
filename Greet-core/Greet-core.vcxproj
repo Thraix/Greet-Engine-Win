@@ -285,6 +285,13 @@
     <None Include="..\..\GreetWorkspace\GreetEngine\greet-core\src\graphics\textures\frame.bin" />
     <None Include="..\Performance4.psess" />
     <None Include="ClassDiagram.cd" />
+    <None Include="src\graphics\shaders\basiclightshader.frag" />
+    <None Include="src\graphics\shaders\debugshader.frag" />
+    <None Include="src\graphics\shaders\default2dshader.frag" />
+    <None Include="src\graphics\shaders\default2dshader.vert" />
+    <None Include="src\graphics\shaders\ledshader.frag" />
+    <None Include="src\graphics\shaders\skyboxshader.frag" />
+    <None Include="src\graphics\shaders\skyboxshader.vert" />
     <None Include="src\graphics\textures\frame.bin" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -341,8 +341,8 @@ public:
 		}
 
 
-		Shader* modelShader = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
-		Shader* stallShader = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
+		Shader* modelShader = Shader::fromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
+		Shader* stallShader = Shader::fromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
 
 		modelMaterial = new Material(modelShader, NULL);
 		stallMaterial = new Material(stallShader,TextureManager::get("stall"));
@@ -493,7 +493,7 @@ public:
 	{
 		if (e.getButton() == GLFW_KEY_F5)
 		{
-			Shader* modelShader = new Shader("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
+			Shader* modelShader = Shader::fromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
 			modelMaterial->setShader(modelShader);
 			Light* l = new Light(math::vec3(25, 25, 12.5), 0xffffffff);
 			modelShader->enable();

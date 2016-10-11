@@ -12,19 +12,17 @@ namespace greet { namespace graphics {
 	class Shader
 	{
 	private:
-		std::string m_name;
-		std::string m_vertPath;
-		std::string m_fragPath;
-		std::string m_vertSrc;
-		std::string m_fragSrc;
 		GLuint m_shaderID;
 
 	private:
-		GLuint load();
+		GLuint load(const std::string& geomSrc, const std::string& vertSrc, const std::string& fragSrc, bool hasGeometry);
+		GLuint load(const std::string& vertSrc, const std::string& fragSrc);
+		GLuint attachShader(const GLuint program, const std::string& shaderSrc, const GLuint shaderType);
 		GLuint getUniformLocation(const GLchar *name) const;
+
+		Shader(const std::string& geomSrc, const std::string& vertSrc, const std::string& fragSrc);
+		Shader(const std::string& vertSrc, const std::string& fragSrc);
 	public:
-		Shader(const std::string& vertPath, const std::string& fragPath);
-		Shader(const std::string& name, const std::string& vertSrc, const std::string& fragSrc);
 
 		~Shader();
 		void enable() const;
@@ -41,9 +39,10 @@ namespace greet { namespace graphics {
 		void setUniformMat3(const GLchar *name, const math::mat3 &value) const;
 		void setUniformMat4(const GLchar *name, const math::mat4 &value) const;
 	public:
-		static Shader* fromFile(const char* vertPath, const char* fragPath);
-		static Shader* fromSource(const char* vertSrc, const char* fragSrc);
-		static Shader* fromSource(const char* name, const char* vertSrc, const char* fragSrc);
+		static Shader* fromFile(const std::string& vertPath, const std::string& fragPath);
+		static Shader* fromFile(const std::string& geomPath, const std::string& vertPath, const std::string& fragPath);
+		static Shader* fromSource(const std::string& vertSrc, const std::string& fragSrc);
+		static Shader* fromSource(const std::string& geomSrc, const std::string& vertSrc, const std::string& fragSrc);
 	};
 
 }}
