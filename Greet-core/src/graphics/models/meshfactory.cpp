@@ -132,6 +132,11 @@ namespace greet { namespace model { namespace MeshFactory {
 		return mesh;
 	}
 
+	Mesh* grid(float x, float y, float z, float width, float length, uint gridWidth, uint gridLength)
+	{
+		return grid(x,y,z,width,length,gridWidth,gridLength,NULL,0);
+	}
+
 	Mesh* grid(float x, float y, float z, float width, float length, uint gridWidth, uint gridLength, float* heightMap, float height)
 	{
 		if (gridWidth < 0 || gridLength < 0)
@@ -147,7 +152,7 @@ namespace greet { namespace model { namespace MeshFactory {
 		{
 			for (uint ix = 0;ix <= gridWidth;ix++)
 			{
-				float heightM = heightMap[ix + iz*(gridWidth + 1)];
+				float heightM = heightMap == NULL ? 0 : heightMap[ix + iz*(gridWidth + 1)];
 				((math::vec3*)vertices)[ix + iz*(gridWidth + 1)] = math::vec3(x + ix*tileWidth, y+heightM*height, z + iz*tileLength);
 				/*if (heightM < 0.2)
 				{

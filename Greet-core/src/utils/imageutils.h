@@ -103,6 +103,29 @@ namespace greet {namespace utils{
 		return result;
 	}
 
+	inline BYTE* cropImage(const BYTE* bits,  uint width,  uint height,  uint bpp,  uint cx,  uint cy,  uint cwidth,  uint cheight)
+	{
+		if (cx >= width || cy >= height || cx + cwidth > width || cy + cheight > height)
+		{
+			LOG_ERROR("IMAGEUTILS", "Invalid bounds when cropping image. ", cx, cy, cwidth, cheight);
+			ErrorHandle::setErrorCode(GREET_ERROR_IMAGE_CROP);
+			return graphics::ImageFactory::getCropErrorImage(&width,&height,&bpp);
+		}
+		cy = height - cheight - cy;
+		bpp = bpp >> 3;
+		BYTE* result = new BYTE[cwidth*cheight*bpp];
+		bits += (cx+cy*width)*bpp;
+		for (uint y = 0;y < cheight;y++)
+		{
+			memcpy(result, bits, cwidth*bpp);
+			bits += width*bpp;
+			result += cwidth*bpp;
+		}
+		result -= cwidth*bpp*cheight;
+		bits -= width*bpp*cheight;
+		return result;
+	}
+
 	inline void saveImageBytes(const char* filepath, const char* output)
 	{
 		uint width,height,bpp;

@@ -331,7 +331,7 @@ public:
 		TextureManager::add(new Texture("res/textures/mask2.png", "mask2"));
 
 		camera = new Camera(math::vec3(0,0,0));
-		Skybox* skybox = new Skybox(new CubeMap("res/textures/skybox-top.png","res/textures/skybox-bottom.png","res/textures/skybox-left.png","res/textures/skybox-right.png","res/textures/skybox-front.png","res/textures/skybox-back.png"));
+		Skybox* skybox = new Skybox(new CubeMap("res/textures/skybox.png"));
 		renderer3d = new BatchRenderer3D(Window::getWidth(), Window::getHeight(), *camera,70,0.001f,100.0f, skybox);
 
 		float* map = new float[101 * 101];
@@ -617,12 +617,12 @@ public:
 		//guilayer->render();
 		uilayer->render();
 
-		m_geomShaderTest->enable();
-		glBegin(GL_POINTS);
-		glColor3f(1,1,1);
-		glVertex2f(0, 0);
-		glEnd();
-		m_geomShaderTest->disable();
+		//m_geomShaderTest->enable();
+		//glBegin(GL_POINTS);
+		//glColor3f(1,1,1);
+		//glVertex2f(0, 0);
+		//glEnd();
+		//m_geomShaderTest->disable();
 	}
 	
 	void windowResize(int width, int height) override

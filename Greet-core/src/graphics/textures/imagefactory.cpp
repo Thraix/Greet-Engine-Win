@@ -16,6 +16,11 @@ namespace greet { namespace graphics{ namespace ImageFactory
 	{
 		return getErrorImage(width,height,bpp,0x00ffff,0x00aaaa);
 	}
+
+	BYTE* getCropErrorImage(uint* width, uint* height, uint* bpp)
+	{
+		return getErrorImage(width,height,bpp,0xff0000,0xaa0000);
+	}
 	
 	BYTE* getErrorImage(uint* width, uint* height, uint* bpp, uint lightColor, uint darkColor)
 	{
