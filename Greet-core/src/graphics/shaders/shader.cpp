@@ -72,7 +72,6 @@ namespace greet {
 				LOG_ERROR("SHADER", "Failed to compile geometry Shader!\n", &error[0]);
 				ErrorHandle::setErrorCode(GREET_ERROR_SHADER_GEOMETRY);
 			}
-
 			glDeleteShader(shader);
 			return ShaderFactory::DefaultShader()->m_shaderID;
 		}	

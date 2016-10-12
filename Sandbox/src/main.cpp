@@ -290,7 +290,7 @@ private:
 	EntityModel* grid;
 	EntityModel* cube;
 	EntityModel* tetrahedron;
-
+	Shader* m_geomShaderTest;
 	std::vector<EntityModel> models;
 
 	Camera* camera;
@@ -343,6 +343,7 @@ public:
 
 		Shader* modelShader = Shader::fromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
 		Shader* stallShader = Shader::fromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
+		m_geomShaderTest = Shader::fromFile("res/shaders/2dshader.geom","res/shaders/2dshader.vert", "res/shaders/2dshader.frag");
 
 		modelMaterial = new Material(modelShader, NULL);
 		stallMaterial = new Material(stallShader,TextureManager::get("stall"));
@@ -615,6 +616,13 @@ public:
 		renderer3d->end();
 		//guilayer->render();
 		uilayer->render();
+
+		m_geomShaderTest->enable();
+		glBegin(GL_POINTS);
+		glColor3f(1,1,1);
+		glVertex2f(0, 0);
+		glEnd();
+		m_geomShaderTest->disable();
 	}
 	
 	void windowResize(int width, int height) override
