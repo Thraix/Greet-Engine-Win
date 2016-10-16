@@ -27,7 +27,6 @@ void main()
 		if(out_color.a < 0.1)
 			discard;
 	}
-
 	vec3 unitNormal = normalize(surfaceNormal);
 	vec3 unitLightVector = normalize(toLightVector);
 

@@ -88,6 +88,7 @@ namespace greet { namespace graphics {
 		inline static math::vec4 getBackgroundColor() { return bgColor; }
 		inline static int getWidth() { return width; };
 		inline static int getHeight() { return height; };
+		inline static void setTitle(const std::string& title) { glfwSetWindowTitle(window,title.c_str()); }
 
 		//Mouse Positions
 		inline static math::vec2 getMousePos(math::mat3 transform) { return transform.inverse()*mousePos; }

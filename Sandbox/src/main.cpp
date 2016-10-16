@@ -1,247 +1,3 @@
-#if 0
-
-#include <camera\camera.h>
-#include <internal\app.h>
-#include <entity\entity.h>
-#include <graphics\gui\frame.h>
-#include <graphics\gui\panel.h>
-#include <graphics\atlas\atlasmanager.h>
-#include <graphics\renderers/batchrenderer.h>
-#include <graphics\shaders\shaderfactory.h>
-#include <graphics\layers\box2dlayer.h>
-//#include <graphics/renderers/renderer3d.h>
-//#include <graphics/models/mesh.h>
-
-
-using namespace greet;
-using namespace graphics;
-using namespace audio;
-//using namespace model;
-
-class Core : public greet::internal::App
-{
-private:
-	entity::Entity* e;
-	entity::Entity* e2;
-	b2World* world;
-	Label* fps;
-	Label* fps2;
-	Frame* frame;
-	//Renderer3D* renderer3d;
-	//Mesh* mesh;
-public:
-
-public:
-	Core()
-		:App()
-	{
-
-	}
-
-	~Core()
-	{
-		camera::Camera::destroyCamera();
-		delete world;
-	}
-
-	void init() override
-	{
-		createWindow("Best Game Ever", 960, 540);
-		camera::Camera::initCamera(m_window);
-		setFrameCap(144);
-		LOG_INFO(getFrameCap());
-		FontManager::add(new Font("Anonymous Pro.ttf", "anonymous", 72));
-		Layer* uilayer = new Layer(new BatchRenderer(), ShaderFactory::DefaultShader(),math::mat3::orthographic(0.0f, (float)m_window->getWidth(), 0.0f, (float)m_window->getHeight()));
-		frame = new Frame(math::vec2(10, 10), math::vec2(370, 400), "Console");
-		Panel* panel = new Panel(math::vec2(-0, -0), frame->getContentSize());
-		panel->setBackgroundColor(0xff777777);
-		frame->add(panel);
-		fps2 = new Label("fps", math::vec2(15, 65), "anonymous", 72, 0xff000000);
-		fps = new Label("fps", math::vec2(10, 60), "anonymous", 72, 0xffff00ff);
-		panel->add(fps2);
-		panel->add(fps);
-		uilayer->add(frame);
-		//renderer3d = new Renderer3D();
-		//LOG_INFO(math::vec2(10,20));
-
-		TextureManager::add(new Texture("res/textures/test.png", "test"));
-		TextureManager::add(new Texture("res/textures/animation.png", "animation"));
-		AtlasManager::add(new Atlas("atlas32", 128, 32));
-		Atlas* atlas32 = AtlasManager::get("atlas32");
-
-		atlas32->addTexture("animation", "res/textures/animation.png");
-		atlas32->addTexture("animation2", "res/textures/animation.png");
-		atlas32->addTexture("grass", "res/textures/test3.png");
-
-
-		m_window->setBackgroundColor(math::vec4(0.5f, 0.5f, 0.5f, 1.0f));
-
-
-		world = new b2World(b2Vec2(0, 0));
-		e = new entity::Entity(math::vec2(20, 20), math::vec2(5, 5), 0xffff00ff, world);
-		e2 = new entity::Entity(math::vec2(10, 10), math::vec2(5, 5), 0xffff00ff, world);
-		//e->m_body->SetAngularVelocity(60);
-		Layer* gamelayer = new Layer(new BatchRenderer(), ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 20.0f, 0.0f, (float)m_window->getHeight() / 20.0f));
-		gamelayer->add(e);
-		gamelayer->add(e2);
-
-		Layer* layer = new Box2DLayer(ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)m_window->getWidth() / 20.0f, 0.0f, (float)m_window->getHeight() / 20.0f), world);
-		createPoly(gamelayer, 15, 15, 6, 5, 0xff00ffff);
-
-		createBody(gamelayer, 0, -1, (float)m_window->getWidth() / 20.0f, 1, 0xff00ffff);
-		createBody(gamelayer, 0, (float)m_window->getHeight() / 20.0f, (float)m_window->getWidth() / 20.0f, 1, 0xff00ffff);
-		createBody(gamelayer, -1, 0, 1, (float)m_window->getHeight() / 20.0f, 0xff00ffff);
-		createBody(gamelayer, (float)m_window->getWidth() / 20.0f, 0, 1, (float)m_window->getHeight() / 20.0f, 0xff00ffff);
-
-		camera::Camera::getInstance()->addLayer(gamelayer, 0);
-		camera::Camera::getInstance()->addLayer(layer, 1);
-		camera::Camera::getInstance()->addLayer(uilayer, 2);
-		//camera::Camera::getInstance()->setViewport(0, 0, 1280, 1280*9/16);
-
-
-		//float vertices[12] = {		-0.5f,  0.5f, 0.0f,
-		//							-0.5f, -0.5f, 0.0f,
-		//							 0.5f, -0.5f, 0.0f,
-		//							 0.5f,  0.5f, 0.0f
-		//							};
-
-		//uint indices[6] = { 0,1,3,3,1,2 };
-
-		//mesh = new Mesh(vertices, 12,indices,6);
-	}
-
-	void createBody(Layer* layer, float x, float y, float width, float height, uint color)
-	{
-		b2BodyDef def;
-		def.type = b2_staticBody;
-		def.position.Set(x, y);
-		def.userData = this;
-		b2Body* m_body = world->CreateBody(&def);
-		b2PolygonShape shape;
-		b2Vec2 vecs[4];
-		vecs[0] = b2Vec2(0, 0);
-		vecs[1] = b2Vec2(0, height);
-		vecs[2] = b2Vec2(width, height);
-		vecs[3] = b2Vec2(width, 0);
-
-		shape.Set(vecs, 4);
-		b2FixtureDef fixtureDef;
-		fixtureDef.shape = &shape;
-		fixtureDef.density = 100.0f;
-		fixtureDef.friction = 93.0f;
-		m_body->CreateFixture(&fixtureDef);
-		layer->add(new RenderablePoly(math::vec2(x, y), math::b2Vec2ToVec2(vecs, 4), 4, color));
-		uint bpp, width2, height2;
-			
-	}
-
-	void createPoly(Layer* layer, float x, float y, uint vertex, uint size, uint color)
-	{
-		b2BodyDef def;
-		def.type = b2_staticBody;
-		def.position.Set(x, y);
-		def.userData = this;
-		b2Body* m_body = world->CreateBody(&def);
-		b2PolygonShape shape;
-		b2Vec2* vecs = math::getPoly(vertex, size, true);
-		shape.Set(vecs, vertex);
-		b2FixtureDef fixtureDef;
-		fixtureDef.shape = &shape;
-		fixtureDef.density = 100.0f;
-		fixtureDef.friction = 93.0f;
-		m_body->CreateFixture(&fixtureDef);
-		layer->add(new RenderablePoly(math::vec2(x, y), math::b2Vec2ToVec2(vecs, vertex), vertex, color));
-	}
-
-	void tick() override
-	{
-		std::string s = utils::toString(getFPS()) + " fps";
-		fps->text = s;
-		fps2->text = s;
-	}
-
-	bool toggle = false;
-	math::vec2 offset;
-	bool press = false;
-	void update(float timeElapsed) override
-	{
-		float dx = 0, dy = 0;
-		if (Window::isKeyDown(GLFW_KEY_A))
-		{
-			dx--;
-		}
-		if (Window::isKeyDown(GLFW_KEY_D))
-		{
-			dx++;
-		}
-		if (Window::isKeyDown(GLFW_KEY_W))
-		{
-			dy--;
-		}
-		if (Window::isKeyDown(GLFW_KEY_S))
-		{
-			dy++;
-		}
-
-		if (Window::isMouseButtonPressed(GLFW_MOUSE_BUTTON_1))
-		{
-			math::vec2 mouse = Window::getMousePos(camera::Camera::getInstance()->getLayer(2)->getProjectionMatrix());
-			press = frame->isInside(mouse);
-			if (press)
-				offset = mouse - frame->getPosition();
-		}
-		if (Window::isMouseButtonDown(GLFW_MOUSE_BUTTON_1))
-		{
-			math::vec2 mouse = Window::getMousePos(camera::Camera::getInstance()->getLayer(2)->getProjectionMatrix());
-			if (press)
-				frame->setPosition(mouse - offset);
-		}
-
-		e2->m_body->SetLinearVelocity(b2Vec2(dx * 10, dy * 10));
-		int32 velocityIterations = 6;
-		int32 positionIterations = 2;
-		world->Step(timeElapsed, velocityIterations, positionIterations);
-		e->update(timeElapsed);
-		e2->update(timeElapsed);
-
-		camera::Camera::getInstance()->update(timeElapsed);
-	}
-
-	void render() override
-	{
-		//greet::managers::GameStateManager::render();
-		camera::Camera::getInstance()->render();
-		//renderer3d->submit(mesh);
-	}
-
-	void windowResize(int width, int height) override
-	{
-		camera::Camera::getInstance()->getLayer(0)->setProjectionMatrix(math::mat3::orthographic(0, (float)width / 20.0f, 0, (float)height / 20.0f)*math::mat3::translate((width - 960) / 40.0f, (height - 540) / 40.0f));
-		camera::Camera::getInstance()->getLayer(1)->setProjectionMatrix(math::mat3::orthographic(0, (float)width / 20.0f, 0, (float)height / 20.0f)*math::mat3::translate((width - 960) / 40.0f, (height - 540) / 40.0f));
-		camera::Camera::getInstance()->getLayer(2)->setProjectionMatrix(math::mat3::orthographic(0, (float)width, 0, (float)height)*math::mat3::translate((width - 960) / 2, (height - 540) / 2));
-		//camera::Camera::getInstance()->setViewport(0, 0, width, height* 9 / 16);
-	}
-
-	void joystickState(unsigned int joystick, bool connect) override
-	{
-
-	}
-
-};
-
-void game()
-{
-}
-
-int main()
-{
-	Core game;
-	game.start();
-	return 0;
-}
-
-#else
-
 #include <internal\app.h>
 #include <entity\entity.h>
 #include <graphics\gui\frame.h>
@@ -269,7 +25,9 @@ int main()
 #include <drivers/driveradapter.h>
 
 #include <graphics/layers/guilayer.h>
+#include <utils/noise.h>
 
+#include "keyboardcontrol.h"
 using namespace greet;
 using namespace graphics;
 using namespace audio;
@@ -283,7 +41,10 @@ class Core : public greet::internal::App, public greet::event::KeyListener, publ
 private:
 	BatchRenderer3D* renderer3d;
 	Material* modelMaterial;
+	Material* terrainMaterial;
 	Material* stallMaterial;
+	KeyboardControl* movement;
+	KeyboardControl* rotation;
 
 	EntityModel* stall;
 	EntityModel* dragon;
@@ -304,7 +65,7 @@ private:
 	Renderable2D* driverTest;
 
 public:
-
+	
 	Core::~Core()
 	{
 		delete modelMaterial;
@@ -316,6 +77,8 @@ public:
 		delete renderer3d;
 		delete uilayer;
 		delete guilayer;
+		delete movement;
+		delete rotation;
 	}
 
 	void init()
@@ -342,16 +105,20 @@ public:
 
 
 		Shader* modelShader = Shader::fromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
+		Shader* terrainShader = Shader::fromFile("res/shaders/noisemap.vert", "res/shaders/3dshader.frag");
 		Shader* stallShader = Shader::fromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
 		m_geomShaderTest = Shader::fromFile("res/shaders/2dshader.geom","res/shaders/2dshader.vert", "res/shaders/2dshader.frag");
 
 		modelMaterial = new Material(modelShader, NULL);
 		stallMaterial = new Material(stallShader,TextureManager::get("stall"));
-
-		Mesh* gridMesh = model::MeshFactory::grid(0, 0, 0, 10, 10, 10, 10, map,1);
+		terrainMaterial = new Material(terrainShader, NULL);
+		terrainMaterial->setReflectivity(0.5f);
+		terrainMaterial->setShineDamper(5.0f);
+		float* noise = Noise::genNoise(100,100,5,8,8,0.5f);
+		Mesh* gridMesh = model::MeshFactory::grid(0, 0, 0, 10, 10, 99, 99, noise,10);
 		//gridMesh->setDefaultAttribute4f(MESH_COLORS_LOCATION, math::vec4(1.0f, 0.0f, 0.0f, 1.0f));
-		gridMesh->setEnableCulling(false);
-		MaterialModel* gridModelMaterial = new MaterialModel(gridMesh, *modelMaterial);
+		//gridMesh->setEnableCulling(false);
+		MaterialModel* gridModelMaterial = new MaterialModel(gridMesh, *terrainMaterial);
 		grid = new EntityModel(*gridModelMaterial, math::vec3(0, 0, 0), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
 
 		Mesh* cubeMesh = model::MeshFactory::cube(0,0,0,10,10,10);
@@ -385,6 +152,10 @@ public:
 		modelShader->enable();
 		l->setToUniform(modelShader, "light");
 		modelShader->disable();
+		terrainShader->enable();
+		l->setToUniform(terrainShader, "light");
+		terrainShader->setUniform1f("amplitude",10);
+		terrainShader->disable();
 	
 		delete l;
 
@@ -417,6 +188,8 @@ public:
 		//{
 		//	renderer3d->submit(&models[i]);
 		//}
+		movement = new KeyboardControl(GLFW_KEY_D,GLFW_KEY_A,GLFW_KEY_S,GLFW_KEY_W,0.5f);
+		rotation = new KeyboardControl(GLFW_KEY_DOWN,GLFW_KEY_UP,GLFW_KEY_RIGHT,GLFW_KEY_LEFT,2);
 	}
 
 	float random()
@@ -428,26 +201,26 @@ public:
 	{
 		std::string s = utils::toString(getFPS()) + " fps";
 		fps->text = s;
+		Window::setTitle("Best Game Ever | " + s);
 	}
 
 	float hue = 0;
 	math::vec3 velocityPos;
 	math::vec3 velocityNeg;
-	math::vec2 rotationPos;
-	math::vec2 rotationNeg;
 
 	void update(float elapsedTime)
 	{
 		//fps->text = utils::toString(slider->getValue());
-		math::vec2 velocityY = math::vec2(velocityPos.x-velocityNeg.x, velocityPos.z-velocityNeg.z);
+		math::vec2 velocityY = movement->getVelocity();
 		if (velocityY.lengthSQ() != 0)
 		{
-			velocityY = velocityY.rotate(camera->yaw).normalize()*0.2;
+			velocityY = velocityY.rotate(camera->yaw);
 			camera->position += math::vec3(velocityY.x, 0, velocityY.y);
 		}
 		camera->position.y += velocityPos.y - velocityNeg.y;
-		camera->pitch += rotationPos.x - rotationNeg.x;
-		camera->yaw += rotationPos.y - rotationNeg.y;
+		math::vec2 rotationVec = rotation->getVelocity();
+		camera->pitch += rotationVec.x;
+		camera->yaw += rotationVec.y;
 		if(Window::isJoystickConnected(0))
 		{
 			input::Joystick& joystick = Window::getJoystick(0);
@@ -494,48 +267,23 @@ public:
 	{
 		if (e.getButton() == GLFW_KEY_F5)
 		{
+			Shader* terrainShader = Shader::fromFile("res/shaders/noisemap.vert", "res/shaders/3dshader.frag");
 			Shader* modelShader = Shader::fromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
 			modelMaterial->setShader(modelShader);
+			terrainMaterial->setShader(terrainShader);
 			Light* l = new Light(math::vec3(25, 25, 12.5), 0xffffffff);
 			modelShader->enable();
 			l->setToUniform(modelShader, "light");
 			modelShader->disable();
+
+			terrainShader->enable();
+			l->setToUniform(terrainShader, "light");
+			terrainShader->setUniform1f("amplitude",10);
+			terrainShader->disable();
 			delete l;
 		}
-
-		if (e.getButton() == GLFW_KEY_W)
-		{
-			velocityNeg.z = 0.2;
-		}
-		if (e.getButton() == GLFW_KEY_S)
-		{
-			velocityPos.z = 0.2;
-		}
-		if (e.getButton() == GLFW_KEY_D)
-		{
-			velocityPos.x = 0.2;
-		}
-		if (e.getButton() == GLFW_KEY_A)
-		{
-			velocityNeg.x = 0.2;
-		}
-		float rotSpeed = 1;
-		if (e.getButton() == GLFW_KEY_LEFT)
-		{
-			rotationNeg.y = rotSpeed;
-		}
-		if (e.getButton() == GLFW_KEY_RIGHT)
-		{
-			rotationPos.y = rotSpeed;
-		}
-		if (e.getButton() == GLFW_KEY_UP)
-		{
-			rotationNeg.x = rotSpeed;
-		}
-		if (e.getButton() == GLFW_KEY_DOWN)
-		{
-			rotationPos.x = rotSpeed;
-		}
+		movement->onInput(e.getButton(),true);
+		rotation->onInput(e.getButton(),true);
 		if (e.getButton() == GLFW_KEY_LEFT_SHIFT)
 		{
 			velocityNeg.y = 0.2;
@@ -549,38 +297,8 @@ public:
 
 	bool onReleased(const KeyReleasedEvent& e)  override
 	{
-		if (e.getButton() == GLFW_KEY_W)
-		{
-			velocityNeg.z = 0;
-		}
-		if (e.getButton() == GLFW_KEY_S)
-		{
-			velocityPos.z = 0;
-		}
-		if (e.getButton() == GLFW_KEY_D)
-		{
-			velocityPos.x = 0;
-		}
-		if (e.getButton() == GLFW_KEY_A)
-		{
-			velocityNeg.x = 0;
-		}
-		if (e.getButton() == GLFW_KEY_LEFT)
-		{
-			rotationNeg.y = 0;
-		}
-		if (e.getButton() == GLFW_KEY_RIGHT)
-		{
-			rotationPos.y = 0;
-		}
-		if (e.getButton() == GLFW_KEY_UP)
-		{
-			rotationNeg.x = 0;
-		}
-		if (e.getButton() == GLFW_KEY_DOWN)
-		{
-			rotationPos.x = 0;
-		}
+		movement->onInput(e.getButton(),false);
+		rotation->onInput(e.getButton(),false);
 		if (e.getButton() == GLFW_KEY_LEFT_SHIFT)
 		{
 			velocityNeg.y = 0;
@@ -640,4 +358,3 @@ int main()
 	Core game;
 	game.start();
 }
-#endif

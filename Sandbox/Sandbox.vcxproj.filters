@@ -35,5 +35,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\2dshader.geom" />
+    <None Include="res\shaders\noisemap.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\keyboardcontrol.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

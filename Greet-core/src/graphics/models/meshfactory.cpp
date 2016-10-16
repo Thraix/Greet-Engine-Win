@@ -2,15 +2,16 @@
 #include <logging/logger.h>
 namespace greet { namespace model { namespace MeshFactory {
 	
+	// Calculate a normal of 3 points in space
 	math::vec3 calculateNormal(math::vec3 p1, math::vec3 p2, math::vec3 p3)
 	{
-		// Calculate a normal of 3 points in space
 		math::vec3 v1 = p2 - p1;
 		math::vec3 v2 = p3 - p1;
 		math::vec3 normal = v1.cross(v2);
 		return normal;
 	}
 
+	// Calculate normals for a mesh
 	float* calculateNormals(float* vertices, uint vertexCount, uint* indices, uint indexCount)
 	{
 		float* normals = new float[vertexCount*3];
@@ -23,7 +24,6 @@ namespace greet { namespace model { namespace MeshFactory {
 			p2 = ((math::vec3*)vertices)[indices[i+1]];
 			p3 = ((math::vec3*)vertices)[indices[i+2]];
 			faceNormal = calculateNormal(p1,p2,p3);
-			//LOG_INFO(p1.x,p1.y,p2.z,p2.x,p2.y,p2.z,p3.x,p3.y,p3.z);
 			((math::vec3*)normals)[indices[i]] += faceNormal;
 			((math::vec3*)normals)[indices[i+1]] += faceNormal;
 			((math::vec3*)normals)[indices[i+2]] += faceNormal;
@@ -139,13 +139,13 @@ namespace greet { namespace model { namespace MeshFactory {
 
 	Mesh* grid(float x, float y, float z, float width, float length, uint gridWidth, uint gridLength, float* heightMap, float height)
 	{
-		if (gridWidth < 0 || gridLength < 0)
+		if (gridWidth < 1 || gridLength < 1)
 			return quad(x, y, z, width, length);
-		float tileWidth = gridWidth / width;
-		float tileLength = gridLength / length;
+		float tileWidth = width/(float)gridWidth;
+		float tileLength = length / (float)gridLength;
 		uint vertexCount = (gridWidth + 1) * (gridLength + 1);
 		float* vertices = new float[vertexCount * 3];
-		uint* colors = new uint[vertexCount];
+		//uint* colors = new uint[vertexCount];
 		x -= width / 2.0f;
 		z -= length / 2.0f;
 		for (uint iz = 0;iz <= gridLength;iz++)
@@ -154,11 +154,12 @@ namespace greet { namespace model { namespace MeshFactory {
 			{
 				float heightM = heightMap == NULL ? 0 : heightMap[ix + iz*(gridWidth + 1)];
 				((math::vec3*)vertices)[ix + iz*(gridWidth + 1)] = math::vec3(x + ix*tileWidth, y+heightM*height, z + iz*tileLength);
-				/*if (heightM < 0.2)
+				/*colors[ix + iz*(gridWidth + 1)] = 0xff000000 | (uint)(heightM * 255.0f) << 16 | (uint)(heightM * 255) << 8 | (uint)(heightM * 255);
+				if (heightM < 0.45)
 				{
 					colors[ix + iz*(gridWidth + 1)] = 0xff0000ff;
 				}
-				else if (heightM < 0.3)
+				else if (heightM < 0.5)
 				{
 					colors[ix + iz*(gridWidth + 1)] = 0xffffff00;
 				}
@@ -166,7 +167,7 @@ namespace greet { namespace model { namespace MeshFactory {
 				{
 					colors[ix + iz*(gridWidth + 1)] = 0xff00ff00;
 				}
-				else if (heightM < 0.8)
+				else if (heightM < 0.65)
 				{
 					colors[ix + iz*(gridWidth + 1)] = 0xff555555;
 				}
