@@ -141,6 +141,7 @@
     <ClCompile Include="src\graphics\textures\cubemap.cpp" />
     <ClCompile Include="src\graphics\textures\imagefactory.cpp" />
     <ClCompile Include="src\graphics\textures\texture.cpp" />
+    <ClCompile Include="src\graphics\textures\texture2d.cpp" />
     <ClCompile Include="src\graphics\textures\texturemanager.cpp" />
     <ClCompile Include="src\graphics\window.cpp" />
     <ClCompile Include="src\input\joystick.cpp" />
@@ -234,6 +235,7 @@
     <ClInclude Include="src\graphics\textures\cubemap.h" />
     <ClInclude Include="src\graphics\textures\imagefactory.h" />
     <ClInclude Include="src\graphics\textures\texture.h" />
+    <ClInclude Include="src\graphics\textures\texture2d.h" />
     <ClInclude Include="src\graphics\textures\texturemanager.h" />
     <ClInclude Include="src\graphics\window.h" />
     <ClInclude Include="src\input\joystick.h" />

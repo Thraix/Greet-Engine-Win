@@ -27,7 +27,7 @@ namespace greet { namespace model{
 		inline float getShineDamper() const { return m_shineDamper; }
 		inline const graphics::Shader& getShader() const { return *m_shader; }
 		inline const graphics::Texture& getTexture() const { return *m_texture; }
-		inline const graphics::Texture& getTextureId() const { return m_texture == NULL ? 0 : m_texture->getTexID(); }
+		inline uint getTextureId() const { return m_texture == NULL ? 0 : m_texture->getTexId(); }
 	private:
 		void updateTexture();
 	};

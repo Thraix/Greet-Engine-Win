@@ -68,6 +68,7 @@
     <ClCompile Include="src\graphics\textures\cubemap.cpp" />
     <ClCompile Include="src\graphics\skybox.cpp" />
     <ClCompile Include="src\utils\noise.cpp" />
+    <ClCompile Include="src\graphics\textures\texture2d.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\font.h" />
@@ -196,6 +197,7 @@
     <ClInclude Include="src\graphics\textures\cubemap.h" />
     <ClInclude Include="src\graphics\skybox.h" />
     <ClInclude Include="src\utils\noise.h" />
+    <ClInclude Include="src\graphics\textures\texture2d.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Performance4.psess" />

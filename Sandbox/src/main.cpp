@@ -1,4 +1,5 @@
 #include <internal\app.h>
+#include <graphics/textures/texture2d.h>
 #include <entity\entity.h>
 #include <graphics\gui\frame.h>
 #include <graphics\gui\panel.h>
@@ -87,14 +88,13 @@ public:
 		EventDispatcher::addMouseListener(DISPATCHER_GUI + 1, *this);
 		createWindow("Best Game Ever", 960, 540);
 		setFrameCap(144);
-		TextureManager::add(new Texture("res/textures/skybox.png", "skybox"));
-		TextureManager::add(new Texture("res/textures/stallTexture.png", "stall"));
-		TextureManager::add(new Texture("res/textures/cursor.png", "cursor"));
-		TextureManager::add(new Texture("res/textures/mask.png", "mask"));
-		TextureManager::add(new Texture("res/textures/mask2.png", "mask2"));
-
+		TextureManager::add(new Texture2D("res/textures/stallTexture.png", "stall"));
+		TextureManager::add(new Texture2D("res/textures/cursor.png", "cursor"));
+		TextureManager::add(new Texture2D("res/textures/mask.png", "mask"));
+		TextureManager::add(new Texture2D("res/textures/mask2.png", "mask2"));
+		TextureManager::add(new CubeMap("res/textures/skybox.png", "skybox"));
 		camera = new Camera(math::vec3(0,0,0));
-		Skybox* skybox = new Skybox(new CubeMap("res/textures/skybox.png"));
+		Skybox* skybox = new Skybox((CubeMap*)TextureManager::get("skybox"));
 		renderer3d = new BatchRenderer3D(Window::getWidth(), Window::getHeight(), *camera,70,0.001f,100.0f, skybox);
 
 		float* map = new float[101 * 101];
@@ -164,7 +164,7 @@ public:
 		uilayer = new Layer<Renderable>(new BatchRenderer(), ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)Window::getWidth(), 0.0f, (float)Window::getHeight()));
 		uint colorPink = ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(300 /360.0f, 3));
 		fps = new Label("144 fps", math::vec2(50, 300), "anonymous", 72, ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(120 / 360.0f, 9)));
-		cursor = new Renderable2D(math::vec2(0,0),math::vec2(32,32),0xffffffff,new Sprite(TextureManager::get("cursor")->getTexID(),32,32, math::vec2(0, 0), math::vec2(1, 1)), new Sprite(TextureManager::get("mask")->getTexID(),256,256,math::vec2(0,0),math::vec2(1,1)));
+		cursor = new Renderable2D(math::vec2(0,0),math::vec2(32,32),0xffffffff,new Sprite(TextureManager::get("cursor")->getTexId(),32,32, math::vec2(0, 0), math::vec2(1, 1)), new Sprite(TextureManager::get("mask")->getTexId(),256,256,math::vec2(0,0),math::vec2(1,1)));
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(driverTest->m_position.x, -20, 0.5f, true, new drivers::DriverAdapter()));
 
 		guilayer = new GUILayer(new BatchRenderer(),ShaderFactory::DefaultShader());

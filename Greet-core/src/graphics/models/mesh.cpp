@@ -53,6 +53,7 @@ namespace greet { namespace model {
 		{
 			glDisable(GL_CULL_FACE);
 		}
+
 		glBindVertexArray(m_vaoId);
 		enableAttributes();
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId);

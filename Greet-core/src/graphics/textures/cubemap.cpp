@@ -1,26 +1,29 @@
 #include "cubemap.h"
 
 namespace greet { namespace graphics {
-	CubeMap::CubeMap(const std::string& top, const std::string& bottom, const std::string& left, const std::string& right, const std::string& front, const std::string& back)
+	CubeMap::CubeMap(const std::string& top, const std::string& bottom, const std::string& left, const std::string& right, const std::string& front, const std::string& back, const std::string& name)
+		: Texture(name, GL_TEXTURE_CUBE_MAP)
 	{
 		loadCubeMap(top, bottom, left, right, front, back);
 	}
 
-	CubeMap::CubeMap(const std::string& map)
+	CubeMap::CubeMap(const std::string& map, const std::string& name)
+		: Texture(name,GL_TEXTURE_CUBE_MAP)
 	{
 		loadCubeMap(map);
 	}
 
-	CubeMap::~CubeMap()
+	CubeMap::CubeMap(uint texId, const std::string& name)
+		: Texture(texId, name, GL_TEXTURE_CUBE_MAP)
 	{
-		glDeleteTextures(1, &textureId);
+
 	}
 
 	void CubeMap::loadCubeMap(const std::string& image)
 	{
 		glActiveTexture(GL_TEXTURE0);
-		glGenTextures(1, &textureId);
-		glBindTexture(GL_TEXTURE_CUBE_MAP,textureId);
+		glGenTextures(1, &m_texId);
+		glBindTexture(GL_TEXTURE_CUBE_MAP,m_texId);
 
 		uint width;
 		uint height;
@@ -46,8 +49,8 @@ namespace greet { namespace graphics {
 	void CubeMap::loadCubeMap(const std::string& top, const std::string& bottom, const std::string& left, const std::string& right, const std::string& front, const std::string& back)
 	{
 		glActiveTexture(GL_TEXTURE0);
-		glGenTextures(1, &textureId);
-		glBindTexture(GL_TEXTURE_CUBE_MAP,textureId);
+		glGenTextures(1, &m_texId);
+		glBindTexture(GL_TEXTURE_CUBE_MAP,m_texId);
 
 		loadImage(right, GL_TEXTURE_CUBE_MAP_POSITIVE_X);
 		loadImage(left, GL_TEXTURE_CUBE_MAP_NEGATIVE_X);

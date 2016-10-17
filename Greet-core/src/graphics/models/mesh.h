@@ -4,6 +4,8 @@
 #include <math/maths.h>
 #include <logging\logger.h>
 #include <map>
+#include <vector>
+#include <graphics/textures/texture.h>
 
 #define MESH_VERTICES_LOCATION	0
 #define MESH_TEXCOORDS_LOCATION 1
@@ -38,7 +40,6 @@ namespace greet { namespace model {
 
 		inline void setEnableCulling(bool culling) { m_culling = culling; }
 		inline bool isEnableCulling() const { return m_culling; }
-
 		void addAttribute(uint location, uint attributeSize, const float* data);
 		void addAttribute(uint location, uint attributeSize, const uint* data);
 		void setDefaultAttribute4f(uint location, const math::vec4& data);

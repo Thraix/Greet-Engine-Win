@@ -3,6 +3,7 @@
 #include <logging/logger.h>
 #include <graphics/fonts/fontmanager.h>
 #include <graphics/textures/texturemanager.h>
+#include <graphics/textures/texture2d.h>
 #include <audio/soundmanager.h>
 #include <audio/channelmanager.h>
 #include <graphics/textures/imagefactory.h>

@@ -11,7 +11,6 @@ namespace greet { namespace graphics {
 
 	Skybox::~Skybox()
 	{
-		delete m_map;
 		delete m_shader;
 		delete m_mesh;
 	}

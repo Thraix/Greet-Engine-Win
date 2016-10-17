@@ -77,7 +77,7 @@ namespace greet { namespace graphics {
 		FontManager::add(new Font("Roboto-Black.ttf","roboto-bold",72));
 		FontManager::add(new Font("Roboto-thin.ttf","roboto",72));
 		uint width,height,bpp;
-		TextureManager::add(new Texture("frame.png","frame"));
+		TextureManager::add(new Texture2D("frame.png","frame"));
 		utils::UUID::init();
 
 		LOG_INFO("WINDOW", "OpenGL Version: ", glGetString(GL_VERSION));

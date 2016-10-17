@@ -20,8 +20,8 @@ namespace greet { namespace model {
 		inline const Mesh& getMesh() const { return *m_mesh; }
 		bool operator < (const MaterialModel & rhs)
 		{
-			uint idl = getMaterial().getTexture().getTexID();
-			uint idr = rhs.getMaterial().getTexture().getTexID();
+			uint idl = getMaterial().getTexture().getTexId();
+			uint idr = rhs.getMaterial().getTexture().getTexId();
 			if (idl < idr) { return true; }
 			if (idl > idr) { return false; }
 			return (idl < idr);

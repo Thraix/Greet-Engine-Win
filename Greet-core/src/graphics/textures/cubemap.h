@@ -4,22 +4,16 @@
 #include <internal/greet_types.h>
 #include <internal/greetgl.h>
 #include <utils/imageutils.h>
+#include <graphics/textures/texture.h>
 
 namespace greet { namespace graphics {
 
-	class CubeMap
+	class CubeMap : public Texture
 	{
-
-	private:
-		uint textureId;
-
 	public:
-		CubeMap(const std::string& top, const std::string& bottom, const std::string& left, const std::string& right, const std::string& front, const std::string& back);
-		CubeMap(const std::string& map);
-		~CubeMap();
-		inline uint getTextureId() const { return textureId; }
-		void enable() const { glBindTexture(GL_TEXTURE_CUBE_MAP,textureId); }
-		void disable() const { glBindTexture(GL_TEXTURE_CUBE_MAP, 0); }
+		CubeMap(const std::string& top, const std::string& bottom, const std::string& left, const std::string& right, const std::string& front, const std::string& back, const std::string& name);
+		CubeMap(const std::string& map, const std::string& name);
+		CubeMap(uint texId, const std::string& name);
 	private:
 		void loadCubeMap(const std::string& image);
 		void loadCubeMap(const std::string& top, const std::string& bottom, const std::string& left, const std::string& right, const std::string& front, const std::string& back);
