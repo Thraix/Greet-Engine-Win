@@ -282,6 +282,10 @@ public:
 			terrainShader->disable();
 			delete l;
 		}
+		if (e.getButton() == GLFW_KEY_F10)
+		{
+			utils::screenshot(Window::getWidth(), Window::getHeight());
+		}
 		movement->onInput(e.getButton(),true);
 		rotation->onInput(e.getButton(),true);
 		if (e.getButton() == GLFW_KEY_LEFT_SHIFT)

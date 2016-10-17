@@ -57,7 +57,7 @@ namespace greet { namespace logging
 	
 	inline void flushToConsole()
 	{
-		std::cout << &buffer[lastConsolePosition];
+		std::cout << &buffer[lastConsolePosition] << std::flush;
 		lastConsolePosition = consolePosition;
 	}
 

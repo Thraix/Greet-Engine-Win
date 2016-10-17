@@ -2,10 +2,39 @@
 
 #include <ctime>
 #include <internal/greet_types.h>
+#include <internal\greetgl.h>
 
 #define BIT(x) 1 << x
 
 namespace greet {namespace utils{
+
+	inline const std::string currentDateTime()
+	{
+		time_t now = time(0);
+		LOG_INFO("here");
+		struct tm tstruct;
+		LOG_INFO("here");
+		char buf[80];
+		LOG_INFO("here");
+		tstruct = *localtime(&now);
+		LOG_INFO("here");
+		strftime(buf,sizeof(buf),"%Y%m%d%H%M%S",&tstruct);
+		LOG_INFO("here");
+		return buf;
+	}
+
+	inline void screenshot(uint width, uint height)
+	{
+		BYTE* pixels = new BYTE[3 * width*height];
+		glReadPixels(0,0,width,height, GL_BGR, GL_UNSIGNED_BYTE, pixels);
+		FIBITMAP* Image = FreeImage_ConvertFromRawBits(pixels, width, height, 3*width, 24, 0xFF0000, 0x00FF00, 0x0000FF, false);
+		std::string s = "screenshot_";
+		s += currentDateTime();
+		s += ".png";
+		LOG_INFO(s);
+		FreeImage_Save(FIF_PNG, Image, s.c_str(), 0);
+		delete[] pixels;
+	}
 
 	template<typename Base, typename T>
 	inline bool instanceof(const T *ptr) {
