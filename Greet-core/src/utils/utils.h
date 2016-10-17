@@ -11,15 +11,10 @@ namespace greet {namespace utils{
 	inline const std::string currentDateTime()
 	{
 		time_t now = time(0);
-		LOG_INFO("here");
 		struct tm tstruct;
-		LOG_INFO("here");
 		char buf[80];
-		LOG_INFO("here");
 		tstruct = *localtime(&now);
-		LOG_INFO("here");
 		strftime(buf,sizeof(buf),"%Y%m%d%H%M%S",&tstruct);
-		LOG_INFO("here");
 		return buf;
 	}
 
@@ -31,7 +26,6 @@ namespace greet {namespace utils{
 		std::string s = "screenshot_";
 		s += currentDateTime();
 		s += ".png";
-		LOG_INFO(s);
 		FreeImage_Save(FIF_PNG, Image, s.c_str(), 0);
 		delete[] pixels;
 	}
