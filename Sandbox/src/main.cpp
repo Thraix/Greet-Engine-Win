@@ -338,7 +338,6 @@ public:
 		renderer3d->end();
 		//guilayer->render();
 		uilayer->render();
-
 		//m_geomShaderTest->enable();
 		//glBegin(GL_POINTS);
 		//glColor3f(1,1,1);

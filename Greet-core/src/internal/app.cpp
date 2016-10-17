@@ -1,6 +1,4 @@
 #include "app.h"
-#include <chrono>
-#include <thread>
 #include <drivers/driverdispatcher.h>
 
 namespace greet { namespace internal {
@@ -32,12 +30,6 @@ namespace greet { namespace internal {
 		run();
 	}
 
-	void sleep(int x)
-	{
-		std::this_thread::sleep_for(std::chrono::milliseconds(x));
-	}
-
-
 	void App::run()
 	{
 		if (!m_initialized)
@@ -58,7 +50,6 @@ namespace greet { namespace internal {
 		while (!Window::closed())
 		{
 			rendered = false;
-			Window::clear();
 			double elapsed = m_timer->elapsed();
 			if (elapsed - updateTimer >= updateTick)
 			{
@@ -70,10 +61,11 @@ namespace greet { namespace internal {
 			}
 			if (elapsed - renderTimer >= frameCap)
 			{
+				Window::clear();
 				render();
 				Window::render();
 				frames++;
-				renderTimer += frameCap;
+				renderTimer += elapsed - renderTimer;
 				rendered = true;
 			}
 
@@ -87,8 +79,6 @@ namespace greet { namespace internal {
 				updates = 0;
 				timer += 1.0;
 			}
-			if(!rendered)
-				sleep(1);
 		}
 	}
 
