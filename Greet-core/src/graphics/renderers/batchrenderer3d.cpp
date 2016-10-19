@@ -33,7 +33,7 @@ namespace greet { namespace graphics {
 	void BatchRenderer3D::flush() const
 	{
 		glDepthRange(m_near, m_far);
-		const math::mat4& viewMatrix = math::mat4::viewMatrix(m_camera.position, math::vec3(m_camera.pitch, m_camera.yaw, m_camera.roll));
+		const math::mat4& viewMatrix = m_camera.getViewMatrix();
 		for (BatchRenderer3DMap* map : m_map)
 		{
 			map->m_material.getMaterial().bind();
@@ -54,5 +54,14 @@ namespace greet { namespace graphics {
 	void BatchRenderer3D::end()
 	{
 		
+	}
+
+	math::vec3 BatchRenderer3D::getScreenCoordination(const math::vec3& coordinate, uint screenWidth, uint screenHeight)
+	{
+		math::vec3 point = getProjectionMatrix() * getCamera().getViewMatrix() * coordinate;
+		math::vec3 p = math::vec3(point.x, point.y,point.z) / (fabs(point.z) * 2.0f) + 0.5f;
+		p.x *= screenWidth;
+		p.y = screenHeight - p.y*screenHeight;
+		return p;
 	}
 } }

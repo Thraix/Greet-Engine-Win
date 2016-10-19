@@ -21,6 +21,7 @@ const float gradient = 1.5;
 
 void main()
 {
+
 	vec4 worldPosition = transformationMatrix * vec4(position,1.0f);
 	vec4 positionRelativeToCamera = viewMatrix * worldPosition;
 	gl_Position = projectionMatrix * positionRelativeToCamera;

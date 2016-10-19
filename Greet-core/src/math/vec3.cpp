@@ -94,6 +94,38 @@ namespace greet{
 		return *this;
 	}
 
+	vec3& vec3::add(const float c)
+	{
+		x += c;
+		y += c;
+		z += c;
+		return *this;
+	}
+
+	vec3& vec3::subtract(const float c)
+	{
+		x -= c;
+		y -= c;
+		z -= c;
+		return *this;
+	}
+
+	vec3& vec3::multiply(const float c)
+	{
+		x *= c;
+		y *= c;
+		z *= c;
+		return *this;
+	}
+
+	vec3& vec3::divide(const float c)
+	{
+		x /= c;
+		y /= c;
+		z /= c;
+		return *this;
+	}
+
 	bool vec3::compare(const vec3& other)
 	{
 		return x == other.x && y == other.y && z == other.z;
@@ -118,6 +150,25 @@ namespace greet{
 	{
 		return vec3(first.x, first.y, first.z).divide(second);
 	}
+	vec3 operator+(const vec3& first, const float c)
+	{
+		return vec3(first.x, first.y,first.z).add(c);
+	}
+
+	vec3 operator-(const vec3& first, const float c)
+	{
+		return vec3(first.x, first.y,first.z).subtract(c);
+	}
+
+	vec3 operator*(const vec3&  first, const float c)
+	{
+		return vec3(first.x, first.y,first.z).multiply(c);
+	}
+
+	vec3 operator/(const vec3& first, const float c)
+	{
+		return vec3(first.x, first.y, first.z).divide(c);
+	}
 
 	vec3& vec3::operator+=(const vec3 &other)
 	{
@@ -137,6 +188,38 @@ namespace greet{
 	vec3& vec3::operator/=(const vec3 &other)
 	{
 		return divide(other);
+	}
+
+	vec3& vec3::operator+=(const float other)
+	{
+		x += other;
+		y += other;
+		z += other;
+		return *this;
+	}
+
+	vec3& vec3::operator-=(const float other)
+	{
+		x -= other;
+		y -= other;
+		z -= other;
+		return *this;
+	}
+
+	vec3& vec3::operator*=(const float other)
+	{
+		x *= other;
+		y *= other;
+		z *= other;
+		return *this;
+	}
+
+	vec3& vec3::operator/=(const float other)
+	{
+		x /= other;
+		y /= other;
+		z /= other;
+		return *this;
 	}
 
 	bool vec3::operator==(const vec3 &other)

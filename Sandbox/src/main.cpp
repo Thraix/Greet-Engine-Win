@@ -29,6 +29,7 @@
 #include <utils/noise.h>
 
 #include "keyboardcontrol.h"
+#include "tree.h"
 using namespace greet;
 using namespace graphics;
 using namespace audio;
@@ -93,6 +94,10 @@ public:
 		TextureManager::add(new Texture2D("res/textures/mask.png", "mask"));
 		TextureManager::add(new Texture2D("res/textures/mask2.png", "mask2"));
 		TextureManager::add(new CubeMap("res/textures/skybox.png", "skybox"));
+		TextureManager::add(new Texture2D("res/textures/lens_flare1.png", "lensflare1"));
+		TextureManager::add(new Texture2D("res/textures/lens_flare2.png", "lensflare2"));
+		TextureManager::add(new Texture2D("res/textures/lens_flare3.png", "lensflare3"));
+		TextureManager::add(new Texture2D("res/textures/lens_flare4.png", "lensflare4"));
 		camera = new Camera(math::vec3(0,0,0));
 		Skybox* skybox = new Skybox((CubeMap*)TextureManager::get("skybox"));
 		renderer3d = new BatchRenderer3D(Window::getWidth(), Window::getHeight(), *camera,70,0.001f,100.0f, skybox);
@@ -123,7 +128,7 @@ public:
 
 		Mesh* cubeMesh = model::MeshFactory::cube(0,0,0,10,10,10);
 		MaterialModel* cubeModelMaterial = new MaterialModel(cubeMesh, *modelMaterial);
-		cube = new EntityModel(*cubeModelMaterial, math::vec3(30, 0, 0), math::vec3(1, 1, 1), math::vec3(0, 0, 0));
+		cube = new EntityModel(*cubeModelMaterial, math::vec3(20, 0, 0), math::vec3(1, 1, 1), math::vec3(0, 0, 0));
 
 		Mesh* tetrahedronMesh = model::MeshFactory::tetrahedron(0,0,0,10);
 		MaterialModel* tetrahedronModelMaterial = new MaterialModel(tetrahedronMesh, *modelMaterial);
@@ -166,7 +171,6 @@ public:
 		fps = new Label("144 fps", math::vec2(50, 300), "anonymous", 72, ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(120 / 360.0f, 9)));
 		cursor = new Renderable2D(math::vec2(0,0),math::vec2(32,32),0xffffffff,new Sprite(TextureManager::get("cursor")->getTexId(),32,32, math::vec2(0, 0), math::vec2(1, 1)), new Sprite(TextureManager::get("mask")->getTexId(),256,256,math::vec2(0,0),math::vec2(1,1)));
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(driverTest->m_position.x, -20, 0.5f, true, new drivers::DriverAdapter()));
-
 		guilayer = new GUILayer(new BatchRenderer(),ShaderFactory::DefaultShader());
 		slider = new Slider(math::vec2(10,100),math::vec2(200,30),0,255,1);
 		button = new Button(math::vec2(10,120+30),math::vec2(100,40),"Test");
@@ -176,7 +180,6 @@ public:
 		frame->add(button);
 		guilayer->add(frame);
 
-		uilayer->add(cursor);
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(frame->m_position.x, 100, 5, true, new drivers::DriverAdapter()));
 
 		renderer3d->submit(stall);
@@ -190,6 +193,7 @@ public:
 		//}
 		movement = new KeyboardControl(GLFW_KEY_D,GLFW_KEY_A,GLFW_KEY_S,GLFW_KEY_W,0.5f);
 		rotation = new KeyboardControl(GLFW_KEY_DOWN,GLFW_KEY_UP,GLFW_KEY_RIGHT,GLFW_KEY_LEFT,2);
+		//Tree t(renderer3d,0,0,0);
 	}
 
 	float random()
@@ -221,7 +225,7 @@ public:
 		math::vec2 rotationVec = rotation->getVelocity();
 		camera->pitch += rotationVec.x;
 		camera->yaw += rotationVec.y;
-		if(Window::isJoystickConnected(0))
+		if (Window::isJoystickConnected(0))
 		{
 			input::Joystick& joystick = Window::getJoystick(0);
 			if (abs(joystick.getLeftStick().length()) > 0.2)
@@ -261,6 +265,7 @@ public:
 		while (hue >= 1)
 			hue--;
 		cursor->m_color = ColorUtils::vec3ToColorHex(ColorUtils::HSVtoRGB(hue, 1, 1));
+		//cursor->setPosition(math::vec2(p.x, p.y));
 	}
 
 	bool onPressed(const KeyPressedEvent& e) override
@@ -285,6 +290,10 @@ public:
 		if (e.getButton() == GLFW_KEY_F10)
 		{
 			utils::screenshot(Window::getWidth(), Window::getHeight());
+		}
+		if (e.getButton() == GLFW_KEY_X)
+		{
+			math::vec3 p = renderer3d->getScreenCoordination(math::vec3(0,0,0),Window::getWidth(),Window::getHeight());
 		}
 		movement->onInput(e.getButton(),true);
 		rotation->onInput(e.getButton(),true);
@@ -337,7 +346,10 @@ public:
 		renderer3d->flush();
 		renderer3d->end();
 		//guilayer->render();
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 		uilayer->render();
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		//m_geomShaderTest->enable();
 		//glBegin(GL_POINTS);
 		//glColor3f(1,1,1);

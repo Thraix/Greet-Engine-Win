@@ -24,6 +24,12 @@ namespace greet{
 		vec3& subtract(const vec3& other);
 		vec3& multiply(const vec3& other);
 		vec3& divide(const vec3& other);
+
+		vec3& add(const float other);
+		vec3& subtract(const float other);
+		vec3& multiply(const float other);
+		vec3& divide(const float other);
+
 		bool compare(const vec3& other);
 
 		friend vec3 operator+(const vec3& first, const vec3 &second);
@@ -31,10 +37,21 @@ namespace greet{
 		friend vec3 operator*(const vec3& first, const vec3 &second);
 		friend vec3 operator/(const vec3& first, const vec3 &second);
 
+		friend vec3 operator+(const vec3& first, const float c);
+		friend vec3 operator-(const vec3& first, const float c);
+		friend vec3 operator*(const vec3& first, const float c);
+		friend vec3 operator/(const vec3& first, const float c);
+
 		vec3& operator+=(const vec3 &other);
 		vec3& operator-=(const vec3 &other);
 		vec3& operator*=(const vec3 &other);
 		vec3& operator/=(const vec3 &other);
+
+
+		vec3& operator+=(const float c);
+		vec3& operator-=(const float c);
+		vec3& operator*=(const float c);
+		vec3& operator/=(const float c);
 
 		bool operator!=(const vec3 &second);
 		bool operator==(const vec3 &second);

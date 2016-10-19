@@ -73,11 +73,11 @@ namespace greet{ namespace graphics{
 		}
 
 		inline uint getTexID() const { return m_sprite == NULL ? 0 : m_sprite->getTextureID(); }
-		inline uint getMaskTexID() const { return m_sprite == NULL ? 0 : m_mask->getTextureID(); }
+		inline uint getMaskTexID() const { return m_mask == NULL ? 0 : m_mask->getTextureID(); }
 		inline const math::vec2& getTexPos() const { return m_sprite == NULL ? math::vec2(0, 0) : m_sprite->getTexPos(); }
 		inline const math::vec2& getTexSize() const { return m_sprite == NULL ? math::vec2(1, 1) : m_sprite->getTexSize(); }
-		inline const math::vec2& getMaskTexPos() const { return m_sprite == NULL ? math::vec2(0, 0) : m_mask->getTexPos(); }
-		inline const math::vec2& getMaskTexSize() const { return m_sprite == NULL ? math::vec2(1, 1) : m_mask->getTexSize(); }
+		inline const math::vec2& getMaskTexPos() const { return m_mask == NULL ? math::vec2(0, 0) : m_mask->getTexPos(); }
+		inline const math::vec2& getMaskTexSize() const { return m_mask == NULL ? math::vec2(1, 1) : m_mask->getTexSize(); }
 		inline Sprite& getSprite() const { return *m_sprite; }
 		inline Sprite& getMask() const { return *m_mask; }
 	};

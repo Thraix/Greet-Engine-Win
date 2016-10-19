@@ -50,6 +50,12 @@ namespace greet { namespace graphics {
 		void begin();
 		void flush() const;
 		void end();
+
+		inline const math::mat4& getProjectionMatrix() const { return m_projectionMatrix; }
+		inline const model::Camera& getCamera() const { return m_camera; }
+
+		math::vec3 getScreenCoordination(const math::vec3& coordinate, uint screenWidth, uint screenHeight);
+
 	private:
 		void submitSkybox();
 
