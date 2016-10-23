@@ -18,5 +18,5 @@ namespace greet { namespace utils { namespace ErrorHandle {
 	static uint errorCode;
 	static void setErrorCode(uint errorCode) { ErrorHandle::errorCode |= errorCode; };
 	static uint getErrorCode() { return errorCode;  }
-	static void resetErrorCode() { ErrorHandle::errorCode == 0; }
+	static void resetErrorCode() { ErrorHandle::errorCode = 0; }
 }}}

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <graphics/gui/gui.h>
+#include <graphics/fonts/fontmanager.h>
 #include <drivers\rectdriver.h>
 #include <drivers/driveradapter.h>
 #include <drivers/driverdispatcher.h>

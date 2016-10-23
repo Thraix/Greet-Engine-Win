@@ -1,6 +1,6 @@
 #pragma once
 
-
+#if 0
 #include <graphics/renderers/batchrenderer3d.h>
 #include <graphics/models/meshfactory.h>
 
@@ -46,3 +46,5 @@ public:
 	{
 	}
 };
+
+#endif

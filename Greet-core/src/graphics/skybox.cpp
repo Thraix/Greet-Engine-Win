@@ -5,8 +5,10 @@ namespace greet { namespace graphics {
 	Skybox::Skybox(CubeMap* cubemap) : m_map(cubemap) 
 	{
 		m_shader = ShaderFactory::SkyboxShader();
-		m_mesh = model::MeshFactory::cube(0,0,0,1,1,1);
+		model::MeshData* data = model::MeshFactory::cube(0,0,0,1,1,1);
+		m_mesh = new model::Mesh(data);
 		m_mesh->setClockwiseRender(true);
+		delete data;
 	}
 
 	Skybox::~Skybox()

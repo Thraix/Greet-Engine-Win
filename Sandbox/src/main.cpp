@@ -30,6 +30,7 @@
 
 #include "keyboardcontrol.h"
 #include "tree.h"
+
 using namespace greet;
 using namespace graphics;
 using namespace audio;
@@ -88,7 +89,7 @@ public:
 		EventDispatcher::addKeyListener(DISPATCHER_GUI+1, *this);
 		EventDispatcher::addMouseListener(DISPATCHER_GUI + 1, *this);
 		createWindow("Best Game Ever", 960, 540);
-		setFrameCap(144);
+		setFrameCap(0);
 		TextureManager::add(new Texture2D("res/textures/stallTexture.png", "stall"));
 		TextureManager::add(new Texture2D("res/textures/cursor.png", "cursor"));
 		TextureManager::add(new Texture2D("res/textures/mask.png", "mask"));
@@ -120,19 +121,22 @@ public:
 		terrainMaterial->setReflectivity(0.5f);
 		terrainMaterial->setShineDamper(5.0f);
 		float* noise = Noise::genNoise(100,100,5,8,8,0.5f);
-		Mesh* gridMesh = model::MeshFactory::grid(0, 0, 0, 10, 10, 99, 99, noise,10);
+		MeshData* gridMesh = model::MeshFactory::grid(0, 0, 0, 10, 10, 99, 99, noise,10);
 		//gridMesh->setDefaultAttribute4f(MESH_COLORS_LOCATION, math::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 		//gridMesh->setEnableCulling(false);
-		MaterialModel* gridModelMaterial = new MaterialModel(gridMesh, *terrainMaterial);
+		MaterialModel* gridModelMaterial = new MaterialModel(new Mesh(gridMesh), *terrainMaterial);
 		grid = new EntityModel(*gridModelMaterial, math::vec3(0, 0, 0), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
+		delete gridMesh;
 
-		Mesh* cubeMesh = model::MeshFactory::cube(0,0,0,10,10,10);
-		MaterialModel* cubeModelMaterial = new MaterialModel(cubeMesh, *modelMaterial);
+		MeshData* cubeMesh = model::MeshFactory::cube(0,0,0,10,10,10);
+		MaterialModel* cubeModelMaterial = new MaterialModel(new Mesh(cubeMesh), *modelMaterial);
 		cube = new EntityModel(*cubeModelMaterial, math::vec3(20, 0, 0), math::vec3(1, 1, 1), math::vec3(0, 0, 0));
+		delete cubeMesh;
 
-		Mesh* tetrahedronMesh = model::MeshFactory::tetrahedron(0,0,0,10);
-		MaterialModel* tetrahedronModelMaterial = new MaterialModel(tetrahedronMesh, *modelMaterial);
+		MeshData* tetrahedronMesh = model::MeshFactory::tetrahedron(0,0,0,10);
+		MaterialModel* tetrahedronModelMaterial = new MaterialModel(new Mesh(tetrahedronMesh), *modelMaterial);
 		tetrahedron = new EntityModel(*tetrahedronModelMaterial, math::vec3(30, 0, 10), math::vec3(1, 1, 1), math::vec3(0, 0, 0));
+		delete tetrahedronMesh;
 
 		Mesh* stallMesh = utils::loadObj("res/objs/stall.obj.gobj");
 		stallMaterial->setReflectivity(0.1)->setShineDamper(1);
@@ -183,7 +187,7 @@ public:
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(frame->m_position.x, 100, 5, true, new drivers::DriverAdapter()));
 
 		renderer3d->submit(stall);
-		renderer3d->submit(dragon);
+		//renderer3d->submit(dragon);
 		renderer3d->submit(grid);
 		renderer3d->submit(cube);
 		renderer3d->submit(tetrahedron);

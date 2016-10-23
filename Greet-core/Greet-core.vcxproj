@@ -109,6 +109,7 @@
     <ClCompile Include="src\graphics\gui\slider.cpp" />
     <ClCompile Include="src\graphics\layers\guilayer.cpp" />
     <ClCompile Include="src\graphics\models\camera.cpp" />
+    <ClCompile Include="src\graphics\models\meshdata.cpp" />
     <ClCompile Include="src\graphics\models\meshfactory.cpp" />
     <ClCompile Include="src\graphics\renderers\batchrenderer.cpp" />
     <ClCompile Include="src\graphics\buffers\batchindexbuffer.cpp" />
@@ -147,6 +148,8 @@
     <ClCompile Include="src\input\joystick.cpp" />
     <ClCompile Include="src\internal\app.cpp" />
     <ClCompile Include="src\managers\gamestatemanager.cpp" />
+    <ClCompile Include="src\managers\manager.cpp" />
+    <ClCompile Include="src\managers\soundmanager.cpp" />
     <ClCompile Include="src\math\mat3.cpp" />
     <ClCompile Include="src\math\mat4.cpp" />
     <ClCompile Include="src\math\quaternion.cpp" />
@@ -184,6 +187,7 @@
     <ClInclude Include="src\graphics\gui\button.h" />
     <ClInclude Include="src\graphics\gui\ltrb.h" />
     <ClInclude Include="src\graphics\layers\guilayer.h" />
+    <ClInclude Include="src\graphics\models\MeshData.h" />
     <ClInclude Include="src\graphics\models\meshfactory.h" />
     <ClInclude Include="src\graphics\renderers\batchrenderer.h" />
     <ClInclude Include="src\graphics\renderers\batchrenderer3d.h" />
@@ -253,12 +257,14 @@
     <ClInclude Include="src\managers\atlasmanager.h" />
     <ClInclude Include="src\managers\channelmanager.h" />
     <ClInclude Include="src\managers\gamestatemanager.h" />
-    <ClInclude Include="src\managers\soundmanager.h" />
+    <ClInclude Include="src\managers\manager.h" />
+    <ClInclude Include="src\managers\managers.h" />
     <ClInclude Include="src\managers\fontmanager.h" />
     <ClInclude Include="src\graphics\glyph.h" />
     <ClInclude Include="src\graphics\label.h" />
     <ClInclude Include="src\graphics\renderableglyph.h" />
     <ClInclude Include="src\graphics\texture.h" />
+    <ClInclude Include="src\managers\soundmanager.h" />
     <ClInclude Include="src\managers\texturemanager.h" />
     <ClInclude Include="src\math\mat3.h" />
     <ClInclude Include="src\math\mat4.h" />
