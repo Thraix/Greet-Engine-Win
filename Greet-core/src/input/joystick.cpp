@@ -66,7 +66,6 @@ namespace greet { namespace input {
 		}
 		m_mapping[button] = rebind;
 	}
-
 	bool Joystick::checkConnect()
 	{
 		m_wasConnected = m_connected;

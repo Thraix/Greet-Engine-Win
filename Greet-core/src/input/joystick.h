@@ -5,6 +5,7 @@
 #include <logging/logger.h>
 #include <internal/greet_types.h>
 #include <math/maths.h>
+#include <utils/timer.h>
 
 #ifndef MAX_JOYSTICKS 
 	#define MAX_JOYSTICKS 4
