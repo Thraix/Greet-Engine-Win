@@ -4,7 +4,6 @@
     <ClCompile Include="src\audio\channel.cpp" />
     <ClCompile Include="src\audio\channelmanager.cpp" />
     <ClCompile Include="src\audio\sound.cpp" />
-    <ClCompile Include="src\audio\soundmanager.cpp" />
     <ClCompile Include="src\entity\entity.cpp" />
     <ClCompile Include="src\event\event.cpp" />
     <ClCompile Include="src\gamestates\gamestate.cpp" />
@@ -69,11 +68,12 @@
     <ClCompile Include="src\graphics\skybox.cpp" />
     <ClCompile Include="src\utils\noise.cpp" />
     <ClCompile Include="src\graphics\textures\texture2d.cpp" />
+    <ClCompile Include="src\graphics\models\meshdata.cpp" />
+    <ClCompile Include="src\audio\soundmanager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\font.h" />
     <ClInclude Include="src\managers\channelmanager.h" />
-    <ClInclude Include="src\managers\soundmanager.h" />
     <ClInclude Include="src\managers\fontmanager.h" />
     <ClInclude Include="src\graphics\glyph.h" />
     <ClInclude Include="src\graphics\label.h" />
@@ -95,7 +95,6 @@
     <ClInclude Include="src\audio\channel.h" />
     <ClInclude Include="src\audio\channelmanager.h" />
     <ClInclude Include="src\audio\sound.h" />
-    <ClInclude Include="src\audio\soundmanager.h" />
     <ClInclude Include="src\entity\entity.h" />
     <ClInclude Include="src\event\event.h" />
     <ClInclude Include="src\event\mouseevent.h" />
@@ -198,6 +197,9 @@
     <ClInclude Include="src\graphics\skybox.h" />
     <ClInclude Include="src\utils\noise.h" />
     <ClInclude Include="src\graphics\textures\texture2d.h" />
+    <ClInclude Include="src\graphics\models\MeshData.h" />
+    <ClInclude Include="src\managers\soundmanager.h" />
+    <ClInclude Include="src\audio\soundmanager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Performance4.psess" />

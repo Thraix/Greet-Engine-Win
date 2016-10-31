@@ -6,11 +6,7 @@
 #include <map>
 #include <vector>
 #include <graphics/textures/texture.h>
-
-#define MESH_VERTICES_LOCATION	0
-#define MESH_TEXCOORDS_LOCATION 1
-#define MESH_COLORS_LOCATION	2 
-#define MESH_NORMALS_LOCATION	3
+#include <graphics/models/meshdata.h>
 
 namespace greet { namespace model {
 	class Mesh
@@ -27,6 +23,8 @@ namespace greet { namespace model {
 
 	public:
 		Mesh(const float* vertices, uint vertexCount, const uint* indices, uint indexCount);
+		Mesh(MeshData* data);
+		void init(const float* vertices, uint vertexCount, const uint* indices, uint indexCount);
 		virtual ~Mesh();
 		inline uint getVAO()  const { return m_vaoId; };
 
@@ -42,6 +40,7 @@ namespace greet { namespace model {
 		inline bool isEnableCulling() const { return m_culling; }
 		void addAttribute(uint location, uint attributeSize, const float* data);
 		void addAttribute(uint location, uint attributeSize, const uint* data);
+		void addAttribute(AttributeData* data);
 		void setDefaultAttribute4f(uint location, const math::vec4& data);
 		void setDefaultAttribute3f(uint location, const math::vec3& data);
 	private:

@@ -5,7 +5,7 @@ namespace greet { namespace graphics {
 	using namespace utils;
 
 	Button::Button(const math::vec2& position, const math::vec2 size, const std::string& text)
-		: GUI(position,size), m_text(text), m_font(FontManager::get("anonymous",size.y * 0.75))
+		: GUI(position,size), m_text(text), m_font(graphics::FontManager::get("anonymous",size.y * 0.75))
 	{
 		m_renderBackground = true;
 		m_backgroundColor = ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(120 / 360.0f, 9));

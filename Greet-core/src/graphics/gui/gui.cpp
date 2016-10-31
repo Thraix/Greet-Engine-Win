@@ -9,7 +9,7 @@ namespace greet { namespace graphics {
 	{
 		m_transformationMatrix = math::mat3::translate(m_position + math::vec2(m_margin.left + m_padding.left, m_margin.top + m_padding.top));
 		if (m_mask == NULL)
-			m_mask = new Sprite(TextureManager::get("mask2")->getTexId(),32,32,math::vec2(0,0),math::vec2(1,1));
+			m_mask = new Sprite(graphics::TextureManager::get("mask2")->getTexId(),32,32,math::vec2(0,0),math::vec2(1,1));
 	}
 	
 	GUI::GUI(const math::vec2& position, const math::vec2& size, const LTRB& margin, const LTRB& padding)
@@ -17,7 +17,7 @@ namespace greet { namespace graphics {
 	{
 		m_transformationMatrix = math::mat3::translate(m_position + math::vec2(m_margin.left + m_padding.left, m_margin.top + m_padding.top));
 		if (m_mask == NULL)
-			m_mask = new Sprite(TextureManager::get("mask2")->getTexId(), 32, 32, math::vec2(0, 0), math::vec2(1, 1));
+			m_mask = new Sprite(graphics::TextureManager::get("mask2")->getTexId(), 32, 32, math::vec2(0, 0), math::vec2(1, 1));
 	}
 
 	GUI::~GUI()

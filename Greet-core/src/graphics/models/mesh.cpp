@@ -4,6 +4,20 @@ namespace greet { namespace model {
 
 	Mesh::Mesh(const float* vertices, uint vertexCount, const uint* indices, uint indexCount)
 	{
+		init(vertices, vertexCount, indices, indexCount);
+	}
+
+	Mesh::Mesh(MeshData* data)
+	{
+		init(data->m_vertices,data->m_vertexCount,data->m_indices,data->m_indexCount);
+		for (uint i = 0;i < data->m_data.size();i++)
+		{
+			addAttribute(data->m_data[i]);
+		}
+	}
+
+	void Mesh::init(const float* vertices, uint vertexCount, const uint* indices, uint indexCount)
+	{
 		m_vertexCount = vertexCount;
 		m_indexCount = indexCount;
 
@@ -25,7 +39,6 @@ namespace greet { namespace model {
 		// Unbind
 		glBindVertexArray(0);
 	}
-
 	Mesh::~Mesh()
 	{
 		for (auto it = m_vbos.begin();it != m_vbos.end(); it++)
@@ -106,7 +119,6 @@ namespace greet { namespace model {
 
 	void Mesh::addAttribute(uint location, uint attributeSize, const uint* data)
 	{
-
 		if (m_vbos.find(location) != m_vbos.end())
 		{
 			// TODO: ERROR CODE
@@ -124,6 +136,26 @@ namespace greet { namespace model {
 		glBindVertexArray(0);
 
 	}
+
+	void Mesh::addAttribute(AttributeData* data)
+	{
+		if (m_vbos.find(data->location) != m_vbos.end())
+		{
+			// TODO: ERROR CODE
+			return;
+		}
+		glBindVertexArray(m_vaoId);
+		uint vbo;
+		glGenBuffers(1, &vbo);
+		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		m_vbos.emplace(data->location,vbo); // Needed to delete vbo when deleting mesh
+		glBufferData(GL_ARRAY_BUFFER, m_vertexCount * data->memoryValueSize, data->data, GL_STATIC_DRAW);
+		glVertexAttribPointer(data->location, data->vertexValueSize, data->glType, data->normalized, 0, 0);
+		glBindBuffer(GL_ARRAY_BUFFER,0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
+		glBindVertexArray(0);
+	}
+
 	void Mesh::setDefaultAttribute4f(uint location, const math::vec4& data)
 	{
 		glBindVertexArray(m_vaoId);

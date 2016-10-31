@@ -35,7 +35,7 @@ namespace greet { namespace model { namespace MeshFactory {
 		return normals;
 	}
 
-	Mesh* quad(float x, float y, float z, float width, float length)
+	MeshData* quad(float x, float y, float z, float width, float length)
 	{
 		float vertices[4 * 3];
 		float halfWidth = width / 2.0f;
@@ -49,15 +49,15 @@ namespace greet { namespace model { namespace MeshFactory {
 		((math::vec3*)normals)[1]  = math::vec3(0.0f, 1.0f, 0.0f);
 		((math::vec3*)normals)[2]  = math::vec3(0.0f, 1.0f, 0.0f);
 		((math::vec3*)normals)[3]  = math::vec3(0.0f, 1.0f, 0.0f);
-		uint indices[6] = {0,1,2,0,2,3};
-		Mesh* mesh = new Mesh(vertices,4,indices,6);
-		mesh->addAttribute(MESH_NORMALS_LOCATION, 3, normals);
-		return mesh;
+		uint* indices = new uint[6]{0,1,2,0,2,3};
+		MeshData* meshdata = new MeshData(vertices,4,indices,6);
+		meshdata->addAttribute(new AttributeData(ATTRIBUTE_NORMAL,normals));
+		return meshdata;
 	}
 	// x, y, z
-	Mesh* cube(float x, float y, float z, float width, float length, float height)	
+	MeshData* cube(float x, float y, float z, float width, float length, float height)	
 	{
-		float vertices[8 * 3];
+		float* vertices = new float[8 * 3];
 		float halfWidth = width / 2.0f;
 		float halfLength = length / 2.0f;
 		float halfHeight = height / 2.0f;
@@ -71,7 +71,7 @@ namespace greet { namespace model { namespace MeshFactory {
 		((math::vec3*)vertices)[6]  = math::vec3(x+halfWidth, y+halfHeight, z+halfLength);
 		((math::vec3*)vertices)[7]  = math::vec3(x+halfWidth, y-halfHeight, z+halfLength);
 
-		float normals[8 * 3];
+		float* normals = new float[8 * 3];
 		((math::vec3*)normals)[0] = math::vec3(-1.0f, -1.0f, -1.0f);
 		((math::vec3*)normals)[1] = math::vec3(-1.0f,  1.0f, -1.0f);
 		((math::vec3*)normals)[2] = math::vec3(-1.0f,  1.0f,  1.0f);
@@ -81,7 +81,7 @@ namespace greet { namespace model { namespace MeshFactory {
 		((math::vec3*)normals)[6] = math::vec3( 1.0f,  1.0f,  1.0f);
 		((math::vec3*)normals)[7] = math::vec3( 1.0f, -1.0f,  1.0f);
 	
-		uint indices[36] = {
+		uint* indices = new uint[36]{
 			 0, 2, 1, 0, 3, 2,
 			 3, 6, 2, 3, 7, 6,
 			 7, 5, 6, 7, 4, 5,
@@ -89,12 +89,12 @@ namespace greet { namespace model { namespace MeshFactory {
 			 2, 5, 1, 2, 6, 5,
 			 3, 0, 4, 3, 4, 7 };
 
-		Mesh* mesh = new Mesh(vertices,8,indices,36);
-		mesh->addAttribute(MESH_NORMALS_LOCATION, 3, normals);
-		return mesh;
+		MeshData* meshdata = new MeshData(vertices,8,indices,36);
+		meshdata->addAttribute(new AttributeData(ATTRIBUTE_NORMAL,normals));
+		return meshdata;
 	}
 
-	Mesh* tetrahedron(float x, float y, float z, float size)
+	MeshData* tetrahedron(float x, float y, float z, float size)
 	{
 		float tan30 = 0.5773502f;  //   tan(30/180*PI)
 		float cos30 = 1.1547005f; //   1 / cos(30/180*PI) 
@@ -110,34 +110,33 @@ namespace greet { namespace model { namespace MeshFactory {
 		math::vec3 v3 = math::vec3(x - halfSize, y - face, z - l2);
 		math::vec3 v4 = math::vec3(x, y + corner, z);
 
-		//LOG_INFO((v1-v2).length(),(v1-v3).length(),(v1-v4).length(),(v2-v3).length(),(v2-v4).length(),(v3-v4).length());
 
-		float vertices[4 * 3];
+		float* vertices = new float[4 * 3];
 		((math::vec3*)vertices)[0] = v1;
 		((math::vec3*)vertices)[1] = v2;
 		((math::vec3*)vertices)[2] = v3;
 		((math::vec3*)vertices)[3] = v4;
 
 		
-		float normals[4 * 3];
+		float* normals = new float[4 * 3];
 
-		((math::vec3*)normals)[0] = (v1 - math::vec3(x, y, z)).normalize();//math::vec3(0.0f, -cos30, 0.8164965f).normalize();
-		((math::vec3*)normals)[1] = (v2 - math::vec3(x, y, z)).normalize();//math::vec3(0.8164965f*(cos30 - tan30), -0.5f*cos30, -0.5*0.8164965f).normalize();
-		((math::vec3*)normals)[2] = (v3 - math::vec3(x, y, z)).normalize();//math::vec3(0.8164965f*(tan30 - cos30), -0.5f*cos30, -0.5*0.8164965f).normalize();
-		((math::vec3*)normals)[3] = (v4 - math::vec3(x, y, z)).normalize();//math::vec3(0.0f, 1.0f, 0.0f);
+		((math::vec3*)normals)[0] = (v1 - math::vec3(x, y, z)).normalize();
+		((math::vec3*)normals)[1] = (v2 - math::vec3(x, y, z)).normalize();
+		((math::vec3*)normals)[2] = (v3 - math::vec3(x, y, z)).normalize();
+		((math::vec3*)normals)[3] = (v4 - math::vec3(x, y, z)).normalize();
 
-		uint indices[12] = { 0, 2, 1, 1, 3, 0, 2, 0, 3, 1, 2, 3};
-		Mesh* mesh = new Mesh(vertices, 12, indices, 12);
-		mesh->addAttribute(MESH_NORMALS_LOCATION, 3, normals);
-		return mesh;
+		uint* indices = new uint[12]{ 0, 2, 1, 1, 3, 0, 2, 0, 3, 1, 2, 3};
+		MeshData* meshdata = new MeshData(vertices, 4, indices, 12);
+		meshdata->addAttribute(new AttributeData(ATTRIBUTE_NORMAL,normals));
+		return meshdata;
 	}
 
-	Mesh* grid(float x, float y, float z, float width, float length, uint gridWidth, uint gridLength)
+	MeshData* grid(float x, float y, float z, float width, float length, uint gridWidth, uint gridLength)
 	{
 		return grid(x,y,z,width,length,gridWidth,gridLength,NULL,0);
 	}
 
-	Mesh* grid(float x, float y, float z, float width, float length, uint gridWidth, uint gridLength, float* heightMap, float height)
+	MeshData* grid(float x, float y, float z, float width, float length, uint gridWidth, uint gridLength, float* heightMap, float height)
 	{
 		if (gridWidth < 1 || gridLength < 1)
 			return quad(x, y, z, width, length);
@@ -145,7 +144,6 @@ namespace greet { namespace model { namespace MeshFactory {
 		float tileLength = length / (float)gridLength;
 		uint vertexCount = (gridWidth + 1) * (gridLength + 1);
 		float* vertices = new float[vertexCount * 3];
-		//uint* colors = new uint[vertexCount];
 		x -= width / 2.0f;
 		z -= length / 2.0f;
 		for (uint iz = 0;iz <= gridLength;iz++)
@@ -154,27 +152,6 @@ namespace greet { namespace model { namespace MeshFactory {
 			{
 				float heightM = heightMap == NULL ? 0 : heightMap[ix + iz*(gridWidth + 1)];
 				((math::vec3*)vertices)[ix + iz*(gridWidth + 1)] = math::vec3(x + ix*tileWidth, y+heightM*height, z + iz*tileLength);
-				/*colors[ix + iz*(gridWidth + 1)] = 0xff000000 | (uint)(heightM * 255.0f) << 16 | (uint)(heightM * 255) << 8 | (uint)(heightM * 255);
-				if (heightM < 0.45)
-				{
-					colors[ix + iz*(gridWidth + 1)] = 0xff0000ff;
-				}
-				else if (heightM < 0.5)
-				{
-					colors[ix + iz*(gridWidth + 1)] = 0xffffff00;
-				}
-				else if (heightM < 0.6)
-				{
-					colors[ix + iz*(gridWidth + 1)] = 0xff00ff00;
-				}
-				else if (heightM < 0.65)
-				{
-					colors[ix + iz*(gridWidth + 1)] = 0xff555555;
-				}
-				else
-				{
-					colors[ix + iz*(gridWidth + 1)] = 0xffffffff;		
-				}*/
 			}
 		}
 		uint indexCount = 6 * gridWidth * gridLength;
@@ -193,10 +170,9 @@ namespace greet { namespace model { namespace MeshFactory {
 			}
 		}
 		float* normals = calculateNormals(vertices,vertexCount,indices,indexCount);
-		Mesh* mesh = new Mesh(vertices,vertexCount,indices,indexCount);
-		mesh->addAttribute(MESH_NORMALS_LOCATION, 3, normals);
-		//mesh->addAttribute(MESH_COLORS_LOCATION, 4, colors);
-		return mesh;
+		MeshData* meshdata = new MeshData(vertices,vertexCount,indices,indexCount);
+		meshdata->addAttribute(new AttributeData(ATTRIBUTE_NORMAL,normals));
+		return meshdata;
 	}
 
 }}}

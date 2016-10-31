@@ -9,6 +9,7 @@
 #include <graphics/window.h>
 #include <listeners/onclicklistener.h>
 #include <algorithm>
+#include <graphics/textures/texturemanager.h>
 
 #define MOUSE_INSIDE(mouse,xPos,yPos,width,height) mouse.x >= xPos && mouse.x < xPos + width && mouse.y >= yPos && mouse.y < yPos + height
 #define MOUSE_INSIDE_GUI(mouse,width,height) mouse.x >= 0 && mouse.x < width && mouse.y >= 0 && mouse.y < height
