@@ -147,7 +147,7 @@
     <ClCompile Include="src\graphics\window.cpp" />
     <ClCompile Include="src\input\joystick.cpp" />
     <ClCompile Include="src\internal\app.cpp" />
-    <ClCompile Include="src\managers\gamestatemanager.cpp" />
+    <ClCompile Include="src\gamestates\gamestatemanager.cpp" />
     <ClCompile Include="src\math\mat3.cpp" />
     <ClCompile Include="src\math\mat4.cpp" />
     <ClCompile Include="src\math\quaternion.cpp" />
@@ -185,7 +185,7 @@
     <ClInclude Include="src\graphics\gui\button.h" />
     <ClInclude Include="src\graphics\gui\ltrb.h" />
     <ClInclude Include="src\graphics\layers\guilayer.h" />
-    <ClInclude Include="src\graphics\models\MeshData.h" />
+    <ClInclude Include="src\graphics\models\meshdata.h" />
     <ClInclude Include="src\graphics\models\meshfactory.h" />
     <ClInclude Include="src\graphics\renderers\batchrenderer.h" />
     <ClInclude Include="src\graphics\renderers\batchrenderer3d.h" />
@@ -216,9 +216,9 @@
     <ClInclude Include="src\graphics\models\camera.h" />
     <ClInclude Include="src\graphics\models\entitymodel.h" />
     <ClInclude Include="src\graphics\models\modelformat.h" />
-    <ClInclude Include="src\graphics\models\Light.h" />
-    <ClInclude Include="src\graphics\models\Material.h" />
-    <ClInclude Include="src\graphics\models\MaterialModel.h" />
+    <ClInclude Include="src\graphics\Light.h" />
+    <ClInclude Include="src\graphics\models\material.h" />
+    <ClInclude Include="src\graphics\models\materialmodel.h" />
     <ClInclude Include="src\graphics\models\mesh.h" />
     <ClInclude Include="src\graphics\particle.h" />
     <ClInclude Include="src\graphics\particlepool.h" />
@@ -240,6 +240,7 @@
     <ClInclude Include="src\graphics\textures\texture2d.h" />
     <ClInclude Include="src\graphics\textures\texturemanager.h" />
     <ClInclude Include="src\graphics\window.h" />
+    <ClInclude Include="src\greet.h" />
     <ClInclude Include="src\input\joystick.h" />
     <ClInclude Include="src\internal\app.h" />
     <ClInclude Include="src\internal\greetgl.h" />
@@ -254,7 +255,7 @@
     <ClInclude Include="src\logging\logger.h" />
     <ClInclude Include="src\managers\atlasmanager.h" />
     <ClInclude Include="src\managers\channelmanager.h" />
-    <ClInclude Include="src\managers\gamestatemanager.h" />
+    <ClInclude Include="src\gamestates\gamestatemanager.h" />
     <ClInclude Include="src\managers\fontmanager.h" />
     <ClInclude Include="src\graphics\glyph.h" />
     <ClInclude Include="src\graphics\label.h" />

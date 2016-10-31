@@ -2,12 +2,12 @@
 
 #include <graphics/layers/layer.h>
 
-namespace greet { namespace managers { class GameStateManager; } }
+namespace greet { namespace gamestate { class GameStateManager; } }
 
 namespace greet { namespace gamestate {
 	class GameState : public graphics::Layer<graphics::Renderable>
 	{
-	friend managers::GameStateManager;
+	friend gamestate::GameStateManager;
 	protected:
 		GameState* parent;
 	public:

@@ -13,7 +13,8 @@
 #include <internal/greetgl.h>
 #include <internal/greet_types.h>
 #include <utils/uuid.h>
-#include <listeners/listeners.h>
+#include <listeners\joystickstate.h>
+#include <listeners\windowlistener.h>
 #include <event\eventdispatcher.h>
 #include <algorithm>
 

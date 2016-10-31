@@ -8,6 +8,7 @@
 #include <event/keylistener.h>
 #include <utils/utils.h>
 #include <logging\logger.h>
+
 #define DISPATCHER_GUI BIT(24)
 
 namespace greet { namespace graphics {

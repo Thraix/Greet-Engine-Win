@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include <internal/greetgl.h>
 #include <math/maths.h>
 #include <graphics/fonts/font.h>
 #include <logging/logger.h>

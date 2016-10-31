@@ -1,6 +1,6 @@
 #include "gamestatemanager.h"
 
-namespace greet{ namespace managers {
+namespace greet{ namespace gamestate {
 
 	gamestate::GameState* GameStateManager::m_gamestate;
 

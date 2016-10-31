@@ -2,7 +2,6 @@
 
 #include <string.h>
 #include "gui.h"
-#include "border.h"
 #include "label.h"
 #include <utils/colorutils.h>
 

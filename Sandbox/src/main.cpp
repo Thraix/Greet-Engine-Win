@@ -1,32 +1,4 @@
-#include <internal\app.h>
-#include <graphics/textures/texture2d.h>
-#include <entity\entity.h>
-#include <graphics\gui\frame.h>
-#include <graphics\gui\panel.h>
-#include <graphics\gui\slider.h>
-#include <graphics\gui\button.h>
-#include <graphics\atlas\atlasmanager.h>
-#include <graphics\renderers/batchrenderer.h>
-#include <graphics\shaders\shaderfactory.h>
-#include <graphics\layers\box2dlayer.h>
-#include <graphics/renderers/batchrenderer3d.h>
-#include <graphics/renderers/renderer3d.h>
-#include <graphics/models/EntityModel.h>
-#include <graphics/models/camera.h>
-#include <utils/colorutils.h>
-#include <utils/objutils.h>
-#include <math/math_func.h>
-#include <graphics/models/light.h>
-#include <event/keylistener.h>
-#include <event/mouselistener.h>
-
-#include <utils/dialogbox.h>
-#include <drivers/driverdispatcher.h>
-#include <drivers/lineardriver.h>
-#include <drivers/driveradapter.h>
-
-#include <graphics/layers/guilayer.h>
-#include <utils/noise.h>
+#include <greet.h>
 
 #include "keyboardcontrol.h"
 #include "tree.h"

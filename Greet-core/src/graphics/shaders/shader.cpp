@@ -1,5 +1,6 @@
-#include "shaderfactory.h"
 #include "shader.h"
+
+#include "shaderfactory.h"
 namespace greet {
 	namespace graphics {
 

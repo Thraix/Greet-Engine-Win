@@ -33,7 +33,6 @@
     <ClCompile Include="src\graphics\window.cpp" />
     <ClCompile Include="src\input\joystick.cpp" />
     <ClCompile Include="src\internal\app.cpp" />
-    <ClCompile Include="src\managers\gamestatemanager.cpp" />
     <ClCompile Include="src\utils\uuid.cpp" />
     <ClCompile Include="src\math\mat3.cpp" />
     <ClCompile Include="src\math\vec2.cpp" />
@@ -70,6 +69,7 @@
     <ClCompile Include="src\graphics\textures\texture2d.cpp" />
     <ClCompile Include="src\graphics\models\meshdata.cpp" />
     <ClCompile Include="src\audio\soundmanager.cpp" />
+    <ClCompile Include="src\gamestates\gamestatemanager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\font.h" />
@@ -139,7 +139,6 @@
     <ClInclude Include="src\listeners\windowresize.h" />
     <ClInclude Include="src\logging\loggable.h" />
     <ClInclude Include="src\logging\logger.h" />
-    <ClInclude Include="src\managers\gamestatemanager.h" />
     <ClInclude Include="src\utils\fileutils.h" />
     <ClInclude Include="src\utils\imageutils.h" />
     <ClInclude Include="src\utils\logutils.h" />
@@ -163,7 +162,6 @@
     <ClInclude Include="src\graphics\models\entitymodel.h" />
     <ClInclude Include="src\graphics\models\camera.h" />
     <ClInclude Include="src\utils\objutils.h" />
-    <ClInclude Include="src\graphics\models\Light.h" />
     <ClInclude Include="src\graphics\models\modelformat.h" />
     <ClInclude Include="src\graphics\framebufferobject.h" />
     <ClInclude Include="src\graphics\renderers\renderer3d.h" />
@@ -198,8 +196,10 @@
     <ClInclude Include="src\utils\noise.h" />
     <ClInclude Include="src\graphics\textures\texture2d.h" />
     <ClInclude Include="src\graphics\models\MeshData.h" />
-    <ClInclude Include="src\managers\soundmanager.h" />
     <ClInclude Include="src\audio\soundmanager.h" />
+    <ClInclude Include="src\greet.h" />
+    <ClInclude Include="src\gamestates\gamestatemanager.h" />
+    <ClInclude Include="src\graphics\Light.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Performance4.psess" />

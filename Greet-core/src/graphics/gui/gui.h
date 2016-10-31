@@ -6,7 +6,6 @@
 #include <event/keyevent.h>
 #include <event/mouseevent.h>
 #include <utils/colorutils.h>
-#include <graphics/window.h>
 #include <listeners/onclicklistener.h>
 #include <algorithm>
 #include <graphics/textures/texturemanager.h>

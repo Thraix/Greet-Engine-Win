@@ -5,7 +5,7 @@
 #include <logging/logger.h>
 #include <internal/greet_types.h>
 
-namespace greet { namespace managers {
+namespace greet { namespace gamestate {
 	class GameStateManager
 	{
 	private:

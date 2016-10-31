@@ -3,6 +3,7 @@
 #include <ctime>
 #include <internal/greet_types.h>
 #include <internal\greetgl.h>
+#include <utils\stringutils.h>
 
 #define BIT(x) 1 << x
 
@@ -70,16 +71,15 @@ namespace greet {namespace utils{
 		std::string res = "";
 		if (hour < 10)
 			res += "0";
-		res += toString(hour)+":";
+		res += std::to_string(hour)+":";
 		if (min < 10)
 			res += "0";
-		res += toString(min);
+		res += std::to_string(min);
 		return res;
 	}
 
 	inline byte* getBytesFromString(const std::string& s)
 	{
-		std::cout << s << std::endl;
 		byte* bytes = new byte[s.length()];
 		for(uint i = 0;i<s.length();i++)
 		{
