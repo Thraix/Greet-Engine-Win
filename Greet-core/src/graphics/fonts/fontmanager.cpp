@@ -6,6 +6,15 @@ namespace greet{ namespace graphics {
 
 	void FontManager::add(graphics::Font* font)
 	{
+		for (int i = 0;i < m_fonts.size();i++)
+		{
+			if (font->getName() == m_fonts[i]->getName())
+			{
+				utils::ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_ADD);
+				LOG_ERROR("FONTMANAGER", "Given font name already exists:", font->getName().c_str());
+				return;
+			}
+		}
 		m_fonts.push_back(font);
 	}
 
@@ -18,7 +27,8 @@ namespace greet{ namespace graphics {
 				return getSize(fontname,size,i);
 			}
 		}
-		LOG_ERROR("FONTMANAGER","Could not find the given font: ", fontname.c_str());
+		utils::ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_GET);
+		LOG_ERROR("FONTMANAGER","Could not find the given font:", fontname.c_str());
 		return getSize(m_fonts[0]->getName(),size,0);
 	}
 	

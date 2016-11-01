@@ -101,7 +101,8 @@ namespace greet { namespace model {
 
 		if (m_vbos.find(location) != m_vbos.end())
 		{
-			// TODO: ERROR CODE
+			utils::ErrorHandle::setErrorCode(GREET_ERROR_MESH_LOCATION);
+			LOG_ERROR("Shader location already used in mesh:",location);
 			return;
 		}
 		glBindVertexArray(m_vaoId);
@@ -121,7 +122,8 @@ namespace greet { namespace model {
 	{
 		if (m_vbos.find(location) != m_vbos.end())
 		{
-			// TODO: ERROR CODE
+			utils::ErrorHandle::setErrorCode(GREET_ERROR_MESH_LOCATION);
+			LOG_ERROR("Shader location already used in mesh:",location);
 			return;
 		}
 		glBindVertexArray(m_vaoId);
@@ -141,7 +143,8 @@ namespace greet { namespace model {
 	{
 		if (m_vbos.find(data->location) != m_vbos.end())
 		{
-			// TODO: ERROR CODE
+			utils::ErrorHandle::setErrorCode(GREET_ERROR_MESH_LOCATION);
+			LOG_ERROR("Shader location already used in mesh:",data->location);
 			return;
 		}
 		glBindVertexArray(m_vaoId);

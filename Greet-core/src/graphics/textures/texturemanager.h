@@ -3,6 +3,7 @@
 #include <logging/logger.h>
 #include <vector>
 #include "texture.h"
+#include <utils/errorhandler.h>
 
 namespace greet {
 	namespace graphics{

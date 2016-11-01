@@ -12,11 +12,15 @@
 #define GREET_ERROR_SHADER_VERTEX	BIT(6)
 #define GREET_ERROR_SHADER_FRAGMENT	BIT(7)
 #define GREET_ERROR_SHADER_GEOMETRY	BIT(8)
+#define GREET_ERROR_MESH_LOCATION	BIT(8)
+#define GREET_ERROR_MANAGER_ADD		BIT(9)
+#define GREET_ERROR_MANAGER_GET		BIT(10)
+#define GREET_ERROR_MANAGER_REMOVE	BIT(11)
 
 namespace greet { namespace utils { namespace ErrorHandle {
 
-	static uint errorCode;
-	static void setErrorCode(uint errorCode) { ErrorHandle::errorCode |= errorCode; };
-	static uint getErrorCode() { return errorCode;  }
+	static ulong errorCode;
+	static void setErrorCode(ulong errorCode) { ErrorHandle::errorCode |= errorCode; };
+	static ulong getErrorCode() { return errorCode;  }
 	static void resetErrorCode() { ErrorHandle::errorCode = 0; }
 }}}

@@ -4,6 +4,7 @@
 #include <graphics/atlas/atlas.h>
 #include <logging/logger.h>
 #include <internal/greet_types.h>
+#include <utils/errorhandler.h>
 
 namespace greet {namespace graphics {
 	class AtlasManager

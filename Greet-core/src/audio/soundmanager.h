@@ -3,6 +3,7 @@
 #include <vector>
 #include <audio/sound.h>
 #include <internal/greet_types.h>
+#include <utils/errorhandler.h>
 
 #include <ga.h>
 #include <gau.h>
