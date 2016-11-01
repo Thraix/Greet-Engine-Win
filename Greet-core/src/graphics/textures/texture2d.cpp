@@ -37,8 +37,17 @@ namespace greet { namespace graphics {
 		delete[] bits;
 	}
 
+	void Texture2D::genTexture(uint width, uint height, uint bpp)
+	{
+		m_width = width;
+		m_height = height;
+		genTexture(NULL,bpp);
+	}
+
 	void Texture2D::genTexture(BYTE* bits, uint bpp)
 	{
+		if (m_texId != 0)
+			glDeleteTextures(1,&m_texId);
 		glGenTextures(1, &m_texId);
 
 		glBindTexture(GL_TEXTURE_2D, m_texId);

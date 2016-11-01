@@ -28,6 +28,7 @@ private:
 	EntityModel* tetrahedron;
 	Shader* m_geomShaderTest;
 	std::vector<EntityModel> models;
+	FrameBufferObject* fbo;
 
 	Camera* camera;
 	Layer<Renderable>* uilayer;
@@ -38,6 +39,7 @@ private:
 	Label* fps;
 	Renderable2D* cursor;
 	Renderable2D* driverTest;
+	Renderable2D* fboScene;
 
 public:
 	
@@ -71,6 +73,11 @@ public:
 		TextureManager::add(new Texture2D("res/textures/lens_flare2.png", "lensflare2"));
 		TextureManager::add(new Texture2D("res/textures/lens_flare3.png", "lensflare3"));
 		TextureManager::add(new Texture2D("res/textures/lens_flare4.png", "lensflare4"));
+
+		uint error = glGetError();
+		fbo = new FrameBufferObject(480,270);
+		if ((error = glGetError()) != GL_NO_ERROR)
+			LOG_INFO(error);
 		camera = new Camera(math::vec3(0,0,0));
 		Skybox* skybox = new Skybox((CubeMap*)TextureManager::get("skybox"));
 		renderer3d = new BatchRenderer3D(Window::getWidth(), Window::getHeight(), *camera,70,0.001f,1000.0f, skybox);
@@ -97,7 +104,7 @@ public:
 		//gridMesh->setDefaultAttribute4f(MESH_COLORS_LOCATION, math::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 		//gridMesh->setEnableCulling(false);
 		MaterialModel* gridModelMaterial = new MaterialModel(new Mesh(gridMesh), *terrainMaterial);
-		grid = new EntityModel(*gridModelMaterial, math::vec3(0, 0, 0), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
+		grid = new EntityModel(*gridModelMaterial, math::vec3(0, -20, 0), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
 		delete gridMesh;
 
 		MeshData* cubeMesh = model::MeshFactory::cube(0,0,0,10,10,10);
@@ -149,10 +156,12 @@ public:
 		slider = new Slider(math::vec2(10,100),math::vec2(200,30),0,255,1);
 		button = new Button(math::vec2(10,120+30),math::vec2(100,40),"Test");
 		frame = new Frame(math::vec2(10, 10), math::vec2(500, 500),"GUI Frame");
+		fboScene = new Renderable2D(math::vec2(0,0),math::vec2(320,180),0xffffffff,new Sprite(fbo->getColorTexture()),NULL);
 		//uilayer->add(fps);
 		frame->add(slider);
 		frame->add(button);
 		guilayer->add(frame);
+		uilayer->add(fboScene);
 		uilayer->add(cursor);
 
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(frame->m_position.x, 100, 5, true, new drivers::DriverAdapter()));
@@ -314,23 +323,20 @@ public:
 
 		return false;
 	}
-
+	bool screenshot = false;
 	void render()
 	{
+		fbo->bind();
+		renderer3d->begin();
+		renderer3d->flush();
+		renderer3d->end();
+		fbo->unbind();
+
 		renderer3d->begin();
 		renderer3d->flush();
 		renderer3d->end();
 		//guilayer->render();
-		//glEnable(GL_BLEND);
-		//glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-		//uilayer->render();
-		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		//m_geomShaderTest->enable();
-		//glBegin(GL_POINTS);
-		//glColor3f(1,1,1);
-		//glVertex2f(0, 0);
-		//glEnd();
-		//m_geomShaderTest->disable();
+		uilayer->render();
 	}
 	
 	void windowResize(int width, int height) override

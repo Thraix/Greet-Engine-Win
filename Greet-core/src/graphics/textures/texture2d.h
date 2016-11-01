@@ -9,6 +9,7 @@
 namespace greet { namespace graphics{
 	class Texture2D : public Texture
 	{
+		friend class FrameBufferObject;
 	protected:
 		uint m_width;
 		uint m_height;
@@ -21,6 +22,7 @@ namespace greet { namespace graphics{
 		inline uint getHeight() const { return m_height; }
 	protected:
 		void loadTexture(const std::string& filename);
+		void genTexture(uint width, uint height, uint bpp);
 		void genTexture(BYTE* bits, uint bpp);
 
 	};

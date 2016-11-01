@@ -69,6 +69,7 @@ namespace greet { namespace graphics {
 		glfwSetCursorPosCallback(window,mouse_position_callback);
 		glfwSetWindowFocusCallback(window,window_focus_callback);
 		glfwSwapInterval(0);
+		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

@@ -109,6 +109,7 @@
 #include <graphics\layers\box2dlayer.h>
 
 #include <graphics\window.h>
+#include <graphics/framebufferobject.h>
 
 #include <graphics\gui\ltrb.h>
 #include <graphics\gui\border.h>
