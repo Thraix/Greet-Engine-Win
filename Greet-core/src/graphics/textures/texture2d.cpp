@@ -1,7 +1,7 @@
 #include "texture2d.h"
 
-namespace greet { namespace graphics{
-	
+namespace greet { namespace graphics {
+
 	Texture2D::Texture2D(const std::string& filename, const std::string& name)
 		:Texture(name, GL_TEXTURE_2D)
 	{
@@ -9,18 +9,23 @@ namespace greet { namespace graphics{
 	}
 
 	Texture2D::Texture2D(BYTE* bits, uint width, uint height, uint bpp, const std::string& name)
-		: Texture(name,GL_TEXTURE_2D)
+		: Texture(name, GL_TEXTURE_2D)
 	{
 		m_width = width;
 		m_height = height;
-		genTexture(bits,bpp);
+		genTexture(bits, bpp);
 		delete[] bits;
 	}
 
 	Texture2D::Texture2D(uint texId, uint width, uint height, const std::string& name)
-		:Texture(texId,name,GL_TEXTURE_2D), m_width(width), m_height(height)
+		:Texture(texId, name, GL_TEXTURE_2D), m_width(width), m_height(height)
 	{
 
+	}
+
+	Texture2D::~Texture2D()
+	{
+	
 	}
 
 	void Texture2D::loadTexture(const std::string& filename)

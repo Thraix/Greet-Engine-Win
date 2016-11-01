@@ -16,7 +16,7 @@ namespace greet { namespace graphics{
 		Texture2D(const std::string& filename, const std::string& name);
 		Texture2D(BYTE* bits, uint width, uint height, uint bpp, const std::string& name);
 		Texture2D(uint texID, uint width, uint height, const std::string& name);
-
+		virtual ~Texture2D();
 		inline uint getWidth() const { return m_width; }
 		inline uint getHeight() const { return m_height; }
 	protected:

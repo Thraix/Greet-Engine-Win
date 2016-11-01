@@ -22,7 +22,7 @@ namespace greet { namespace graphics
 			
 		public:
 			Label(const std::string& text, math::vec2 pos,Font* font, uint color);
-			Label(const std::string& text, math::vec2 pos,std::string fontname, float fontsize, uint color);
+			Label(const std::string& text, math::vec2 pos,std::string fontname, uint fontsize, uint color);
 			
 			void submit(Renderer2D* renderer) const override;
 			bool update(float timeElapsed) override;

@@ -9,7 +9,7 @@ namespace greet { namespace graphics {
 		
 	}
 	
-	Label::Label(const std::string& text, math::vec2 pos,std::string fontname, float fontsize, uint color)
+	Label::Label(const std::string& text, math::vec2 pos,std::string fontname, uint fontsize, uint color)
 	:text(text),position(pos),m_font(FontManager::get(fontname,fontsize)),color(color)
 	{
 		

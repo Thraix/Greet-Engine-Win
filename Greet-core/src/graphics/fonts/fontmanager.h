@@ -14,7 +14,7 @@ namespace greet { namespace graphics {
 	public:
 
 		static void add(FontContainer* font);
-		static Font* get(const std::string& fontname, float size);
+		static Font* get(const std::string& fontname, uint size);
 		static void destroy();
 	private:
 		FontManager(){}

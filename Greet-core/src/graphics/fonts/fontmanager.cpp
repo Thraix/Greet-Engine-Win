@@ -18,7 +18,7 @@ namespace greet{ namespace graphics {
 		m_fonts.push_back(font);
 	}
 
-	Font* FontManager::get(const std::string& fontname, float size)
+	Font* FontManager::get(const std::string& fontname, uint size)
 	{
 		for (uint i = 0; i < m_fonts.size(); i++)
 		{
