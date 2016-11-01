@@ -73,7 +73,7 @@ public:
 		TextureManager::add(new Texture2D("res/textures/lens_flare4.png", "lensflare4"));
 		camera = new Camera(math::vec3(0,0,0));
 		Skybox* skybox = new Skybox((CubeMap*)TextureManager::get("skybox"));
-		renderer3d = new BatchRenderer3D(Window::getWidth(), Window::getHeight(), *camera,70,0.001f,100.0f, skybox);
+		renderer3d = new BatchRenderer3D(Window::getWidth(), Window::getHeight(), *camera,70,0.001f,1000.0f, skybox);
 
 		float* map = new float[101 * 101];
 		for (int i = 0;i < 101 * 101;i++)
@@ -83,7 +83,7 @@ public:
 
 
 		Shader* modelShader = Shader::fromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
-		Shader* terrainShader = Shader::fromFile("res/shaders/noisemap.vert", "res/shaders/3dshader.frag");
+		Shader* terrainShader = Shader::fromFile("res/shaders/terrain.geom", "res/shaders/terrain.vert", "res/shaders/terrain.frag");
 		Shader* stallShader = Shader::fromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
 		m_geomShaderTest = Shader::fromFile("res/shaders/2dshader.geom","res/shaders/2dshader.vert", "res/shaders/2dshader.frag");
 
@@ -92,8 +92,8 @@ public:
 		terrainMaterial = new Material(terrainShader, NULL);
 		terrainMaterial->setReflectivity(0.5f);
 		terrainMaterial->setShineDamper(5.0f);
-		float* noise = Noise::genNoise(100,100,5,8,8,0.5f);
-		MeshData* gridMesh = model::MeshFactory::grid(0, 0, 0, 10, 10, 99, 99, noise,10);
+		float* noise = Noise::genNoise(500,500,5,64,64,0.5f);
+		MeshData* gridMesh = model::MeshFactory::grid(0, 0, 0, 500, 500, 499, 499, noise,10);
 		//gridMesh->setDefaultAttribute4f(MESH_COLORS_LOCATION, math::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 		//gridMesh->setEnableCulling(false);
 		MaterialModel* gridModelMaterial = new MaterialModel(new Mesh(gridMesh), *terrainMaterial);
@@ -155,6 +155,7 @@ public:
 		frame->add(slider);
 		frame->add(button);
 		guilayer->add(frame);
+		uilayer->add(cursor);
 
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(frame->m_position.x, 100, 5, true, new drivers::DriverAdapter()));
 
@@ -248,7 +249,7 @@ public:
 	{
 		if (e.getButton() == GLFW_KEY_F5)
 		{
-			Shader* terrainShader = Shader::fromFile("res/shaders/noisemap.vert", "res/shaders/3dshader.frag");
+			Shader* terrainShader = Shader::fromFile("res/shaders/terrain.geom", "res/shaders/terrain.vert", "res/shaders/terrain.frag");
 			Shader* modelShader = Shader::fromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
 			modelMaterial->setShader(modelShader);
 			terrainMaterial->setShader(terrainShader);
@@ -256,12 +257,13 @@ public:
 			modelShader->enable();
 			l->setToUniform(modelShader, "light");
 			modelShader->disable();
-
+			Light* l2 = new Light(math::vec3(0, 100, 0), 0xffffffff);
 			terrainShader->enable();
-			l->setToUniform(terrainShader, "light");
+			l2->setToUniform(terrainShader, "light");
 			terrainShader->setUniform1f("amplitude",10);
 			terrainShader->disable();
 			delete l;
+			delete l2;
 		}
 		if (e.getButton() == GLFW_KEY_F10)
 		{
@@ -322,10 +324,10 @@ public:
 		renderer3d->flush();
 		renderer3d->end();
 		//guilayer->render();
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-		uilayer->render();
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glEnable(GL_BLEND);
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+		//uilayer->render();
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		//m_geomShaderTest->enable();
 		//glBegin(GL_POINTS);
 		//glColor3f(1,1,1);

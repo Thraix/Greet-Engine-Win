@@ -35,7 +35,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\2dshader.geom" />
-    <None Include="res\shaders\noisemap.vert" />
+    <None Include="res\shaders\terrain.vert" />
+    <None Include="res\shaders\terrain.geom" />
+    <None Include="res\shaders\terrain.frag" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\keyboardcontrol.h">

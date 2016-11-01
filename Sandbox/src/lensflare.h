@@ -21,7 +21,6 @@ init:
 	lensflare5->render = false;
 	lensflare6->render = false;
 
-	uilayer->add(cursor);
 	uilayer->add(lensflare1);
 	uilayer->add(lensflare2);
 	uilayer->add(lensflare3);
