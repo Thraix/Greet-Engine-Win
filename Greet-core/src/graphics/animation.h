@@ -10,8 +10,8 @@ namespace greet { namespace graphics{
 	private:
 		math::vec2 m_add;
 
-		int m_image;
-		int m_images;
+		uint m_image;
+		uint m_images;
 		bool m_horizontalRead;
 		float m_frameTime;
 		float m_frameTimer;
@@ -19,9 +19,8 @@ namespace greet { namespace graphics{
 	public:
 
 	public:
-		Animation(uint texID, uint texWidth, uint texHeight, math::vec2 texPos, math::vec2 texSize, float frameTimer, int images, bool horizontalRead);
-		Animation(uint color);
-		Animation(const Sprite& sprite, float frameTimer, int images, bool horizontalRead);
+		Animation(Texture2D* texture, math::vec2 texPos, math::vec2 texSize, float frameTimer, uint images, bool horizontalRead);
+		Animation(const Sprite& sprite, float frameTimer, uint images, bool horizontalRead);
 		~Animation();
 
 		bool update(float elapsedTime);

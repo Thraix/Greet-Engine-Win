@@ -11,7 +11,6 @@ out float visibility;
 uniform mat4 transformationMatrix;
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
-uniform float amplitude;
 
 const float density = 0.0007;
 const float gradient = 1.5;
@@ -25,30 +24,30 @@ out Vertex
 void main()
 {
 	vertex.realPos = position;
-	if(position.y < 0.45*amplitude)
+	if(position.y < 0.45)
 	{
-		vertex.realColor = vec4(0,0,pow(position.y/amplitude/0.45,4.0f),1);
-		vertex.realPos.y = 0.45*amplitude;
+		vertex.realColor = vec4(0,0,pow(position.y/0.45,4.0f),1);
+		vertex.realPos.y = 0.45;
 	}
-	else if(position.y < 0.48*amplitude)
+	else if(position.y < 0.48)
 	{
 		vertex.realColor = vec4(0.95,0.9,0.8,1.0);
 	}
-	else if(position.y < 0.58*amplitude)
+	else if(position.y < 0.58)
 	{
 		vertex.realColor = vec4(101/255.0,186/255.0,89/255.0,1);
 	}
-	else if(position.y < 0.65*amplitude)
+	else if(position.y < 0.65)
 	{
 		vertex.realColor = vec4(0.45,0.45,0.6,1.0);
-		vertex.realPos.y = (pow(vertex.realPos.y / amplitude - 0.58, 0.6) + 0.58) * amplitude;
+		vertex.realPos.y = (pow(vertex.realPos.y - 0.58, 0.6) + 0.58);
 	}
 	else
 	{
 		vertex.realColor = vec4(0.9,0.9,1,1);
-		vertex.realPos.y = (pow(vertex.realPos.y / amplitude - 0.58, 0.6) + 0.58) * amplitude;
+		vertex.realPos.y = (pow(vertex.realPos.y - 0.58, 0.6) + 0.58);
 	}
-	vertex.realPos.y*=2;
+	vertex.realPos.y*=20;
 
 	vec4 worldPosition = transformationMatrix * vec4(vertex.realPos,1.0f);
 	vec4 positionRelativeToCamera = viewMatrix * worldPosition;

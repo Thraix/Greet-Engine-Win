@@ -2,9 +2,9 @@
 
 namespace greet{ namespace graphics {
 
-	std::vector<graphics::Font*> FontManager::m_fonts;
+	std::vector<graphics::FontContainer*> FontManager::m_fonts;
 
-	void FontManager::add(graphics::Font* font)
+	void FontManager::add(graphics::FontContainer* font)
 	{
 		for (int i = 0;i < m_fonts.size();i++)
 		{
@@ -24,33 +24,14 @@ namespace greet{ namespace graphics {
 		{
 			if (fontname.compare(m_fonts[i]->getName())==0)
 			{
-				return getSize(fontname,size,i);
+				return m_fonts[i]->getSize(size);
 			}
 		}
 		utils::ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_GET);
 		LOG_ERROR("FONTMANAGER","Could not find the given font:", fontname.c_str());
-		return getSize(m_fonts[0]->getName(),size,0);
-	}
-	
-	Font* FontManager::getSize(const std::string& fontname, float size, uint pos)
-	{
-		for(uint i = pos;i<m_fonts.size();i++)
-		{
-			if (fontname.compare(m_fonts[i]->getName())==0)
-			{
-				if(m_fonts[i]->getSize()==size)
-				{
-					return m_fonts[i];
-				}
-			}
-		}
-		Font* newFont;
-		if(m_fonts[pos]->getFileName().compare(""))
-			newFont = new Font(m_fonts[pos]->getFileName(),fontname,size);
-		else
-			newFont = new Font(m_fonts[pos]->getData(),m_fonts[pos]->getDataSize(),fontname,size);
-		add(newFont);
-		return newFont;
+		if (m_fonts.size() > 0)
+			return m_fonts[0]->getSize(size);
+		return NULL; // Return Default that always can be read.
 	}
 	
 	// TODO: REMOVE FONTS
@@ -61,6 +42,7 @@ namespace greet{ namespace graphics {
 		{
 			delete m_fonts[i];
 		}
+		m_fonts.clear();
 	}
 
 }}

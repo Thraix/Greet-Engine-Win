@@ -33,6 +33,16 @@ namespace greet{ namespace graphics{
 		return m_textures[0];
 	}
 
+	Texture2D* TextureManager::get2D(const std::string& texturename)
+	{
+		return (Texture2D*)get(texturename);
+	}
+
+	CubeMap* TextureManager::get3D(const std::string& texturename)
+	{
+		return (CubeMap*)get(texturename);
+	}
+
 	void TextureManager::destroy()
 	{
 		for (uint i = 0; i < m_textures.size(); i++)

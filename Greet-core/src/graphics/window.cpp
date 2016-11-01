@@ -75,8 +75,8 @@ namespace greet { namespace graphics {
 		ASSERT(glewInit() == GLEW_OK,"Glew failed to init.");
 
 		// SET DEFAULT VALUES
-		FontManager::add(new Font("Roboto-Black.ttf","roboto-bold",72));
-		FontManager::add(new Font("Roboto-thin.ttf","roboto",72));
+		FontManager::add(new FontContainer("Roboto-Black.ttf","roboto-bold"));
+		FontManager::add(new FontContainer("Roboto-thin.ttf","roboto"));
 		uint width,height,bpp;
 		TextureManager::add(new Texture2D("frame.png","frame"));
 		utils::UUID::init();

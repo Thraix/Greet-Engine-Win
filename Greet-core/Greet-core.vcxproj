@@ -105,6 +105,7 @@
     <ClCompile Include="src\graphics\animation.cpp" />
     <ClCompile Include="src\graphics\atlas\atlas.cpp" />
     <ClCompile Include="src\graphics\atlas\atlasmanager.cpp" />
+    <ClCompile Include="src\graphics\fonts\fontcontainer.cpp" />
     <ClCompile Include="src\graphics\gui\button.cpp" />
     <ClCompile Include="src\graphics\gui\slider.cpp" />
     <ClCompile Include="src\graphics\layers\guilayer.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="src\graphics\animation.h" />
     <ClInclude Include="src\graphics\atlas\atlas.h" />
     <ClInclude Include="src\graphics\atlas\atlasmanager.h" />
+    <ClInclude Include="src\graphics\fonts\fontcontainer.h" />
     <ClInclude Include="src\graphics\gui\button.h" />
     <ClInclude Include="src\graphics\gui\ltrb.h" />
     <ClInclude Include="src\graphics\layers\guilayer.h" />

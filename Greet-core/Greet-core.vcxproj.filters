@@ -70,6 +70,7 @@
     <ClCompile Include="src\graphics\models\meshdata.cpp" />
     <ClCompile Include="src\audio\soundmanager.cpp" />
     <ClCompile Include="src\gamestates\gamestatemanager.cpp" />
+    <ClCompile Include="src\graphics\fonts\fontcontainer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\font.h" />
@@ -200,6 +201,7 @@
     <ClInclude Include="src\greet.h" />
     <ClInclude Include="src\gamestates\gamestatemanager.h" />
     <ClInclude Include="src\graphics\Light.h" />
+    <ClInclude Include="src\graphics\fonts\fontcontainer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Performance4.psess" />

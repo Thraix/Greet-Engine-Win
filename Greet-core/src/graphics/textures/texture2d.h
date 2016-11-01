@@ -9,7 +9,7 @@
 namespace greet { namespace graphics{
 	class Texture2D : public Texture
 	{
-	private:
+	protected:
 		uint m_width;
 		uint m_height;
 	public:
@@ -19,7 +19,7 @@ namespace greet { namespace graphics{
 
 		inline uint getWidth() const { return m_width; }
 		inline uint getHeight() const { return m_height; }
-	private:
+	protected:
 		void loadTexture(const std::string& filename);
 		void genTexture(BYTE* bits, uint bpp);
 

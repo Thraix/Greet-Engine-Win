@@ -7,6 +7,7 @@ Greet.opensdf
 *.opendb
 *.exe
 *.sdf
+*.suo
 *Performance*
 *.vspx
 *.cd

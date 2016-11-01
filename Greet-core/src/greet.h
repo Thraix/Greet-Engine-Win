@@ -62,6 +62,7 @@
 
 #include <graphics\renderers\renderer.h>
 #include <graphics\textures\texture.h>
+#include <graphics\fonts\fontcontainer.h>
 #include <graphics\fonts\font.h>
 #include <graphics\fonts\fontmanager.h>
 #include <graphics\textures\texture2d.h>

@@ -2,14 +2,14 @@
 
 namespace greet { namespace graphics{
 
-	Animation::Animation(uint texID, uint texWidth, uint texHeight, math::vec2 texPos, math::vec2 texSize, float frameTimer, int images, bool horizontalRead)
-		: Sprite(texID, texWidth, texHeight, texPos, texSize), m_frameTimer(frameTimer), m_frameTime(frameTimer), m_images(images), m_image(0)
+	Animation::Animation(Texture2D* texture, math::vec2 texPos, math::vec2 texSize, float frameTimer, uint images, bool horizontalRead)
+		: Sprite(texture, texPos, texSize), m_frameTimer(frameTimer), m_frameTime(frameTimer), m_images(images), m_image(0)
 	{
 		m_add = math::vec2(horizontalRead ? texSize.x : 0.0f, horizontalRead ? 0.0f : texSize.y);
 		m_texPos2 = m_texPos;
 	}
 
-	Animation::Animation(const Sprite& sprite, float frameTimer, int images, bool horizontalRead)
+	Animation::Animation(const Sprite& sprite, float frameTimer, uint images, bool horizontalRead)
 		: Sprite(sprite), m_frameTimer(frameTimer), m_frameTime(frameTimer), m_images(images), m_image(0)
 	{
 		m_add = math::vec2(horizontalRead ? m_texSize.x : 0.0f, horizontalRead ? 0.0f : m_texSize.y);

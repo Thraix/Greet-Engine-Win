@@ -1,55 +1,52 @@
 #include "atlas.h"
 
 namespace greet { namespace graphics{
+
 	Atlas::Atlas(std::string atlasName, uint atlasSize, uint textureSize)
-		:m_name(atlasName), m_atlasSize(atlasSize), m_textureSize(textureSize), m_texturesSide(m_atlasSize / m_textureSize), m_textures((m_atlasSize / m_textureSize)*(m_atlasSize / m_textureSize))
+		: Texture2D(0,atlasSize,atlasSize,atlasName), m_textureSize(textureSize)
 	{
-		ASSERT(m_atlasSize > m_textureSize, "ATLAS", "Atlas size must be greater than the textures sizes: ", m_name.c_str());
-		ASSERT(!(m_atlasSize == 0) && !(m_atlasSize & (m_atlasSize - 1)),"ATLAS", "Atlas size must be a power of two: ", m_name.c_str());
-		ASSERT(!(m_textureSize == 0) && !(m_textureSize & (m_textureSize - 1)), "ATLAS", "Texture size must be a power of two: ", m_name.c_str());
-		uint bits = m_atlasSize * m_atlasSize * 4;
+		ASSERT(atlasSize > m_textureSize, "ATLAS", "Atlas size must be greater than the textures sizes: ", m_name.c_str());
+		ASSERT(!(atlasSize == 0) && !(atlasSize & (atlasSize - 1)),"ATLAS", "Atlas size must be a power of two: ", m_name.c_str());
+		ASSERT(!(textureSize == 0) && !(m_textureSize & (m_textureSize - 1)), "ATLAS", "Texture size must be a power of two: ", m_name.c_str());
+		m_texturesSide = atlasSize / m_textureSize;
+		m_textures = (atlasSize / m_textureSize)*(atlasSize / m_textureSize);
+		uint bits = atlasSize * atlasSize * 4;
 
 		m_bits = new BYTE[bits];
 		for (int i = 0; i < bits; i+=4)
 		{
-			m_bits[i  ] = 0;
-			m_bits[i+1] = 0;
-			m_bits[i+2] = 0;
-			m_bits[i+3] = 255;
+			m_bits[i+FI_RGBA_RED  ]	 = 0;
+			m_bits[i+FI_RGBA_GREEN]	 = 0;
+			m_bits[i+FI_RGBA_BLUE]	 = 0;
+			m_bits[i+FI_RGBA_ALPHA]	 = 255;
 		}
 		for (int i = 0; i < m_textures; i++)
 		{
 			m_occupied.push_back(false);
 		}
 
-		genTexture();
+		genTexture(m_bits,4);
+		updateTexture();
 	}
 
 	Atlas::~Atlas()
 	{
-
-	}
-
-	void Atlas::genTexture()
-	{
-		glGenTextures(1, &m_texID);
-
-		updateTexture();
+		delete m_bits;
 	}
 
 	void Atlas::updateTexture()
 	{
-		glBindTexture(GL_TEXTURE_2D, m_texID);
+		glBindTexture(GL_TEXTURE_2D, m_texId);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_atlasSize, m_atlasSize, 0, GL_BGRA, GL_UNSIGNED_BYTE, m_bits);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, GL_BGRA, GL_UNSIGNED_BYTE, m_bits);
 
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
 	bool Atlas::addTexture(std::string name, std::string filePath)
 	{
-		uint textures = m_atlasSize / m_textureSize;
+		uint textures = m_width / m_textureSize;
 		if (m_textureNames.size() >= textures*textures)
 		{
 			LOG_ERROR("ATLAS","There is no more room in the Atlas. Increase size or create a new one. ", m_name.c_str());
@@ -99,14 +96,14 @@ namespace greet { namespace graphics{
 	void Atlas::fillTexture(uint x, uint y, BYTE* bits, uint bpp)
 	{
 
-		uint pos = (x + ((m_texturesSide - y) - 1) * m_atlasSize) * m_textureSize;
+		uint pos = (x + ((m_texturesSide - y) - 1) * m_width) * m_textureSize;
 		uint j;
 		uint k;
 		for (uint xx = 0; xx < m_textureSize; xx++)
 		{
 			for (uint yy = 0; yy < m_textureSize; yy++)
 			{
-				j = (pos + xx + yy * m_atlasSize) * 4;
+				j = (pos + xx + yy * m_width) * 4;
 				k = (xx + yy * m_textureSize) * 4;
 				for (uint i = 0; i < (bpp >> 3); i++)
 					m_bits[j + i] = bits[k + i];
@@ -130,18 +127,18 @@ namespace greet { namespace graphics{
 			if (m_textureNames[i].compare(sheetName)==0)
 			{
 				uint j = m_textureNamePos[i];
-				uint x = j % (m_atlasSize / m_textureSize);
-				uint y = (j - x) / (m_atlasSize / m_textureSize);
-				float size = (float)m_textureSize / (float)m_atlasSize;
+				uint x = j % (m_width / m_textureSize);
+				uint y = (j - x) / (m_width / m_textureSize);
+				float size = (float)m_textureSize / (float)m_width;
 				math::vec2 spriteSize = math::vec2(size,size);
 				math::vec2 spritePos = spriteSize*math::vec2(x, y);
 				spritePos += texPos * spriteSize;
 				spriteSize *= texSize;
-				return new Sprite(m_texID, (uint)(m_textureSize*texSize.x), (uint)(m_textureSize*texSize.y), spritePos, spriteSize);
+				return new Sprite(this, spritePos, spriteSize);
 			}
 		}
 		LOG_ERROR("ATLAS", "No texture found in Atlas: ", m_name.c_str(), "(", sheetName.c_str(), ")");
-		return new Sprite(m_texID, m_atlasSize, m_atlasSize, math::vec2(0, 0), math::vec2(1, 1));
+		return new Sprite(this);
 	}
 
 	void Atlas::removeTexture(std::string textureName)

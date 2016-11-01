@@ -14,6 +14,7 @@ namespace greet { namespace graphics{
 		m_width = width;
 		m_height = height;
 		genTexture(bits,bpp);
+		delete[] bits;
 	}
 
 	Texture2D::Texture2D(uint texId, uint width, uint height, const std::string& name)
@@ -28,6 +29,7 @@ namespace greet { namespace graphics{
 		uint bpp = 0;
 		BYTE* bits = loadImage(filename.c_str(),&m_width,&m_height,&bpp);
 		genTexture(bits, bpp);
+		delete[] bits;
 	}
 
 	void Texture2D::genTexture(BYTE* bits, uint bpp)
@@ -39,6 +41,5 @@ namespace greet { namespace graphics{
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexImage2D(GL_TEXTURE_2D, 0, bpp == 32 ? GL_RGBA : GL_RGB, m_width, m_height, 0, bpp == 32 ? GL_BGRA : GL_BGR, GL_UNSIGNED_BYTE, bits);
 		glBindTexture(GL_TEXTURE_2D, 0);
-		delete[] bits;
 	}
 }}

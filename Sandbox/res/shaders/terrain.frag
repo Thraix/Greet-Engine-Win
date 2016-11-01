@@ -23,7 +23,7 @@ void main()
 	//out_color = vec4(unitNormal,1.0);
 
 	float nDot = dot(unitNormal, unitLightVector);
-	float brightness = max(nDot,0.3*);
+	float brightness = max(nDot,0.3);
 	vec3 diffuse = light_color * brightness;
 	out_color *= vec4(diffuse,1.0f);
 

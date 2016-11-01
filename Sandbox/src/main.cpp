@@ -93,7 +93,7 @@ public:
 		terrainMaterial->setReflectivity(0.5f);
 		terrainMaterial->setShineDamper(5.0f);
 		float* noise = Noise::genNoise(500,500,5,64,64,0.5f);
-		MeshData* gridMesh = model::MeshFactory::grid(0, 0, 0, 500, 500, 499, 499, noise,10);
+		MeshData* gridMesh = model::MeshFactory::grid(0, 0, 0, 500, 500, 499, 499, noise,1);
 		//gridMesh->setDefaultAttribute4f(MESH_COLORS_LOCATION, math::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 		//gridMesh->setEnableCulling(false);
 		MaterialModel* gridModelMaterial = new MaterialModel(new Mesh(gridMesh), *terrainMaterial);
@@ -135,17 +135,15 @@ public:
 		modelShader->disable();
 		terrainShader->enable();
 		l->setToUniform(terrainShader, "light");
-		terrainShader->setUniform1f("amplitude",10);
 		terrainShader->disable();
 	
 		delete l;
-
-		FontManager::add(new Font("Anonymous Pro.ttf", "anonymous", 72));
+		FontManager::add(new FontContainer("Anonymous Pro.ttf", "anonymous"));
 
 		uilayer = new Layer<Renderable>(new BatchRenderer(), ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)Window::getWidth(), 0.0f, (float)Window::getHeight()));
 		uint colorPink = ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(300 /360.0f, 3));
 		fps = new Label("144 fps", math::vec2(50, 300), "anonymous", 72, ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(120 / 360.0f, 9)));
-		cursor = new Renderable2D(math::vec2(0,0),math::vec2(32,32),0xffffffff,new Sprite(TextureManager::get("cursor")->getTexId(),32,32, math::vec2(0, 0), math::vec2(1, 1)), new Sprite(TextureManager::get("mask")->getTexId(),256,256,math::vec2(0,0),math::vec2(1,1)));
+		cursor = new Renderable2D(math::vec2(0,0),math::vec2(32,32),0xffffffff, new Sprite(TextureManager::get2D("cursor")), new Sprite(TextureManager::get2D("mask")));
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(driverTest->m_position.x, -20, 0.5f, true, new drivers::DriverAdapter()));
 		guilayer = new GUILayer(new BatchRenderer(),ShaderFactory::DefaultShader());
 		slider = new Slider(math::vec2(10,100),math::vec2(200,30),0,255,1);
@@ -260,7 +258,6 @@ public:
 			Light* l2 = new Light(math::vec3(0, 100, 0), 0xffffffff);
 			terrainShader->enable();
 			l2->setToUniform(terrainShader, "light");
-			terrainShader->setUniform1f("amplitude",10);
 			terrainShader->disable();
 			delete l;
 			delete l2;
