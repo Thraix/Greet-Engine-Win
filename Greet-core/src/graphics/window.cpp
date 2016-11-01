@@ -15,6 +15,7 @@ namespace greet { namespace graphics {
 	math::vec4 Window::bgColor;
 	bool Window::mouseButtonDown[MAX_MOUSEBUTTONS];
 	bool Window::isMouseButtonDown;
+	uint Window::joystickCheck;
 
 
 	std::vector<listener::WindowResizeListener*> Window::windowResize;
@@ -103,23 +104,18 @@ namespace greet { namespace graphics {
 
 	void Window::checkJoysticks()
 	{
-		for (int i = 0; i < MAX_JOYSTICKS; i++)
+		if (joysticks[joystickCheck].checkConnect())
 		{
-			if (!joysticks[i].m_connected)
-			{
-				if (joysticks[i].checkConnect())
-				{
-					for (uint j = 0;j < joystickState.size();j++)
-						joystickState[i]->joystickState(i, JOYSTICK_STATE_CONNECTED);
-				}
-			}
+			for (uint j = 0;j < joystickState.size();j++)
+				joystickState[joystickCheck]->joystickState(joystickCheck, JOYSTICK_STATE_CONNECTED);
+			joystickCheck++;
 		}
 	}
 
 	void Window::update()
 	{
 		if (focus){
-			for (int i = 0; i < MAX_JOYSTICKS; i++)
+			for (int i = MAX_JOYSTICKS-1; i >= 0; i--)
 			{
 				if (joysticks[i].m_connected)
 				{
@@ -128,6 +124,7 @@ namespace greet { namespace graphics {
 					{
 						for (uint j = 0;j < joystickState.size();j++)
 							joystickState[j]->joystickState(j, JOYSTICK_STATE_DISCONNECTED);
+						joystickCheck = i;
 					}
 				}
 			}

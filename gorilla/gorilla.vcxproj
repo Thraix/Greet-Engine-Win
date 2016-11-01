@@ -70,13 +70,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(SolutionDir)libraries\OpenAL\include;$(SolutionDir)libraries\libogg\include;$(SolutionDir)libraries\libvorbis\include;$(IncludePath)</IncludePath>
-    <OutDir>$(SolutionDir)libraries\gorilla\bin</OutDir>
-    <IntDir>$(SolutionDir)libraries\gorilla\bin\intermediates</IntDir>
+    <OutDir>$(SolutionDir)libraries\gorilla\bin\$(Configuration)</OutDir>
+    <IntDir>$(SolutionDir)libraries\gorilla\bin\$(Configuration)\intermediates</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(SolutionDir)libraries\OpenAL\include;$(SolutionDir)libraries\libogg\include;$(SolutionDir)libraries\libvorbis\include;$(IncludePath)</IncludePath>
-    <OutDir>$(SolutionDir)libraries\gorilla\bin</OutDir>
-    <IntDir>$(SolutionDir)libraries\gorilla\bin\intermediates</IntDir>
+    <OutDir>$(SolutionDir)libraries\gorilla\bin\$(Configuration)</OutDir>
+    <IntDir>$(SolutionDir)libraries\gorilla\bin\$(Configuration)\intermediates</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

@@ -89,7 +89,7 @@ public:
 		EventDispatcher::addKeyListener(DISPATCHER_GUI+1, *this);
 		EventDispatcher::addMouseListener(DISPATCHER_GUI + 1, *this);
 		createWindow("Best Game Ever", 960, 540);
-		setFrameCap(0);
+		setFrameCap(144);
 		TextureManager::add(new Texture2D("res/textures/stallTexture.png", "stall"));
 		TextureManager::add(new Texture2D("res/textures/cursor.png", "cursor"));
 		TextureManager::add(new Texture2D("res/textures/mask.png", "mask"));

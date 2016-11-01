@@ -55,6 +55,7 @@ namespace greet { namespace graphics {
 		static bool isMouseButtonDown;
 		static math::vec2 mousePos;
 		static math::vec2 mousePosPixel;
+		static uint joystickCheck;
 	private:
 		static bool init();
 		static void window_resize(GLFWwindow *window, int width, int height);

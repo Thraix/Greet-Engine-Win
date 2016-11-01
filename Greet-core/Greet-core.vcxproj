@@ -48,7 +48,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\$(Configuration)\Intermediate\</IntDir>
-    <IncludePath>$(SolutionDir)libraries\FreeImage\include;$(SolutionDir)libraries\GLFW\include;$(SolutionDir)libraries\GLEW\include;$(SolutionDir)libraries\libogg\include;$(SolutionDir)libraries\gorilla\include;$(SolutionDir)libraries\libvorbis\include;$(SolutionDir)libraries\OpenAL\include;$(SolutionDir)libraries\Box2D\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)ext/freetype/include;$(ProjectDir)ext\gorilla;$(SolutionDir)freetype/include;$(SolutionDir)libraries\freetype\include</IncludePath>
+    <IncludePath>$(SolutionDir)libraries\freetype\include;$(SolutionDir)libraries\FreeImage\include;$(SolutionDir)libraries\GLFW\include;$(SolutionDir)libraries\GLEW\include;$(SolutionDir)libraries\libogg\include;$(SolutionDir)libraries\gorilla\include;$(SolutionDir)libraries\libvorbis\include;$(SolutionDir)libraries\OpenAL\include;$(SolutionDir)libraries\Box2D\include;$(VC_IncludePath);$(ProjectDir)ext\gorilla;$(ProjectDir)ext\freetype-gl;$(ProjectDir)ext\freetype\include;$(WindowsSDK_IncludePath);$(ProjectDir)ext/freetype/include;$(SolutionDir)freetype/include</IncludePath>
     <LibraryPath>$(SolutionDir)libraries\GLFW\lib-vc2013;$(SolutionDir)libraries\FreeImage\lib;$(SolutionDir)libraries\GLEW\lib;$(SolutionDir)libraries\OpenAL\libs\Win32;$(SolutionDir)libraries\libogg\bin;$(SolutionDir)libraries\libvorbis\bin;$(SolutionDir)libraries\Box2D\bin</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -73,7 +73,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;FT2_BUILD_LIBRARY;WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
@@ -148,8 +148,6 @@
     <ClCompile Include="src\input\joystick.cpp" />
     <ClCompile Include="src\internal\app.cpp" />
     <ClCompile Include="src\managers\gamestatemanager.cpp" />
-    <ClCompile Include="src\managers\manager.cpp" />
-    <ClCompile Include="src\managers\soundmanager.cpp" />
     <ClCompile Include="src\math\mat3.cpp" />
     <ClCompile Include="src\math\mat4.cpp" />
     <ClCompile Include="src\math\quaternion.cpp" />
@@ -257,14 +255,11 @@
     <ClInclude Include="src\managers\atlasmanager.h" />
     <ClInclude Include="src\managers\channelmanager.h" />
     <ClInclude Include="src\managers\gamestatemanager.h" />
-    <ClInclude Include="src\managers\manager.h" />
-    <ClInclude Include="src\managers\managers.h" />
     <ClInclude Include="src\managers\fontmanager.h" />
     <ClInclude Include="src\graphics\glyph.h" />
     <ClInclude Include="src\graphics\label.h" />
     <ClInclude Include="src\graphics\renderableglyph.h" />
     <ClInclude Include="src\graphics\texture.h" />
-    <ClInclude Include="src\managers\soundmanager.h" />
     <ClInclude Include="src\managers\texturemanager.h" />
     <ClInclude Include="src\math\mat3.h" />
     <ClInclude Include="src\math\mat4.h" />

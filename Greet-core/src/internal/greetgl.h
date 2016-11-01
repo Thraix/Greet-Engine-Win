@@ -3,6 +3,8 @@
 #ifndef GLEW_STATIC
 #define GLEW_STATIC
 #endif // !GLEW_STATIC
+
+
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include <freetype-gl.h>

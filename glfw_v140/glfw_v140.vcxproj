@@ -69,12 +69,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)libraries\GLFW\bin</OutDir>
-    <IntDir>$(SolutionDir)libraries\GLFW\bin\intermediates</IntDir>
+    <OutDir>$(SolutionDir)libraries\GLFW\bin\$(Configuration)</OutDir>
+    <IntDir>$(SolutionDir)libraries\GLFW\bin\$(Configuration)\intermediates</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)libraries\GLFW\bin</OutDir>
-    <IntDir>$(SolutionDir)libraries\GLFW\bin\intermediates</IntDir>
+    <OutDir>$(SolutionDir)libraries\GLFW\bin\$(Configuration)</OutDir>
+    <IntDir>$(SolutionDir)libraries\GLFW\bin\$(Configuration)\intermediates</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
