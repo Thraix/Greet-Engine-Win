@@ -4,6 +4,7 @@
 #include <internal/greetgl.h>
 #include <graphics/textures/texture2d.h>
 #include <graphics/window.h>
+#include <map>
 
 namespace greet { namespace graphics {
 
@@ -13,13 +14,18 @@ namespace greet { namespace graphics {
 		uint m_fbo;
 		uint m_width;
 		uint m_height;
-		Texture2D* m_colorTexture;
+		std::map<uint, Texture2D*> m_colorTextures;
+		Texture2D* m_depthTexture;
 		uint m_depthBuffer;
 	public:
 		FrameBufferObject(uint width, uint height);
 		virtual ~FrameBufferObject();
 		void bind();
 		void unbind();
-		inline Texture2D* getColorTexture() const { return m_colorTexture; }
+		void attachColorTexture(uint attachementId);
+		Texture2D* getColorTexture(uint attachmentId) const;
+		inline Texture2D* getDepthTexture() const { return m_depthTexture; }
+	private:
+		void attachDepthTexture();
 	};
 }}

@@ -8,7 +8,8 @@ in vec3 toLightVector;
 in vec3 toCameraVector;
 in float visibility;
 
-out vec4 out_color;
+layout(location = 0) out vec4 out_color;
+layout(location = 1) out vec4 out_brightColor;
 
 uniform sampler2D textureSampler;
 uniform vec3 light_color = vec3(1.0f,1.0f,1.0f);
@@ -47,10 +48,13 @@ void main()
 	out_color *= vec4(diffuse,1.0f);
 	out_color += vec4(finalSpecular,0.0);
 
-	//float luminance = (out_color.r + out_color.g + out_color.b)/3.0;
-	//out_color.rgb = floor(luminance * 4.0)/4.0 * fogColor;
-
 	out_color = mix(vec4(fogColor.xyz,1.0),vec4(out_color.rgb,1.0),visibility);
+	float luminance = (out_color.r + out_color.g + out_color.b)/3.0;
+	//out_color.rgb = floor(luminance * 4.0)/4.0 * fogColor;
+	if(luminance > 0.8)
+		out_brightColor = vec4(luminance,luminance,luminance,1);
+	else
+		out_brightColor = vec4(0,0,0,1);
 	//out_color = vec4(finalSpecular.xyz,1.0);
 	//out_color = vec4(out_color.rgb*visibility,1.0);
 	//out_color.a = 1.0f;

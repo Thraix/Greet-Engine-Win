@@ -14,6 +14,7 @@ class Core : public greet::internal::App, public greet::event::KeyListener, publ
 {
 
 private:
+	Shader* blurShader;
 	BatchRenderer3D* renderer3d;
 	Material* modelMaterial;
 	Material* terrainMaterial;
@@ -31,6 +32,7 @@ private:
 	FrameBufferObject* fbo;
 
 	Camera* camera;
+	Layer<Renderable>* scene3d;
 	Layer<Renderable>* uilayer;
 	GUILayer* guilayer;
 	Slider* slider;
@@ -74,24 +76,17 @@ public:
 		TextureManager::add(new Texture2D("res/textures/lens_flare3.png", "lensflare3"));
 		TextureManager::add(new Texture2D("res/textures/lens_flare4.png", "lensflare4"));
 
-		uint error = glGetError();
-		fbo = new FrameBufferObject(480,270);
-		if ((error = glGetError()) != GL_NO_ERROR)
-			LOG_INFO(error);
+		fbo = new FrameBufferObject(960,540);
+		fbo->attachColorTexture(GL_COLOR_ATTACHMENT1);
 		camera = new Camera(math::vec3(0,0,0));
 		Skybox* skybox = new Skybox((CubeMap*)TextureManager::get("skybox"));
-		renderer3d = new BatchRenderer3D(Window::getWidth(), Window::getHeight(), *camera,70,0.001f,1000.0f, skybox);
-
-		float* map = new float[101 * 101];
-		for (int i = 0;i < 101 * 101;i++)
-		{
-			map[i] = rand() / (float)RAND_MAX;
-		}
+		renderer3d = new BatchRenderer3D(Window::getWidth(), Window::getHeight(), *camera,90,0.001f,1000.0f, skybox);
 
 
 		Shader* modelShader = Shader::fromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
 		Shader* terrainShader = Shader::fromFile("res/shaders/terrain.geom", "res/shaders/terrain.vert", "res/shaders/terrain.frag");
 		Shader* stallShader = Shader::fromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
+		blurShader = Shader::fromFile("res/shaders/default2dshader.vert","res/shaders/guassianblur.frag");
 		m_geomShaderTest = Shader::fromFile("res/shaders/2dshader.geom","res/shaders/2dshader.vert", "res/shaders/2dshader.frag");
 
 		modelMaterial = new Material(modelShader, NULL);
@@ -156,12 +151,15 @@ public:
 		slider = new Slider(math::vec2(10,100),math::vec2(200,30),0,255,1);
 		button = new Button(math::vec2(10,120+30),math::vec2(100,40),"Test");
 		frame = new Frame(math::vec2(10, 10), math::vec2(500, 500),"GUI Frame");
-		fboScene = new Renderable2D(math::vec2(0,0),math::vec2(320,180),0xffffffff,new Sprite(fbo->getColorTexture()),NULL);
+
+		scene3d = new Layer<Renderable>(new BatchRenderer(),blurShader, math::mat3::orthographic(0.0f, (float)Window::getWidth(), 0.0f, (float)Window::getHeight()));
+		fboScene = new Renderable2D(math::vec2(0,0),math::vec2(960,540),0xffffffff,new Sprite(fbo->getColorTexture(GL_COLOR_ATTACHMENT0)),NULL);
+		scene3d->add(fboScene);
+
 		//uilayer->add(fps);
 		frame->add(slider);
 		frame->add(button);
 		guilayer->add(frame);
-		uilayer->add(fboScene);
 		uilayer->add(cursor);
 
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(frame->m_position.x, 100, 5, true, new drivers::DriverAdapter()));
@@ -178,6 +176,8 @@ public:
 		movement = new KeyboardControl(GLFW_KEY_D,GLFW_KEY_A,GLFW_KEY_S,GLFW_KEY_W,0.5f);
 		rotation = new KeyboardControl(GLFW_KEY_DOWN,GLFW_KEY_UP,GLFW_KEY_RIGHT,GLFW_KEY_LEFT,2);
 		//Tree t(renderer3d,0,0,0);
+		uint pos = 0;
+//		LOG_INFO(JSONLoader::isNumber("0.1234s",pos));
 	}
 
 	float random()
@@ -331,10 +331,10 @@ public:
 		renderer3d->flush();
 		renderer3d->end();
 		fbo->unbind();
-
-		renderer3d->begin();
-		renderer3d->flush();
-		renderer3d->end();
+		//blurShader->enable();
+		//blurShader->setUniform2f("scale",math::vec2(1.0f/960.0f,0.0f));
+		//blurShader->disable();
+		scene3d->render();
 		//guilayer->render();
 		uilayer->render();
 	}
@@ -351,6 +351,17 @@ public:
 
 int main()
 {
-	Core game;
-	game.start();
+	uint pos = 0;
+	uint lastPos = pos;
+	JSONObject obj = JSONLoader::loadJSON("test.txt");
+	LOG_INFO("object1",obj.hasKey("object1") ? "true" : "false");
+	LOG_INFO("object1.string1", obj.getObject("object1").getValue("string1"));
+	LOG_INFO("object1.float", obj.getObject("object1").getValueAsFloat("float"));
+	LOG_INFO("object1.null", obj.getObject("object1").isNull("null"));
+	LOG_INFO("object1.true", obj.getObject("object1").getValueAsBool("true"));
+	LOG_INFO("object1.false", obj.getObject("object1").getValueAsBool("false"));
+	LOG_INFO("string2", obj.getValueAsFloat("string2"));
+	system("pause");
+	//Core game;
+	//game.start();
 }

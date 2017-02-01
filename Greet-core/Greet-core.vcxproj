@@ -156,6 +156,10 @@
     <ClCompile Include="src\math\vec3.cpp" />
     <ClCompile Include="src\math\vec4.cpp" />
     <ClCompile Include="src\utils\dialogbox.cpp" />
+    <ClCompile Include="src\utils\json\JSONArray.cpp" />
+    <ClCompile Include="src\utils\json\JSONArrayObject.cpp" />
+    <ClCompile Include="src\utils\json\JSONLoader.cpp" />
+    <ClCompile Include="src\utils\json\JSONObject.cpp" />
     <ClCompile Include="src\utils\noise.cpp" />
     <ClCompile Include="src\utils\uuid.cpp" />
   </ItemGroup>
@@ -279,6 +283,10 @@
     <ClInclude Include="src\utils\errorhandler.h" />
     <ClInclude Include="src\utils\fileutils.h" />
     <ClInclude Include="src\utils\imageutils.h" />
+    <ClInclude Include="src\utils\json\JSONArray.h" />
+    <ClInclude Include="src\utils\json\JSONArrayObject.h" />
+    <ClInclude Include="src\utils\json\JSONLoader.h" />
+    <ClInclude Include="src\utils\json\JSONObject.h" />
     <ClInclude Include="src\utils\log.h" />
     <ClInclude Include="src\utils\logutils.h" />
     <ClInclude Include="src\utils\noise.h" />
@@ -297,6 +305,7 @@
     <None Include="src\graphics\shaders\debugshader.frag" />
     <None Include="src\graphics\shaders\default2dshader.frag" />
     <None Include="src\graphics\shaders\default2dshader.vert" />
+    <None Include="src\graphics\shaders\guassianblur.frag" />
     <None Include="src\graphics\shaders\ledshader.frag" />
     <None Include="src\graphics\shaders\skyboxshader.frag" />
     <None Include="src\graphics\shaders\skyboxshader.vert" />

@@ -1,1 +1,15 @@
-œ"ž?œ"ž?œ"ž?œ"ž?
+{
+    "object1": {
+        "string1":"valu123e",
+		"float": 0.1,
+		"null": null,
+		"true":true,
+		"false":false
+    },
+    "string2":"test",
+    "array1": [
+        {
+            "test2":"test"
+        }
+    ]
+}

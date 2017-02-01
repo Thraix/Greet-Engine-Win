@@ -71,6 +71,10 @@
     <ClCompile Include="src\audio\soundmanager.cpp" />
     <ClCompile Include="src\gamestates\gamestatemanager.cpp" />
     <ClCompile Include="src\graphics\fonts\fontcontainer.cpp" />
+    <ClCompile Include="src\utils\json\JSONObject.cpp" />
+    <ClCompile Include="src\utils\json\JSONArrayObject.cpp" />
+    <ClCompile Include="src\utils\json\JSONArray.cpp" />
+    <ClCompile Include="src\utils\json\JSONLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\font.h" />
@@ -202,6 +206,10 @@
     <ClInclude Include="src\gamestates\gamestatemanager.h" />
     <ClInclude Include="src\graphics\Light.h" />
     <ClInclude Include="src\graphics\fonts\fontcontainer.h" />
+    <ClInclude Include="src\utils\json\JSONArray.h" />
+    <ClInclude Include="src\utils\json\JSONObject.h" />
+    <ClInclude Include="src\utils\json\JSONArrayObject.h" />
+    <ClInclude Include="src\utils\json\JSONLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Performance4.psess" />
@@ -215,5 +223,6 @@
     <None Include="src\graphics\shaders\ledshader.frag" />
     <None Include="src\graphics\shaders\debugshader.frag" />
     <None Include="src\graphics\shaders\basiclightshader.frag" />
+    <None Include="src\graphics\shaders\guassianblur.frag" />
   </ItemGroup>
 </Project>

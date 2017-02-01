@@ -24,10 +24,11 @@ namespace greet { namespace graphics {
 		Shader(const std::string& vertSrc, const std::string& fragSrc);
 	public:
 
-		~Shader();
+		virtual ~Shader();
 		void enable() const;
-		
 		static void disable();
+		void bindAttributeOutput(uint attachmentId, const std::string& name);
+
 		void setUniformBoolean(const GLchar *name, bool value) const;
 		void setUniform1f(const GLchar *name, float value) const;
 		void setUniform1fv(const GLchar *name, int count, float* value) const;

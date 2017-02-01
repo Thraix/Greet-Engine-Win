@@ -81,6 +81,11 @@ namespace greet {
 		return 0;
 	}
 
+	void Shader::bindAttributeOutput(uint attachmentId, const std::string& name)
+	{
+		glBindFragDataLocation(m_shaderID,attachmentId,name.c_str());
+	}
+
 	GLuint Shader::getUniformLocation(const GLchar *name) const
 	{
 		return glGetUniformLocation(m_shaderID,name);

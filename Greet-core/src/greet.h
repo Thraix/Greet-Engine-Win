@@ -10,6 +10,9 @@
 #include <utils\utils.h>
 #include <utils\colorutils.h>
 #include <utils\fileutils.h>
+#include <utils\json\JSONArray.h>
+#include <utils\json\JSONObject.h>
+#include <utils\json\JSONLoader.h>
 #include <utils\imageutils.h>
 #include <utils\errorhandler.h>
 #include <utils\logutils.h>
