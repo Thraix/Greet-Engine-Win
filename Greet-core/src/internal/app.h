@@ -3,6 +3,7 @@
 #include <graphics/window.h>
 #include <utils/timer.h>
 #include <logging/logger.h>
+#include <graphics/renderengine.h>
 
 namespace greet { namespace internal {
 

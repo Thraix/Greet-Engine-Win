@@ -75,6 +75,7 @@ public:
 		TextureManager::add(new Texture2D("res/textures/lens_flare2.png", "lensflare2"));
 		TextureManager::add(new Texture2D("res/textures/lens_flare3.png", "lensflare3"));
 		TextureManager::add(new Texture2D("res/textures/lens_flare4.png", "lensflare4"));
+		FontManager::add(new FontContainer("Anonymous Pro.ttf", "anonymous"));
 
 		fbo = new FrameBufferObject(960,540);
 		fbo->attachColorTexture(GL_COLOR_ATTACHMENT1);
@@ -140,7 +141,6 @@ public:
 		terrainShader->disable();
 	
 		delete l;
-		FontManager::add(new FontContainer("Anonymous Pro.ttf", "anonymous"));
 
 		uilayer = new Layer<Renderable>(new BatchRenderer(), ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)Window::getWidth(), 0.0f, (float)Window::getHeight()));
 		uint colorPink = ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(300 /360.0f, 3));
@@ -156,7 +156,7 @@ public:
 		fboScene = new Renderable2D(math::vec2(0,0),math::vec2(960,540),0xffffffff,new Sprite(fbo->getColorTexture(GL_COLOR_ATTACHMENT0)),NULL);
 		scene3d->add(fboScene);
 
-		//uilayer->add(fps);
+		uilayer->add(fps);
 		frame->add(slider);
 		frame->add(button);
 		guilayer->add(frame);
@@ -178,6 +178,9 @@ public:
 		//Tree t(renderer3d,0,0,0);
 		uint pos = 0;
 //		LOG_INFO(JSONLoader::isNumber("0.1234s",pos));
+		//RenderEngine::add_layer2d(scene3d, "uilayer");
+		RenderEngine::add_layer2d(uilayer, "uilayer");
+		RenderEngine::add_layer3d(new Layer3D(renderer3d), "3dWorld");
 	}
 
 	float random()
@@ -243,8 +246,6 @@ public:
 		//{
 		//	models[i].update(elapsedTime);
 		//}
-		uilayer->update(elapsedTime);
-		guilayer->update(elapsedTime);
 		hue += elapsedTime / 3.0f;
 		while (hue >= 1)
 			hue--;
@@ -326,17 +327,7 @@ public:
 	bool screenshot = false;
 	void render()
 	{
-		fbo->bind();
-		renderer3d->begin();
-		renderer3d->flush();
-		renderer3d->end();
-		fbo->unbind();
-		//blurShader->enable();
-		//blurShader->setUniform2f("scale",math::vec2(1.0f/960.0f,0.0f));
-		//blurShader->disable();
-		scene3d->render();
-		//guilayer->render();
-		uilayer->render();
+		
 	}
 	
 	void windowResize(int width, int height) override
@@ -351,7 +342,7 @@ public:
 
 int main()
 {
-	uint pos = 0;
+	/*uint pos = 0;
 	uint lastPos = pos;
 	JSONObject obj = JSONLoader::loadJSON("test.txt");
 	LOG_INFO("object1",obj.hasKey("object1") ? "true" : "false");
@@ -360,8 +351,8 @@ int main()
 	LOG_INFO("object1.null", obj.getObject("object1").isNull("null"));
 	LOG_INFO("object1.true", obj.getObject("object1").getValueAsBool("true"));
 	LOG_INFO("object1.false", obj.getObject("object1").getValueAsBool("false"));
-	LOG_INFO("string2", obj.getValueAsFloat("string2"));
-	system("pause");
-	//Core game;
-	//game.start();
+	LOG_INFO("string2", obj.getValueAsFloat("string2"));*/
+	//system("pause");
+	Core game;
+	game.start();
 }

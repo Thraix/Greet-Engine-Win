@@ -18,6 +18,7 @@ namespace greet { namespace graphics {
 		model::Mesh* m_mesh;
 	public:
 		Skybox(CubeMap* map);
+		const CubeMap* getCubeMap() const { return m_map; };
 		virtual ~Skybox();
 		void render(const math::mat4& projectionMatrix, const model::Camera& camera) const;
 	};

@@ -112,6 +112,7 @@
     <ClCompile Include="src\graphics\models\camera.cpp" />
     <ClCompile Include="src\graphics\models\meshdata.cpp" />
     <ClCompile Include="src\graphics\models\meshfactory.cpp" />
+    <ClCompile Include="src\graphics\renderengine.cpp" />
     <ClCompile Include="src\graphics\renderers\batchrenderer.cpp" />
     <ClCompile Include="src\graphics\buffers\batchindexbuffer.cpp" />
     <ClCompile Include="src\graphics\buffers\buffer.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="src\graphics\layers\guilayer.h" />
     <ClInclude Include="src\graphics\models\meshdata.h" />
     <ClInclude Include="src\graphics\models\meshfactory.h" />
+    <ClInclude Include="src\graphics\renderengine.h" />
     <ClInclude Include="src\graphics\renderers\batchrenderer.h" />
     <ClInclude Include="src\graphics\renderers\batchrenderer3d.h" />
     <ClInclude Include="src\graphics\batchrenderersquare.h" />

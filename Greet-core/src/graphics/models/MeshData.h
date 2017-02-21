@@ -63,6 +63,6 @@ namespace greet { namespace model {
 	};
 }}
 
-#define ATTRIBUTE_COLOR		AttributeDefaults(MESH_COLORS_LOCATION, 4, sizeof(uint),GL_UNSIGNED_BYTE,GL_TRUE)
+#define ATTRIBUTE_COLOR		AttributeDefaults(MESH_COLORS_LOCATION, 4, sizeof(uint), GL_UNSIGNED_BYTE,GL_TRUE)
 #define ATTRIBUTE_NORMAL	AttributeDefaults(MESH_NORMALS_LOCATION,3, sizeof(float) * 3,GL_FLOAT,GL_FALSE)
 #define ATTRIBUTE_TEXCOORD	AttributeDefaults(MESH_TEXCOORDS_LOCATION,2, sizeof(float) * 2,GL_FLOAT,GL_FALSE)

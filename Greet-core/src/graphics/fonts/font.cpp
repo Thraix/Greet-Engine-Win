@@ -6,6 +6,7 @@ namespace greet{ namespace graphics{
 	Font::Font(FontContainer* container, uint size)
 	: m_container(container), m_size(size)
 	{
+		init();
 	}
 
 	void Font::init()

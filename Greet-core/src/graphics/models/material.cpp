@@ -20,7 +20,7 @@ namespace greet { namespace model{
 		m_shader->enable();
 		m_shader->setUniform1f("reflectivity", m_reflectivity);
 		m_shader->setUniform1f("shineDamper", m_shineDamper);
-		m_shader->setUniform3f("fogColor", math::vec3(1.0,1.0,1.0));
+		m_shader->setUniform3f("fogColor", math::vec3(0.2,0.2,0.2));
 		m_shader->setUniform1f("shineDamper", m_shineDamper);
 		if (m_texture != NULL)
 			m_texture->enable();

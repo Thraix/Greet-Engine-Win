@@ -105,11 +105,13 @@
 #include <graphics\layers\layer.h>
 #include <graphics\layers\layer3d.h>
 
+
 #include <gamestates\gamestate.h>
 #include <gamestates\gamestatemanager.h>
 
 #include <entity\entity.h>
 #include <graphics\layers\box2dlayer.h>
+
 
 #include <graphics\window.h>
 #include <graphics/framebufferobject.h>
@@ -124,6 +126,7 @@
 #include <graphics\gui\button.h>
 #include <graphics\layers\guilayer.h>
 
+#include <graphics/renderengine.h>
 #include <internal\app.h>
 
 #endif // _GREET_H

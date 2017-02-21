@@ -75,6 +75,7 @@
     <ClCompile Include="src\utils\json\JSONArrayObject.cpp" />
     <ClCompile Include="src\utils\json\JSONArray.cpp" />
     <ClCompile Include="src\utils\json\JSONLoader.cpp" />
+    <ClCompile Include="src\graphics\renderengine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\font.h" />
@@ -210,6 +211,7 @@
     <ClInclude Include="src\utils\json\JSONObject.h" />
     <ClInclude Include="src\utils\json\JSONArrayObject.h" />
     <ClInclude Include="src\utils\json\JSONLoader.h" />
+    <ClInclude Include="src\graphics\renderengine.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Performance4.psess" />

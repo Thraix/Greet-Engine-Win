@@ -20,17 +20,7 @@ namespace greet { namespace graphics {
 		m_map.push_back(map);
 	}
 
-	void BatchRenderer3D::submitSkybox()
-	{
-		m_skybox->render(m_projectionMatrix,m_camera);
-	}
-
-	void BatchRenderer3D::begin()
-	{
-		submitSkybox();
-	}
-
-	void BatchRenderer3D::flush() const
+	void BatchRenderer3D::render() const
 	{
 		glDepthRange(m_near, m_far);
 		const math::mat4& viewMatrix = m_camera.getViewMatrix();
@@ -49,11 +39,7 @@ namespace greet { namespace graphics {
 			mesh.unbind();
 			map->m_material.getMaterial().unbind();
 		}
-	}
 
-	void BatchRenderer3D::end()
-	{
-		
 	}
 
 	math::vec3 BatchRenderer3D::getScreenCoordination(const math::vec3& coordinate, uint screenWidth, uint screenHeight)

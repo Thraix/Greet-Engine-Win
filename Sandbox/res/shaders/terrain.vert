@@ -6,14 +6,10 @@ in vec3 normal;
 out vec4 vert_color;
 out vec2 vert_texCoord;
 out vec3 toCameraVector;
-out float visibility;
 
 uniform mat4 transformationMatrix;
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
-
-const float density = 0.0007;
-const float gradient = 1.5;
 
 out Vertex
 {
@@ -55,8 +51,4 @@ void main()
 	gl_Position = projectionMatrix * positionRelativeToCamera;
 
 	toCameraVector = (inverse(viewMatrix) * vec4(0,0,0,1)).xyz - worldPosition.xyz;
-
-	float distance = length(positionRelativeToCamera.xyz);
-	visibility = exp(-pow((distance*density),gradient));
-	visibility = clamp(visibility,0.0,1.0);
 }

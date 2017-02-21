@@ -3,6 +3,11 @@
 out vec4 vert_color;
 out vec3 surfaceNormal;
 out vec3 toLightVector;
+out float visibility;
+
+
+const float density = 0.005;
+const float gradient = 1.3;
 
 in Vertex
 {
@@ -11,6 +16,8 @@ in Vertex
 } vertex[];
 
 uniform mat4 transformationMatrix;
+uniform mat4 viewMatrix;
+uniform mat4 projectionMatrix;
 
 uniform vec3 light_position = vec3(0.0,1000.0,0.0);
 layout(triangles) in;
@@ -35,6 +42,13 @@ void main()
 	for(int i = 0;i<3;i++)
 	{
 		gl_Position = gl_in[i].gl_Position;
+
+		vec4 worldPosition = transformationMatrix * vec4(vertex[i].realPos,1.0f);
+		vec4 positionRelativeToCamera = viewMatrix * worldPosition;
+
+		float distance = length(positionRelativeToCamera.xyz);
+		visibility = exp(-pow((distance*density),gradient));
+		visibility = clamp(visibility,0.0,1.0);
 		EmitVertex();
 	}
 	EndPrimitive();
