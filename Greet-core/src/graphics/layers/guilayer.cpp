@@ -35,6 +35,11 @@ namespace greet { namespace graphics {
 		return false;
 	}
 
+	bool GUILayer::onTyped(const event::KeyTypedEvent& e)
+	{
+		return false;
+	}
+
 	bool GUILayer::onPressed(const event::MousePressedEvent& e)
 	{
 
@@ -72,7 +77,7 @@ namespace greet { namespace graphics {
 		return moved;
 	}
 
-	bool GUILayer::onScroll(const MouseScrollEvent& e)
+	bool GUILayer::onScroll(const event::MouseScrollEvent& e)
 	{
 		return false;
 	}

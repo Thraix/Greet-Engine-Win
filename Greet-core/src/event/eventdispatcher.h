@@ -35,5 +35,6 @@ namespace greet { namespace event {
 
 		static void onKeyPressed(const KeyPressedEvent& e);
 		static void onKeyReleased(const KeyReleasedEvent& e);
+		static void onKeyTyped(const KeyTypedEvent& e);
 	};
 }}

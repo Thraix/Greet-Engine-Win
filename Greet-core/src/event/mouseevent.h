@@ -51,7 +51,7 @@ namespace greet { namespace event {
 		inline const float getX() const { return m_position.x; }
 		inline const float getY() const { return m_position.y; }
 		inline const float getDX() const { return m_deltaPosition.x; }
-		inline const float getDY() const { return m_deltaPosition.x; }
+		inline const float getDY() const { return m_deltaPosition.y; }
 		inline const void setX(float x) { m_position.x = x; }
 		inline const void setY(float y) { m_position.y = y; }
 		inline const math::vec2& getPosition() const { return m_position; }

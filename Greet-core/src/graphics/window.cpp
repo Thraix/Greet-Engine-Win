@@ -69,6 +69,7 @@ namespace greet { namespace graphics {
 		glfwSetCursorPosCallback(window,mouse_position_callback);
 		glfwSetWindowFocusCallback(window,window_focus_callback);
 		glfwSetScrollCallback(window, mouse_scroll_callback);
+		glfwSetCharCallback(window, key_char_callback);
 		glfwSwapInterval(0);
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
@@ -219,6 +220,11 @@ namespace greet { namespace graphics {
 	void Window::mouse_scroll_callback(GLFWwindow* window, double scrollX, double scrollY)
 	{
 		event::EventDispatcher::onMouseScrolled(event::MouseScrollEvent(scrollY));
+	}
+
+	void Window::key_char_callback(GLFWwindow* window, uint charCode)
+	{
+		event::EventDispatcher::onKeyTyped(event::KeyTypedEvent(charCode));
 	}
 
 	void Window::window_focus_callback(GLFWwindow* window,int state)

@@ -154,4 +154,17 @@ namespace greet { namespace event {
 			}
 		}
 	}
+
+	void EventDispatcher::onKeyTyped(const KeyTypedEvent& e)
+	{
+		for (it_keyMap it = m_keyListeners.begin();it != m_keyListeners.end(); it++)
+		{
+			std::vector<KeyListener*> listeners = it->second;
+			for (it_keyListener it2 = listeners.begin(); it2 != listeners.end(); it2++)
+			{
+				if ((*it2)->onTyped(e))
+					return;
+			}
+		}
+	}
 }}

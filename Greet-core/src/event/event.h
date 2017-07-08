@@ -10,7 +10,8 @@ namespace greet { namespace event{
 			MOUSE_MOVED,
 			MOUSE_SCROLLED,
 			KEY_PRESSED,
-			KEY_RELEASED
+			KEY_RELEASED,
+			KEY_TYPED
 		};
 
 	private:

@@ -17,6 +17,7 @@ namespace greet { namespace graphics {
 
 		bool onPressed(const event::KeyPressedEvent& e) override;
 		bool onReleased(const event::KeyReleasedEvent& e) override;
+		bool onTyped(const event::KeyTypedEvent& e) override;
 		bool onPressed(const event::MousePressedEvent& e) override;
 		bool onReleased(const event::MouseReleasedEvent& e) override;
 		bool onMoved(const event::MouseMovedEvent& e) override;

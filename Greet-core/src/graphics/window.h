@@ -59,8 +59,11 @@ namespace greet { namespace graphics {
 		static uint joystickCheck;
 	private:
 		static bool init();
+
 		static void window_resize(GLFWwindow *window, int width, int height);
 		static void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
+		static void key_char_callback(GLFWwindow* window, uint charCode);
+
 		static void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
 		static void window_focus_callback(GLFWwindow* window, int state);
 		static void mouse_position_callback(GLFWwindow* window, double xpos, double ypos);

@@ -30,4 +30,14 @@ namespace greet { namespace event {
 			: KeyButtonEvent(button, KEY_RELEASED) {}
 	};
 
+	class KeyTypedEvent : public Event
+	{
+	private:
+		uint m_charCode;
+
+	public:
+		KeyTypedEvent(uint charCode) : Event(KEY_TYPED), m_charCode(charCode) {}
+		uint getCharCode() const { return m_charCode; }
+	};
+
 }}

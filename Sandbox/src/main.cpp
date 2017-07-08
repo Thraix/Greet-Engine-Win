@@ -314,6 +314,12 @@ public:
 		return false;
 	}
 
+	bool onTyped(const KeyTypedEvent& e) override
+	{
+		LOG_INFO((unsigned char)e.getCharCode());
+		return false;
+	}
+
 	bool mouse3 = false;
 	bool mouse1 = false;
 	bool onPressed(const MousePressedEvent& e)  override
@@ -353,8 +359,10 @@ public:
 		else
 		if (mouse1)
 		{
-			camera->position.x += e.getDeltaPosition().x;
-			camera->position.z += e.getDeltaPosition().y;
+			math::vec2 dpos = e.getDeltaPosition();
+			dpos.rotate(camera->rotation);
+			camera->position.x += dpos.y * 0.005f * camera->distance;
+			camera->position.z -= dpos.x * 0.005f * camera->distance;
 		}
 
 
@@ -363,8 +371,7 @@ public:
 
 	bool onScroll(const MouseScrollEvent& e) override
 	{
-		camera->distance += e.getScroll();
-		LOG_INFO("Scroll: ", e.getScroll());
+		camera->distance -= e.getScroll();
 		math::clamp(&(camera->distance), 15, 80);
 		return false;
 	}
