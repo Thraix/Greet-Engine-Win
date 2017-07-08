@@ -28,7 +28,7 @@ namespace greet{ namespace graphics{
 		materialModel.getMaterial().bind();
 		materialModel.getMaterial().getShader().setUniformMat4("transformationMatrix", model.getTransformationMatrix());
 		materialModel.getMaterial().getShader().setUniformMat4("projectionMatrix", m_projectionMatrix);
-		materialModel.getMaterial().getShader().setUniformMat4("viewMatrix", math::mat4::viewMatrix(m_camera.position, m_camera.getRotationVector()));
+		materialModel.getMaterial().getShader().setUniformMat4("viewMatrix", m_camera.getViewMatrix());
 		render(materialModel.getMesh());
 		materialModel.getMaterial().unbind();
 	}

@@ -20,6 +20,7 @@ namespace greet { namespace graphics {
 		bool onPressed(const event::MousePressedEvent& e) override;
 		bool onReleased(const event::MouseReleasedEvent& e) override;
 		bool onMoved(const event::MouseMovedEvent& e) override;
+		bool onScroll(const event::MouseScrollEvent& e) override;
 		void windowResize(int width, int height) override;
 	};
 

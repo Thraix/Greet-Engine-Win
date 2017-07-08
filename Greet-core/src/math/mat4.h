@@ -33,6 +33,7 @@ namespace greet {
 
 			static mat4 transformationMatrix(math::vec3 position, math::vec3 rotation, math::vec3 scale);
 			static mat4 viewMatrix(math::vec3 position, math::vec3 rotation);
+			static mat4 tpCamera(math::vec3 position, float distance, float height, float rotation);
 
 			static mat4 translate(const vec3& translation);
 			static mat4 scale(const vec3& scaling);

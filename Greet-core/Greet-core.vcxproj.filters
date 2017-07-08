@@ -53,7 +53,6 @@
     <ClCompile Include="src\graphics\models\meshfactory.cpp" />
     <ClCompile Include="src\graphics\gui\slider.cpp" />
     <ClCompile Include="src\event\eventdispatcher.cpp" />
-    <ClCompile Include="src\graphics\models\camera.cpp" />
     <ClCompile Include="src\event\keylistener.cpp" />
     <ClCompile Include="src\event\mouselistener.cpp" />
     <ClCompile Include="src\utils\dialogbox.cpp" />
@@ -212,6 +211,8 @@
     <ClInclude Include="src\utils\json\JSONArrayObject.h" />
     <ClInclude Include="src\utils\json\JSONLoader.h" />
     <ClInclude Include="src\graphics\renderengine.h" />
+    <ClInclude Include="src\graphics\models\tpcamera.h" />
+    <ClInclude Include="src\graphics\models\fpcamera.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Performance4.psess" />

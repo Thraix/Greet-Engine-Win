@@ -15,6 +15,11 @@
 namespace greet{ namespace math{
 
 	//struct vec2;
+	inline void clamp(float* value, float min, float max)
+	{
+		*value = *value < min ? min : (*value > max ? max : *value);
+	}
+
 
 	inline float toRadians(float degrees)
 	{

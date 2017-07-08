@@ -16,5 +16,6 @@ namespace greet { namespace event {
 		virtual bool onPressed(const MousePressedEvent& e) = 0;// { return false; };
 		virtual bool onReleased(const MouseReleasedEvent& e) = 0;// { return false; };
 		virtual bool onMoved(const MouseMovedEvent& e) = 0;// { return false; };
+		virtual bool onScroll(const MouseScrollEvent& e) = 0;
 	};
 }}

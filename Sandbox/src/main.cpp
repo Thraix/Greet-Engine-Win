@@ -31,7 +31,7 @@ private:
 	std::vector<EntityModel> models;
 	FrameBufferObject* fbo;
 
-	Camera* camera;
+	TPCamera* camera;
 	Layer<Renderable>* scene3d;
 	Layer<Renderable>* uilayer;
 	GUILayer* guilayer;
@@ -79,7 +79,9 @@ public:
 
 		fbo = new FrameBufferObject(960,540);
 		fbo->attachColorTexture(GL_COLOR_ATTACHMENT1);
-		camera = new Camera(math::vec3(0,0,0));
+		camera = new TPCamera();
+		camera->distance = 50;
+		camera->position = math::vec3(100,0,0);
 		Skybox* skybox = new Skybox((CubeMap*)TextureManager::get("skybox"));
 		renderer3d = new BatchRenderer3D(Window::getWidth(), Window::getHeight(), *camera,90,0.001f,1000.0f, skybox);
 
@@ -105,7 +107,7 @@ public:
 
 		MeshData* cubeMesh = model::MeshFactory::cube(0,0,0,10,10,10);
 		MaterialModel* cubeModelMaterial = new MaterialModel(new Mesh(cubeMesh), *modelMaterial);
-		cube = new EntityModel(*cubeModelMaterial, math::vec3(20, 0, 0), math::vec3(1, 1, 1), math::vec3(0, 0, 0));
+		cube = new EntityModel(*cubeModelMaterial, camera->position, math::vec3(1, 1, 1), math::vec3(0, 0, 0));
 		delete cubeMesh;
 
 		MeshData* tetrahedronMesh = model::MeshFactory::tetrahedron(0,0,0,10);
@@ -202,6 +204,7 @@ public:
 	void update(float elapsedTime)
 	{
 		//fps->text = utils::toString(slider->getValue());
+#if 0 // FPCamera
 		math::vec2 velocityY = movement->getVelocity();
 		if (velocityY.lengthSQ() != 0)
 		{
@@ -238,6 +241,9 @@ public:
 				camera->position.y -= 0.2;
 			}
 		}
+#else
+
+#endif
 		//model->rotate(elapsedTime*100, elapsedTime * 100, elapsedTime * 100);
 		//model->update(elapsedTime);
 		//model2->update(elapsedTime);
@@ -308,22 +314,61 @@ public:
 		return false;
 	}
 
+	bool mouse3 = false;
+	bool mouse1 = false;
 	bool onPressed(const MousePressedEvent& e)  override
 	{
+		if (e.getButton() == GLFW_MOUSE_BUTTON_1)
+		{
+			mouse1 = true;
+		}
+		if (e.getButton() == GLFW_MOUSE_BUTTON_3)
+		{
+			mouse3 = true;
+		}
 		return false;
 	}
 
 	bool onReleased(const MouseReleasedEvent& e) override
 	{
+		if (e.getButton() == GLFW_MOUSE_BUTTON_1)
+		{
+			mouse1 = false;
+		}
+		if (e.getButton() == GLFW_MOUSE_BUTTON_3)
+		{
+			mouse3 = false;
+		}
 		return false;
 	}
 
 	bool onMoved(const MouseMovedEvent& e) override
 	{
 		cursor->setPosition(math::vec2(e.getX(), e.getY()));
+		if (mouse3)	{
+			camera->height += e.getDeltaPosition().y * 0.01f;
+			math::clamp(&(camera->height), 0, 0.8);
+			camera->rotation += e.getDeltaPosition().x * 0.5f;
+		}
+		else
+		if (mouse1)
+		{
+			camera->position.x += e.getDeltaPosition().x;
+			camera->position.z += e.getDeltaPosition().y;
+		}
+
 
 		return false;
 	}
+
+	bool onScroll(const MouseScrollEvent& e) override
+	{
+		camera->distance += e.getScroll();
+		LOG_INFO("Scroll: ", e.getScroll());
+		math::clamp(&(camera->distance), 15, 80);
+		return false;
+	}
+
 	bool screenshot = false;
 	void render()
 	{

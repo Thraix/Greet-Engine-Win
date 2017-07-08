@@ -91,6 +91,12 @@ namespace greet {
 				math::mat4::translate(-position.x, -position.y, -position.z);
 		}
 
+		mat4 mat4::tpCamera(math::vec3 position, float distance, float height, float rotation)
+		{
+			return rotateRX(asin(height)) * mat4::rotateY(90) * mat4::translate(vec3(sqrt(1 - height*height) * distance, - height * distance, 0)) * mat4::rotateY(rotation) * mat4::translate(-position.x,-position.y,-position.z);
+		}
+
+
 		mat4 mat4::translate(const vec3& translation)
 		{
 			mat4 result(1.0f);

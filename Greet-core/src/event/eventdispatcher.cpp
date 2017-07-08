@@ -114,6 +114,19 @@ namespace greet { namespace event {
 		}
 	}
 
+	void EventDispatcher::onMouseScrolled(const MouseScrollEvent& e)
+	{
+		for (it_mouseMap it = m_mouseListeners.begin();it != m_mouseListeners.end(); it++)
+		{
+			std::vector<MouseListener*> listeners = it->second;
+			for (it_mouseListener it2 = listeners.begin(); it2 != listeners.end(); it2++)
+			{
+				if ((*it2)->onScroll(e))
+					return;
+			}
+		}
+	}
+
 	void EventDispatcher::onKeyPressed(const KeyPressedEvent& e)
 	{
 		for (it_keyMap it = m_keyListeners.begin();it != m_keyListeners.end(); it++)

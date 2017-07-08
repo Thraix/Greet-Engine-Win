@@ -68,6 +68,7 @@ namespace greet { namespace graphics {
 		glfwSetMouseButtonCallback(window,mouse_button_callback);
 		glfwSetCursorPosCallback(window,mouse_position_callback);
 		glfwSetWindowFocusCallback(window,window_focus_callback);
+		glfwSetScrollCallback(window, mouse_scroll_callback);
 		glfwSwapInterval(0);
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
@@ -210,9 +211,14 @@ namespace greet { namespace graphics {
 
 	void Window::mouse_position_callback(GLFWwindow* window, double xpos, double ypos)
 	{
-		event::EventDispatcher::onMouseMoved(event::MouseMovedEvent(xpos,ypos, xpos - mousePosPixel.x, ypos - mousePosPixel.y,isMouseButtonDown));
-		mousePos = math::vec2(xpos / width, 1.0f-(ypos / height))*2.0f - 1.0f;
+		event::EventDispatcher::onMouseMoved(event::MouseMovedEvent(xpos, ypos, xpos - mousePosPixel.x, ypos - mousePosPixel.y, isMouseButtonDown));
+		mousePos = math::vec2(xpos / width, 1.0f - (ypos / height))*2.0f - 1.0f;
 		mousePosPixel = math::vec2(xpos, ypos);
+	}
+
+	void Window::mouse_scroll_callback(GLFWwindow* window, double scrollX, double scrollY)
+	{
+		event::EventDispatcher::onMouseScrolled(event::MouseScrollEvent(scrollY));
 	}
 
 	void Window::window_focus_callback(GLFWwindow* window,int state)

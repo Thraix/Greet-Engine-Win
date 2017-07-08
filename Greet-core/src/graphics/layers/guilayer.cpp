@@ -72,6 +72,11 @@ namespace greet { namespace graphics {
 		return moved;
 	}
 
+	bool GUILayer::onScroll(const MouseScrollEvent& e)
+	{
+		return false;
+	}
+
 	void GUILayer::windowResize(int width, int height)
 	{
 		setProjectionMatrix(mat3::orthographic(0, width, 0, height));

@@ -31,6 +31,7 @@ namespace greet { namespace event {
 		static void onMousePressed(const MousePressedEvent& e);
 		static void onMouseReleased(const MouseReleasedEvent& e);
 		static void onMouseMoved(const MouseMovedEvent& e);
+		static void onMouseScrolled(const MouseScrollEvent& e);
 
 		static void onKeyPressed(const KeyPressedEvent& e);
 		static void onKeyReleased(const KeyReleasedEvent& e);

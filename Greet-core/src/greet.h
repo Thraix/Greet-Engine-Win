@@ -91,6 +91,8 @@
 #include <graphics\renderers\batchrenderer.h>
 
 #include <graphics\models\camera.h>
+#include <graphics\models\tpcamera.h>
+#include <graphics\models\fpcamera.h>
 #include <graphics\models\Material.h>
 #include <graphics\models\meshdata.h>
 #include <graphics\models\meshfactory.h>

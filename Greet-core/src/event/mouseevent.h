@@ -50,10 +50,27 @@ namespace greet { namespace event {
 	public:
 		inline const float getX() const { return m_position.x; }
 		inline const float getY() const { return m_position.y; }
+		inline const float getDX() const { return m_deltaPosition.x; }
+		inline const float getDY() const { return m_deltaPosition.x; }
 		inline const void setX(float x) { m_position.x = x; }
 		inline const void setY(float y) { m_position.y = y; }
 		inline const math::vec2& getPosition() const { return m_position; }
 		inline const math::vec2& getDeltaPosition() const { return m_deltaPosition; }
 		inline const bool isDragged() const { return m_dragged; }
+	};
+
+	class MouseScrollEvent : public Event
+	{
+	private:
+		int m_scroll;
+		int m_scrollDirection;
+	public:
+		MouseScrollEvent(int scroll)
+			//															Calculate the direction, keeping in mind div by 0
+			:Event(MOUSE_SCROLLED), m_scroll(scroll), m_scrollDirection(scroll / (scroll < 0 ? -scroll : (scroll == 0 ? 1 : scroll))) {}
+
+		inline const int getScroll() const { return m_scroll; };
+		inline const int getDirection() const { return m_scrollDirection; }
+
 	};
 }}
