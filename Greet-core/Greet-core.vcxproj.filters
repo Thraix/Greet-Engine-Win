@@ -75,6 +75,7 @@
     <ClCompile Include="src\utils\json\JSONArray.cpp" />
     <ClCompile Include="src\utils\json\JSONLoader.cpp" />
     <ClCompile Include="src\graphics\renderengine.cpp" />
+    <ClCompile Include="src\graphics\models\tpcamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\font.h" />

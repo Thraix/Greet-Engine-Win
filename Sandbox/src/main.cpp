@@ -80,8 +80,9 @@ public:
 		fbo = new FrameBufferObject(960,540);
 		fbo->attachColorTexture(GL_COLOR_ATTACHMENT1);
 		camera = new TPCamera();
-		camera->distance = 50;
-		camera->position = math::vec3(100,0,0);
+		//camera->
+		//camera->distance = 50;
+		//camera->position = math::vec3(100,0,0);
 		Skybox* skybox = new Skybox((CubeMap*)TextureManager::get("skybox"));
 		renderer3d = new BatchRenderer3D(Window::getWidth(), Window::getHeight(), *camera,90,0.001f,1000.0f, skybox);
 
@@ -107,7 +108,7 @@ public:
 
 		MeshData* cubeMesh = model::MeshFactory::cube(0,0,0,10,10,10);
 		MaterialModel* cubeModelMaterial = new MaterialModel(new Mesh(cubeMesh), *modelMaterial);
-		cube = new EntityModel(*cubeModelMaterial, camera->position, math::vec3(1, 1, 1), math::vec3(0, 0, 0));
+		cube = new EntityModel(*cubeModelMaterial, math::vec3(0,0,0), math::vec3(1, 1, 1), math::vec3(0, 0, 0));
 		delete cubeMesh;
 
 		MeshData* tetrahedronMesh = model::MeshFactory::tetrahedron(0,0,0,10);
@@ -146,7 +147,7 @@ public:
 
 		uilayer = new Layer<Renderable>(new BatchRenderer(), ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)Window::getWidth(), 0.0f, (float)Window::getHeight()));
 		uint colorPink = ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(300 /360.0f, 3));
-		fps = new Label("144 fps", math::vec2(50, 300), "anonymous", 72, ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(120 / 360.0f, 9)));
+		fps = new Label("144 fps", math::vec2(50, 300), "roboto", 72, ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(120 / 360.0f, 9)));
 		cursor = new Renderable2D(math::vec2(0,0),math::vec2(32,32),0xffffffff, new Sprite(TextureManager::get2D("cursor")), new Sprite(TextureManager::get2D("mask")));
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(driverTest->m_position.x, -20, 0.5f, true, new drivers::DriverAdapter()));
 		guilayer = new GUILayer(new BatchRenderer(),ShaderFactory::DefaultShader());
@@ -161,7 +162,7 @@ public:
 		uilayer->add(fps);
 		frame->add(slider);
 		frame->add(button);
-		guilayer->add(frame);
+		//guilayer->add(frame);
 		uilayer->add(cursor);
 
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(frame->m_position.x, 100, 5, true, new drivers::DriverAdapter()));
@@ -193,7 +194,7 @@ public:
 	void tick()
 	{
 		std::string s = utils::toString(getFPS()) + " fps";
-		fps->text = s;
+		//fps->text = s;
 		Window::setTitle("Best Game Ever | " + s);
 	}
 
@@ -317,62 +318,28 @@ public:
 	bool onTyped(const KeyTypedEvent& e) override
 	{
 		LOG_INFO((unsigned char)e.getCharCode());
+		fps->text = (char)e.getCharCode();
 		return false;
 	}
 
-	bool mouse3 = false;
-	bool mouse1 = false;
 	bool onPressed(const MousePressedEvent& e)  override
 	{
-		if (e.getButton() == GLFW_MOUSE_BUTTON_1)
-		{
-			mouse1 = true;
-		}
-		if (e.getButton() == GLFW_MOUSE_BUTTON_3)
-		{
-			mouse3 = true;
-		}
 		return false;
 	}
 
 	bool onReleased(const MouseReleasedEvent& e) override
 	{
-		if (e.getButton() == GLFW_MOUSE_BUTTON_1)
-		{
-			mouse1 = false;
-		}
-		if (e.getButton() == GLFW_MOUSE_BUTTON_3)
-		{
-			mouse3 = false;
-		}
 		return false;
 	}
 
 	bool onMoved(const MouseMovedEvent& e) override
 	{
 		cursor->setPosition(math::vec2(e.getX(), e.getY()));
-		if (mouse3)	{
-			camera->height += e.getDeltaPosition().y * 0.01f;
-			math::clamp(&(camera->height), 0, 0.8);
-			camera->rotation += e.getDeltaPosition().x * 0.5f;
-		}
-		else
-		if (mouse1)
-		{
-			math::vec2 dpos = e.getDeltaPosition();
-			dpos.rotate(camera->rotation);
-			camera->position.x += dpos.y * 0.005f * camera->distance;
-			camera->position.z -= dpos.x * 0.005f * camera->distance;
-		}
-
-
 		return false;
 	}
 
 	bool onScroll(const MouseScrollEvent& e) override
 	{
-		camera->distance -= e.getScroll();
-		math::clamp(&(camera->distance), 15, 80);
 		return false;
 	}
 

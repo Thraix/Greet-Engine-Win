@@ -26,6 +26,11 @@ namespace greet{ namespace math{
 		return (float)(degrees * M_PI * 0.005555555f);
 	}
 
+	inline float toDegrees(float radians)
+	{
+		return (float)(radians * 180.0f / M_PI);
+	}
+
 	inline vec2* getVertices(b2Body* body)
 	{
 		const b2Fixture* f = body->GetFixtureList();

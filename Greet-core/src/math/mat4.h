@@ -33,6 +33,14 @@ namespace greet {
 
 			static mat4 transformationMatrix(math::vec3 position, math::vec3 rotation, math::vec3 scale);
 			static mat4 viewMatrix(math::vec3 position, math::vec3 rotation);
+
+			/* 
+			View Matrix of a third person camera around an object.
+				position	- Position of the object
+				distance	- distance from the object
+				height		- height above the object, between -1 and 1
+				rotation	- angle around the object
+			*/
 			static mat4 tpCamera(math::vec3 position, float distance, float height, float rotation);
 
 			static mat4 translate(const vec3& translation);

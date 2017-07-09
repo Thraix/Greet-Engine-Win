@@ -70,6 +70,7 @@ namespace greet { namespace graphics {
 		glfwSetWindowFocusCallback(window,window_focus_callback);
 		glfwSetScrollCallback(window, mouse_scroll_callback);
 		glfwSetCharCallback(window, key_char_callback);
+
 		glfwSwapInterval(0);
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);

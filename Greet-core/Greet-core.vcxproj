@@ -111,6 +111,7 @@
     <ClCompile Include="src\graphics\layers\guilayer.cpp" />
     <ClCompile Include="src\graphics\models\meshdata.cpp" />
     <ClCompile Include="src\graphics\models\meshfactory.cpp" />
+    <ClCompile Include="src\graphics\models\tpcamera.cpp" />
     <ClCompile Include="src\graphics\renderengine.cpp" />
     <ClCompile Include="src\graphics\renderers\batchrenderer.cpp" />
     <ClCompile Include="src\graphics\buffers\batchindexbuffer.cpp" />
