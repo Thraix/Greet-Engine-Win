@@ -2,10 +2,11 @@
 
 namespace greet { namespace graphics {
 
-	std::map<std::string, Layer<Renderable>*> RenderEngine::m_renderer2ds;
+	std::map<std::string, Layer*> RenderEngine::m_renderer2ds;
+
 	std::map<std::string, Layer3D*> RenderEngine::m_renderer3ds;
 
-	void RenderEngine::add_layer2d(Layer<Renderable>* renderer, const std::string& name)
+	void RenderEngine::add_layer2d(Layer* renderer, const std::string& name)
 	{
 		m_renderer2ds.emplace(name, renderer);
 	}
@@ -15,7 +16,7 @@ namespace greet { namespace graphics {
 		m_renderer3ds.emplace(name, renderer);
 	}
 
-	Layer<Renderable>* RenderEngine::remove_layer2d(const std::string& name)
+	Layer* RenderEngine::remove_layer2d(const std::string& name)
 	{
 		auto it = m_renderer2ds.find(name);
 		m_renderer2ds.erase(it);
@@ -29,7 +30,7 @@ namespace greet { namespace graphics {
 		return it->second;
 	}
 
-	Layer<Renderable>* RenderEngine::get_renderer2d(const std::string& name)
+	Layer* RenderEngine::get_renderer2d(const std::string& name)
 	{
 		auto it = m_renderer2ds.find(name);
 		return it->second;

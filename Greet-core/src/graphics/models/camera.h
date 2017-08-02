@@ -8,8 +8,9 @@ namespace greet { namespace model {
 	class Camera {
 
 	public:
-		virtual math::vec3 getRotationVector() const = 0;
-		virtual math::mat4 getViewMatrix() const = 0;
+		virtual const math::vec3& getRotationVector() const = 0;
+		virtual const math::mat4& getViewMatrix() const = 0;
+		virtual void update(float timeElapsed) {};
 	};
 
 

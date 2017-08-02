@@ -5,7 +5,7 @@
 namespace greet { namespace gamestate { class GameStateManager; } }
 
 namespace greet { namespace gamestate {
-	class GameState : public graphics::Layer<graphics::Renderable>
+	class GameState : public graphics::Layer
 	{
 	friend gamestate::GameStateManager;
 	protected:

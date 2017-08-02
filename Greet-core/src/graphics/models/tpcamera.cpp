@@ -3,13 +3,30 @@
 namespace greet { namespace model {
 
 	TPCamera::TPCamera()
-		: m_distance(15), m_height(0), m_rotation(0)
+		: TPCamera(math::vec3(0,0,0), 1, 0, 0)
 	{
-		m_position = math::vec3(0,0,0);
-		event::EventDispatcher::addMouseListener(0,*this);
+	}
+
+	TPCamera::TPCamera(math::vec3 position, float distance, float height, float rotation)
+		:TPCamera(position, distance, height, rotation, 1, 100, -1,1)
+	{
+	
+	}
+
+	TPCamera::TPCamera(math::vec3 position, float distance, float height, float rotation, float distanceMin, float distanceMax, float heightMin, float heightMax)
+		: TPCamera(position, distance, height, rotation, distanceMin, distanceMax, heightMin, heightMax, 0.5f, 0.01f, 0.005f)
+	{
+	}
+
+	TPCamera::TPCamera(math::vec3 position, float distance, float height, float rotation, float distanceMin, float distanceMax, float heightMin, float heightMax, float rotationSpeed, float heightSpeed, float distanceSpeed) 
+		: m_position(position), m_distance(distance), m_height(height), m_rotation(rotation), m_rotationSpeed(rotationSpeed), m_heightSpeed(heightSpeed), m_distanceSpeed(distanceSpeed)
+	{
+		m_rotationWanted = m_rotation;
 		m_rotationVector.z = 0;
-		calculateRotationVector();
-		calculateViewMatrix();
+		setDistanceClamp(distanceMin, distanceMax);
+		setHeightClamp(heightMin, heightMax);
+		calculateInformation();
+		event::EventDispatcher::addMouseListener(0, *this);
 	}
 
 	TPCamera::~TPCamera()
@@ -17,35 +34,97 @@ namespace greet { namespace model {
 		event::EventDispatcher::removeMouseListener(*this);
 	}
 
-	math::vec3 TPCamera::getRotationVector() const 
+	void TPCamera::update(float timeElapsed)
+	{
+		m_rotation += (m_rotationWanted - m_rotation) * (timeElapsed * 20.0f); // 0.33 ish
+		calculateInformation();
+	}
+
+	const math::vec3& TPCamera::getRotationVector() const
 	{ 
 		return m_rotationVector;
 	}
-	math::mat4 TPCamera::getViewMatrix() const 
+
+	const math::mat4& TPCamera::getViewMatrix() const
 	{ 
 		return m_viewMatrix;
-	}
-
-	void TPCamera::setDistanceClamp(float min, float max)
-	{
-		m_distanceMin = min < 0 ? 0 : min;
-		m_distanceMax = max < 0 ? 0 : max;
-		calculateInformation();
-	}
-
-	void TPCamera::setHeightClamp(float min, float max)
-	{
-		math::clamp(&min, -1, 1);
-		m_heightMin = min;
-		math::clamp(&max, -1, 1);
-		m_heightMax = max;
-		calculateInformation();
 	}
 
 	void TPCamera::setPosition(math::vec3 pos)
 	{
 		m_position = pos;
+		calculateViewMatrix();
+	}
+
+	void TPCamera::setHeight(float height)
+	{
+		m_height = height;
+		math::clamp(&m_height, m_heightMin, m_heightMax);
+		if (m_height != height)
+		{
+			LOG_WARNING("TPCamera", "height outside of clamp, clamping.");
+		}
 		calculateInformation();
+	}
+
+	void TPCamera::setRotation(float rotation)
+	{
+		m_rotation = rotation;
+		calculateViewMatrix();
+	}
+
+	void TPCamera::setDistance(float distance)
+	{
+		m_distance = distance;
+		math::clamp(&m_distance, m_distanceMin, m_distanceMax);
+		if (m_distance != distance)
+		{
+			LOG_WARNING("TPCamera", "distance outside of clamp, clamping.");
+		}
+	}
+
+	void TPCamera::setDistanceClamp(float min, float max)
+	{
+		if (min > max)
+		{
+			LOG_ERROR("TPCamera", "Distance clamp: min greater than max.");
+			return;
+		}
+		m_distanceMin = min < 0 ? 0 : min;
+		m_distanceMax = max < 0 ? 0 : max;
+		if (m_distance < m_distanceMin)
+		{
+			LOG_INFO("TPCamera", "Distance outside of clamp, reclamping.");
+			m_distance = m_distanceMin;
+		}
+		else if (m_distance > m_distanceMax)
+		{
+			LOG_INFO("TPCamera", "Distance outside of clamp, reclamping.");
+			m_distance = m_distanceMax;
+		}
+	}
+
+	void TPCamera::setHeightClamp(float min, float max)
+	{
+		if (min > max)
+		{
+			LOG_ERROR("TPCamera", "Height clamp: min greater than max.");
+			return;
+		}
+		math::clamp(&min, -1, 1);
+		math::clamp(&max, -1, 1);
+		m_heightMin = min;
+		m_heightMax = max;
+		if (m_height < m_heightMin)
+		{
+			LOG_INFO("TPCamera", "Height outside of clamp, reclamping.");
+			m_height = m_heightMin;
+		}
+		else if (m_height > m_heightMax)
+		{
+			LOG_INFO("TPCamera", "Height outside of clamp, reclamping.");
+			m_height = m_heightMax;
+		}
 	}
 
 	void TPCamera::calculateRotationVector()
@@ -94,8 +173,7 @@ namespace greet { namespace model {
 		if (m_mouse3) {
 			m_height += e.getDY() * m_heightSpeed;
 			math::clamp(&m_height, m_heightMin, m_heightMax);
-			m_rotation += e.getDX() * m_rotationSpeed;
-			calculateInformation();
+			m_rotationWanted += m_rotationSpeed * e.getDX();
 		}
 		else if (m_mouse1)
 		{
@@ -103,7 +181,6 @@ namespace greet { namespace model {
 			dpos.rotate(m_rotation);
 			m_position.x += dpos.y * m_distanceSpeed * m_distance;
 			m_position.z -= dpos.x * m_distanceSpeed * m_distance;
-			calculateInformation();
 		}
 		return false;
 	}
@@ -111,7 +188,6 @@ namespace greet { namespace model {
 	bool TPCamera::onScroll(const event::MouseScrollEvent& e) {
 		m_distance -= e.getScroll();
 		math::clamp(&m_distance, m_distanceMin, m_distanceMax);
-		calculateInformation();
 		return false;
 	}
 

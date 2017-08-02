@@ -7,12 +7,11 @@
 
 namespace greet { namespace graphics{
 
-	template<class T>
 	class Layer
 	{
 	protected:
 		Renderer2D* m_renderer;
-		std::vector<T*> m_renderables;
+		std::vector<Renderable*> m_renderables;
 		Shader* m_shader;
 
 		math::mat3 m_projectionMatrix;
@@ -40,7 +39,7 @@ namespace greet { namespace graphics{
 				delete m_renderables[i];
 		}
 
-		virtual void add(T* renderable)
+		virtual void add(Renderable* renderable)
 		{
 			m_renderables.push_back(renderable);
 		}

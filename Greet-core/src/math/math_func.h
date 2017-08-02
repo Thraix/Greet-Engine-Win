@@ -14,6 +14,11 @@
 
 namespace greet{ namespace math{
 
+	inline bool isPositive(float val)
+	{
+		return -val < val;
+	}
+
 	//struct vec2;
 	inline void clamp(float* value, float min, float max)
 	{

@@ -126,6 +126,56 @@ namespace greet { namespace utils {
 			return objectNull;
 		}
 		return it->second;
-	
+	}
+
+	std::ostream& operator<<(std::ostream& os, const JSONObject& obj)
+	{
+		os << JSON::get_indent() << "{\n";
+		JSON::push_indent();
+		uint vsize = obj.m_values.size();
+		uint asize = obj.m_arrays.size();
+		uint osize = obj.m_objects.size();
+
+		uint i = 1;
+		for (auto it = obj.m_values.begin();it != obj.m_values.end(); ++it, ++i)
+		{
+			os << JSON::get_indent() << "\"" << it->first << "\"" << ": ";
+			if (it->second == "null" || it->second == "true" || it->second == "false" || is_number(it->second))
+			{
+				os << it->second;
+			}
+			else
+			{
+				os << "\"" << it->second << "\"";
+			}
+
+			if (i != vsize || asize != 0 || osize != 0)
+			{
+				os << ",\n";
+			}
+		}
+
+		i = 1;
+		for (auto it = obj.m_arrays.begin();it != obj.m_arrays.end(); ++it, ++i)
+		{
+			os << JSON::get_indent() << "\"" << it->first << "\"" << ":\n" << it->second;
+			if (i != asize || osize != 0)
+			{
+				os << ",\n";
+			}
+		}
+
+		i = 1;
+		for (auto it = obj.m_objects.begin();it != obj.m_objects.end(); ++it, ++i)
+		{
+			os << JSON::get_indent() << "\"" << it->first << "\"" << ":\n" << it->second;
+			if (i != osize)
+			{
+				os << ",\n";
+			}
+		}
+		JSON::pop_indent();
+		os << "\n" << JSON::get_indent() << "}";
+		return os;
 	}
 }}

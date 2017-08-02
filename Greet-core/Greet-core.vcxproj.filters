@@ -76,6 +76,7 @@
     <ClCompile Include="src\utils\json\JSONLoader.cpp" />
     <ClCompile Include="src\graphics\renderengine.cpp" />
     <ClCompile Include="src\graphics\models\tpcamera.cpp" />
+    <ClCompile Include="src\utils\json\JSON.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\font.h" />
@@ -214,6 +215,7 @@
     <ClInclude Include="src\graphics\renderengine.h" />
     <ClInclude Include="src\graphics\models\tpcamera.h" />
     <ClInclude Include="src\graphics\models\fpcamera.h" />
+    <ClInclude Include="src\utils\json\JSON.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Performance4.psess" />

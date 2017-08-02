@@ -9,12 +9,16 @@
 
 namespace greet { namespace graphics {
 
-	class GUILayer : public Layer<GUI>, public event::KeyListener, public event::MouseListener, public listener::WindowResizeListener
+	class GUILayer : public Layer, public event::KeyListener, public event::MouseListener, public listener::WindowResizeListener
 	{
+
+	private:
+		GUI* getGUI(uint i) { return (GUI*)m_renderables[i]; };
 	public:
 		GUILayer(Renderer2D* renderer, Shader* shader);
 		virtual ~GUILayer();
-
+		void add(Renderable* renderable) override;
+		void add(GUI* renderable);
 		bool onPressed(const event::KeyPressedEvent& e) override;
 		bool onReleased(const event::KeyReleasedEvent& e) override;
 		bool onTyped(const event::KeyTypedEvent& e) override;

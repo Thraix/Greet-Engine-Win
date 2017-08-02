@@ -1,10 +1,12 @@
 #pragma once
 
+#include <utils/json/JSON.h>
 #include <utils/json/JSONArray.h>
 #include <internal\greet_types.h>
 #include <logging/logger.h>
 #include <map>
 #include <vector>
+#include <utils/stringutils.h>
 
 namespace greet { namespace utils {
 
@@ -40,6 +42,8 @@ namespace greet { namespace utils {
 
 		const JSONArray& getArray(const std::string& key) const;
 		const JSONObject& getObject(const std::string& key) const;
+
+		friend std::ostream& operator<<(std::ostream& os, const JSONObject& obj);
 	};
 
 }}

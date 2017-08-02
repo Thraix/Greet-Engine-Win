@@ -19,7 +19,7 @@ namespace greet{ namespace graphics{
 
 	void Renderer3D::renderSkybox() const
 	{
-		m_skybox->render(m_projectionMatrix, m_camera);
+		m_skybox->render(m_projectionMatrix, *m_camera);
 	}
 
 	void Renderer3D::render(const EntityModel& model) const
@@ -28,8 +28,13 @@ namespace greet{ namespace graphics{
 		materialModel.getMaterial().bind();
 		materialModel.getMaterial().getShader().setUniformMat4("transformationMatrix", model.getTransformationMatrix());
 		materialModel.getMaterial().getShader().setUniformMat4("projectionMatrix", m_projectionMatrix);
-		materialModel.getMaterial().getShader().setUniformMat4("viewMatrix", m_camera.getViewMatrix());
+		materialModel.getMaterial().getShader().setUniformMat4("viewMatrix", m_camera->getViewMatrix());
 		render(materialModel.getMesh());
 		materialModel.getMaterial().unbind();
+	}
+
+	void Renderer3D::update(float timeElapsed)
+	{
+		m_camera->update(timeElapsed);
 	}
 }}

@@ -23,7 +23,7 @@ namespace greet { namespace graphics {
 	void BatchRenderer3D::render() const
 	{
 		glDepthRange(m_near, m_far);
-		const math::mat4& viewMatrix = m_camera.getViewMatrix();
+		const math::mat4& viewMatrix = m_camera->getViewMatrix();
 		for (BatchRenderer3DMap* map : m_map)
 		{
 			map->m_material.getMaterial().bind();

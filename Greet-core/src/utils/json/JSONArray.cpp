@@ -45,4 +45,22 @@ namespace greet { namespace utils {
 	{
 		return getObject(i);
 	}
+
+	std::ostream& operator<<(std::ostream& os, const JSONArray& arr)
+	{
+		os << JSON::get_indent() << "[\n";
+		JSON::push_indent();
+		uint size = arr.m_objects.size();
+		for (uint i = 0;i<size;++i)
+		{
+			os << arr.getObject(i);
+			if(i != size - 1)
+			{ 
+				os << ",\n" << JSON::get_indent();
+			}
+		}
+		JSON::pop_indent();
+		os << "\n" << JSON::get_indent() << "]";
+		return os;
+	}
 }}

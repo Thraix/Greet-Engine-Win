@@ -71,6 +71,7 @@ namespace greet { namespace utils {
 		}
 		return false;
 	}
+
 	bool JSONLoader::isObject(const std::string& file, uint& currentPos, JSONObject* object)
 	{
 		JSONObject retObject;

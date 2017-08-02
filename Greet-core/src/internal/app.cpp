@@ -56,7 +56,7 @@ namespace greet { namespace internal {
 				drivers::DriverDispatcher::update(updateTick);
 				update(elapsed - updateTimer);
 				Window::update();
-				graphics::RenderEngine::render();
+				graphics::RenderEngine::update(elapsed - updateTimer);
 				updates++;
 				updateTimer += elapsed - updateTimer;
 			}

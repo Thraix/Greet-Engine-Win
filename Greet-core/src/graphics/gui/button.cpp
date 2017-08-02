@@ -44,7 +44,6 @@ namespace greet { namespace graphics {
 
 	bool Button::onPressed(const event::MousePressedEvent& event, math::vec2 relativeMousePos)
 	{
-		
 		GUI::onPressed(event, relativeMousePos);
 		return false;
 	}

@@ -18,7 +18,7 @@ namespace greet{ namespace graphics{
 
 	protected:
 		math::mat4 m_projectionMatrix;
-		const model::Camera& m_camera;
+		model::Camera* m_camera;
 		float m_renderDistance;
 		float m_near;
 		float m_far;
@@ -26,7 +26,7 @@ namespace greet{ namespace graphics{
 
 
 	public:
-		Renderer3D(float width, float height, const model::Camera& camera, float fov, float near, float far, Skybox* skybox)
+		Renderer3D(float width, float height, model::Camera* camera, float fov, float near, float far, Skybox* skybox)
 			: m_projectionMatrix(math::mat4::projectionMatrix(width/height, fov, near, far)), m_camera(camera), m_skybox(skybox), m_renderDistance(far), m_near(near), m_far(far)
 		{
 			
@@ -39,6 +39,8 @@ namespace greet{ namespace graphics{
 		virtual void render(const model::EntityModel& model) const;
 		virtual void render(const model::Mesh& model) const;
 		virtual void render(const model::MaterialModel& model) const;
+
+		virtual void update(float timeElapsed);
 
 		virtual void submit(const model::EntityModel* model) {};
 

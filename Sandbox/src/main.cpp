@@ -32,8 +32,8 @@ private:
 	FrameBufferObject* fbo;
 
 	TPCamera* camera;
-	Layer<Renderable>* scene3d;
-	Layer<Renderable>* uilayer;
+	Layer* scene3d;
+	Layer* uilayer;
 	GUILayer* guilayer;
 	Slider* slider;
 	Frame* frame;
@@ -79,12 +79,9 @@ public:
 
 		fbo = new FrameBufferObject(960,540);
 		fbo->attachColorTexture(GL_COLOR_ATTACHMENT1);
-		camera = new TPCamera();
-		//camera->
-		//camera->distance = 50;
-		//camera->position = math::vec3(100,0,0);
+		camera = new TPCamera(math::vec3(0,0,0),15,0,0,15,80,0,0.8f);
 		Skybox* skybox = new Skybox((CubeMap*)TextureManager::get("skybox"));
-		renderer3d = new BatchRenderer3D(Window::getWidth(), Window::getHeight(), *camera,90,0.001f,1000.0f, skybox);
+		renderer3d = new BatchRenderer3D(Window::getWidth(), Window::getHeight(), camera,90,0.001f,1000.0f, skybox);
 
 
 		Shader* modelShader = Shader::fromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
@@ -145,7 +142,7 @@ public:
 	
 		delete l;
 
-		uilayer = new Layer<Renderable>(new BatchRenderer(), ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)Window::getWidth(), 0.0f, (float)Window::getHeight()));
+		uilayer = new Layer(new BatchRenderer(), ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)Window::getWidth(), 0.0f, (float)Window::getHeight()));
 		uint colorPink = ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(300 /360.0f, 3));
 		fps = new Label("144 fps", math::vec2(50, 300), "roboto", 72, ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(120 / 360.0f, 9)));
 		cursor = new Renderable2D(math::vec2(0,0),math::vec2(32,32),0xffffffff, new Sprite(TextureManager::get2D("cursor")), new Sprite(TextureManager::get2D("mask")));
@@ -155,14 +152,14 @@ public:
 		button = new Button(math::vec2(10,120+30),math::vec2(100,40),"Test");
 		frame = new Frame(math::vec2(10, 10), math::vec2(500, 500),"GUI Frame");
 
-		scene3d = new Layer<Renderable>(new BatchRenderer(),blurShader, math::mat3::orthographic(0.0f, (float)Window::getWidth(), 0.0f, (float)Window::getHeight()));
+		scene3d = new Layer(new BatchRenderer(),blurShader, math::mat3::orthographic(0.0f, (float)Window::getWidth(), 0.0f, (float)Window::getHeight()));
 		fboScene = new Renderable2D(math::vec2(0,0),math::vec2(960,540),0xffffffff,new Sprite(fbo->getColorTexture(GL_COLOR_ATTACHMENT0)),NULL);
 		scene3d->add(fboScene);
 
 		uilayer->add(fps);
 		frame->add(slider);
 		frame->add(button);
-		//guilayer->add(frame);
+		guilayer->add(frame);
 		uilayer->add(cursor);
 
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(frame->m_position.x, 100, 5, true, new drivers::DriverAdapter()));
@@ -181,8 +178,8 @@ public:
 		//Tree t(renderer3d,0,0,0);
 		uint pos = 0;
 //		LOG_INFO(JSONLoader::isNumber("0.1234s",pos));
-		//RenderEngine::add_layer2d(scene3d, "uilayer");
 		RenderEngine::add_layer2d(uilayer, "uilayer");
+		RenderEngine::add_layer2d(guilayer, "guilayer");
 		RenderEngine::add_layer3d(new Layer3D(renderer3d), "3dWorld");
 	}
 
@@ -358,20 +355,23 @@ public:
 		uilayer->setProjectionMatrix(math::mat3::orthographic(0,Window::getWidth(),0,Window::getHeight()));
 	}
 };
-
+#include <fstream>
 int main()
 {
-	/*uint pos = 0;
+	uint pos = 0;
 	uint lastPos = pos;
 	JSONObject obj = JSONLoader::loadJSON("test.txt");
 	LOG_INFO("object1",obj.hasKey("object1") ? "true" : "false");
 	LOG_INFO("object1.string1", obj.getObject("object1").getValue("string1"));
 	LOG_INFO("object1.float", obj.getObject("object1").getValueAsFloat("float"));
-	LOG_INFO("object1.null", obj.getObject("object1").isNull("null"));
-	LOG_INFO("object1.true", obj.getObject("object1").getValueAsBool("true"));
-	LOG_INFO("object1.false", obj.getObject("object1").getValueAsBool("false"));
-	LOG_INFO("string2", obj.getValueAsFloat("string2"));*/
-	//system("pause");
-	Core game;
-	game.start();
+	LOG_INFO("object1.null", obj.getObject("object1").isNull("null") ? "true" : "false");
+	LOG_INFO("object1.true", obj.getObject("object1").getValueAsBool("true") ? "true" : "false");
+	LOG_INFO("object1.false", obj.getObject("object1").getValueAsBool("false") ? "true" : "false");
+	LOG_INFO("string2", obj.getValueAsFloat("string2"));
+	std::ofstream file("save.txt");
+	file << obj;
+	file.close();
+	system("pause");
+	//Core game;
+	//game.start();
 }

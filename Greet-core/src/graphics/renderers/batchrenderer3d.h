@@ -27,7 +27,7 @@ namespace greet { namespace graphics {
 	private:
 		std::vector<BatchRenderer3DMap*> m_map;
 	public:
-		BatchRenderer3D(float width, float height, const model::Camera& camera, float fov, float near, float far, Skybox* skybox)
+		BatchRenderer3D(float width, float height, model::Camera* camera, float fov, float near, float far, Skybox* skybox)
 			: Renderer3D(width,height,camera,fov,near,far,skybox)
 		{
 			
@@ -37,7 +37,7 @@ namespace greet { namespace graphics {
 		void render() const override;
 
 		inline const math::mat4& getProjectionMatrix() const { return m_projectionMatrix; }
-		inline const model::Camera& getCamera() const { return m_camera; }
+		inline const model::Camera& getCamera() const { return *m_camera; }
 
 		math::vec3 getScreenCoordination(const math::vec3& coordinate, uint screenWidth, uint screenHeight);
 

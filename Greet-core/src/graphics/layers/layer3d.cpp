@@ -27,6 +27,6 @@ namespace greet { namespace graphics{
 
 	void Layer3D::update(float timeElapsed)
 	{
-		return;
+		m_renderer->update(timeElapsed);
 	}
 }}
