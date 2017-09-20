@@ -231,4 +231,9 @@ namespace greet{
 	{
 		return !compare(other);
 	}
+
+	std::ostream& operator<<(std::ostream& stream, const vec3& vec)
+	{
+		return stream << vec.x << ", " << vec.y << ", " << vec.z;
+	}
 }}

@@ -3,6 +3,7 @@
 #include <sstream>
 
 namespace greet {namespace utils{
+
 	template <typename T>
 	inline std::string toString(T t)
 	{

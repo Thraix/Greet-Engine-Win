@@ -3,7 +3,7 @@
 #include <vector>
 #include <internal/greetgl.h>
 #include <math/maths.h>
-#include <logging/logger.h>
+#include <logging/log.h>
 
 namespace greet{ namespace graphics{
 
@@ -34,7 +34,7 @@ namespace greet{ namespace graphics{
 			if (m_transformationStack.size() > 1)
 				m_transformationStack.pop_back();
 			else
-				LOG_WARNING("RENDERER", "Trying to pop the last matrix.");
+				Log::warning("Trying to pop the last matrix.");
 			m_transformationBack = &m_transformationStack.back();
 		}
 
@@ -47,7 +47,7 @@ namespace greet{ namespace graphics{
 		{
 			if (index >= 0 && index<m_transformationStack.size())
 				return m_transformationStack[index];
-			LOG_WARNING("RENDERER", "Index out of bound: ", "index:", index, ",size:", m_transformationStack.size());
+			Log::warning("Index out of bound: ", "index: ", index, ",size: ", m_transformationStack.size());
 			return m_transformationStack[0];
 		}
 	};

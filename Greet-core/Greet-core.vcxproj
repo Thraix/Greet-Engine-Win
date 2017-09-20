@@ -150,6 +150,10 @@
     <ClCompile Include="src\input\joystick.cpp" />
     <ClCompile Include="src\internal\app.cpp" />
     <ClCompile Include="src\gamestates\gamestatemanager.cpp" />
+    <ClCompile Include="src\logging\Log.cpp" />
+    <ClCompile Include="src\logging\Logger.cpp" />
+    <ClCompile Include="src\logging\LogLevel.cpp" />
+    <ClCompile Include="src\logging\LogStream.cpp" />
     <ClCompile Include="src\math\mat3.cpp" />
     <ClCompile Include="src\math\mat4.cpp" />
     <ClCompile Include="src\math\quaternion.cpp" />
@@ -262,8 +266,10 @@
     <ClInclude Include="src\listeners\windowfocus.h" />
     <ClInclude Include="src\listeners\windowlistener.h" />
     <ClInclude Include="src\listeners\windowresize.h" />
-    <ClInclude Include="src\logging\loggable.h" />
+    <ClInclude Include="src\logging\Log.h" />
     <ClInclude Include="src\logging\logger.h" />
+    <ClInclude Include="src\logging\LogLevel.h" />
+    <ClInclude Include="src\logging\LogStream.h" />
     <ClInclude Include="src\managers\atlasmanager.h" />
     <ClInclude Include="src\managers\channelmanager.h" />
     <ClInclude Include="src\gamestates\gamestatemanager.h" />

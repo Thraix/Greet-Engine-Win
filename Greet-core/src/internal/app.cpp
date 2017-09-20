@@ -6,7 +6,9 @@ namespace greet { namespace internal {
 	App::App()
 	: m_fps(0), m_ups(0)
 	{
-
+		std::ofstream file(".logging", std::fstream::out | std::fstream::app);
+		LogStream fileStream = LogStream(file, LogLevel::error, "fileStream");
+		Log::addLogStream(fileStream);
 	}
 
 	App::~App()
@@ -34,7 +36,7 @@ namespace greet { namespace internal {
 	{
 		if (!m_initialized)
 		{
-			LOG_FATAL("Window is not initalized, set it in App::createWindow");
+			Log::error("Window is not initalized, set it in App::createWindow");
 			return;
 		}
 		m_timer = new utils::Timer();

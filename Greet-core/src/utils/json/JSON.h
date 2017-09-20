@@ -1,7 +1,7 @@
 #pragma once
 
 #include <internal/greet_types.h>
-#include <logging\logger.h>
+#include <logging\log.h>
 
 namespace greet { namespace utils {
 
@@ -37,7 +37,7 @@ namespace greet { namespace utils {
 			}
 			else
 			{
-				LOG_ERROR("JSON", "Maximum output indention reached.");
+				Log::error("Maximum output indention reached.");
 			}
 		}
 

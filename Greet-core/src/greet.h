@@ -24,8 +24,10 @@
 
 #include <math\maths.h>
 
-#include <logging\loggable.h>
+#include <logging\loglevel.h>
+#include <logging\logstream.h>
 #include <logging\logger.h>
+#include <logging\log.h>
 
 #include <drivers\driverlistener.h>
 #include <drivers\driveradapter.h>

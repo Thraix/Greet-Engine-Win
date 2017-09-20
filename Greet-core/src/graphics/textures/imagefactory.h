@@ -1,5 +1,5 @@
 #pragma once
-#include <logging/logger.h>
+#include <logging/log.h>
 #include <FreeImage.h>
 #include <internal/greet_types.h>
 #include <utils/utils.h>

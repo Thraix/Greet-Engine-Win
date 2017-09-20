@@ -5,10 +5,11 @@
 #endif
 
 #include <math.h>
+#include <iostream>
 
 namespace greet{ namespace math {
 	
-	struct vec4// : public logging::Loggable
+	struct vec4
 	{
 		float x, y, z, w;
 		vec4();
@@ -34,8 +35,9 @@ namespace greet{ namespace math {
 
 		bool operator!=(const vec4 &second);
 		bool operator==(const vec4 &second);
+
+		friend std::ostream& operator<<(std::ostream& stream, const vec4& vec);
 		
-		//virtual std::string toString() const { return "vec2("+utils::toString(x)+","+utils::toString(y)+","+utils::toString(z)+","+utils::toString(w)+")";}
 	};
 
 }}

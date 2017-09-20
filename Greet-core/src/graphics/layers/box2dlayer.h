@@ -4,7 +4,7 @@
 #include <graphics/layers/layer.h>
 #include <entity/entity.h>
 #include <graphics/renderable2d.h>
-#include <logging/logger.h>
+#include <logging/log.h>
 #include <graphics/renderers/batchrenderer.h>
 
 namespace greet { namespace graphics {

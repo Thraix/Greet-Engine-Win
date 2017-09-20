@@ -46,7 +46,7 @@ namespace greet { namespace model {
 			else if (bytes != NULL)
 				delete[] bytes;
 			else
-				LOG_ERROR("ATTRIBUTEDATA", "Could not delete data, unknown type.");
+				Log::error("Could not delete data, unknown type.");
 		}
 	};
 

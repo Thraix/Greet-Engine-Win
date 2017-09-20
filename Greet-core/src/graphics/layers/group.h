@@ -23,12 +23,12 @@ namespace greet { namespace graphics{
 		void setEnable(bool enable) { Group::enable = enable;}
 		void setTransformationMatrix(math::mat3 transformationMatrix) {m_transformationMatrix = transformationMatrix;}
 
-		void setColor(uint color) override { LOG_WARNING("THIS DOES NOTHING",__PRETTY_FUNCTION__); }
-		inline uint getColor() const override { LOG_WARNING("THIS DOES NOTHING",__PRETTY_FUNCTION__);return 0xffffffff;}
-		void setPosition(const math::vec2& position) override { LOG_WARNING("THIS DOES NOTHING",__PRETTY_FUNCTION__); }
-		inline const math::vec2& getPosition() const override { LOG_WARNING("THIS DOES NOTHING",__PRETTY_FUNCTION__);return math::vec2(0,0);}
-		void setSize(const math::vec2& size) override { LOG_WARNING("THIS DOES NOTHING",__PRETTY_FUNCTION__); }
-		inline const math::vec2& getSize() const override { LOG_WARNING("THIS DOES NOTHING",__PRETTY_FUNCTION__);return math::vec2(1,1);}
+		void setColor(uint color) override { Log::warning("THIS DOES NOTHING",__PRETTY_FUNCTION__); }
+		inline uint getColor() const override { Log::warning("THIS DOES NOTHING",__PRETTY_FUNCTION__);return 0xffffffff;}
+		void setPosition(const math::vec2& position) override { Log::warning("THIS DOES NOTHING",__PRETTY_FUNCTION__); }
+		inline const math::vec2& getPosition() const override { Log::warning("THIS DOES NOTHING",__PRETTY_FUNCTION__);return math::vec2(0,0);}
+		void setSize(const math::vec2& size) override { Log::warning("THIS DOES NOTHING",__PRETTY_FUNCTION__); }
+		inline const math::vec2& getSize() const override { Log::warning("THIS DOES NOTHING",__PRETTY_FUNCTION__);return math::vec2(1,1);}
 	};
 
 }}

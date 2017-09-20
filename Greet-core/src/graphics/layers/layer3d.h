@@ -3,7 +3,7 @@
 #include <graphics/shaders/shader.h>
 #include <graphics/renderable.h>
 #include <graphics/renderers/renderer3d.h>
-#include <logging/logger.h>
+#include <logging/log.h>
 
 namespace greet { namespace graphics{
 	class Layer3D

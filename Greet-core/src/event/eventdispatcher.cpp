@@ -54,7 +54,7 @@ namespace greet { namespace event {
 				}
 			}
 		}
-		LOG_WARNING("EVENTDISPATCHER", "The given listener is not in the dispatcher");
+		Log::warning("Could not remove listener, doesn't exist.");
 	}
 
 	void EventDispatcher::removeKeyListener(KeyListener& listener)
@@ -71,7 +71,7 @@ namespace greet { namespace event {
 				}
 			}
 		}
-		LOG_WARNING("EVENTDISPATCHER", "The given listener is not in the dispatcher");
+		Log::warning("Could not remove listener, doesn't exist.");
 	}
 
 	void EventDispatcher::onMousePressed(const MousePressedEvent& e)

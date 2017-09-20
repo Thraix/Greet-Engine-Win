@@ -181,11 +181,11 @@ public:
 		rotation = new KeyboardControl(GLFW_KEY_DOWN,GLFW_KEY_UP,GLFW_KEY_RIGHT,GLFW_KEY_LEFT,2);
 		//Tree t(renderer3d,0,0,0);
 		uint pos = 0;
-//		LOG_INFO(JSONLoader::isNumber("0.1234s",pos));
+//		Log::info(JSONLoader::isNumber("0.1234s",pos));
 		RenderEngine::add_layer2d(uilayer, "uilayer");
 		RenderEngine::add_layer2d(guilayer, "guilayer");
 		RenderEngine::add_layer3d(new Layer3D(renderer3d), "3dWorld");
-		LOG_INFO(sizeof(math::vec3));
+		Log::info(sizeof(math::vec3));
 	}
 
 	void recalcGrid(MeshData* data, uint gridWidth, uint gridLength)
@@ -360,7 +360,7 @@ public:
 
 	bool onTyped(const KeyTypedEvent& e) override
 	{
-		LOG_INFO((unsigned char)e.getCharCode());
+		Log::info((unsigned char)e.getCharCode());
 		fps->text = (char)e.getCharCode();
 		return false;
 	}
@@ -407,13 +407,13 @@ int main()
 	/*uint pos = 0;
 	uint lastPos = pos;
 	JSONObject obj = JSONLoader::loadJSON("test.txt");
-	LOG_INFO("object1",obj.hasKey("object1") ? "true" : "false");
-	LOG_INFO("object1.string1", obj.getObject("object1").getValue("string1"));
-	LOG_INFO("object1.float", obj.getObject("object1").getValueAsFloat("float"));
-	LOG_INFO("object1.null", obj.getObject("object1").isNull("null") ? "true" : "false");
-	LOG_INFO("object1.true", obj.getObject("object1").getValueAsBool("true") ? "true" : "false");
-	LOG_INFO("object1.false", obj.getObject("object1").getValueAsBool("false") ? "true" : "false");
-	LOG_INFO("string2", obj.getValueAsFloat("string2"));
+	Log::info("object1",obj.hasKey("object1") ? "true" : "false");
+	Log::info("object1.string1", obj.getObject("object1").getValue("string1"));
+	Log::info("object1.float", obj.getObject("object1").getValueAsFloat("float"));
+	Log::info("object1.null", obj.getObject("object1").isNull("null") ? "true" : "false");
+	Log::info("object1.true", obj.getObject("object1").getValueAsBool("true") ? "true" : "false");
+	Log::info("object1.false", obj.getObject("object1").getValueAsBool("false") ? "true" : "false");
+	Log::info("string2", obj.getValueAsFloat("string2"));
 	std::ofstream file("save.txt");
 	file << obj;
 	file.close();

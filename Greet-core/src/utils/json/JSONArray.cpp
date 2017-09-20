@@ -31,7 +31,7 @@ namespace greet { namespace utils {
 		size_t size = m_objects.size();
 		if (i >= size)
 		{
-			LOG_ERROR("JSONARRAY","Index is out of bounds:",i,">=",size);
+			Log::error("Index is out of bounds: ",i," >= ",size);
 			if (size != 0)
 			{
 				return getObject(0);

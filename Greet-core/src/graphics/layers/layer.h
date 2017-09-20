@@ -3,7 +3,7 @@
 #include <graphics/shaders/shader.h>
 #include <graphics/renderable.h>
 #include <graphics/renderers/renderer2d.h>
-#include <logging/logger.h>
+#include <logging/log.h>
 
 namespace greet { namespace graphics{
 

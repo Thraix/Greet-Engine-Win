@@ -77,6 +77,10 @@
     <ClCompile Include="src\graphics\renderengine.cpp" />
     <ClCompile Include="src\graphics\models\tpcamera.cpp" />
     <ClCompile Include="src\utils\json\JSON.cpp" />
+    <ClCompile Include="src\logging\Log.cpp" />
+    <ClCompile Include="src\logging\Logger.cpp" />
+    <ClCompile Include="src\logging\LogStream.cpp" />
+    <ClCompile Include="src\logging\LogLevel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\font.h" />
@@ -144,7 +148,6 @@
     <ClInclude Include="src\listeners\windowfocus.h" />
     <ClInclude Include="src\listeners\windowlistener.h" />
     <ClInclude Include="src\listeners\windowresize.h" />
-    <ClInclude Include="src\logging\loggable.h" />
     <ClInclude Include="src\logging\logger.h" />
     <ClInclude Include="src\utils\fileutils.h" />
     <ClInclude Include="src\utils\imageutils.h" />
@@ -216,6 +219,9 @@
     <ClInclude Include="src\graphics\models\tpcamera.h" />
     <ClInclude Include="src\graphics\models\fpcamera.h" />
     <ClInclude Include="src\utils\json\JSON.h" />
+    <ClInclude Include="src\logging\Log.h" />
+    <ClInclude Include="src\logging\LogLevel.h" />
+    <ClInclude Include="src\logging\LogStream.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Performance4.psess" />

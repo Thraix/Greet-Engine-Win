@@ -9,13 +9,13 @@ namespace greet { namespace audio{
 	{
 		std::vector<std::string> split = utils::split_string(filename,".");
 		if (split.size() < 2){
-			LOG_ERROR("SOUND","Invalid file name: ", filename.c_str());
+			Log::error("Invalid file name: ", filename.c_str());
 			return;
 		}
 		m_sound = gau_load_sound_file(("res/sounds/" + filename).c_str(), split.back().c_str());
 		if (m_sound == nullptr)
 		{
-			LOG_ERROR("SOUND", "Could not load file: ", filename.c_str());
+			Log::error("Could not load file: ", filename.c_str());
 			return;
 		}
 

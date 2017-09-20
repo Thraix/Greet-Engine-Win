@@ -1,6 +1,6 @@
 #pragma once
 
-#include <logging/logger.h>
+#include <logging/log.h>
 #include <internal/greetgl.h>
 #include <internal/greet_types.h>
 #include <utils/imageutils.h>

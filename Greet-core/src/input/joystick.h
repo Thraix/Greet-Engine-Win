@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <internal/greetgl.h>
-#include <logging/logger.h>
+#include <logging/log.h>
 #include <internal/greet_types.h>
 #include <math/maths.h>
 #include <utils/timer.h>

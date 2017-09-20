@@ -10,17 +10,18 @@
 #endif
 
 #include <string>
-#include <logging/logger.h>
+#include <logging/log.h>
 namespace greet { namespace utils{
 
-	inline std::string print_working_directory()
+	inline void print_working_directory()
 	{
 		char cCurrentPath[FILENAME_MAX];
 
 		if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath))){
-			LOG_ERROR("CANNOT PRINT WORKING DIRECTORY");
+			Log::error("Cannot print working directory");
+			return;
 		}
-		LOG_INFO(cCurrentPath);
+		Log::info(cCurrentPath);
 	}
 
 	inline std::string read_file(const char* filepath)
@@ -28,7 +29,7 @@ namespace greet { namespace utils{
 		FILE *file = fopen(filepath, "rt");
 		if (!file)
 		{
-			LOG_ERROR("FILEUTILS","File could not be read: ", filepath);
+			Log::error("File could not be read: ", filepath);
 			return "";
 		}
 		fseek(file, 0, SEEK_END);

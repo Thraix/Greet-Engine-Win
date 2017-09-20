@@ -7,13 +7,12 @@
 #include <iostream>
 #include <Box2D/Common/b2Math.h>
 #include <math.h>
-#include <logging/loggable.h>
+#include <logging/log.h>
 #include <utils/logutils.h>
 
 namespace greet{ namespace math{
 	
-	//struct vec2
-	class vec2
+	struct vec2
 	{
 	public:
 		float x, y;
@@ -67,7 +66,7 @@ namespace greet{ namespace math{
 		bool operator!=(const vec2 &other);
 		bool operator==(const vec2 &other);
 
-		//std::string toString() const override { return "vec2("+utils::toString(x)+","+utils::toString(y)+")";}
+		friend std::ostream& operator<<(std::ostream& stream, const vec2& vec);
 
 		inline float toRadians(float degrees)
 		{

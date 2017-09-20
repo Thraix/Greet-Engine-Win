@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <logging/logger.h>
+#include <logging/log.h>
 #include "channelmanager.h"
 #include "channel.h"
 

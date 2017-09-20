@@ -39,12 +39,12 @@ namespace greet { namespace graphics{
 		glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 		if (attachmentId < GL_COLOR_ATTACHMENT0 || attachmentId > GL_COLOR_ATTACHMENT15)
 		{
-			LOG_ERROR("FRAMEBUFFEROBJECT","Color attachment is out of range:",attachmentId);
+			Log::error("Color attachment is out of range: ",attachmentId);
 			return;
 		}
 		if (m_colorTextures.find(attachmentId) != m_colorTextures.end())
 		{
-			LOG_ERROR("FRAMEBUFFEROBJECT", "The given attachment is already in use:", attachmentId);
+			Log::error("The given attachment is already in use: ", attachmentId);
 		}
 		uint texId;
 		glGenTextures(1, &texId);
@@ -99,7 +99,7 @@ namespace greet { namespace graphics{
 		auto it = m_colorTextures.find(attachmentId);
 		if (it != m_colorTextures.end())
 			return it->second;
-		LOG_ERROR("FRAMEBUFFEROBJECT", "There is no Texture with the given attachmentId:",attachmentId);
+		Log::error("There is no Texture with the given attachmentId: ",attachmentId);
 		return m_colorTextures.begin()->second;
 	}
 }}

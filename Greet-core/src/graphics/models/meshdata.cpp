@@ -1,5 +1,5 @@
 #include "MeshData.h"
-#include <logging/logger.h>
+#include <logging/log.h>
 
 namespace greet { namespace model {
 

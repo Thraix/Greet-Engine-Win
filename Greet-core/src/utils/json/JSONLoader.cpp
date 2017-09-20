@@ -10,13 +10,13 @@ namespace greet { namespace utils {
 		JSONObject obj;
 		if (!isObject(file, currentPos,&obj))
 		{
-			LOG_ERROR("Invalid format:",currentPos,file[currentPos] == ' ');
+			Log::error("Invalid format: ",currentPos,file[currentPos] == ' ');
 			return JSONObject();
 		}
 		while (isIndent(file, currentPos));
 		if (currentPos != file.size())
 		{
-			LOG_INFO("JSONObject ended but there is more in the file.");
+			Log::info("JSONObject ended but there is more in the file.");
 			return JSONObject();
 		}
 		return obj;
@@ -94,7 +94,7 @@ namespace greet { namespace utils {
 			if (!isKeyValue(file, currentPos, &key, &value, &obj, &jsonArray, &type))
 			{
 				currentPos = lastPos;
-				LOG_INFO("Argument in JSONObject doesn't have a key or value");
+				Log::info("Argument in JSONObject doesn't have a key or value");
 				return false;
 			}
 			if (type == 0)

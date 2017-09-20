@@ -26,7 +26,7 @@ namespace greet { namespace graphics {
 
 	void GUILayer::add(Renderable* renderable)
 	{
-		LOG_ERROR("GUILAYER", "doesn't accept Renderables only GUIs.");
+		Log::error("Doesn't accept Renderables only GUIs.");
 	}
 
 	void GUILayer::add(GUI* renderable)

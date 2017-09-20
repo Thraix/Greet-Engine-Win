@@ -113,7 +113,7 @@ namespace greet { namespace utils {
 		FILE *file = fopen((filename + ".gobj").c_str(), "wb+");
 		if (!file)
 		{
-			LOG_ERROR("OBJUTILS", "Obj could not be read:", filename);
+			Log::error("Obj could not be read: ", filename);
 			return errorModel(); // TODO return cube model
 		}
 
@@ -206,7 +206,7 @@ namespace greet { namespace utils {
 		FILE *file = fopen(filename.c_str(), "rb");
 		if (!file)
 		{
-			LOG_ERROR("OBJUTILS", "Obj could not be read:", filename);
+			Log::error("Obj could not be read: ", filename);
 			ErrorHandle::setErrorCode(GREET_ERROR_GOBJ_READ);
 			return errorModel();
 		}
@@ -219,7 +219,7 @@ namespace greet { namespace utils {
 		if (length < sizeof(char) * 4 + sizeof(uint) * 4)
 		{
 			fclose(file);
-			LOG_ERROR("OBJUTILS", "File format not supported, if you are using obj you need to compile it to gobj:", filename);
+			Log::error("File format not supported, if you are using obj you need to compile it to gobj: ", filename);
 			ErrorHandle::setErrorCode(GREET_ERROR_GOBJ_FORMAT);
 			return errorModel();
 		}
@@ -227,9 +227,8 @@ namespace greet { namespace utils {
 		fread(data, sizeof(char), 4, file);
 		if (std::string(data).compare("GOBJ") != 0)
 		{
-			LOG_INFO("ERROR", std::string(data));
 			fclose(file);
-			LOG_ERROR("OBJUTILS", "File format not supported, if you are using obj you need to compile it to gobj:",filename);
+			Log::error("File format not supported, if you are using obj you need to compile it to gobj: ",filename);
 			ErrorHandle::setErrorCode(GREET_ERROR_GOBJ_FORMAT);
 			return errorModel();
 		}
@@ -245,7 +244,7 @@ namespace greet { namespace utils {
 		if (length < (vertexCount * 3 + texCoordCount * 2 + normalCount * 3) * sizeof(float) + indexCount * sizeof(uint))
 		{
 			fclose(file);
-			LOG_ERROR("OBJUTILS","GOBJ file could not be read:",filename);
+			Log::error("GOBJ file could not be read: ",filename);
 			ErrorHandle::setErrorCode(GREET_ERROR_GOBJ_READ);
 			return errorModel();
 		}

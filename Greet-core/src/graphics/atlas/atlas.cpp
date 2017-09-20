@@ -49,7 +49,7 @@ namespace greet { namespace graphics{
 		uint textures = m_width / m_textureSize;
 		if (m_textureNames.size() >= textures*textures)
 		{
-			LOG_ERROR("ATLAS","There is no more room in the Atlas. Increase size or create a new one. ", m_name.c_str());
+			Log::error("There is no more room in the Atlas. Increase size or create a new one. ", m_name.c_str());
 			return false;
 		}
 		uint width;
@@ -58,7 +58,7 @@ namespace greet { namespace graphics{
 		BYTE* bits = utils::loadImage(filePath.c_str(), &width, &height,&bpp);
 		if (width != m_textureSize || height != m_textureSize)
 		{
-			LOG_ERROR("ATLAS","The given textures size is not valid: ",name.c_str()," (",width,",",height,")");
+			Log::error("The given textures size is not valid: ",name.c_str()," (",width,",",height,")");
 			return false;
 		}
 		addTexture(bits,bpp,name);
@@ -86,7 +86,7 @@ namespace greet { namespace graphics{
 		}
 		if (x == m_texturesSide || y == m_texturesSide)
 		{
-			LOG_ERROR("ATLAS", "There is no more room in the Atlas. Increase size or create a new one. ", m_name.c_str());
+			Log::error("There is no more room in the Atlas. Increase size or create a new one. ", m_name.c_str());
 			return;
 		}
 
@@ -137,7 +137,7 @@ namespace greet { namespace graphics{
 				return new Sprite(this, spritePos, spriteSize);
 			}
 		}
-		LOG_ERROR("ATLAS", "No texture found in Atlas: ", m_name.c_str(), "(", sheetName.c_str(), ")");
+		Log::error("No texture found in Atlas: ", m_name.c_str(), "(", sheetName.c_str(), ")");
 		return new Sprite(this);
 	}
 

@@ -64,22 +64,22 @@ namespace greet{
 		return x == other.x && y == other.y && z == other.z && w == other.w;
 	}
 
-	vec4& operator+(vec4 first, const vec4 &second)
+	vec4& operator+(vec4& first, const vec4 &second)
 	{
 		return first.add(second);
 	}
 
-	vec4& operator-(vec4 first, const vec4 &second)
+	vec4& operator-(vec4& first, const vec4 &second)
 	{
 		return first.subtract(second);
 	}
 
-	vec4& operator*(vec4 first, const vec4 &second)
+	vec4& operator*(vec4& first, const vec4 &second)
 	{
 		return first.multiply(second);
 	}
 
-	vec4& operator/(vec4 first, const vec4 &second)
+	vec4& operator/(vec4& first, const vec4 &second)
 	{
 		return first.divide(second);
 	}
@@ -112,5 +112,10 @@ namespace greet{
 	bool vec4::operator!=(const vec4 &other)
 	{
 		return !compare(other);
+	}
+
+	std::ostream& operator<<(std::ostream& stream, const vec4& vec)
+	{
+		return stream << vec.x << ", " << vec.y << ", " << vec.z << ", " << vec.z;
 	}
 }}

@@ -37,7 +37,7 @@ namespace greet { namespace utils {
 	{
 		if (hasKey(key))
 		{
-			LOG_ERROR("JSONOBJECT", "Key already defined in JSONObject:", key);
+			Log::error("Key already defined in JSONObject: ", key);
 			return;
 		}
 		m_values[key] = value;
@@ -46,7 +46,7 @@ namespace greet { namespace utils {
 	{
 		if (hasKey(key))
 		{
-			LOG_ERROR("JSONOBJECT", "Key already defined in JSONObject:", key);
+			Log::error("Key already defined in JSONObject: ", key);
 			return;
 		}
 		m_arrays[key] = value;
@@ -55,7 +55,7 @@ namespace greet { namespace utils {
 	{
 		if (hasKey(key))
 		{
-			LOG_ERROR("JSONOBJECT", "Key already defined in JSONObject:", key);
+			Log::error("Key already defined in JSONObject: ", key);
 			return;
 		}
 		m_objects[key] = value;
@@ -66,7 +66,7 @@ namespace greet { namespace utils {
 		auto it = m_values.find(key);
 		if (it == m_values.end())
 		{
-			LOG_ERROR("JSONOBJECT", "Key does not exist in JSONObject:", key);
+			Log::error("Key does not exist in JSONObject: ", key);
 			return valueNull;
 		}
 		return it->second;
@@ -77,7 +77,7 @@ namespace greet { namespace utils {
 		auto it = m_values.find(key);
 		if (it == m_values.end())
 		{
-			LOG_ERROR("JSONOBJECT", "Key does not exist in JSONObject:", key);
+			Log::error("Key does not exist in JSONObject: ", key);
 			return 0.0f;
 		}
 		return atof(it->second.c_str());
@@ -88,7 +88,7 @@ namespace greet { namespace utils {
 		auto it = m_values.find(key);
 		if (it == m_values.end())
 		{
-			LOG_ERROR("JSONOBJECT", "Key does not exist in JSONObject:", key);
+			Log::error("Key does not exist in JSONObject: ", key);
 			return 0.0f;
 		}
 		return it->second == "true";
@@ -99,7 +99,7 @@ namespace greet { namespace utils {
 		auto it = m_values.find(key);
 		if (it == m_values.end())
 		{
-			LOG_ERROR("JSONOBJECT", "Key does not exist in JSONObject:", key);
+			Log::error("Key does not exist in JSONObject: ", key);
 			return 0.0f;
 		}
 		return it->second == "null";
@@ -110,7 +110,7 @@ namespace greet { namespace utils {
 		auto it = m_arrays.find(key);
 		if (it == m_arrays.end())
 		{
-			LOG_ERROR("JSONOBJECT", "Key does not exist in JSONObject:", key);
+			Log::error("Key does not exist in JSONObject: ", key);
 			return arrayNull;
 		}
 		return it->second;
@@ -122,7 +122,7 @@ namespace greet { namespace utils {
 		auto it = m_objects.find(key);
 		if (it == m_objects.end())
 		{
-			LOG_ERROR("JSONOBJECT", "Key does not exist in JSONObject:", key);
+			Log::error("Key does not exist in JSONObject: ", key);
 			return objectNull;
 		}
 		return it->second;

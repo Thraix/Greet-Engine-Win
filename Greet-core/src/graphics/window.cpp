@@ -86,8 +86,8 @@ namespace greet { namespace graphics {
 		TextureManager::add(new Texture2D("frame.png","frame"));
 		utils::UUID::init();
 
-		LOG_INFO("WINDOW", "OpenGL Version: ", glGetString(GL_VERSION));
-		LOG_INFO("WINDOW", "GLFW Version:   ", glfwGetVersionString());
+		Log::info("OpenGL Version: ", glGetString(GL_VERSION));
+		Log::info("GLFW Version: ", glfwGetVersionString());
 		checkJoysticks();
 		return true;
 	}

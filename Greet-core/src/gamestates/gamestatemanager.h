@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <gamestates/gamestate.h>
-#include <logging/logger.h>
+#include <logging/log.h>
 #include <internal/greet_types.h>
 
 namespace greet { namespace gamestate {

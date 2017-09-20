@@ -6,7 +6,7 @@
 #include <graphics/renderable2d.h>
 #include <graphics/renderablepoly.h>
 #include <graphics/buffers/batchindexbuffer.h>
-#include <logging/logger.h>
+#include <logging/log.h>
 
 #define RENDERER_MAX_TEXTURES	32
 #define RENDERER_MAX_SPRITES	360000

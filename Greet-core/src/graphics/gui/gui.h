@@ -45,8 +45,8 @@ namespace greet{ namespace graphics {
 			virtual void submit(Renderer2D* renderer) const override;
 			virtual void render(Renderer2D* renderer) const;
 
-			virtual void onMouseEnter() { /*LOG_INFO("mouse entered"); */};
-			virtual void onMouseExit() { /*LOG_INFO("mouse exited");*/ };
+			virtual void onMouseEnter() { /*Log::info("mouse entered"); */};
+			virtual void onMouseExit() { /*Log::info("mouse exited");*/ };
 			virtual bool onPressed(event::KeyPressedEvent& event);
 			virtual bool onReleased(event::KeyReleasedEvent& event);
 			virtual bool onPressed(const event::MousePressedEvent& event, math::vec2 relativeMousePos);

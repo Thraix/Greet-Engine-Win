@@ -1,6 +1,6 @@
 #pragma once
 
-#include <logging/logger.h>
+#include <logging/log.h>
 #include <internal/greetgl.h>
 #include <math/maths.h>
 #include <utils/fileutils.h>

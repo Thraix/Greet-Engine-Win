@@ -1,6 +1,7 @@
 #pragma once
 
-#include <logging/logger.h>
+#include <utils/logutils.h>
+#include <logging/log.h>
 #include <internal/greetgl.h>
 #include <iostream>
 #include <internal/greet_types.h>
@@ -23,7 +24,7 @@ namespace greet {namespace utils{
 				s += utils::toString((uint)pixel[FI_RGBA_GREEN]) + ",";
 				s += utils::toString((uint)pixel[FI_RGBA_BLUE]) + ")";
 				pixel += bpp;
-				LOG_INFO(s);
+				Log::info(s);
 			}
 			bits += bpp*width;
 		}
@@ -64,7 +65,7 @@ namespace greet {namespace utils{
 
 		if (fif == FIF_UNKNOWN)
 		{
-			LOG_ERROR("IMAGEUTILS","FreeImage file format is not supported or file not exist:", filepath);
+			Log::error("FreeImage file format is not supported or file not exist: ", filepath);
 			ErrorHandle::setErrorCode(GREET_ERROR_IMAGE_FORMAT);
 			return graphics::ImageFactory::getBadFormatImage(width,height,bpp);
 		}
@@ -73,7 +74,7 @@ namespace greet {namespace utils{
 			dib = FreeImage_Load(fif, filepath);
 		if (!dib)
 		{
-			LOG_ERROR("IMAGEUTILS", "FreeImage file Cannot be read:", filepath);
+			Log::error("FreeImage file Cannot be read: ", filepath);
 			ErrorHandle::setErrorCode(GREET_ERROR_IMAGE_READ);
 			return graphics::ImageFactory::getCantReadImage(width,height,bpp);
 		}
@@ -86,7 +87,7 @@ namespace greet {namespace utils{
 		*bpp = FreeImage_GetBPP(dib);
 		if (*bpp != 24 && *bpp != 32)
 		{
-			LOG_ERROR("IMAGEUTILS", "Bits per pixel is not valid (24 or 32):", filepath);
+			Log::error("Bits per pixel is not valid (24 or 32): ", filepath);
 			ErrorHandle::setErrorCode(GREET_ERROR_IMAGE_BPP);
 			delete[] bits;
 			return graphics::ImageFactory::getBadBPPImage(width,height,bpp);
@@ -107,7 +108,7 @@ namespace greet {namespace utils{
 	{
 		if (cx >= width || cy >= height || cx + cwidth > width || cy + cheight > height)
 		{
-			LOG_ERROR("IMAGEUTILS", "Invalid bounds when cropping image. ", cx, cy, cwidth, cheight);
+			Log::error("Invalid bounds when cropping image. ", cx, ", ", cy, ", ", cwidth, ", ", cheight);
 			ErrorHandle::setErrorCode(GREET_ERROR_IMAGE_CROP);
 			return graphics::ImageFactory::getCropErrorImage(&width,&height,&bpp);
 		}

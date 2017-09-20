@@ -2,7 +2,7 @@
 #define _USE_MATH_DEFINES
 #include <string>
 #include <cmath>
-#include <logging/logger.h>
+#include <logging/log.h>
 
 namespace greet { namespace utils {
 	

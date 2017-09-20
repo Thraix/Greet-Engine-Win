@@ -2,7 +2,7 @@
 
 #include "driver.h"
 
-#include <logging/logger.h>
+#include <logging/log.h>
 
 namespace greet { namespace drivers {
 	Driver::Driver(float time, DriverListener* listener) 

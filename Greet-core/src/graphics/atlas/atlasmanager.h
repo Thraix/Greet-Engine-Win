@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <graphics/atlas/atlas.h>
-#include <logging/logger.h>
+#include <logging/log.h>
 #include <internal/greet_types.h>
 #include <utils/errorhandler.h>
 

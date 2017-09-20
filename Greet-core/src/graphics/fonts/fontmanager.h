@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <logging/logger.h>
+#include <logging/log.h>
 #include <internal/greet_types.h>
 #include <utils/errorhandler.h>
 #include <graphics\fonts\font.h>

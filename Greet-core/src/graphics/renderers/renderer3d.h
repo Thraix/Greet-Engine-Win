@@ -4,7 +4,7 @@
 #include <internal/greetgl.h>
 #include <math/maths.h>
 #include <graphics/fonts/font.h>
-#include <logging/logger.h>
+#include <logging/log.h>
 #include <graphics/renderers/renderer.h>
 #include <graphics\models\entitymodel.h>
 #include <graphics\models\camera.h>

@@ -62,7 +62,7 @@ namespace greet { namespace model {
 		math::clamp(&m_height, m_heightMin, m_heightMax);
 		if (m_height != height)
 		{
-			LOG_WARNING("TPCamera", "height outside of clamp, clamping.");
+			Log::warning("Height outside of clamp, clamping.");
 		}
 		calculateInformation();
 	}
@@ -79,7 +79,7 @@ namespace greet { namespace model {
 		math::clamp(&m_distance, m_distanceMin, m_distanceMax);
 		if (m_distance != distance)
 		{
-			LOG_WARNING("TPCamera", "distance outside of clamp, clamping.");
+			Log::warning("Distance outside of clamp, clamping.");
 		}
 	}
 
@@ -87,19 +87,19 @@ namespace greet { namespace model {
 	{
 		if (min > max)
 		{
-			LOG_ERROR("TPCamera", "Distance clamp: min greater than max.");
+			Log::error("Distance clamp: min greater than max.");
 			return;
 		}
 		m_distanceMin = min < 0 ? 0 : min;
 		m_distanceMax = max < 0 ? 0 : max;
 		if (m_distance < m_distanceMin)
 		{
-			LOG_INFO("TPCamera", "Distance outside of clamp, reclamping.");
+			Log::info("Distance outside of clamp, reclamping.");
 			m_distance = m_distanceMin;
 		}
 		else if (m_distance > m_distanceMax)
 		{
-			LOG_INFO("TPCamera", "Distance outside of clamp, reclamping.");
+			Log::info("Distance outside of clamp, reclamping.");
 			m_distance = m_distanceMax;
 		}
 	}
@@ -108,7 +108,7 @@ namespace greet { namespace model {
 	{
 		if (min > max)
 		{
-			LOG_ERROR("TPCamera", "Height clamp: min greater than max.");
+			Log::error("Height clamp: min greater than max.");
 			return;
 		}
 		math::clamp(&min, -1, 1);
@@ -117,12 +117,12 @@ namespace greet { namespace model {
 		m_heightMax = max;
 		if (m_height < m_heightMin)
 		{
-			LOG_INFO("TPCamera", "Height outside of clamp, reclamping.");
+			Log::info("Height outside of clamp, reclamping.");
 			m_height = m_heightMin;
 		}
 		else if (m_height > m_heightMax)
 		{
-			LOG_INFO("TPCamera", "Height outside of clamp, reclamping.");
+			Log::info("Height outside of clamp, reclamping.");
 			m_height = m_heightMax;
 		}
 	}
@@ -150,7 +150,7 @@ namespace greet { namespace model {
 			m_mouse1 = true;
 			//math::mat4 inv = ~m_viewMatrix;
 			//math::vec3 worldCoord = inv * math::vec3(e.getX(), e.getY(), 1.0f);
-			//LOG_INFO("TPCamera", worldCoord.x, worldCoord.y);
+			//Log::info(worldCoord.x," ", worldCoord.y);
 		}
 		if (e.getButton() == GLFW_MOUSE_BUTTON_3)
 		{

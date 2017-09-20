@@ -5,11 +5,12 @@
 #endif
 
 #include <math.h>
+#include <iostream>
 
 namespace greet{
 	namespace math{
 	
-	struct vec3// : public logging::Loggable
+	struct vec3
 	{
 		float x, y, z;
 		vec3() = default;
@@ -55,8 +56,8 @@ namespace greet{
 
 		bool operator!=(const vec3 &second);
 		bool operator==(const vec3 &second);
-		
-		//virtual std::string toString() const { return "vec3("+utils::toString(x)+","+utils::toString(y)+","+utils::toString(z)+")";}
+
+		friend std::ostream& operator<<(std::ostream& stream, const vec3& vec);
 	};
 
 }}

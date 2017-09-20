@@ -10,7 +10,7 @@ namespace greet{ namespace graphics {
 			if (atlas->getName() == m_atlas[i]->getName())
 			{
 				utils::ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_ADD);
-				LOG_ERROR("ATLASMANAGER", "Given atlas name already exists:", atlas->getName().c_str());
+				Log::error("Given atlas name already exists: ", atlas->getName().c_str());
 				return;
 			}
 		}
@@ -28,7 +28,7 @@ namespace greet{ namespace graphics {
 			}
 		}
 		utils::ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_GET);
-		LOG_ERROR("ATLASMANAGER", "Could not find the given atlas: ", atlasName.c_str());
+		Log::error("Could not find the given atlas: ", atlasName.c_str());
 		return m_atlas[0];
 	}
 

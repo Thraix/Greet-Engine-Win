@@ -5,7 +5,7 @@
 #include <graphics/textures/texture.h>
 #include <string>
 #include <math/maths.h>
-#include <logging/logger.h>
+#include <logging/log.h>
 #include <graphics/fonts/fontcontainer.h>
 
 namespace greet{ namespace graphics{

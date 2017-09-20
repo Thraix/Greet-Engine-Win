@@ -60,17 +60,17 @@ namespace greet {
 			using namespace utils;
 			if (shaderType == GL_FRAGMENT_SHADER)
 			{
-				LOG_ERROR("SHADER", "Failed to compile fragment Shader!\n", &error[0]);
+				Log::error("Failed to compile fragment Shader!\n", &error[0]);
 				ErrorHandle::setErrorCode(GREET_ERROR_SHADER_FRAGMENT);
 			}
 			else if (shaderType == GL_VERTEX_SHADER)
 			{
-				LOG_ERROR("SHADER", "Failed to compile vertex Shader!\n", &error[0]);
+				Log::error("Failed to compile vertex Shader!\n", &error[0]);
 				ErrorHandle::setErrorCode(GREET_ERROR_SHADER_VERTEX);
 			}
 			else if (shaderType == GL_GEOMETRY_SHADER)
 			{
-				LOG_ERROR("SHADER", "Failed to compile geometry Shader!\n", &error[0]);
+				Log::error("Failed to compile geometry Shader!\n", &error[0]);
 				ErrorHandle::setErrorCode(GREET_ERROR_SHADER_GEOMETRY);
 			}
 			glDeleteShader(shader);

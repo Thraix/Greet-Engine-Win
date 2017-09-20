@@ -11,7 +11,7 @@ namespace greet{ namespace audio {
 				if (channel->getName() == m_channels[i]->getName())
 				{
 					utils::ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_ADD);
-					LOG_ERROR("ATLASMANAGER", "Given atlas name already exists:", channel->getName().c_str());
+					Log::error("Given channel name already exists: ", channel->getName().c_str());
 					return;
 				}
 			}
@@ -26,7 +26,7 @@ namespace greet{ namespace audio {
 				if (channelname.compare(m_channels[i]->getName().c_str()) == 0)
 					return m_channels[i];
 			utils::ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_GET);
-			LOG_ERROR("CHANNELMANAGER", "Could not find the given channel: ", channelname.c_str());
+			Log::error("Could not find the given channel: ", channelname.c_str());
 			return m_channels[0];
 		}
 

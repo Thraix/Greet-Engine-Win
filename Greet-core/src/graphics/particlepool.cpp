@@ -57,7 +57,7 @@ namespace greet { namespace graphics{
 			m_usedParticles++;
 			return true;
 		}
-		LOG_WARNING("PARTICLEPOOL","Could not find an unused particle");
+		Log::warning("Could not find an unused particle");
 		return false;
 
 		/*Particle* particle = m_particles.back();

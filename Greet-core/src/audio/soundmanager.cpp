@@ -22,7 +22,7 @@ namespace greet{ namespace audio {
 			if (sound->getName() == m_sounds[i]->getName())
 			{
 				utils::ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_ADD);
-				LOG_ERROR("SOUNDMANAGER", "Given sound name already exists:", sound->getName().c_str());
+				Log::error("Given sound name already exists: ", sound->getName().c_str());
 				return;
 			}
 		}
@@ -37,7 +37,7 @@ namespace greet{ namespace audio {
 			if (soundname.compare(m_sounds[i]->getName().c_str()) == 0)
 				return m_sounds[i];
 		utils::ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_GET);
-		LOG_ERROR("SOUNDMANAGER","Could not find the given sound: ", soundname.c_str());
+		Log::error("Could not find the given sound: ", soundname.c_str());
 		return m_sounds[0];
 	}
 

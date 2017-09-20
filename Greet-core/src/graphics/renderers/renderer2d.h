@@ -3,7 +3,7 @@
 #include <vector>
 #include <math/maths.h>
 #include <graphics/fonts/font.h>
-#include <logging/logger.h>
+#include <logging/log.h>
 #include <graphics/renderers/renderer.h>
 #include <graphics/sprite.h>
 

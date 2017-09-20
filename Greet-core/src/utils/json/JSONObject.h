@@ -3,7 +3,7 @@
 #include <utils/json/JSON.h>
 #include <utils/json/JSONArray.h>
 #include <internal\greet_types.h>
-#include <logging/logger.h>
+#include <logging/log.h>
 #include <map>
 #include <vector>
 #include <utils/stringutils.h>

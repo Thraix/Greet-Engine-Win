@@ -1,6 +1,6 @@
 #pragma once
 
-#include <logging/logger.h>
+#include <logging/log.h>
 #include <graphics/fonts/fontmanager.h>
 #include <graphics/textures/texturemanager.h>
 #include <graphics/textures/texture2d.h>
