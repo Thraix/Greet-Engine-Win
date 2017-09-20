@@ -2,7 +2,6 @@
 
 in vec4 vert_color;
 in vec2 vert_texCoord;
-
 in vec3 surfaceNormal;
 in vec3 toLightVector;
 in vec3 toCameraVector;

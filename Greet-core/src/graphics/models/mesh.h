@@ -23,9 +23,9 @@ namespace greet { namespace model {
 		bool m_clockwise = false;
 
 	public:
-		Mesh(const float* vertices, uint vertexCount, const uint* indices, uint indexCount);
+		Mesh(const math::vec3* vertices, uint vertexCount, const uint* indices, uint indexCount);
 		Mesh(MeshData* data);
-		void init(const float* vertices, uint vertexCount, const uint* indices, uint indexCount);
+		void init(const math::vec3* vertices, uint vertexCount, const uint* indices, uint indexCount);
 		virtual ~Mesh();
 		inline uint getVAO()  const { return m_vaoId; };
 
@@ -39,7 +39,9 @@ namespace greet { namespace model {
 
 		inline void setEnableCulling(bool culling) { m_culling = culling; }
 		inline bool isEnableCulling() const { return m_culling; }
-		void addAttribute(uint location, uint attributeSize, const float* data);
+		void addAttribute(uint location, const math::vec3* data);
+		void addAttribute(uint location, const math::vec2* data);
+		//void addAttribute(uint location, uint attributeSize, const float* data);
 		void addAttribute(uint location, uint attributeSize, const uint* data);
 		void addAttribute(AttributeData* data);
 		void setDefaultAttribute4f(uint location, const math::vec4& data);

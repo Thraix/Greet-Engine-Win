@@ -1,6 +1,7 @@
 #pragma once
 
 #include <logging\logger.h>
+#include <math\maths.h>
 #include <internal/greetgl.h>
 #include <internal/greet_types.h>
 #include <vector>
@@ -32,6 +33,7 @@ namespace greet { namespace model {
 		float* floats = NULL;
 		byte* bytes = NULL;
 	public:
+		AttributeData(AttributeDefaults defaults, math::vec3* data) : location(defaults.location), vertexValueSize(defaults.vertexValueSize), memoryValueSize(defaults.memoryValueSize), glType(defaults.glType), normalized(defaults.normalized), data(data), floats((float*)data) {}
 		AttributeData(AttributeDefaults defaults, float* data) : location(defaults.location),vertexValueSize(defaults.vertexValueSize), memoryValueSize(defaults.memoryValueSize), glType(defaults.glType), normalized(defaults.normalized), data(data), floats(data) {}
 		AttributeData(AttributeDefaults defaults, uint* data) : location(defaults.location),vertexValueSize(defaults.vertexValueSize), memoryValueSize(defaults.memoryValueSize), glType(defaults.glType), normalized(defaults.normalized), data(data), uints(data){}
 		AttributeData(AttributeDefaults defaults, byte* data) : location(defaults.location),vertexValueSize(defaults.vertexValueSize), memoryValueSize(defaults.memoryValueSize), glType(defaults.glType), normalized(defaults.normalized), data(data), bytes(data){}
@@ -50,16 +52,23 @@ namespace greet { namespace model {
 
 	class MeshData
 	{
-	public:
+		friend class Mesh;
+	private:
 		std::vector<AttributeData*> m_data;
-		const float* m_vertices;
-		const uint* m_indices;
-		const uint m_vertexCount;
-		const uint m_indexCount;
+		math::vec3* m_vertices;
+		uint* m_indices;
+		uint m_vertexCount;
+		uint m_indexCount;
 	public:
-		MeshData(float* vertices, uint vertexCount, uint* indices, uint indexCount);
+		MeshData(math::vec3* vertices, uint vertexCount, uint* indices, uint indexCount);
 		virtual ~MeshData();
 		void addAttribute(AttributeData* data);
+		AttributeData* getAttribute(AttributeDefaults defaults) const;
+		
+		math::vec3* getVertices() const { return m_vertices; }
+		uint* getIndices() const { return m_indices; }
+		uint getVertexCount() const { return m_vertexCount; }
+		uint getIndexCount() const { return m_indexCount; }
 	};
 }}
 

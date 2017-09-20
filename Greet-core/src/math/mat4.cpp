@@ -37,7 +37,7 @@ namespace greet {
 
 		mat4::mat4(float* elem)
 		{
-			memcpy(elements,elem,FLOATS * sizeof(float));
+			memcpy(elements, elem, FLOATS * sizeof(float));
 		}
 
 		mat4 mat4::identity()
@@ -61,7 +61,7 @@ namespace greet {
 		mat4 mat4::projectionMatrix(float aspect, float fov, float near, float far)
 		{
 			mat4 result(1.0f);
-			float tan2 = 1.0f/tan(toRadians(fov * 0.5f));
+			float tan2 = 1.0f / tan(toRadians(fov * 0.5f));
 			result.elements[_0_0] = tan2 / aspect;
 			result.elements[_1_1] = tan2;
 			result.elements[_2_2] = (far + near) / (near - far);
@@ -74,7 +74,7 @@ namespace greet {
 
 		mat4 mat4::transformationMatrix(math::vec3 position, math::vec3 rotation, math::vec3 scale)
 		{
-			return 
+			return
 				math::mat4::translate(position) *
 				math::mat4::rotateX(rotation.x) *
 				math::mat4::rotateY(rotation.y) *
@@ -93,7 +93,7 @@ namespace greet {
 
 		mat4 mat4::tpCamera(math::vec3 position, float distance, float height, float rotation)
 		{
-			return rotateRX(asin(height)) * mat4::rotateY(90) * mat4::translate(vec3(sqrt(1 - height*height) * distance, - height * distance, 0)) * mat4::rotateY(rotation) * mat4::translate(-position.x,-position.y,-position.z);
+			return rotateRX(asin(height)) * mat4::rotateY(90) * mat4::translate(vec3(sqrt(1 - height*height) * distance, -height * distance, 0)) * mat4::rotateY(rotation) * mat4::translate(-position.x, -position.y, -position.z);
 		}
 
 
@@ -191,7 +191,7 @@ namespace greet {
 
 		mat4 mat4::rotate(float deg, const vec3& axis)
 		{
-			return rotateR(toRadians(deg),axis);
+			return rotateR(toRadians(deg), axis);
 		}
 
 		mat4 mat4::rotateR(float rad, const vec3& axis)
@@ -421,6 +421,11 @@ namespace greet {
 		vec4 operator*(const mat4 &first, const vec4 &second)
 		{
 			return first.multiply(second);
+		}
+
+		mat4 operator~(const mat4& first)
+		{
+			return mat4::inverse(first);
 		}
 	}
 }

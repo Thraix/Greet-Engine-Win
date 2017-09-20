@@ -2,21 +2,21 @@
 
 namespace greet { namespace model {
 
-	Mesh::Mesh(const float* vertices, uint vertexCount, const uint* indices, uint indexCount)
+	Mesh::Mesh(const math::vec3* vertices, uint vertexCount, const uint* indices, uint indexCount)
 	{
 		init(vertices, vertexCount, indices, indexCount);
 	}
 
 	Mesh::Mesh(MeshData* data)
 	{
-		init(data->m_vertices,data->m_vertexCount,data->m_indices,data->m_indexCount);
+		init(data->getVertices(),data->getVertexCount(),data->getIndices(),data->getIndexCount());
 		for (uint i = 0;i < data->m_data.size();i++)
 		{
 			addAttribute(data->m_data[i]);
 		}
 	}
 
-	void Mesh::init(const float* vertices, uint vertexCount, const uint* indices, uint indexCount)
+	void Mesh::init(const math::vec3* vertices, uint vertexCount, const uint* indices, uint indexCount)
 	{
 		m_vertexCount = vertexCount;
 		m_indexCount = indexCount;
@@ -31,7 +31,7 @@ namespace greet { namespace model {
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(uint), indices, GL_STATIC_DRAW);
 
 		// Attributes 
-		addAttribute(MESH_VERTICES_LOCATION, 3, vertices); // vertices
+		addAttribute(MESH_VERTICES_LOCATION, vertices); // vertices
 		
 		// Set default color to white
 		glVertexAttrib4f(MESH_COLORS_LOCATION,1.0f,1.0f,1.0f,1.0f);
@@ -52,7 +52,7 @@ namespace greet { namespace model {
 
 	void Mesh::render() const
 	{
-		glDrawElements(GL_TRIANGLES,m_indexCount * sizeof(uint), GL_UNSIGNED_INT,0);
+		glDrawElements(GL_TRIANGLES, m_indexCount * sizeof(uint), GL_UNSIGNED_INT,0);
 	}
 
 	void Mesh::bind() const
@@ -96,13 +96,13 @@ namespace greet { namespace model {
 		}
 	}
 
-	void Mesh::addAttribute(uint location, uint attributeSize, const float* data)
+	void Mesh::addAttribute(uint location, const math::vec3* data)
 	{
 
 		if (m_vbos.find(location) != m_vbos.end())
 		{
 			utils::ErrorHandle::setErrorCode(GREET_ERROR_MESH_LOCATION);
-			LOG_ERROR("Shader location already used in mesh:",location);
+			LOG_ERROR("Shader location already used in mesh:", location);
 			return;
 		}
 		glBindVertexArray(m_vaoId);
@@ -111,8 +111,29 @@ namespace greet { namespace model {
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		m_vbos.emplace(location, vbo); // Needed to delete vbo when deleting mesh
-		glBufferData(GL_ARRAY_BUFFER, m_vertexCount * sizeof(float) * attributeSize, data, GL_STATIC_DRAW);
-		glVertexAttribPointer(location, attributeSize, GL_FLOAT, false, 0, 0);
+		glBufferData(GL_ARRAY_BUFFER, m_vertexCount * sizeof(float) * 3, data, GL_STATIC_DRAW);
+		glVertexAttribPointer(location, 3, GL_FLOAT, false, 0, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
+	}
+
+	void Mesh::addAttribute(uint location, const math::vec2* data)
+	{
+		if (m_vbos.find(location) != m_vbos.end())
+		{
+			utils::ErrorHandle::setErrorCode(GREET_ERROR_MESH_LOCATION);
+			LOG_ERROR("Shader location already used in mesh:", location);
+			return;
+		}
+		glBindVertexArray(m_vaoId);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId);
+		uint vbo;
+		glGenBuffers(1, &vbo);
+		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		m_vbos.emplace(location, vbo); // Needed to delete vbo when deleting mesh
+		glBufferData(GL_ARRAY_BUFFER, m_vertexCount * sizeof(float) * 2, data, GL_STATIC_DRAW);
+		glVertexAttribPointer(location, 2, GL_FLOAT, false, 0, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);

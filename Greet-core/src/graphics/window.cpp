@@ -77,6 +77,7 @@ namespace greet { namespace graphics {
 		glEnable(GL_DEPTH_TEST);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		ASSERT(glewInit() == GLEW_OK,"Glew failed to init.");
+		glProvokingVertex(GL_FIRST_VERTEX_CONVENTION);
 
 		// SET DEFAULT VALUES
 		FontManager::add(new FontContainer("Roboto-Black.ttf","roboto-bold"));

@@ -148,6 +148,9 @@ namespace greet { namespace model {
 		if (e.getButton() == GLFW_MOUSE_BUTTON_1)
 		{
 			m_mouse1 = true;
+			//math::mat4 inv = ~m_viewMatrix;
+			//math::vec3 worldCoord = inv * math::vec3(e.getX(), e.getY(), 1.0f);
+			//LOG_INFO("TPCamera", worldCoord.x, worldCoord.y);
 		}
 		if (e.getButton() == GLFW_MOUSE_BUTTON_3)
 		{

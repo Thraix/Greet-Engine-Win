@@ -1,12 +1,13 @@
 #version 330 core
 
-in vec4 vert_color;
 
-in vec3 surfaceNormal;
-in vec3 toLightVector;
-in vec3 toCameraVector;
-in float visibility;
-in vec3 skybox_texCoord;
+flat in vec4 vert_color;
+flat in vec3 toCameraVector;
+flat in vec3 surfaceNormal;
+flat in vec3 toLightVector;
+flat in float visibility;
+
+//in vec3 skybox_texCoord;
 
 out vec4 out_color;
 

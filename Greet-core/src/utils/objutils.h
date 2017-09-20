@@ -29,7 +29,7 @@ namespace greet { namespace utils {
 		return math::vec2(atof(dataLine[1].c_str()), atof(dataLine[2].c_str()));
 	}
 
-	inline void processVertex(const std::vector<std::string>& vertexData, std::vector<uint>& indices, std::vector<uint>& indicesArray, const std::vector<math::vec2>& texCoords, const std::vector<math::vec3>& normals, float* texCoordsArray, float* normalsArray)
+	inline void processVertex(const std::vector<std::string>& vertexData, std::vector<uint>& indices, std::vector<uint>& indicesArray, const std::vector<math::vec2>& texCoords, const std::vector<math::vec3>& normals, math::vec2* texCoordsArray, math::vec3* normalsArray)
 	{
 		uint currentVertex = atoi(vertexData[0].c_str()) - 1;
 
@@ -38,14 +38,11 @@ namespace greet { namespace utils {
 		uint texPos = atoi(vertexData[1].c_str()) - 1;
 		math::vec2 currentTex = texCoords[texPos];
 		indicesArray.push_back(texPos);
-		texCoordsArray[currentVertex * 2] = currentTex.x;
-		texCoordsArray[currentVertex * 2 + 1] = currentTex.y;
+		texCoordsArray[currentVertex] = currentTex;
 		uint normalPos = atoi(vertexData[2].c_str()) - 1;
 		math::vec3 currentNormal = normals[normalPos];
 		indicesArray.push_back(normalPos);
-		normalsArray[currentVertex * 3] = currentNormal.x;
-		normalsArray[currentVertex * 3 + 1] = currentNormal.y;
-		normalsArray[currentVertex * 3 + 2] = currentNormal.z;
+		normalsArray[currentVertex] = currentNormal;
 	}
 
 	inline model::Mesh* convertToGobj(const std::string& filename)
@@ -59,8 +56,8 @@ namespace greet { namespace utils {
 		std::vector<uint> indicesArray2;
 		bool atIndex = false;
 
-		float* texCoordsArray = NULL;
-		float* normalsArray = NULL;
+		math::vec2* texCoordsArray = NULL;
+		math::vec3* normalsArray = NULL;
 
 		std::ifstream input(filename);
 		for (std::string line; getline(input, line); )
@@ -85,8 +82,8 @@ namespace greet { namespace utils {
 			{
 				if (!atIndex)
 				{
-					texCoordsArray = new float[vertices.size() * 2];
-					normalsArray = new float[vertices.size() * 3];
+					texCoordsArray = new math::vec2[vertices.size()];
+					normalsArray = new math::vec3[vertices.size()];
 					atIndex = true;
 				}
 				std::vector<std::string> vertex1 = split_string(dataLine[1], "/");
@@ -100,14 +97,13 @@ namespace greet { namespace utils {
 		}
 
 		input.close();
-		float* verticesArray = new float[vertices.size() * 3];
+		math::vec3* verticesArray = new math::vec3[vertices.size()];
 		uint* indicesArray = new uint[indices.size()];
 		int i = 0;
 		for (math::vec3 vertex : vertices)
 		{
-			verticesArray[i++] = vertex.x;
-			verticesArray[i++] = vertex.y;
-			verticesArray[i++] = vertex.z;
+			verticesArray[i++] = vertex;
+
 		}
 		for (uint i = 0;i < indices.size();i++)
 		{
@@ -159,24 +155,36 @@ namespace greet { namespace utils {
 		fwrite("GOBJ", 1, 4, file);
 		fclose(file);
 		model::Mesh* mesh = new model::Mesh(verticesArray, vertices.size(), indicesArray, indices.size());
-		mesh->addAttribute(MESH_NORMALS_LOCATION, 3, normalsArray);
-		mesh->addAttribute(MESH_TEXCOORDS_LOCATION, 2, texCoordsArray);
+		mesh->addAttribute(MESH_NORMALS_LOCATION, normalsArray);
+		mesh->addAttribute(MESH_TEXCOORDS_LOCATION, texCoordsArray);
 		return mesh;
 	}
 
-	inline void readFloats(FILE* file, uint& filePointer, float* floats, uint amount)
+	inline void readVec2s(FILE* file, uint& filePointer, math::vec2* vec2s, uint amount)
 	{
-		float* data = new float[amount+1];
-		memset(data, 0, (amount + 1) * sizeof(float));
-;		fread(data, sizeof(float), amount, file);
+		math::vec2* data = new math::vec2[amount + 1];
+		memset(data, 0, (amount + 1) * sizeof(float) * 2);
+		fread((float*)data, sizeof(float), amount * 2, file);
 		for (uint i = 0;i < amount;i++)
 		{
-			floats[i] = data[i];
+			vec2s[i] = data[i];
 		}
 		delete[] data;
 	}
 
-	inline void readUints(FILE* file, uint& filePointer, uint* uints, uint count, float* normalsArray, float* texCoordsArray, float* normals, float* texCoords)
+	inline void readVec3s(FILE* file, uint& filePointer, math::vec3* vec3s, uint amount)
+	{
+		math::vec3* data = new math::vec3[amount + 1];
+		memset(data, 0, (amount + 1) * sizeof(float) * 3);
+		fread((float*)data, sizeof(float), amount * 3, file);
+		for (uint i = 0;i < amount;i++)
+		{
+			vec3s[i] = data[i];
+		}
+		delete[] data;
+	}
+
+	inline void readUints(FILE* file, uint& filePointer, uint* uints, uint count, math::vec3* normalsArray, math::vec2* texCoordsArray, math::vec3* normals, math::vec2* texCoords)
 	{
 		uint* data = new uint[count+1];
 		memset(data, 0, (count + 1)*sizeof(uint));
@@ -188,11 +196,8 @@ namespace greet { namespace utils {
 			uint texCoord = data[j + 1];
 			uint normal = data[j + 2];
 			uints[i] = vertex;
-			texCoordsArray[vertex * 2] = texCoords[texCoord * 2];
-			texCoordsArray[vertex * 2 + 1] = texCoords[texCoord * 2 + 1];
-			normalsArray[vertex * 3] = normals[normal * 3];
-			normalsArray[vertex * 3 + 1] = normals[normal * 3 + 1];
-			normalsArray[vertex * 3 + 2] = normals[normal * 3 + 2];
+			texCoordsArray[vertex] = texCoords[texCoord];
+			normalsArray[vertex] = normals[normal];
 		}
 		memset(data, 0xffffffff, count*sizeof(uint));
 		delete[] data;
@@ -247,22 +252,23 @@ namespace greet { namespace utils {
 			ErrorHandle::setErrorCode(GREET_ERROR_GOBJ_READ);
 			return errorModel();
 		}
-		float* vertices = new float[vertexCount * 3];
-		float* texCoords = new float[texCoordCount * 2];
-		float* normals = new float[normalCount * 3];
+		math::vec3* vertices = new math::vec3[vertexCount];
+		math::vec2* texCoords = new math::vec2[texCoordCount];
+		math::vec3* normals = new math::vec3[normalCount];
 		uint* indices = new uint[indexCount];
 
-		float* texCoordsArray = new float[vertexCount * 2];
-		float* normalsArray = new float[vertexCount * 3];
+		math::vec2* texCoordsArray = new math::vec2[vertexCount];
+		math::vec3* normalsArray = new math::vec3[vertexCount];
 
-		readFloats(file, pointer, vertices, vertexCount * 3);
-		readFloats(file, pointer, texCoords, texCoordCount * 2);
-		readFloats(file, pointer, normals, normalCount * 3);
-		readUints(file, pointer, indices, indexCount * 3, normalsArray, texCoordsArray, normals, texCoords);
+		readVec3s(file, pointer, vertices, vertexCount);
+		readVec2s(file, pointer, texCoords, texCoordCount);
+		readVec3s(file, pointer, normals, normalCount);
+		readUints(file, pointer, indices, indexCount, normalsArray, texCoordsArray, normals, texCoords);
+		ulong pos = ftell(file);
 		fclose(file);
 		model::Mesh* mesh = new model::Mesh(vertices, vertexCount, indices, indexCount);
-		mesh->addAttribute(MESH_NORMALS_LOCATION, 3, normalsArray); 
-		mesh->addAttribute(MESH_TEXCOORDS_LOCATION, 2, texCoordsArray);
+		mesh->addAttribute(MESH_NORMALS_LOCATION, normalsArray); 
+		mesh->addAttribute(MESH_TEXCOORDS_LOCATION, texCoordsArray);
 		return mesh;
 	}
 

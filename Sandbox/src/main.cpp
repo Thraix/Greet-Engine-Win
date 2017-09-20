@@ -78,14 +78,13 @@ public:
 		FontManager::add(new FontContainer("Anonymous Pro.ttf", "anonymous"));
 
 		fbo = new FrameBufferObject(960,540);
-		fbo->attachColorTexture(GL_COLOR_ATTACHMENT1);
 		camera = new TPCamera(math::vec3(0,0,0),15,0,0,15,80,0,0.8f);
 		Skybox* skybox = new Skybox((CubeMap*)TextureManager::get("skybox"));
 		renderer3d = new BatchRenderer3D(Window::getWidth(), Window::getHeight(), camera,90,0.001f,1000.0f, skybox);
 
 
 		Shader* modelShader = Shader::fromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
-		Shader* terrainShader = Shader::fromFile("res/shaders/terrain.geom", "res/shaders/terrain.vert", "res/shaders/terrain.frag");
+		Shader* terrainShader = Shader::fromFile("res/shaders/terrain.vert", "res/shaders/terrain.frag");
 		Shader* stallShader = Shader::fromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
 		blurShader = Shader::fromFile("res/shaders/default2dshader.vert","res/shaders/guassianblur.frag");
 		m_geomShaderTest = Shader::fromFile("res/shaders/2dshader.geom","res/shaders/2dshader.vert", "res/shaders/2dshader.frag");
@@ -95,8 +94,12 @@ public:
 		terrainMaterial = new Material(terrainShader, NULL);
 		terrainMaterial->setReflectivity(0.5f);
 		terrainMaterial->setShineDamper(5.0f);
+		uint gridWidth = 499;
+		uint gridLength = 499;
 		float* noise = Noise::genNoise(500,500,5,64,64,0.5f);
-		MeshData* gridMesh = model::MeshFactory::grid(0, 0, 0, 500, 500, 499, 499, noise,1);
+		MeshData* gridMesh = model::MeshFactory::grid(0, 0, 0, gridWidth+1, gridLength+1, gridWidth, gridLength, noise,1);
+		recalcGrid(gridMesh, gridWidth, gridLength);
+		
 		//gridMesh->setDefaultAttribute4f(MESH_COLORS_LOCATION, math::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 		//gridMesh->setEnableCulling(false);
 		MaterialModel* gridModelMaterial = new MaterialModel(new Mesh(gridMesh), *terrainMaterial);
@@ -113,10 +116,10 @@ public:
 		tetrahedron = new EntityModel(*tetrahedronModelMaterial, math::vec3(30, 0, 10), math::vec3(1, 1, 1), math::vec3(0, 0, 0));
 		delete tetrahedronMesh;
 
-		Mesh* stallMesh = utils::loadObj("res/objs/stall.obj.gobj");
+		Mesh* stallMesh = utils::loadObj("res/objs/cube.obj.gobj");
 		stallMaterial->setReflectivity(0.1)->setShineDamper(1);
 		MaterialModel* stallModelMaterial = new MaterialModel(stallMesh, *stallMaterial);
-		stall = new EntityModel(*stallModelMaterial, math::vec3(0.0f, 0.0f, -25), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
+		stall = new EntityModel(*stallModelMaterial, math::vec3(0.0f, 0.0f, -25), math::vec3(10.0f, 10.0f, 10.0f), math::vec3(0.0f, 0.0f, 0.0f));
 
 		Mesh* dragonMesh = utils::loadObj("res/objs/dragon.obj.gobj");
 		MaterialModel* dragonModelMaterial = new MaterialModel(dragonMesh, *modelMaterial);
@@ -181,6 +184,47 @@ public:
 		RenderEngine::add_layer2d(uilayer, "uilayer");
 		RenderEngine::add_layer2d(guilayer, "guilayer");
 		RenderEngine::add_layer3d(new Layer3D(renderer3d), "3dWorld");
+		LOG_INFO(sizeof(math::vec3));
+	}
+
+	void recalcGrid(MeshData* data, uint gridWidth, uint gridLength)
+	{
+		uint* colors = new uint[data->getVertexCount()];
+		math::vec3* vertices = data->getVertices();
+		for (uint z = 0; z <= gridLength; z++)
+		{
+			for (uint x = 0; x <= gridLength; x++)
+			{
+				float y = vertices[z + x*(gridWidth + 1)].y;
+				if (y < 0.45)
+				{
+					y = 0.45;
+					colors[z + x*(gridWidth + 1)] = 0xff000000 | ((uint)(pow(y / 0.45, 4.0f) * 255) & 0xff);
+				}
+				else if (y < 0.48)
+				{
+					colors[z + x*(gridWidth + 1)] = 0xfff2d985;
+				}
+				else if (y < 0.58)
+				{
+					colors[z + x*(gridWidth + 1)] = 0xff9DCF97;
+				}
+				else if (y > 0.65)
+				{
+					colors[z + x*(gridWidth + 1)] = 0xff747499;
+					y = (pow(y - 0.58, 0.6) + 0.58);
+				}
+				else
+				{
+					colors[z + x*(gridWidth + 1)] = 0xeff5e5ff;
+					y = (pow(y - 0.58, 0.6) + 0.58);
+				}
+
+				vertices[z + x*(gridWidth + 1)].y = y*20;
+			}
+		}
+		model::MeshFactory::calculateNormals(vertices, data->getVertexCount(), data->getIndices(), data->getIndexCount(), (math::vec3*)data->getAttribute(ATTRIBUTE_NORMAL)->floats);
+		data->addAttribute(new AttributeData(ATTRIBUTE_COLOR, colors));
 	}
 
 	float random()
@@ -261,7 +305,7 @@ public:
 	{
 		if (e.getButton() == GLFW_KEY_F5)
 		{
-			Shader* terrainShader = Shader::fromFile("res/shaders/terrain.geom", "res/shaders/terrain.vert", "res/shaders/terrain.frag");
+			Shader* terrainShader = Shader::fromFile("res/shaders/terrain.vert", "res/shaders/terrain.frag");
 			Shader* modelShader = Shader::fromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
 			modelMaterial->setShader(modelShader);
 			terrainMaterial->setShader(terrainShader);
@@ -358,7 +402,7 @@ public:
 #include <fstream>
 int main()
 {
-	uint pos = 0;
+	/*uint pos = 0;
 	uint lastPos = pos;
 	JSONObject obj = JSONLoader::loadJSON("test.txt");
 	LOG_INFO("object1",obj.hasKey("object1") ? "true" : "false");
@@ -372,6 +416,7 @@ int main()
 	file << obj;
 	file.close();
 	system("pause");
-	//Core game;
-	//game.start();
+	*/
+	Core game;
+	game.start();
 }

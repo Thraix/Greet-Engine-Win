@@ -74,6 +74,7 @@ namespace greet {
 			friend vec2 operator*(const mat4& first, const vec2 &second);
 			friend vec3 operator*(const mat4& first, const vec3 &second);
 			friend vec4 operator*(const mat4& first, const vec4 &second);
+			friend mat4 operator~(const mat4& first);
 
 		};
 	}

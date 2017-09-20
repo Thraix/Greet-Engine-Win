@@ -7,8 +7,6 @@ namespace greet { namespace utils {
 
 	class JSON
 	{
-		friend class JSONArray;
-		friend class JSONOBject;
 	private:
 		static char* m_indent;
 		static uint ostream_indent;
