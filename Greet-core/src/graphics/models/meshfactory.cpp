@@ -145,7 +145,6 @@ namespace greet { namespace model { namespace MeshFactory {
 
 	MeshData* grid(float x, float y, float z, float width, float length, uint gridWidth, uint gridLength, float* heightMap, float height)
 	{
-#if 1
 		if (gridWidth < 1 || gridLength < 1)
 			return quad(x, y, z, width, length);
 
@@ -205,41 +204,6 @@ namespace greet { namespace model { namespace MeshFactory {
 		data->addAttribute(new AttributeData(ATTRIBUTE_NORMAL, normals));
 
 		return data;
-#else
-		float tileWidth = width/(float)gridWidth;
-		float tileLength = length / (float)gridLength;
-		uint vertexCount = (gridWidth + 1) * (gridLength + 1);
-		math::vec3* vertices = new math::vec3[vertexCount];
-		x -= width / 2.0f;
-		z -= length / 2.0f;
-		for (uint iz = 0;iz <= gridLength;iz++)
-		{
-			for (uint ix = 0;ix <= gridWidth;ix++)
-			{
-				float heightM = heightMap == NULL ? 0 : heightMap[ix + iz*(gridWidth + 1)];
-				vertices[ix + iz*(gridWidth + 1)] = math::vec3(x + ix*tileWidth, y+heightM*height, z + iz*tileLength);
-			}
-		}
-		uint indexCount = 6 * gridWidth * gridLength;
-		uint* indices = new uint[indexCount];
-		uint i = 0;
-		for (uint iz = 0;iz < gridLength;iz++)
-		{
-			for (uint ix = 0;ix < gridWidth;ix++)
-			{
-				indices[i++] = ix + iz*(gridWidth + 1);
-				indices[i++] = ix + (iz+1)*(gridWidth + 1);
-				indices[i++] = ix+1 + (iz+1)*(gridWidth + 1);
-				indices[i++] = ix + iz*(gridWidth + 1);
-				indices[i++] = ix+1 + (iz+1)*(gridWidth + 1);
-				indices[i++] = ix+1 + iz*(gridWidth + 1);
-			}
-		}
-		math::vec3* normals = calculateNormals(vertices,vertexCount,indices,indexCount);
-		MeshData* meshdata = new MeshData(vertices,vertexCount,indices,indexCount);
-		meshdata->addAttribute(new AttributeData(ATTRIBUTE_NORMAL,normals));
-		return meshdata;
-#endif
 	}
 
 }}}

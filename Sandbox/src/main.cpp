@@ -2,6 +2,7 @@
 
 #include "keyboardcontrol.h"
 #include "tree.h"
+#include <random>
 
 using namespace greet;
 using namespace graphics;
@@ -116,10 +117,10 @@ public:
 		tetrahedron = new EntityModel(*tetrahedronModelMaterial, math::vec3(30, 0, 10), math::vec3(1, 1, 1), math::vec3(0, 0, 0));
 		delete tetrahedronMesh;
 
-		Mesh* stallMesh = utils::loadObj("res/objs/cube.obj.gobj");
+		Mesh* stallMesh = utils::loadObj("res/objs/stall.obj.gobj");
 		stallMaterial->setReflectivity(0.1)->setShineDamper(1);
 		MaterialModel* stallModelMaterial = new MaterialModel(stallMesh, *stallMaterial);
-		stall = new EntityModel(*stallModelMaterial, math::vec3(0.0f, 0.0f, -25), math::vec3(10.0f, 10.0f, 10.0f), math::vec3(0.0f, 0.0f, 0.0f));
+		stall = new EntityModel(*stallModelMaterial, math::vec3(0.0f, 0.0f, -25), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
 
 		Mesh* dragonMesh = utils::loadObj("res/objs/dragon.obj.gobj");
 		MaterialModel* dragonModelMaterial = new MaterialModel(dragonMesh, *modelMaterial);
@@ -198,25 +199,27 @@ public:
 				float y = vertices[z + x*(gridWidth + 1)].y;
 				if (y < 0.45)
 				{
-					y = 0.45;
-					colors[z + x*(gridWidth + 1)] = 0xff000000 | ((uint)(pow(y / 0.45, 4.0f) * 255) & 0xff);
+					uint blue = (uint)(pow(y + 0.65, 4.0f) * 255);
+					blue = blue > 255 ? 255 : blue;
+					colors[z + x*(gridWidth + 1)] = 0xff000000 | ((blue / 2) << 16) | ((uint)(blue * 0.9) << 8) | blue;
+					y = 0.45 + 0.03f*(rand() / (float)RAND_MAX - 0.5f);
 				}
 				else if (y < 0.48)
 				{
-					colors[z + x*(gridWidth + 1)] = 0xfff2d985;
+					colors[z + x*(gridWidth + 1)] = 0xffD6BF63;
 				}
 				else if (y < 0.58)
 				{
-					colors[z + x*(gridWidth + 1)] = 0xff9DCF97;
+					colors[z + x*(gridWidth + 1)] = 0xff7CD663;
 				}
-				else if (y > 0.65)
+				else if (y < 0.65)
 				{
-					colors[z + x*(gridWidth + 1)] = 0xff747499;
+					colors[z + x*(gridWidth + 1)] = 0xffB5B0A8;
 					y = (pow(y - 0.58, 0.6) + 0.58);
 				}
 				else
 				{
-					colors[z + x*(gridWidth + 1)] = 0xeff5e5ff;
+					colors[z + x*(gridWidth + 1)] = 0xeffDCF2F2;
 					y = (pow(y - 0.58, 0.6) + 0.58);
 				}
 
@@ -310,15 +313,14 @@ public:
 			modelMaterial->setShader(modelShader);
 			terrainMaterial->setShader(terrainShader);
 			Light* l = new Light(math::vec3(25, 25, 12.5), 0xffffffff);
+
 			modelShader->enable();
 			l->setToUniform(modelShader, "light");
 			modelShader->disable();
-			Light* l2 = new Light(math::vec3(0, 100, 0), 0xffffffff);
 			terrainShader->enable();
-			l2->setToUniform(terrainShader, "light");
+			l->setToUniform(terrainShader, "light");
 			terrainShader->disable();
 			delete l;
-			delete l2;
 		}
 		if (e.getButton() == GLFW_KEY_F10)
 		{

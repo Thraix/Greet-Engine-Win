@@ -28,7 +28,7 @@ void main()
 	float brightness = max(nDot,0.3);
 	vec3 diffuse = light_color * brightness;
 	out_color *= vec4(diffuse,1.0f);
-	out_color = mix(vec4(fogColor.rgb,1.0),vec4(out_color.rgb,1.0),visibility);
+	out_color = mix(vec4(fogColor.rgb,out_color.a),vec4(out_color.rgb,out_color.a),visibility);
 
 	//float luminance = (out_color.r + out_color.g + out_color.b)/3.0;
 	//out_color.rgb = floor(luminance * 4.0)/4.0 * fogColor;

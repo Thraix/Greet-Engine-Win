@@ -163,7 +163,6 @@ namespace greet { namespace utils {
 	inline void readVec2s(FILE* file, uint& filePointer, math::vec2* vec2s, uint amount)
 	{
 		math::vec2* data = new math::vec2[amount + 1];
-		memset(data, 0, (amount + 1) * sizeof(float) * 2);
 		fread((float*)data, sizeof(float), amount * 2, file);
 		for (uint i = 0;i < amount;i++)
 		{
@@ -175,7 +174,6 @@ namespace greet { namespace utils {
 	inline void readVec3s(FILE* file, uint& filePointer, math::vec3* vec3s, uint amount)
 	{
 		math::vec3* data = new math::vec3[amount + 1];
-		memset(data, 0, (amount + 1) * sizeof(float) * 3);
 		fread((float*)data, sizeof(float), amount * 3, file);
 		for (uint i = 0;i < amount;i++)
 		{
@@ -186,11 +184,10 @@ namespace greet { namespace utils {
 
 	inline void readUints(FILE* file, uint& filePointer, uint* uints, uint count, math::vec3* normalsArray, math::vec2* texCoordsArray, math::vec3* normals, math::vec2* texCoords)
 	{
-		uint* data = new uint[count+1];
-		memset(data, 0, (count + 1)*sizeof(uint));
-		fread(data, sizeof(uint), count, file);
+		uint* data = new uint[count*3+1];
+		fread(data, sizeof(uint), count * 3, file);
 		uint i = 0;
-		for (uint j = 0;j < count;j += 3,i++)
+		for (uint j = 0;j < count * 3;j += 3,i++)
 		{
 			uint vertex = data[j];
 			uint texCoord = data[j + 1];
@@ -199,7 +196,7 @@ namespace greet { namespace utils {
 			texCoordsArray[vertex] = texCoords[texCoord];
 			normalsArray[vertex] = normals[normal];
 		}
-		memset(data, 0xffffffff, count*sizeof(uint));
+		memset(data, 0xffffffff, count * 3 * sizeof(uint));
 		delete[] data;
 	}
 
@@ -226,10 +223,11 @@ namespace greet { namespace utils {
 			ErrorHandle::setErrorCode(GREET_ERROR_GOBJ_FORMAT);
 			return errorModel();
 		}
-		memset(data, 0, 5);
+		data[4] = '\0';
 		fread(data, sizeof(char), 4, file);
 		if (std::string(data).compare("GOBJ") != 0)
 		{
+			LOG_INFO("ERROR", std::string(data));
 			fclose(file);
 			LOG_ERROR("OBJUTILS", "File format not supported, if you are using obj you need to compile it to gobj:",filename);
 			ErrorHandle::setErrorCode(GREET_ERROR_GOBJ_FORMAT);
@@ -238,7 +236,6 @@ namespace greet { namespace utils {
 		delete[] data;
 
 		uint* uintData = new uint[4 + 1];
-		memset(uintData, 0, (4 + 1)*sizeof(uint));
 		fread(uintData, sizeof(uint), 4, file);
 		uint vertexCount = uintData[0];
 		uint texCoordCount = uintData[1];
