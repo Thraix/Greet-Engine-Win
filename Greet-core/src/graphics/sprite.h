@@ -1,30 +1,30 @@
 #pragma once
 
-#include <internal/greet_types.h>
+#include <internal/Greet_types.h>
 #include <math/maths.h>
 #include <graphics/textures/texture2d.h>
 
-namespace greet{ namespace graphics{
+namespace Greet{
 	class Sprite
 	{
 	protected:
 		Texture2D* m_texture;
-		math::vec2 m_texPos;
-		math::vec2 m_texSize;
+		vec2 m_texPos;
+		vec2 m_texSize;
 	public:
 		Sprite()
-			: m_texture(NULL), m_texPos(math::vec2(0, 0)), m_texSize(math::vec2(1, 1))
+			: m_texture(NULL), m_texPos(vec2(0, 0)), m_texSize(vec2(1, 1))
 		{
 
 		}
 
 		Sprite(Texture2D* texture)
-			: m_texture(texture), m_texPos(math::vec2(0, 0)), m_texSize(math::vec2(1, 1))
+			: m_texture(texture), m_texPos(vec2(0, 0)), m_texSize(vec2(1, 1))
 		{
 		
 		}
 
-		Sprite(Texture2D* texture, math::vec2 texPos, math::vec2 texSize)
+		Sprite(Texture2D* texture, vec2 texPos, vec2 texSize)
 			: m_texture(texture), m_texPos(texPos), m_texSize(texSize)
 		{
 
@@ -36,8 +36,8 @@ namespace greet{ namespace graphics{
 
 		inline uint getTextureID() const { return m_texture==NULL ? 0 : m_texture->getTexId(); }
 
-		inline Sprite* fromSpriteSheet(math::vec2 texPos, math::vec2 texSize) const { return new Sprite(m_texture,m_texPos + texPos*m_texSize, m_texSize*texSize); }
-		virtual inline const math::vec2& getTexPos() const { return m_texPos; }
-		inline const math::vec2& getTexSize() const { return m_texSize; }
+		inline Sprite* fromSpriteSheet(vec2 texPos, vec2 texSize) const { return new Sprite(m_texture,m_texPos + texPos*m_texSize, m_texSize*texSize); }
+		virtual inline const vec2& getTexPos() const { return m_texPos; }
+		inline const vec2& getTexSize() const { return m_texSize; }
 	};
-}}
+}

@@ -7,10 +7,10 @@
 class Tree
 {
 public:
-	Tree(greet::graphics::BatchRenderer3D* renderer, float x, float y, float z)
+	Tree(Greet::BatchRenderer3D* renderer, float x, float y, float z)
 	{
-		using namespace greet::graphics;
-		using namespace greet::model;
+		using namespace Greet::graphics;
+		using namespace Greet::model;
 		Shader* shader = Shader::fromFile("res/shaders/3dshader.vert","res/shaders/3dshader.frag");
 		Material* material = new Material(shader,NULL);
 		material->setReflectivity(0.0f);

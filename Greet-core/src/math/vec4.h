@@ -7,7 +7,7 @@
 #include <math.h>
 #include <iostream>
 
-namespace greet{ namespace math {
+namespace Greet{
 	
 	struct vec4
 	{
@@ -39,5 +39,4 @@ namespace greet{ namespace math {
 		friend std::ostream& operator<<(std::ostream& stream, const vec4& vec);
 		
 	};
-
-}}
+}

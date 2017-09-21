@@ -1,13 +1,13 @@
 #pragma once
 
 #include <logging/log.h>
-#include <internal/greetgl.h>
-#include <internal/greet_types.h>
+#include <internal/Greetgl.h>
+#include <internal/Greet_types.h>
 #include <utils/imageutils.h>
 #include <FreeImage.h>
-#include <internal/greet_types.h>
+#include <internal/Greet_types.h>
 
-namespace greet { namespace graphics{
+namespace Greet {
 	class Texture
 	{
 	protected:
@@ -27,4 +27,4 @@ namespace greet { namespace graphics{
 		inline void setTexId(uint texId) { m_texId = texId; }
 	};
 
-}}
+}

@@ -5,7 +5,7 @@
 #include <graphics/renderers/renderer3d.h>
 #include <logging/log.h>
 
-namespace greet { namespace graphics{
+namespace Greet {
 	class Layer3D
 	{
 	protected:
@@ -13,7 +13,7 @@ namespace greet { namespace graphics{
 	public:
 		Layer3D(Renderer3D* renderer);
 		virtual ~Layer3D();
-		void add(const model::EntityModel* renderable);
+		void add(const EntityModel* renderable);
 		virtual void render() const;
 		virtual void update(float timeElapsed);
 		virtual void viewportResize(float x, float y, float width, float height) {}
@@ -23,4 +23,4 @@ namespace greet { namespace graphics{
 	protected:
 		virtual void setUniforms() const {}
 	};
-}}
+}

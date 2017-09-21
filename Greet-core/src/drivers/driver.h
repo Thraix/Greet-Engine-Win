@@ -1,9 +1,9 @@
 #pragma once
 
 #include "driverlistener.h"
-#include <internal/greet_types.h>
+#include <internal/Greet_types.h>
 
-namespace greet { namespace drivers {
+namespace Greet {
 
 	class Driver
 	{
@@ -25,4 +25,4 @@ namespace greet { namespace drivers {
 		void onFinished();
 	};
 
-}}
+}

@@ -3,8 +3,7 @@
 #include "math_func.h"
 #include "maths.h"
 
-namespace greet{
-	namespace math{
+namespace Greet{
 
 	vec3::vec3(float x, float y, float z)
 	{
@@ -42,8 +41,8 @@ namespace greet{
 
 	vec3& vec3::rotate(const float& angle, const vec3& axis)
 	{
-		float sh = (float)sin(toRadians(angle / 2.0));
-		float ch = (float)cos(toRadians(angle / 2.0));
+		float sh = (float)sin(Math::toRadians(angle / 2.0));
+		float ch = (float)cos(Math::toRadians(angle / 2.0));
 
 		float rX = axis.x * sh;
 		float rY = axis.y * sh;
@@ -236,4 +235,4 @@ namespace greet{
 	{
 		return stream << vec.x << ", " << vec.y << ", " << vec.z;
 	}
-}}
+}

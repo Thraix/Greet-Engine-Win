@@ -1,8 +1,8 @@
-#ifndef _GREET_H
-#define _GREET_H
+#ifndef _Greet_H
+#define _Greet_H
 
-#include <internal\greet_types.h>
-#include <internal\greetgl.h>
+#include <internal\Greet_types.h>
+#include <internal\Greetgl.h>
 
 #include <Box2D\Box2D.h>
 
@@ -15,7 +15,6 @@
 #include <utils\json\JSONLoader.h>
 #include <utils\imageutils.h>
 #include <utils\errorhandler.h>
-#include <utils\logutils.h>
 #include <utils\objutils.h>
 #include <utils\noise.h>
 #include <utils\dialogbox.h>
@@ -39,8 +38,8 @@
 #include <drivers\rectdriver.h>
 #include <drivers\driverdispatcher.h>
 
-#include <audio/channel.h>
-#include <audio\channelmanager.h>
+#include <audio/audiochannel.h>
+#include <audio\audiochannelmanager.h>
 #include <audio\sound.h>
 #include <audio\soundmanager.h>
 
@@ -133,4 +132,4 @@
 #include <graphics/renderengine.h>
 #include <internal\app.h>
 
-#endif // _GREET_H
+#endif // _Greet_H

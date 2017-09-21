@@ -2,7 +2,7 @@
 
 #include <graphics/renderers/renderer2d.h>
 
-namespace greet { namespace graphics {
+namespace Greet {
 	class Renderable
 	{
 	public:
@@ -26,9 +26,9 @@ namespace greet { namespace graphics {
 
 		virtual void setColor(uint color) = 0;
 		virtual inline uint getColor() const = 0;
-		virtual void setPosition(const math::vec2& pos) = 0;
-		virtual inline const math::vec2& getPosition() const = 0;
-		virtual void setSize(const math::vec2& size) = 0;
-		virtual inline const math::vec2& getSize() const = 0;
+		virtual void setPosition(const vec2& pos) = 0;
+		virtual inline const vec2& getPosition() const = 0;
+		virtual void setSize(const vec2& size) = 0;
+		virtual inline const vec2& getSize() const = 0;
 	};
-}}
+}

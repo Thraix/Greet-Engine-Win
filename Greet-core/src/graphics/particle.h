@@ -3,30 +3,30 @@
 #include <math/vec2.h>
 #include "renderable2d.h"
 
-namespace greet{ namespace graphics{
+namespace Greet{
 	class Particle : public Renderable2D {
 		friend class ParticlePool;
 	private:
-		math::vec2 m_startPos;
+		vec2 m_startPos;
 		float m_minspeed;
 		float m_maxspeed;
 		float m_frameTime;
-		math::vec2 m_velocity;
-		math::vec2 m_acceleration;
-		math::vec2 m_pos;
-		math::vec2 m_size;
+		vec2 m_velocity;
+		vec2 m_acceleration;
+		vec2 m_pos;
+		vec2 m_size;
 	private:
 		Particle();
 		bool update(float timeElapsed);
-		void define(math::vec2 pos, math::vec2 size, math::vec2 vel, math::vec2 acc, uint color, float minspeed, float maxspeed, float frameTime, Sprite* sprite);
+		void define(vec2 pos, vec2 size, vec2 vel, vec2 acc, uint color, float minspeed, float maxspeed, float frameTime, Sprite* sprite);
 
 	public:
-		inline math::vec2 getVelocity() const { return m_velocity; }
-		inline math::vec2 getAcceleration() const { return m_acceleration; }
+		inline vec2 getVelocity() const { return m_velocity; }
+		inline vec2 getAcceleration() const { return m_acceleration; }
 		inline float getMaxSpeed() const { return m_maxspeed; }
 		inline float getMinSpeed() const { return m_minspeed; }
 		inline double getFrameTime() const { return m_frameTime; }
 		virtual ~Particle();
 	};
 
-}}
+}

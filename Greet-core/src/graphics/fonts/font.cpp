@@ -1,7 +1,7 @@
 #include "font.h"
 #include <direct.h>
 
-namespace greet{ namespace graphics{
+namespace Greet{
 
 	Font::Font(FontContainer* container, uint size)
 	: m_container(container), m_size(size)
@@ -43,4 +43,4 @@ namespace greet{ namespace graphics{
 		}
 		return width;
 	}
-}}
+}

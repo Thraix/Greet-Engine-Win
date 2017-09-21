@@ -1,5 +1,7 @@
 #include "dialogbox.h"
-namespace greet { namespace utils { namespace DialogBox {
+
+namespace Greet { namespace DialogBox {
+
 #ifdef WIN32
 
 	#include <windows.h>
@@ -119,4 +121,4 @@ namespace greet { namespace utils { namespace DialogBox {
 		return selection;
 	}
 #endif
-}}}
+}}

@@ -1,7 +1,6 @@
 #include "renderer3d.h"
 
-namespace greet{ namespace graphics{
-	using namespace model;
+namespace Greet{
 	void Renderer3D::render(const Mesh& mesh) const
 	{
 		glEnable(GL_CULL_FACE);
@@ -37,4 +36,4 @@ namespace greet{ namespace graphics{
 	{
 		m_camera->update(timeElapsed);
 	}
-}}
+}

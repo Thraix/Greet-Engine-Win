@@ -2,7 +2,7 @@
 
 #include "mat3.h"
 
-namespace greet { namespace math{
+namespace Greet {
 	class Transform
 	{
 	public:
@@ -78,4 +78,4 @@ namespace greet { namespace math{
 
 		inline const mat3& getMatrix() const { return m_matrix; }
 	};
-}}
+}

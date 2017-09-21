@@ -1,12 +1,12 @@
 #pragma once
 
-#include <internal/greet_types.h>
+#include <internal/Greet_types.h>
 #include <vector>
 
 /* *
 	Not currently supported
 */
-namespace greet { namespace utils {
+namespace Greet {
 
 	class JSONObject;
 	class JSONArray;
@@ -24,4 +24,4 @@ namespace greet { namespace utils {
 		JSONArrayObject(std::string* values, uint valueSize, JSONObject* objects, uint objectSize, JSONArray* arrays, uint arraySize);
 
 	};
-}}
+}

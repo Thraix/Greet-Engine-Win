@@ -7,7 +7,7 @@
 #include <graphics/window.h>
 #include <listeners/windowresize.h>
 
-namespace greet { namespace camera {
+namespace greet {
 
 	struct LayerIndex
 	{
@@ -44,5 +44,5 @@ namespace greet { namespace camera {
 		static Camera* instance;
 
 	};
-}}
+}
 #endif

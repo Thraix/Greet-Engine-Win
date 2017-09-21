@@ -2,11 +2,11 @@
 
 #define GAU_THREAD_POLICY_MULTI 2
 
-namespace greet{ namespace audio {
+namespace Greet{
 
 	gau_Manager* SoundManager::m_manager = nullptr;
 	ga_Mixer* SoundManager::m_mixer = nullptr;
-	std::vector<audio::Sound*> SoundManager::m_sounds;
+	std::vector<Sound*> SoundManager::m_sounds;
 
 	void SoundManager::init()
 	{
@@ -15,13 +15,13 @@ namespace greet{ namespace audio {
 		m_mixer = gau_manager_mixer(m_manager);
 	}
 
-	void SoundManager::add(audio::Sound* sound)
+	void SoundManager::add(Sound* sound)
 	{
 		for (int i = 0;i < m_sounds.size();i++)
 		{
 			if (sound->getName() == m_sounds[i]->getName())
 			{
-				utils::ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_ADD);
+				ErrorHandle::setErrorCode(Greet_ERROR_MANAGER_ADD);
 				Log::error("Given sound name already exists: ", sound->getName().c_str());
 				return;
 			}
@@ -29,14 +29,14 @@ namespace greet{ namespace audio {
 		m_sounds.push_back(sound);
 	}
 
-	audio::Sound* SoundManager::get(const std::string& soundname)
+	Sound* SoundManager::get(const std::string& soundname)
 	{
 		uint size = m_sounds.size();
 
 		for (uint i = 0; i < size; i++)
 			if (soundname.compare(m_sounds[i]->getName().c_str()) == 0)
 				return m_sounds[i];
-		utils::ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_GET);
+		ErrorHandle::setErrorCode(Greet_ERROR_MANAGER_GET);
 		Log::error("Could not find the given sound: ", soundname.c_str());
 		return m_sounds[0];
 	}
@@ -55,4 +55,4 @@ namespace greet{ namespace audio {
 		gau_manager_update(m_manager);
 	}
 
-}}
+}

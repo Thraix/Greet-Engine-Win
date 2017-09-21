@@ -1,10 +1,10 @@
 #include "panel.h"
 
-namespace greet {namespace graphics {
+namespace Greet {
 	
-	Panel::Panel(const math::vec2& position, const math::vec2& size)
+	Panel::Panel(const vec2& position, const vec2& size)
 	: GUI(position,size)
 	{
 	}
 	
-}}
+}

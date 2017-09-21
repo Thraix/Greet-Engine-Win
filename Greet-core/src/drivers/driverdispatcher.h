@@ -3,16 +3,16 @@
 #include <vector>
 #include <drivers/driver.h>
 
-namespace greet { namespace internal {
+namespace Greet {
 	class App;
-}}
+}
 
-namespace greet { namespace drivers {
+namespace Greet {
 
 	class DriverDispatcher
 	{
 
-	friend class internal::App;
+	friend class App;
 
 	public:
 		static void addDriver(Driver* driver);
@@ -24,4 +24,4 @@ namespace greet { namespace drivers {
 		
 	};
 
-}}
+}

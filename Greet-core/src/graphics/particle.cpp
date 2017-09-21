@@ -1,6 +1,6 @@
 #include "particle.h"
 
-namespace greet { namespace graphics {
+namespace Greet {
 
 	Particle::Particle()
 	{
@@ -11,7 +11,7 @@ namespace greet { namespace graphics {
 		delete m_sprite;
 	}
 
-	void Particle::define(math::vec2 pos, math::vec2 size, math::vec2 vel, math::vec2 acc, uint color, float minspeed, float maxspeed, float frameTime, Sprite* sprite)
+	void Particle::define(vec2 pos, vec2 size, vec2 vel, vec2 acc, uint color, float minspeed, float maxspeed, float frameTime, Sprite* sprite)
 	{
 		m_startPos = pos;
 		m_pos = pos;
@@ -41,4 +41,4 @@ namespace greet { namespace graphics {
 		m_pos += m_velocity;
 		return m_frameTime<=0;
 	}
-}}
+}

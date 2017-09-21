@@ -4,7 +4,7 @@
 #include <cmath>
 #include <logging/log.h>
 
-namespace greet { namespace utils {
+namespace Greet {
 	
 	float* Noise::genNoise(uint width, uint height, uint octave, uint frequencyX, uint frequencyY, float persistance)
 	{
@@ -92,7 +92,4 @@ namespace greet { namespace utils {
 
 		return v;
 	}
-
-
-
-}}
+}

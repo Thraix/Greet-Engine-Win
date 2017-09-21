@@ -1,6 +1,6 @@
 #include "layer3d.h"
 
-namespace greet { namespace graphics{
+namespace Greet {
 
 	Layer3D::Layer3D(Renderer3D* renderer)
 		: m_renderer(renderer)
@@ -12,7 +12,7 @@ namespace greet { namespace graphics{
 		delete m_renderer;
 	}
 
-	void Layer3D::add(const model::EntityModel* renderable)
+	void Layer3D::add(const EntityModel* renderable)
 	{
 		m_renderer->submit(renderable);
 	}
@@ -29,4 +29,4 @@ namespace greet { namespace graphics{
 	{
 		m_renderer->update(timeElapsed);
 	}
-}}
+}

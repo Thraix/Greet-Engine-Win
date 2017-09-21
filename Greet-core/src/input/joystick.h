@@ -1,9 +1,9 @@
 #pragma once
 
 #include <vector>
-#include <internal/greetgl.h>
+#include <internal/Greetgl.h>
 #include <logging/log.h>
-#include <internal/greet_types.h>
+#include <internal/Greet_types.h>
 #include <math/maths.h>
 #include <utils/timer.h>
 
@@ -11,16 +11,13 @@
 	#define MAX_JOYSTICKS 4
 #endif
 
-namespace greet { namespace graphics{
-	class Window;
-}}
 
-namespace greet { namespace input {
+namespace Greet {
 
 	class Joystick
 	{
 
-		friend class greet::graphics::Window;
+		friend class Window;
 
 	private:
 		std::vector<uint> m_mapping;
@@ -33,8 +30,8 @@ namespace greet { namespace input {
 		float m_calibrateRight;
 
 		//AXES
-		math::vec2 m_leftStick;
-		math::vec2 m_rightStick;
+		vec2 m_leftStick;
+		vec2 m_rightStick;
 
 		bool buttonCur[GLFW_JOYSTICK_BUTTONS];
 		bool buttonPas[GLFW_JOYSTICK_BUTTONS];
@@ -46,8 +43,8 @@ namespace greet { namespace input {
 		void clearInput();
 	public:
 
-		inline math::vec2 getLeftStick() const { return m_leftStick; }
-		inline math::vec2 getRightStick() const { return m_rightStick; }
+		inline vec2 getLeftStick() const { return m_leftStick; }
+		inline vec2 getRightStick() const { return m_rightStick; }
 
 		void remapButton(uint button, uint rebind);
 		bool buttonExists(uint buttoncode) const;
@@ -60,4 +57,4 @@ namespace greet { namespace input {
 		bool isConnected() const { return m_connected; }
 
 	};
-}}
+}

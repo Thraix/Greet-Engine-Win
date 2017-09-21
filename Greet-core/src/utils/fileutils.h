@@ -11,7 +11,7 @@
 
 #include <string>
 #include <logging/log.h>
-namespace greet { namespace utils{
+namespace Greet { namespace FileUtils {
 
 	inline void print_working_directory()
 	{

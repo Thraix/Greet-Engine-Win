@@ -1,6 +1,6 @@
 #include "graphics\models\MaterialModel.h"
 
-namespace greet { namespace model {
+namespace Greet {
 
 	uint MaterialModel::s_current_id;
 
@@ -20,4 +20,4 @@ namespace greet { namespace model {
 	{
 		return m_id == second.m_id;
 	}
-} }
+}

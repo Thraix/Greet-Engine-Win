@@ -7,19 +7,18 @@
 #include <graphics/models/meshfactory.h>
 #include <graphics\shaders\shaderfactory.h>
 
-namespace greet { namespace graphics {
+namespace Greet {
 	
-
 	class Skybox
 	{
 	private:
 		CubeMap* m_map;
 		Shader* m_shader;
-		model::Mesh* m_mesh;
+		Mesh* m_mesh;
 	public:
 		Skybox(CubeMap* map);
 		const CubeMap* getCubeMap() const { return m_map; };
 		virtual ~Skybox();
-		void render(const math::mat4& projectionMatrix, const model::Camera& camera) const;
+		void render(const mat4& projectionMatrix, const Camera& camera) const;
 	};
-}}
+}

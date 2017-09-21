@@ -5,12 +5,12 @@
 #include <random>
 #include <ctime>
 
-namespace greet {namespace utils {
+namespace Greet {
 
 
 	class UUID 
 	{
-		friend graphics::Window;
+		friend class Window;
 	private:
 		uint m_current;
 		std::vector<uint> m_usedUUID;
@@ -29,4 +29,4 @@ namespace greet {namespace utils {
 		static void init();
 		static void cleanUp();
 	};
-}}
+}

@@ -1,15 +1,15 @@
 #include "label.h"
 
 #
-namespace greet { namespace graphics {
+namespace Greet {
 	
-	Label::Label(const std::string& text, math::vec2 pos,Font* font, uint color)
+	Label::Label(const std::string& text, vec2 pos,Font* font, uint color)
 	:text(text),position(pos),m_font(font),color(color)
 	{
 		
 	}
 	
-	Label::Label(const std::string& text, math::vec2 pos,std::string fontname, uint fontsize, uint color)
+	Label::Label(const std::string& text, vec2 pos,std::string fontname, uint fontsize, uint color)
 	:text(text),position(pos),m_font(FontManager::get(fontname,fontsize)),color(color)
 	{
 		
@@ -44,4 +44,4 @@ namespace greet { namespace graphics {
 		return width;
 	}
 	
-}}
+}

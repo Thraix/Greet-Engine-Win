@@ -1,9 +1,9 @@
 #include "MeshData.h"
 #include <logging/log.h>
 
-namespace greet { namespace model {
+namespace Greet {
 
-	MeshData::MeshData(math::vec3* vertices, uint vertexCount, uint* indices, uint indexCount)
+	MeshData::MeshData(vec3* vertices, uint vertexCount, uint* indices, uint indexCount)
 		: m_vertices(vertices), m_indices(indices), m_vertexCount(vertexCount), m_indexCount(indexCount)
 	{
 		
@@ -35,4 +35,4 @@ namespace greet { namespace model {
 		}
 		return NULL;
 	}
-}}
+}

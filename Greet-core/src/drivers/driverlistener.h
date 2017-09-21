@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace greet { namespace drivers {
+namespace Greet {
 
 	class DriverListener
 	{
@@ -9,4 +9,4 @@ namespace greet { namespace drivers {
 		virtual void onFinished() = 0;
 	};
 
-}}
+}

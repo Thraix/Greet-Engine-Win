@@ -1,8 +1,8 @@
 #include "app.h"
 #include <drivers/driverdispatcher.h>
 
-namespace greet { namespace internal {
-	using namespace graphics;
+namespace Greet {
+
 	App::App()
 	: m_fps(0), m_ups(0)
 	{
@@ -39,7 +39,7 @@ namespace greet { namespace internal {
 			Log::error("Window is not initalized, set it in App::createWindow");
 			return;
 		}
-		m_timer = new utils::Timer();
+		m_timer = new Timer();
 		double timer = 0.0f;
 		double updateTimer = 0.0f;
 		double updateTick = 1.0 / 60.0;
@@ -55,10 +55,10 @@ namespace greet { namespace internal {
 			double elapsed = m_timer->elapsed();
 			if (elapsed - updateTimer >= updateTick)
 			{
-				drivers::DriverDispatcher::update(updateTick);
+				DriverDispatcher::update(updateTick);
 				update(elapsed - updateTimer);
 				Window::update();
-				graphics::RenderEngine::update(elapsed - updateTimer);
+				RenderEngine::update(elapsed - updateTimer);
 				updates++;
 				updateTimer += elapsed - updateTimer;
 			}
@@ -66,7 +66,7 @@ namespace greet { namespace internal {
 			{
 				Window::clear();
 				render();
-				graphics::RenderEngine::render();
+				RenderEngine::render();
 				Window::render();
 				frames++;
 				renderTimer += elapsed - renderTimer;
@@ -85,5 +85,4 @@ namespace greet { namespace internal {
 			}
 		}
 	}
-
-}}
+}

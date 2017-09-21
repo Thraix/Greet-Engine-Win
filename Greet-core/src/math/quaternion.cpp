@@ -3,7 +3,7 @@
 #include "math_func.h"
 
 
-namespace greet { namespace math {
+namespace Greet {
 
 	quaternion::quaternion(float x, float y, float z, float w) :x(x), y(y), z(z), w(w) {}
 
@@ -76,4 +76,4 @@ namespace greet { namespace math {
 		return multiply(other);
 	}
 
-}}
+}

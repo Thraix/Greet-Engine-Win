@@ -1,5 +1,5 @@
 #include "keylistener.h"
 
-namespace greet { namespace event{
+namespace Greet {
 	uint KeyListener::m_currentId;
-}}
+}

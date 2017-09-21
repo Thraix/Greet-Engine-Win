@@ -1,19 +1,13 @@
-#include <greet.h>
+#include <Greet.h>
 
 #include "keyboardcontrol.h"
 #include "tree.h"
 #include <random>
 
-using namespace greet;
-using namespace graphics;
-using namespace audio;
-using namespace model;
-using namespace utils;
-using namespace event;
+using namespace Greet;
 
-class Core : public greet::internal::App, public greet::event::KeyListener, public greet::event::MouseListener
+class Core : public App, public KeyListener, public MouseListener
 {
-
 private:
 	Shader* blurShader;
 	BatchRenderer3D* renderer3d;
@@ -79,7 +73,7 @@ public:
 		FontManager::add(new FontContainer("Anonymous Pro.ttf", "anonymous"));
 
 		fbo = new FrameBufferObject(960,540);
-		camera = new TPCamera(math::vec3(0,0,0),15,0,0,15,80,0,0.8f);
+		camera = new TPCamera(vec3(0,0,0),15,0,0,15,80,0,0.8f);
 		Skybox* skybox = new Skybox((CubeMap*)TextureManager::get("skybox"));
 		renderer3d = new BatchRenderer3D(Window::getWidth(), Window::getHeight(), camera,90,0.001f,1000.0f, skybox);
 
@@ -98,45 +92,45 @@ public:
 		uint gridWidth = 499;
 		uint gridLength = 499;
 		float* noise = Noise::genNoise(500,500,5,64,64,0.5f);
-		MeshData* gridMesh = model::MeshFactory::grid(0, 0, 0, gridWidth+1, gridLength+1, gridWidth, gridLength, noise,1);
+		MeshData* gridMesh = MeshFactory::grid(0, 0, 0, gridWidth+1, gridLength+1, gridWidth, gridLength, noise,1);
 		recalcGrid(gridMesh, gridWidth, gridLength);
 		
-		//gridMesh->setDefaultAttribute4f(MESH_COLORS_LOCATION, math::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+		//gridMesh->setDefaultAttribute4f(MESH_COLORS_LOCATION, vec4(1.0f, 0.0f, 0.0f, 1.0f));
 		//gridMesh->setEnableCulling(false);
 		MaterialModel* gridModelMaterial = new MaterialModel(new Mesh(gridMesh), *terrainMaterial);
-		grid = new EntityModel(*gridModelMaterial, math::vec3(0, -20, 0), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
+		grid = new EntityModel(*gridModelMaterial, vec3(0, -20, 0), vec3(1.0f, 1.0f, 1.0f), vec3(0.0f, 0.0f, 0.0f));
 		delete gridMesh;
 
-		MeshData* cubeMesh = model::MeshFactory::cube(0,0,0,10,10,10);
+		MeshData* cubeMesh = MeshFactory::cube(0,0,0,10,10,10);
 		MaterialModel* cubeModelMaterial = new MaterialModel(new Mesh(cubeMesh), *modelMaterial);
-		cube = new EntityModel(*cubeModelMaterial, math::vec3(0,0,0), math::vec3(1, 1, 1), math::vec3(0, 0, 0));
+		cube = new EntityModel(*cubeModelMaterial, vec3(0,0,0), vec3(1, 1, 1), vec3(0, 0, 0));
 		delete cubeMesh;
 
-		MeshData* tetrahedronMesh = model::MeshFactory::tetrahedron(0,0,0,10);
+		MeshData* tetrahedronMesh = MeshFactory::tetrahedron(0,0,0,10);
 		MaterialModel* tetrahedronModelMaterial = new MaterialModel(new Mesh(tetrahedronMesh), *modelMaterial);
-		tetrahedron = new EntityModel(*tetrahedronModelMaterial, math::vec3(30, 0, 10), math::vec3(1, 1, 1), math::vec3(0, 0, 0));
+		tetrahedron = new EntityModel(*tetrahedronModelMaterial, vec3(30, 0, 10), vec3(1, 1, 1), vec3(0, 0, 0));
 		delete tetrahedronMesh;
 
-		Mesh* stallMesh = utils::loadObj("res/objs/stall.obj.gobj");
+		Mesh* stallMesh = ObjUtils::loadObj("res/objs/stall.obj.gobj");
 		stallMaterial->setReflectivity(0.1)->setShineDamper(1);
 		MaterialModel* stallModelMaterial = new MaterialModel(stallMesh, *stallMaterial);
-		stall = new EntityModel(*stallModelMaterial, math::vec3(0.0f, 0.0f, -25), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
+		stall = new EntityModel(*stallModelMaterial, vec3(0.0f, 0.0f, -25), vec3(1.0f, 1.0f, 1.0f), vec3(0.0f, 0.0f, 0.0f));
 
-		Mesh* dragonMesh = utils::loadObj("res/objs/dragon.obj.gobj");
+		Mesh* dragonMesh = ObjUtils::loadObj("res/objs/dragon.obj.gobj");
 		MaterialModel* dragonModelMaterial = new MaterialModel(dragonMesh, *modelMaterial);
-		dragon = new EntityModel(*dragonModelMaterial, math::vec3(10.0f, 0.0f, -25), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(0.0f, 0.0f, 0.0f));
+		dragon = new EntityModel(*dragonModelMaterial, vec3(10.0f, 0.0f, -25), vec3(1.0f, 1.0f, 1.0f), vec3(0.0f, 0.0f, 0.0f));
 		
-		//Mesh* gridMesh = model::MeshFactory::cube(0,0,0,10,10,10);
+		//Mesh* gridMesh = MeshFactory::cube(0,0,0,10,10,10);
 		//gridMesh->setEnableCulling(false);
 		//MaterialModel* gridModelMaterial = new MaterialModel(gridMesh, *modelMaterial);
-		//grid = new EntityModel(*gridModelMaterial, math::vec3(0, 0, 0), math::vec3(1, 1, 1), math::vec3(0, 0, 0));
+		//grid = new EntityModel(*gridModelMaterial, vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0));
 
 		//for (uint i = 0;i < 2000;i++)
 		//{
-		//	models.push_back(EntityModel(*modelModelMaterial, math::vec3(random()*100, random() * 100, random() * 100), math::vec3(1.0f, 1.0f, 1.0f), math::vec3(random() * 360, random() * 360, random() * 360)));
+		//	models.push_back(EntityModel(*modelModelMaterial, vec3(random()*100, random() * 100, random() * 100), vec3(1.0f, 1.0f, 1.0f), vec3(random() * 360, random() * 360, random() * 360)));
 		//}
 
-		Light* l = new Light(math::vec3(25, 25,12.5), 0xffffffff);
+		Light* l = new Light(vec3(25, 25,12.5), 0xffffffff);
 		modelShader->enable();
 		l->setToUniform(modelShader, "light");
 		modelShader->disable();
@@ -146,18 +140,18 @@ public:
 	
 		delete l;
 
-		uilayer = new Layer(new BatchRenderer(), ShaderFactory::DefaultShader(), math::mat3::orthographic(0.0f, (float)Window::getWidth(), 0.0f, (float)Window::getHeight()));
+		uilayer = new Layer(new BatchRenderer(), ShaderFactory::DefaultShader(), mat3::orthographic(0.0f, (float)Window::getWidth(), 0.0f, (float)Window::getHeight()));
 		uint colorPink = ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(300 /360.0f, 3));
-		fps = new Label("144 fps", math::vec2(50, 300), "roboto", 72, ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(120 / 360.0f, 9)));
-		cursor = new Renderable2D(math::vec2(0,0),math::vec2(32,32),0xffffffff, new Sprite(TextureManager::get2D("cursor")), new Sprite(TextureManager::get2D("mask")));
+		fps = new Label("144 fps", vec2(50, 300), "roboto", 72, ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(120 / 360.0f, 9)));
+		cursor = new Renderable2D(vec2(0,0),vec2(32,32),0xffffffff, new Sprite(TextureManager::get2D("cursor")), new Sprite(TextureManager::get2D("mask")));
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(driverTest->m_position.x, -20, 0.5f, true, new drivers::DriverAdapter()));
 		guilayer = new GUILayer(new BatchRenderer(),ShaderFactory::DefaultShader());
-		slider = new Slider(math::vec2(10,100),math::vec2(200,30),0,255,1);
-		button = new Button(math::vec2(10,120+30),math::vec2(100,40),"Test");
-		frame = new Frame(math::vec2(10, 10), math::vec2(500, 500),"GUI Frame");
+		slider = new Slider(vec2(10,100),vec2(200,30),0,255,1);
+		button = new Button(vec2(10,120+30),vec2(100,40),"Test");
+		frame = new Frame(vec2(10, 10), vec2(500, 500),"GUI Frame");
 
-		scene3d = new Layer(new BatchRenderer(),blurShader, math::mat3::orthographic(0.0f, (float)Window::getWidth(), 0.0f, (float)Window::getHeight()));
-		fboScene = new Renderable2D(math::vec2(0,0),math::vec2(960,540),0xffffffff,new Sprite(fbo->getColorTexture(GL_COLOR_ATTACHMENT0)),NULL);
+		scene3d = new Layer(new BatchRenderer(),blurShader, mat3::orthographic(0.0f, (float)Window::getWidth(), 0.0f, (float)Window::getHeight()));
+		fboScene = new Renderable2D(vec2(0,0),vec2(960,540),0xffffffff,new Sprite(fbo->getColorTexture(GL_COLOR_ATTACHMENT0)),NULL);
 		scene3d->add(fboScene);
 
 		uilayer->add(fps);
@@ -185,13 +179,13 @@ public:
 		RenderEngine::add_layer2d(uilayer, "uilayer");
 		RenderEngine::add_layer2d(guilayer, "guilayer");
 		RenderEngine::add_layer3d(new Layer3D(renderer3d), "3dWorld");
-		Log::info(sizeof(math::vec3));
+		Log::info(sizeof(vec3));
 	}
 
 	void recalcGrid(MeshData* data, uint gridWidth, uint gridLength)
 	{
 		uint* colors = new uint[data->getVertexCount()];
-		math::vec3* vertices = data->getVertices();
+		vec3* vertices = data->getVertices();
 		for (uint z = 0; z <= gridLength; z++)
 		{
 			for (uint x = 0; x <= gridLength; x++)
@@ -226,7 +220,7 @@ public:
 				vertices[z + x*(gridWidth + 1)].y = y*20;
 			}
 		}
-		model::MeshFactory::calculateNormals(vertices, data->getVertexCount(), data->getIndices(), data->getIndexCount(), (math::vec3*)data->getAttribute(ATTRIBUTE_NORMAL)->floats);
+		MeshFactory::calculateNormals(vertices, data->getVertexCount(), data->getIndices(), data->getIndexCount(), (vec3*)data->getAttribute(ATTRIBUTE_NORMAL)->floats);
 		data->addAttribute(new AttributeData(ATTRIBUTE_COLOR, colors));
 	}
 
@@ -237,37 +231,37 @@ public:
 
 	void tick()
 	{
-		std::string s = utils::toString(getFPS()) + " fps";
+		std::string s = StringUtils::toString(getFPS()) + " fps";
 		//fps->text = s;
 		Window::setTitle("Best Game Ever | " + s);
 	}
 
 	float hue = 0;
-	math::vec3 velocityPos;
-	math::vec3 velocityNeg;
+	vec3 velocityPos;
+	vec3 velocityNeg;
 
 	void update(float elapsedTime)
 	{
-		//fps->text = utils::toString(slider->getValue());
+		//fps->text = toString(slider->getValue());
 #if 0 // FPCamera
-		math::vec2 velocityY = movement->getVelocity();
+		vec2 velocityY = movement->getVelocity();
 		if (velocityY.lengthSQ() != 0)
 		{
 			velocityY = velocityY.rotate(camera->yaw);
-			camera->position += math::vec3(velocityY.x, 0, velocityY.y);
+			camera->position += vec3(velocityY.x, 0, velocityY.y);
 		}
 		camera->position.y += velocityPos.y - velocityNeg.y;
-		math::vec2 rotationVec = rotation->getVelocity();
+		vec2 rotationVec = rotation->getVelocity();
 		camera->pitch += rotationVec.x;
 		camera->yaw += rotationVec.y;
 		if (Window::isJoystickConnected(0))
 		{
-			input::Joystick& joystick = Window::getJoystick(0);
+			Joystick& joystick = Window::getJoystick(0);
 			if (abs(joystick.getLeftStick().length()) > 0.2)
 			{
-				float r = math::toRadians(camera->yaw);
-				math::vec2 rot = joystick.getLeftStick().rotateR(r)*0.2;
-				camera->position += math::vec3(rot.x, 0.0, rot.y);
+				float r = toRadians(camera->yaw);
+				vec2 rot = joystick.getLeftStick().rotateR(r)*0.2;
+				camera->position += vec3(rot.x, 0.0, rot.y);
 			}
 			if (abs(joystick.getRightStick().x) > 0.2)
 			{
@@ -301,7 +295,7 @@ public:
 		while (hue >= 1)
 			hue--;
 		cursor->m_color = ColorUtils::vec3ToColorHex(ColorUtils::HSVtoRGB(hue, 1, 1));
-		//cursor->setPosition(math::vec2(p.x, p.y));
+		//cursor->setPosition(vec2(p.x, p.y));
 	}
 
 	bool onPressed(const KeyPressedEvent& e) override
@@ -312,7 +306,7 @@ public:
 			Shader* modelShader = Shader::fromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
 			modelMaterial->setShader(modelShader);
 			terrainMaterial->setShader(terrainShader);
-			Light* l = new Light(math::vec3(25, 25, 12.5), 0xffffffff);
+			Light* l = new Light(vec3(25, 25, 12.5), 0xffffffff);
 
 			modelShader->enable();
 			l->setToUniform(modelShader, "light");
@@ -324,11 +318,11 @@ public:
 		}
 		if (e.getButton() == GLFW_KEY_F10)
 		{
-			utils::screenshot(Window::getWidth(), Window::getHeight());
+			Utils::screenshot(Window::getWidth(), Window::getHeight());
 		}
 		if (e.getButton() == GLFW_KEY_X)
 		{
-			math::vec3 p = renderer3d->getScreenCoordination(math::vec3(0,0,0),Window::getWidth(),Window::getHeight());
+			vec3 p = renderer3d->getScreenCoordination(vec3(0,0,0),Window::getWidth(),Window::getHeight());
 		}
 		movement->onInput(e.getButton(),true);
 		rotation->onInput(e.getButton(),true);
@@ -377,7 +371,7 @@ public:
 
 	bool onMoved(const MouseMovedEvent& e) override
 	{
-		cursor->setPosition(math::vec2(e.getX(), e.getY()));
+		cursor->setPosition(vec2(e.getX(), e.getY()));
 		return false;
 	}
 
@@ -394,11 +388,11 @@ public:
 	
 	void windowResize(int width, int height) override
 	{
-		//camera::Camera::getInstance()->getLayer(0)->setProjectionMatrix(math::mat3::orthographic(0, (float)width / 20.0f, 0, (float)height / 20.0f)*math::mat3::translate((width - 960) / 40.0f, (height - 540) / 40.0f));
-		//camera::Camera::getInstance()->getLayer(1)->setProjectionMatrix(math::mat3::orthographic(0, (float)width / 20.0f, 0, (float)height / 20.0f)*math::mat3::translate((width - 960) / 40.0f, (height - 540) / 40.0f));
-		//camera::Camera::getInstance()->getLayer(2)->setProjectionMatrix(math::mat3::orthographic(0, (float)width, 0, (float)height)*math::mat3::translate((width - 960) / 2, (height - 540) / 2));
+		//camera::Camera::getInstance()->getLayer(0)->setProjectionMatrix(mat3::orthographic(0, (float)width / 20.0f, 0, (float)height / 20.0f)*mat3::translate((width - 960) / 40.0f, (height - 540) / 40.0f));
+		//camera::Camera::getInstance()->getLayer(1)->setProjectionMatrix(mat3::orthographic(0, (float)width / 20.0f, 0, (float)height / 20.0f)*mat3::translate((width - 960) / 40.0f, (height - 540) / 40.0f));
+		//camera::Camera::getInstance()->getLayer(2)->setProjectionMatrix(mat3::orthographic(0, (float)width, 0, (float)height)*mat3::translate((width - 960) / 2, (height - 540) / 2));
 		//camera::Camera::getInstance()->setViewport(0, 0, width, height* 9 / 16);
-		uilayer->setProjectionMatrix(math::mat3::orthographic(0,Window::getWidth(),0,Window::getHeight()));
+		uilayer->setProjectionMatrix(mat3::orthographic(0,Window::getWidth(),0,Window::getHeight()));
 	}
 };
 #include <fstream>

@@ -2,27 +2,27 @@
 
 #include <vector>
 #include <audio/sound.h>
-#include <internal/greet_types.h>
+#include <internal/Greet_types.h>
 #include <utils/errorhandler.h>
 
 #include <ga.h>
 #include <gau.h>
 
-namespace greet { namespace audio {
+namespace Greet {
 	class SoundManager
 	{
 	private:
-		friend class audio::Sound;
+		friend class Sound;
 		static gau_Manager* m_manager;
 		static ga_Mixer* m_mixer;
-		static std::vector<audio::Sound*> m_sounds;
+		static std::vector<Sound*> m_sounds;
 	public:
 		static void init();
-		static void add(audio::Sound* sound);
-		static audio::Sound* get(const std::string& soundname);
+		static void add(Sound* sound);
+		static Sound* get(const std::string& soundname);
 		static void destroy();
 		static void update();
 	private:
 		SoundManager(){}
 	};
-}}
+}

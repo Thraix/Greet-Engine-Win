@@ -1,11 +1,8 @@
 #include "batchrenderer3d.h"
 
-namespace greet { namespace graphics {
-	using namespace model;
+namespace Greet {
 
-
-
-	void BatchRenderer3D::submit(const model::EntityModel* model)
+	void BatchRenderer3D::submit(const EntityModel* model)
 	{
 		for (BatchRenderer3DMap* map : m_map)
 		{
@@ -23,7 +20,7 @@ namespace greet { namespace graphics {
 	void BatchRenderer3D::render() const
 	{
 		glDepthRange(m_near, m_far);
-		const math::mat4& viewMatrix = m_camera->getViewMatrix();
+		const mat4& viewMatrix = m_camera->getViewMatrix();
 		for (BatchRenderer3DMap* map : m_map)
 		{
 			map->m_material.getMaterial().bind();
@@ -42,12 +39,12 @@ namespace greet { namespace graphics {
 
 	}
 
-	math::vec3 BatchRenderer3D::getScreenCoordination(const math::vec3& coordinate, uint screenWidth, uint screenHeight)
+	vec3 BatchRenderer3D::getScreenCoordination(const vec3& coordinate, uint screenWidth, uint screenHeight)
 	{
-		math::vec3 point = getProjectionMatrix() * getCamera().getViewMatrix() * coordinate;
-		math::vec3 p = math::vec3(point.x, point.y, point.z) / (fabs(point.z) * 2.0f) + 0.5f;
+		vec3 point = getProjectionMatrix() * getCamera().getViewMatrix() * coordinate;
+		vec3 p = vec3(point.x, point.y, point.z) / (fabs(point.z) * 2.0f) + 0.5f;
 		p.x *= screenWidth;
 		p.y = screenHeight - p.y * screenHeight;
 		return p;
 	}
-} }
+}

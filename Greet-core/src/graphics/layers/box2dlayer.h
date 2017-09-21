@@ -7,7 +7,7 @@
 #include <logging/log.h>
 #include <graphics/renderers/batchrenderer.h>
 
-namespace greet { namespace graphics {
+namespace Greet {
 	class Box2DLayer : public Layer
 	{
 	public:
@@ -15,10 +15,10 @@ namespace greet { namespace graphics {
 
 
 	public:
-		Box2DLayer(Shader* shader, math::mat3 projectionMatrix, b2World* world);
+		Box2DLayer(Shader* shader, mat3 projectionMatrix, b2World* world);
 
 		void update(float timeElapsed) override;
 
 		void render() const override;
 	};
-}}
+}

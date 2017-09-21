@@ -10,16 +10,16 @@
 #include <graphics/models/meshfactory.h>
 #include <graphics/renderers/renderer3d.h>
 
-namespace greet { namespace graphics {
+namespace Greet {
 
 	struct BatchRenderer3DMap
 	{
 		friend class BatchRenderer3D;
 	private:
-		const model::MaterialModel& m_material;
-		std::vector<const model::EntityModel*> m_models;
-		BatchRenderer3DMap(const model::MaterialModel& material) : m_material(material) {}
-		void addEntity(const model::EntityModel* model) { m_models.push_back(model); };
+		const MaterialModel& m_material;
+		std::vector<const EntityModel*> m_models;
+		BatchRenderer3DMap(const MaterialModel& material) : m_material(material) {}
+		void addEntity(const EntityModel* model) { m_models.push_back(model); };
 	};
 
 	class BatchRenderer3D : public Renderer3D
@@ -27,19 +27,19 @@ namespace greet { namespace graphics {
 	private:
 		std::vector<BatchRenderer3DMap*> m_map;
 	public:
-		BatchRenderer3D(float width, float height, model::Camera* camera, float fov, float near, float far, Skybox* skybox)
+		BatchRenderer3D(float width, float height, Camera* camera, float fov, float near, float far, Skybox* skybox)
 			: Renderer3D(width,height,camera,fov,near,far,skybox)
 		{
 			
 		}
 
-		void submit(const model::EntityModel* model) override;
+		void submit(const EntityModel* model) override;
 		void render() const override;
 
-		inline const math::mat4& getProjectionMatrix() const { return m_projectionMatrix; }
-		inline const model::Camera& getCamera() const { return *m_camera; }
+		inline const mat4& getProjectionMatrix() const { return m_projectionMatrix; }
+		inline const Camera& getCamera() const { return *m_camera; }
 
-		math::vec3 getScreenCoordination(const math::vec3& coordinate, uint screenWidth, uint screenHeight);
+		vec3 getScreenCoordination(const vec3& coordinate, uint screenWidth, uint screenHeight);
 
 	};
-}}
+}

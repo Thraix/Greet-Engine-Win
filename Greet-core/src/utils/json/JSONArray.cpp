@@ -2,7 +2,7 @@
 
 #include "JSONObject.h"
 
-namespace greet { namespace utils {
+namespace Greet {
 	
 	JSONArray::JSONArray()
 	{
@@ -63,4 +63,4 @@ namespace greet { namespace utils {
 		os << "\n" << JSON::get_indent() << "]";
 		return os;
 	}
-}}
+}

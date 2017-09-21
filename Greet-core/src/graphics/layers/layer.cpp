@@ -1,9 +1,9 @@
 #include "layer.h"
 
-namespace greet { namespace graphics {
+namespace greet {
 
 	template<class T>
-	Layer<T>::Layer(Renderer2D* renderer, Shader* shader, math::mat3 projectionMatrix)
+	Layer<T>::Layer(Renderer2D* renderer, Shader* shader, mat3 projectionMatrix)
 		: m_renderer(renderer), m_shader(shader), m_projectionMatrix(projectionMatrix)
 	{
 		GLint texIDs[32];
@@ -60,11 +60,11 @@ namespace greet { namespace graphics {
 	}
 
 	template<class T>
-	void Layer<T>::setProjectionMatrix(math::mat3 projectionMatrix)
+	void Layer<T>::setProjectionMatrix(mat3 projectionMatrix)
 	{
 		 m_projectionMatrix = projectionMatrix; 
 		 m_shader->enable();
 		 m_shader->setUniformMat3("pr_matrix", m_projectionMatrix);
 		 m_shader->disable();
 	}
-}}
+}

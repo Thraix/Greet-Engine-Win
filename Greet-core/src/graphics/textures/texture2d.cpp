@@ -1,6 +1,6 @@
 #include "texture2d.h"
 
-namespace greet { namespace graphics {
+namespace Greet {
 
 	Texture2D::Texture2D(const std::string& filename, const std::string& name)
 		:Texture(name, GL_TEXTURE_2D)
@@ -30,9 +30,8 @@ namespace greet { namespace graphics {
 
 	void Texture2D::loadTexture(const std::string& filename)
 	{
-		using namespace utils;
 		uint bpp = 0;
-		BYTE* bits = loadImage(filename.c_str(),&m_width,&m_height,&bpp);
+		BYTE* bits = ImageUtils::loadImage(filename.c_str(),&m_width,&m_height,&bpp);
 		genTexture(bits, bpp);
 		delete[] bits;
 	}
@@ -56,4 +55,4 @@ namespace greet { namespace graphics {
 		glTexImage2D(GL_TEXTURE_2D, 0, bpp == 32 ? GL_RGBA : GL_RGB, m_width, m_height, 0, bpp == 32 ? GL_BGRA : GL_BGR, GL_UNSIGNED_BYTE, bits);
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
-}}
+}

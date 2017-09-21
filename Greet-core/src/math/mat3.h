@@ -5,7 +5,7 @@
 #include "math_func.h"
 #include <string.h>
 
-namespace greet{ namespace math{
+namespace Greet{
 	struct mat3
 	{
 		union
@@ -55,4 +55,4 @@ namespace greet{ namespace math{
 		friend vec3 operator*(const mat3& first, const vec3 &second);
 
 	};
-}}
+}

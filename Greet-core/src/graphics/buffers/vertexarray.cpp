@@ -1,6 +1,6 @@
 #include "vertexarray.h"
 
-namespace greet {namespace graphics {
+namespace Greet {
 
 	VertexArray::VertexArray()
 	{
@@ -38,4 +38,4 @@ namespace greet {namespace graphics {
 		glBindVertexArray(0);
 	}
 
-}}
+}

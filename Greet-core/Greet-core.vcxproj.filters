@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="src\audio\channel.cpp" />
-    <ClCompile Include="src\audio\channelmanager.cpp" />
     <ClCompile Include="src\audio\sound.cpp" />
     <ClCompile Include="src\entity\entity.cpp" />
     <ClCompile Include="src\event\event.cpp" />
@@ -45,7 +43,6 @@
     <ClCompile Include="src\graphics\models\material.cpp" />
     <ClCompile Include="src\graphics\models\materialmodel.cpp" />
     <ClCompile Include="src\graphics\models\entitymodel.cpp" />
-    <ClCompile Include="src\graphics\models\modelformat.cpp" />
     <ClCompile Include="src\graphics\framebufferobject.cpp" />
     <ClCompile Include="src\graphics\renderers\renderer3d.cpp" />
     <ClCompile Include="src\graphics\renderers\batchrenderer.cpp" />
@@ -81,6 +78,8 @@
     <ClCompile Include="src\logging\Logger.cpp" />
     <ClCompile Include="src\logging\LogStream.cpp" />
     <ClCompile Include="src\logging\LogLevel.cpp" />
+    <ClCompile Include="src\audio\audiochannel.cpp" />
+    <ClCompile Include="src\audio\audiochannelmanager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\font.h" />
@@ -103,8 +102,6 @@
     <ClInclude Include="src\graphics\guis\textview.h" />
     <ClInclude Include="src\graphics\renderable4poly.h" />
     <ClInclude Include="src\graphics\batchrenderersquare.h" />
-    <ClInclude Include="src\audio\channel.h" />
-    <ClInclude Include="src\audio\channelmanager.h" />
     <ClInclude Include="src\audio\sound.h" />
     <ClInclude Include="src\entity\entity.h" />
     <ClInclude Include="src\event\event.h" />
@@ -125,7 +122,6 @@
     <ClInclude Include="src\graphics\gui\panel.h" />
     <ClInclude Include="src\graphics\layers\box2dlayer.h" />
     <ClInclude Include="src\graphics\layers\group.h" />
-    <ClInclude Include="src\graphics\layers\layer.h" />
     <ClInclude Include="src\graphics\shaders\shader.h" />
     <ClInclude Include="src\graphics\shaders\shaderfactory.h" />
     <ClInclude Include="src\graphics\textures\imagefactory.h" />
@@ -151,7 +147,6 @@
     <ClInclude Include="src\logging\logger.h" />
     <ClInclude Include="src\utils\fileutils.h" />
     <ClInclude Include="src\utils\imageutils.h" />
-    <ClInclude Include="src\utils\logutils.h" />
     <ClInclude Include="src\utils\stringutils.h" />
     <ClInclude Include="src\utils\timer.h" />
     <ClInclude Include="src\utils\utils.h" />
@@ -172,7 +167,6 @@
     <ClInclude Include="src\graphics\models\entitymodel.h" />
     <ClInclude Include="src\graphics\models\camera.h" />
     <ClInclude Include="src\utils\objutils.h" />
-    <ClInclude Include="src\graphics\models\modelformat.h" />
     <ClInclude Include="src\graphics\framebufferobject.h" />
     <ClInclude Include="src\graphics\renderers\renderer3d.h" />
     <ClInclude Include="src\graphics\renderers\renderer.h" />
@@ -222,6 +216,8 @@
     <ClInclude Include="src\logging\Log.h" />
     <ClInclude Include="src\logging\LogLevel.h" />
     <ClInclude Include="src\logging\LogStream.h" />
+    <ClInclude Include="src\audio\audiochannel.h" />
+    <ClInclude Include="src\audio\audiochannelmanager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Performance4.psess" />

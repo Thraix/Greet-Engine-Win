@@ -2,15 +2,13 @@
 
 #include <drivers/driverlistener.h>
 
-namespace greet {
-	namespace drivers {
+namespace Greet {
 
-		class DriverAdapter : public DriverListener
-		{
-		public:
-		public:
-			void onFinished() override {}
-		};
+	class DriverAdapter : public DriverListener
+	{
+	public:
+	public:
+		void onFinished() override {}
+	};
 
-	}
 }

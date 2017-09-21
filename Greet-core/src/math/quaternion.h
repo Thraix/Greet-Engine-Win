@@ -2,7 +2,7 @@
 
 #include "vec3.h"
 
-namespace greet { namespace math {
+namespace Greet {
 
 class quaternion
 {
@@ -20,7 +20,7 @@ public:
 	quaternion& conjugate();
 
 	quaternion& multiply(const quaternion& other);
-	quaternion& multiply(const math::vec3& other);
+	quaternion& multiply(const vec3& other);
 
 	friend quaternion operator*(const quaternion& first, const quaternion &second);
 	friend quaternion operator*(const quaternion& first, const vec3 &second);
@@ -29,4 +29,4 @@ public:
 	quaternion& operator*=(const vec3 &other);
 };
 
-}}
+}

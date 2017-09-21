@@ -1,7 +1,7 @@
 #include "vec4.h"
 
-namespace greet{
-	namespace math{
+namespace Greet{
+
 	vec4::vec4()
 	{
 		this->x = 0;
@@ -118,4 +118,4 @@ namespace greet{
 	{
 		return stream << vec.x << ", " << vec.y << ", " << vec.z << ", " << vec.z;
 	}
-}}
+}

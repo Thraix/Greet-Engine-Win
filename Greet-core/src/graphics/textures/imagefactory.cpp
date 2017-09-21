@@ -1,6 +1,6 @@
 #include "imagefactory.h"
 
-namespace greet { namespace graphics{ namespace ImageFactory 
+namespace Greet { namespace ImageFactory 
 {
 	BYTE* getBadFormatImage(uint* width, uint* height, uint* bpp)
 	{
@@ -69,4 +69,4 @@ namespace greet { namespace graphics{ namespace ImageFactory
 
 	}
 #endif
-}}}
+}}

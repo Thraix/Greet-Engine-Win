@@ -2,12 +2,12 @@
 
 #include "soundmanager.h"
 
-namespace greet { namespace audio{
+namespace Greet {
 	
 	Sound::Sound(const std::string& filename, const std::string& name, std::string channelName)
-		: m_name(name), m_channel(ChannelManager::get(channelName)), m_playing(false)
+		: m_name(name), m_channel(AudioChannelManager::get(channelName)), m_playing(false)
 	{
-		std::vector<std::string> split = utils::split_string(filename,".");
+		std::vector<std::string> split = StringUtils::split_string(filename,".");
 		if (split.size() < 2){
 			Log::error("Invalid file name: ", filename.c_str());
 			return;
@@ -21,7 +21,7 @@ namespace greet { namespace audio{
 
 	}
 
-	Sound::Sound(const std::string& filename, const std::string& name, Channel* channel)
+	Sound::Sound(const std::string& filename, const std::string& name, AudioChannel* channel)
 		: m_name(name), m_channel(channel), m_playing(false)
 	{
 		m_sound = gau_load_sound_file(("res/sounds/" + filename).c_str(),"wav");
@@ -103,4 +103,4 @@ namespace greet { namespace audio{
 		ga_handle_destroy(in_handle);
 	}
 
-}}
+}

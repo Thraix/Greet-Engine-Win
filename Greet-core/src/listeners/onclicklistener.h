@@ -2,9 +2,9 @@
 
 #include <math/maths.h>
 
-namespace greet { namespace listener {
+namespace Greet {
 	class OnClickListener
 	{
-		virtual void onClick(math::vec2 mousePosition) = 0;
+		virtual void onClick(vec2 mousePosition) = 0;
 	};
-} }
+}

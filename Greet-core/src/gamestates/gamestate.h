@@ -2,12 +2,10 @@
 
 #include <graphics/layers/layer.h>
 
-namespace greet { namespace gamestate { class GameStateManager; } }
-
-namespace greet { namespace gamestate {
-	class GameState : public graphics::Layer
+namespace Greet {
+	class GameState : public Layer
 	{
-	friend gamestate::GameStateManager;
+	friend class GameStateManager;
 	protected:
 		GameState* parent;
 	public:
@@ -20,7 +18,7 @@ namespace greet { namespace gamestate {
 		virtual void update(float timeElapsed) = 0;
 
 	public:
-		GameState(graphics::Renderer2D* renderer, graphics::Shader* shader, math::mat3 projectionMatrix);
+		GameState(Renderer2D* renderer, Shader* shader, mat3 projectionMatrix);
 		virtual ~GameState(){ }
 	};
-}}
+}

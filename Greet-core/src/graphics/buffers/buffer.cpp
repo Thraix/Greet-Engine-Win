@@ -1,6 +1,6 @@
 #include "buffer.h"
 
-namespace greet { namespace graphics {
+namespace Greet {
 	Buffer::Buffer(GLfloat* data, GLsizei count, GLuint componentCount)
 	{
 		m_componentCount = componentCount;
@@ -25,4 +25,4 @@ namespace greet { namespace graphics {
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
-}}
+}

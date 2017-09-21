@@ -1,6 +1,6 @@
 #include "batchindexbuffer.h"
 
-namespace greet {namespace graphics {
+namespace Greet {
 	BatchIndexBuffer::BatchIndexBuffer(GLushort *data, GLsizei amount)
 		: m_count(0)
 	{
@@ -33,4 +33,4 @@ namespace greet {namespace graphics {
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
-}}
+}

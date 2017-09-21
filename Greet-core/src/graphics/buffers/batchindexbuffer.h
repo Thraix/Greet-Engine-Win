@@ -1,8 +1,8 @@
 #pragma once
 
-#include <internal/greetgl.h>
+#include <internal/Greetgl.h>
 
-namespace greet {namespace graphics {
+namespace Greet {
 	class BatchIndexBuffer
 	{
 	private:
@@ -19,4 +19,4 @@ namespace greet {namespace graphics {
 		void resetCount(){ m_count = 0; }
 		inline GLsizei getCount() const { return m_count; }
 	};
-}}
+}

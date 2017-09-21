@@ -1,6 +1,6 @@
 #pragma once
 
-namespace greet { namespace graphics {
+namespace Greet {
 
 	struct LTRB
 	{
@@ -22,4 +22,4 @@ namespace greet { namespace graphics {
 		}
 	};
 
-}}
+}

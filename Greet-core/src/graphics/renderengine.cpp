@@ -1,6 +1,6 @@
 #include "renderengine.h"
 
-namespace greet { namespace graphics {
+namespace Greet {
 
 	std::map<std::string, Layer*> RenderEngine::m_renderer2ds;
 
@@ -68,4 +68,4 @@ namespace greet { namespace graphics {
 		}
 	}
 
-} }
+}

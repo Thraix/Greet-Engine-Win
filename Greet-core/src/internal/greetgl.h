@@ -1,5 +1,5 @@
-#ifndef _GREETGL_H_
-#define _GREETGL_H_
+#ifndef _GreetGL_H_
+#define _GreetGL_H_
 #ifndef GLEW_STATIC
 #define GLEW_STATIC
 #endif // !GLEW_STATIC
@@ -35,4 +35,4 @@
 #define GLFW_JOYSTICK_BUTTONS		0x0E
 #define GLFW_JOYSTICK_AXES			0x05
 
-#endif // _GREETGL_H_
+#endif // _GreetGL_H_

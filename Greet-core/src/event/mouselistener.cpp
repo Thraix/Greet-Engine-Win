@@ -1,7 +1,5 @@
 #include "mouselistener.h"
 
-namespace greet {
-	namespace event{
-		uint MouseListener::m_currentId;
-	}
+namespace Greet {
+	uint MouseListener::m_currentId;
 }

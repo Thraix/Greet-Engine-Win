@@ -2,11 +2,7 @@
 
 #include "guilayer.h"
 
-namespace greet { namespace graphics {
-
-	using namespace event;
-	using namespace math;
-	using namespace utils;
+namespace Greet {
 
 	GUILayer::GUILayer(Renderer2D* renderer, Shader* shader)
 		: Layer(renderer,shader, mat3::orthographic(0,Window::getWidth(),0,Window::getHeight()))
@@ -34,63 +30,63 @@ namespace greet { namespace graphics {
 		Layer::add(renderable);
 	}
 
-	bool GUILayer::onPressed(const event::KeyPressedEvent& e)
+	bool GUILayer::onPressed(const KeyPressedEvent& e)
 	{
 		
 		return false;
 	}
 
-	bool GUILayer::onReleased(const event::KeyReleasedEvent& e)
+	bool GUILayer::onReleased(const KeyReleasedEvent& e)
 	{
 		return false;
 	}
 
-	bool GUILayer::onTyped(const event::KeyTypedEvent& e)
+	bool GUILayer::onTyped(const KeyTypedEvent& e)
 	{
 		return false;
 	}
 
-	bool GUILayer::onPressed(const event::MousePressedEvent& e)
+	bool GUILayer::onPressed(const MousePressedEvent& e)
 	{
 
 		bool pressed = false;
-		math::vec2 relativePos;
+		vec2 relativePos;
 		for (uint i = 0;i < m_renderables.size();i++)
 		{
 			GUI* gui = getGUI(i);
-			relativePos = (e.getPosition() - gui->m_position) - math::vec2(gui->m_margin.left, gui->m_margin.top);
+			relativePos = (e.getPosition() - gui->m_position) - vec2(gui->m_margin.left, gui->m_margin.top);
 			pressed |= gui->onPressed(e, relativePos);
 		}
 		return pressed;
 	}
 
-	bool GUILayer::onReleased(const event::MouseReleasedEvent& e)
+	bool GUILayer::onReleased(const MouseReleasedEvent& e)
 	{
 		bool released = false;
-		math::vec2 relativePos;
+		vec2 relativePos;
 		for (uint i = 0;i < m_renderables.size();i++)
 		{
 			GUI* gui = getGUI(i);
-			relativePos = (e.getPosition() - gui->m_position) - math::vec2(gui->m_margin.left, gui->m_margin.top);
+			relativePos = (e.getPosition() - gui->m_position) - vec2(gui->m_margin.left, gui->m_margin.top);
 			released |= gui->onReleased(e, relativePos);
 		}
 		return released;
 	}
 
-	bool GUILayer::onMoved(const event::MouseMovedEvent& e)
+	bool GUILayer::onMoved(const MouseMovedEvent& e)
 	{
 		bool moved = false;
-		math::vec2 relativePos;
+		vec2 relativePos;
 		for (uint i = 0;i < m_renderables.size();i++)
 		{
 			GUI* gui = getGUI(i);
-			relativePos = (e.getPosition() - gui->m_position) - math::vec2(gui->m_margin.left, gui->m_margin.top);
+			relativePos = (e.getPosition() - gui->m_position) - vec2(gui->m_margin.left, gui->m_margin.top);
 			moved |= gui->onMoved(e,relativePos);
 		}
 		return moved;
 	}
 
-	bool GUILayer::onScroll(const event::MouseScrollEvent& e)
+	bool GUILayer::onScroll(const MouseScrollEvent& e)
 	{
 		return false;
 	}
@@ -100,4 +96,4 @@ namespace greet { namespace graphics {
 		setProjectionMatrix(mat3::orthographic(0, width, 0, height));
 	}
 
-}}
+}

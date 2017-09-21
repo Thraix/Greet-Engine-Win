@@ -1,24 +1,24 @@
 #include "tpcamera.h"
 
-namespace greet { namespace model {
+namespace Greet {
 
 	TPCamera::TPCamera()
-		: TPCamera(math::vec3(0,0,0), 1, 0, 0)
+		: TPCamera(vec3(0,0,0), 1, 0, 0)
 	{
 	}
 
-	TPCamera::TPCamera(math::vec3 position, float distance, float height, float rotation)
+	TPCamera::TPCamera(vec3 position, float distance, float height, float rotation)
 		:TPCamera(position, distance, height, rotation, 1, 100, -1,1)
 	{
 	
 	}
 
-	TPCamera::TPCamera(math::vec3 position, float distance, float height, float rotation, float distanceMin, float distanceMax, float heightMin, float heightMax)
+	TPCamera::TPCamera(vec3 position, float distance, float height, float rotation, float distanceMin, float distanceMax, float heightMin, float heightMax)
 		: TPCamera(position, distance, height, rotation, distanceMin, distanceMax, heightMin, heightMax, 0.5f, 0.01f, 0.005f)
 	{
 	}
 
-	TPCamera::TPCamera(math::vec3 position, float distance, float height, float rotation, float distanceMin, float distanceMax, float heightMin, float heightMax, float rotationSpeed, float heightSpeed, float distanceSpeed) 
+	TPCamera::TPCamera(vec3 position, float distance, float height, float rotation, float distanceMin, float distanceMax, float heightMin, float heightMax, float rotationSpeed, float heightSpeed, float distanceSpeed) 
 		: m_position(position), m_distance(distance), m_height(height), m_rotation(rotation), m_rotationSpeed(rotationSpeed), m_heightSpeed(heightSpeed), m_distanceSpeed(distanceSpeed)
 	{
 		m_rotationWanted = m_rotation;
@@ -26,12 +26,12 @@ namespace greet { namespace model {
 		setDistanceClamp(distanceMin, distanceMax);
 		setHeightClamp(heightMin, heightMax);
 		calculateInformation();
-		event::EventDispatcher::addMouseListener(0, *this);
+		EventDispatcher::addMouseListener(0, *this);
 	}
 
 	TPCamera::~TPCamera()
 	{
-		event::EventDispatcher::removeMouseListener(*this);
+		EventDispatcher::removeMouseListener(*this);
 	}
 
 	void TPCamera::update(float timeElapsed)
@@ -40,17 +40,17 @@ namespace greet { namespace model {
 		calculateInformation();
 	}
 
-	const math::vec3& TPCamera::getRotationVector() const
+	const vec3& TPCamera::getRotationVector() const
 	{ 
 		return m_rotationVector;
 	}
 
-	const math::mat4& TPCamera::getViewMatrix() const
+	const mat4& TPCamera::getViewMatrix() const
 	{ 
 		return m_viewMatrix;
 	}
 
-	void TPCamera::setPosition(math::vec3 pos)
+	void TPCamera::setPosition(vec3 pos)
 	{
 		m_position = pos;
 		calculateViewMatrix();
@@ -59,7 +59,7 @@ namespace greet { namespace model {
 	void TPCamera::setHeight(float height)
 	{
 		m_height = height;
-		math::clamp(&m_height, m_heightMin, m_heightMax);
+		Math::clamp(&m_height, m_heightMin, m_heightMax);
 		if (m_height != height)
 		{
 			Log::warning("Height outside of clamp, clamping.");
@@ -76,7 +76,7 @@ namespace greet { namespace model {
 	void TPCamera::setDistance(float distance)
 	{
 		m_distance = distance;
-		math::clamp(&m_distance, m_distanceMin, m_distanceMax);
+		Math::clamp(&m_distance, m_distanceMin, m_distanceMax);
 		if (m_distance != distance)
 		{
 			Log::warning("Distance outside of clamp, clamping.");
@@ -111,8 +111,8 @@ namespace greet { namespace model {
 			Log::error("Height clamp: min greater than max.");
 			return;
 		}
-		math::clamp(&min, -1, 1);
-		math::clamp(&max, -1, 1);
+		Math::clamp(&min, -1, 1);
+		Math::clamp(&max, -1, 1);
 		m_heightMin = min;
 		m_heightMax = max;
 		if (m_height < m_heightMin)
@@ -129,13 +129,13 @@ namespace greet { namespace model {
 
 	void TPCamera::calculateRotationVector()
 	{
-		m_rotationVector.x = math::toDegrees(asin(m_height));
+		m_rotationVector.x = Math::toDegrees(asin(m_height));
 		m_rotationVector.y = m_rotation;
 	}
 
 	void TPCamera::calculateViewMatrix()
 	{
-		m_viewMatrix = math::mat4::tpCamera(m_position, m_distance, m_height, m_rotation);
+		m_viewMatrix = mat4::tpCamera(m_position, m_distance, m_height, m_rotation);
 	}
 
 	void TPCamera::calculateInformation()
@@ -144,12 +144,12 @@ namespace greet { namespace model {
 		calculateViewMatrix();
 	}
 
-	bool TPCamera::onPressed(const event::MousePressedEvent& e){
+	bool TPCamera::onPressed(const MousePressedEvent& e){
 		if (e.getButton() == GLFW_MOUSE_BUTTON_1)
 		{
 			m_mouse1 = true;
-			//math::mat4 inv = ~m_viewMatrix;
-			//math::vec3 worldCoord = inv * math::vec3(e.getX(), e.getY(), 1.0f);
+			//mat4 inv = ~m_viewMatrix;
+			//vec3 worldCoord = inv * vec3(e.getX(), e.getY(), 1.0f);
 			//Log::info(worldCoord.x," ", worldCoord.y);
 		}
 		if (e.getButton() == GLFW_MOUSE_BUTTON_3)
@@ -159,7 +159,7 @@ namespace greet { namespace model {
 		return false;
 	}
 
-	bool TPCamera::onReleased(const event::MouseReleasedEvent& e)
+	bool TPCamera::onReleased(const MouseReleasedEvent& e)
 	{
 		if (e.getButton() == GLFW_MOUSE_BUTTON_1)
 		{
@@ -172,15 +172,15 @@ namespace greet { namespace model {
 		return false;
 	}
 
-	bool TPCamera::onMoved(const event::MouseMovedEvent& e) {
+	bool TPCamera::onMoved(const MouseMovedEvent& e) {
 		if (m_mouse3) {
 			m_height += e.getDY() * m_heightSpeed;
-			math::clamp(&m_height, m_heightMin, m_heightMax);
+			Math::clamp(&m_height, m_heightMin, m_heightMax);
 			m_rotationWanted += m_rotationSpeed * e.getDX();
 		}
 		else if (m_mouse1)
 		{
-			math::vec2 dpos = e.getDeltaPosition();
+			vec2 dpos = e.getDeltaPosition();
 			dpos.rotate(m_rotation);
 			m_position.x += dpos.y * m_distanceSpeed * m_distance;
 			m_position.z -= dpos.x * m_distanceSpeed * m_distance;
@@ -188,10 +188,10 @@ namespace greet { namespace model {
 		return false;
 	}
 
-	bool TPCamera::onScroll(const event::MouseScrollEvent& e) {
+	bool TPCamera::onScroll(const MouseScrollEvent& e) {
 		m_distance -= e.getScroll();
-		math::clamp(&m_distance, m_distanceMin, m_distanceMax);
+		Math::clamp(&m_distance, m_distanceMin, m_distanceMax);
 		return false;
 	}
 
-} }
+}

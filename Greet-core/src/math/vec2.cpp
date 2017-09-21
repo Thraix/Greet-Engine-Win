@@ -1,7 +1,6 @@
 #include "vec2.h"
 
-namespace greet{
-	namespace math{
+namespace Greet{
 
 	vec2::vec2()
 	{
@@ -31,12 +30,12 @@ namespace greet{
 		return x*x + y*y;
 	}
 
-	float vec2::dot(const math::vec2& vec) const 
+	float vec2::dot(const vec2& vec) const 
 	{
 		return x*vec.x + y*vec.y;
 	}
 
-	float vec2::cross(const math::vec2& vec) const
+	float vec2::cross(const vec2& vec) const
 	{
 		return x * vec.y - y * vec.x;
 	}
@@ -48,7 +47,7 @@ namespace greet{
 		return *this;
 	}
 
-	vec2& vec2::projected(const math::vec2& vec)
+	vec2& vec2::projected(const vec2& vec)
 	{
 		return multiply(dot(vec) / lengthSQ());
 	}
@@ -254,4 +253,4 @@ namespace greet{
 	{
 		return stream << vec.x << ", " << vec.y;
 	}
-}}
+}

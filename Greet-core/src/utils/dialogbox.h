@@ -1,6 +1,6 @@
 #pragma once
 
-namespace greet { namespace utils { namespace DialogBox {
+namespace Greet { namespace DialogBox {
 
 	enum class Style {
 		Info,
@@ -40,4 +40,4 @@ namespace greet { namespace utils { namespace DialogBox {
 		return show(message, title, DEFAULT_STYLE, DEFAULT_BUTTONS);
 	}
 
-}}}
+}}

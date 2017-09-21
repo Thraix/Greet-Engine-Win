@@ -5,13 +5,13 @@
 #include <graphics/textures/texturemanager.h>
 #include <graphics/textures/texture2d.h>
 #include <audio/soundmanager.h>
-#include <audio/channelmanager.h>
+#include <audio/audiochannelmanager.h>
 #include <graphics/textures/imagefactory.h>
 #include <input/joystick.h>
 #include <vector>
 #include <iostream>
-#include <internal/greetgl.h>
-#include <internal/greet_types.h>
+#include <internal/Greetgl.h>
+#include <internal/Greet_types.h>
 #include <utils/uuid.h>
 #include <listeners\joystickstate.h>
 #include <listeners\windowlistener.h>
@@ -29,7 +29,7 @@
 #define JOYSTICK_STATE_DISCONNECTED 0x0
 #define JOYSTICK_STATE_CONNECTED	0x1
 
-namespace greet { namespace graphics {
+namespace Greet {
 	class GUI;
 	typedef void(*WINDOW_RESIZE)(int width, int height);
 	typedef void(*JOYSTICK_STATE)(uint joystick, unsigned char state);
@@ -39,23 +39,23 @@ namespace greet { namespace graphics {
 	class Window
 	{
 	private:
-		static std::vector<listener::WindowResizeListener*> windowResize;
-		static std::vector<listener::WindowFocusListener*> windowFocus;
-		static std::vector<listener::JoystickStateListener*> joystickState;
+		static std::vector<WindowResizeListener*> windowResize;
+		static std::vector<WindowFocusListener*> windowFocus;
+		static std::vector<JoystickStateListener*> joystickState;
 		static void* pointer;
 		friend struct GLFWwindow;
 		static std::string title;
 		static uint width, height;
 		static GLFWwindow *window;
-		static math::vec4 bgColor;
+		static vec4 bgColor;
 
-		static std::vector<input::Joystick> joysticks;
+		static std::vector<Joystick> joysticks;
 	
 		static bool focus;
 		static bool mouseButtonDown[MAX_MOUSEBUTTONS];
 		static bool isMouseButtonDown;
-		static math::vec2 mousePos;
-		static math::vec2 mousePosPixel;
+		static vec2 mousePos;
+		static vec2 mousePosPixel;
 		static uint joystickCheck;
 	private:
 		static bool init();
@@ -84,28 +84,28 @@ namespace greet { namespace graphics {
 		static void update();
 		static void tick();
 
-		static void setBackgroundColor(math::vec4 color);
-		static void addResizeCallback(listener::WindowResizeListener* listenter);
-		static void removeResizeCallback(listener::WindowResizeListener* listener);
-		static void addWindowFocusCallback(listener::WindowFocusListener* listener);
-		static void removeWindowFocusCallback(listener::WindowFocusListener* listener);
-		static void addJoystickCallback(listener::JoystickStateListener* listener);
-		static void removeJoystickCallback(listener::JoystickStateListener* listener);
+		static void setBackgroundColor(vec4 color);
+		static void addResizeCallback(WindowResizeListener* listenter);
+		static void removeResizeCallback(WindowResizeListener* listener);
+		static void addWindowFocusCallback(WindowFocusListener* listener);
+		static void removeWindowFocusCallback(WindowFocusListener* listener);
+		static void addJoystickCallback(JoystickStateListener* listener);
+		static void removeJoystickCallback(JoystickStateListener* listener);
 
-		inline static math::vec4 getBackgroundColor() { return bgColor; }
+		inline static vec4 getBackgroundColor() { return bgColor; }
 		inline static int getWidth() { return width; };
 		inline static int getHeight() { return height; };
 		inline static void setTitle(const std::string& title) { glfwSetWindowTitle(window,title.c_str()); }
 
 		//Mouse Positions
-		inline static math::vec2 getMousePos(math::mat3 transform) { return transform.inverse()*mousePos; }
-		inline static float getMouseX(math::mat3 transform) { return (transform.inverse()*mousePos).x; }
-		inline static float getMouseY(math::mat3 transform) { return (transform.inverse()*mousePos).y; }
+		inline static vec2 getMousePos(mat3 transform) { return transform.inverse()*mousePos; }
+		inline static float getMouseX(mat3 transform) { return (transform.inverse()*mousePos).x; }
+		inline static float getMouseY(mat3 transform) { return (transform.inverse()*mousePos).y; }
 
-		inline static math::vec2 getMousePosPixel() { return mousePosPixel; }
+		inline static vec2 getMousePosPixel() { return mousePosPixel; }
 		inline static float getMouseXPixel() { return mousePosPixel.x; }
 		inline static float getMouseYPixel() { return mousePosPixel.y; }
-		inline static input::Joystick &getJoystick(uint joystick){ ASSERT(joystick < GLFW_JOYSTICKS, "WINDOW","Invalid Joystick. Ranges from 0-3: ", joystick); return joysticks[joystick]; }
+		inline static Joystick &getJoystick(uint joystick){ ASSERT(joystick < GLFW_JOYSTICKS, "WINDOW","Invalid Joystick. Ranges from 0-3: ", joystick); return joysticks[joystick]; }
 		inline static bool isJoystickConnected(uint joystick){ ASSERT(joystick < GLFW_JOYSTICKS, "WINDOW", "Invalid Joystick. Ranges from 0-3: ", joystick); return joysticks[joystick].m_connected; }
 
 
@@ -114,4 +114,4 @@ namespace greet { namespace graphics {
 		static void setUserPointer(Window* window, void* pointer);
 
 	};
-}}
+}

@@ -1,12 +1,12 @@
 #pragma once
 
 #include <logging/log.h>
-#include <internal/greetgl.h>
+#include <internal/Greetgl.h>
 #include <utils/imageutils.h>
 #include <FreeImage.h>
 #include <graphics/textures/texture.h>
 
-namespace greet { namespace graphics{
+namespace Greet {
 	class Texture2D : public Texture
 	{
 		friend class FrameBufferObject;
@@ -26,5 +26,4 @@ namespace greet { namespace graphics{
 		void genTexture(BYTE* bits, uint bpp);
 
 	};
-
-}}
+}

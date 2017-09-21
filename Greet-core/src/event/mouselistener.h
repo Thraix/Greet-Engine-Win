@@ -2,7 +2,7 @@
 
 #include <event/mouseevent.h>
 
-namespace greet { namespace event {
+namespace Greet {
 
 	class MouseListener
 	{
@@ -18,4 +18,4 @@ namespace greet { namespace event {
 		virtual bool onMoved(const MouseMovedEvent& e) = 0;// { return false; };
 		virtual bool onScroll(const MouseScrollEvent& e) = 0;
 	};
-}}
+}

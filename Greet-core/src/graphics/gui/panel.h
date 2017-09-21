@@ -3,12 +3,12 @@
 #include "border.h"
 #include "gui.h"
 
-namespace greet {namespace graphics {
+namespace Greet {
 	
 	class Panel : public GUI
 	{
 		public:
-			Panel(const math::vec2& position, const math::vec2& size);
+			Panel(const vec2& position, const vec2& size);
 	};
 
-}}
+}

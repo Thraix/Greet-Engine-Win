@@ -7,9 +7,9 @@
 #include <utils/utils.h>
 #include <graphics/gui/gui.h>
 
-namespace greet { namespace graphics {
+namespace Greet {
 
-	class GUILayer : public Layer, public event::KeyListener, public event::MouseListener, public listener::WindowResizeListener
+	class GUILayer : public Layer, public KeyListener, public MouseListener, public WindowResizeListener
 	{
 
 	private:
@@ -19,14 +19,14 @@ namespace greet { namespace graphics {
 		virtual ~GUILayer();
 		void add(Renderable* renderable) override;
 		void add(GUI* renderable);
-		bool onPressed(const event::KeyPressedEvent& e) override;
-		bool onReleased(const event::KeyReleasedEvent& e) override;
-		bool onTyped(const event::KeyTypedEvent& e) override;
-		bool onPressed(const event::MousePressedEvent& e) override;
-		bool onReleased(const event::MouseReleasedEvent& e) override;
-		bool onMoved(const event::MouseMovedEvent& e) override;
-		bool onScroll(const event::MouseScrollEvent& e) override;
+		bool onPressed(const KeyPressedEvent& e) override;
+		bool onReleased(const KeyReleasedEvent& e) override;
+		bool onTyped(const KeyTypedEvent& e) override;
+		bool onPressed(const MousePressedEvent& e) override;
+		bool onReleased(const MouseReleasedEvent& e) override;
+		bool onMoved(const MouseMovedEvent& e) override;
+		bool onScroll(const MouseScrollEvent& e) override;
 		void windowResize(int width, int height) override;
 	};
 
-}}
+}

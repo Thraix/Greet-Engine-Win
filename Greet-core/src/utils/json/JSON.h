@@ -1,9 +1,9 @@
 #pragma once
 
-#include <internal/greet_types.h>
+#include <internal/Greet_types.h>
 #include <logging\log.h>
 
-namespace greet { namespace utils {
+namespace Greet {
 
 	class JSON
 	{
@@ -47,4 +47,4 @@ namespace greet { namespace utils {
 			m_indent[--ostream_indent] = '\0';
 		}
 	};
-}}
+}

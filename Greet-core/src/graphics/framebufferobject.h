@@ -1,12 +1,12 @@
 #pragma once
 
-#include <internal/greet_types.h>
-#include <internal/greetgl.h>
+#include <internal/Greet_types.h>
+#include <internal/Greetgl.h>
 #include <graphics/textures/texture2d.h>
 #include <graphics/window.h>
 #include <map>
 
-namespace greet { namespace graphics {
+namespace Greet {
 
 	class FrameBufferObject
 	{
@@ -28,4 +28,4 @@ namespace greet { namespace graphics {
 	private:
 		void attachDepthTexture();
 	};
-}}
+}

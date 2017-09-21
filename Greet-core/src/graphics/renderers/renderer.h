@@ -1,26 +1,26 @@
 #pragma once
 
 #include <vector>
-#include <internal/greetgl.h>
+#include <internal/Greetgl.h>
 #include <math/maths.h>
 #include <logging/log.h>
 
-namespace greet{ namespace graphics{
+namespace Greet{
 
 	class Renderer
 	{
 	protected:
-		std::vector<math::mat3> m_transformationStack;
-		const math::mat3* m_transformationBack;
+		std::vector<mat3> m_transformationStack;
+		const mat3* m_transformationBack;
 
 		Renderer()
 		{
-			m_transformationStack.push_back(math::mat3::identity());
+			m_transformationStack.push_back(mat3::identity());
 			m_transformationBack = &m_transformationStack.back();
 		}
 
 	public:
-		void pushMatrix(const math::mat3 &matrix, bool override = false)
+		void pushMatrix(const mat3 &matrix, bool override = false)
 		{
 			if (override)
 				m_transformationStack.push_back(matrix);
@@ -38,12 +38,12 @@ namespace greet{ namespace graphics{
 			m_transformationBack = &m_transformationStack.back();
 		}
 
-		const math::mat3& getMatrix()
+		const mat3& getMatrix()
 		{
 			return *m_transformationBack;
 		}
 
-		const math::mat3& getMatrix(uint index)
+		const mat3& getMatrix(uint index)
 		{
 			if (index >= 0 && index<m_transformationStack.size())
 				return m_transformationStack[index];
@@ -51,4 +51,4 @@ namespace greet{ namespace graphics{
 			return m_transformationStack[0];
 		}
 	};
-}}
+}

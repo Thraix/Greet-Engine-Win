@@ -8,9 +8,8 @@
 #include <Box2D/Common/b2Math.h>
 #include <math.h>
 #include <logging/log.h>
-#include <utils/logutils.h>
 
-namespace greet{ namespace math{
+namespace Greet{
 	
 	struct vec2
 	{
@@ -22,10 +21,10 @@ namespace greet{ namespace math{
 
 		float length();
 		float lengthSQ();
-		float dot(const math::vec2& vec) const;
-		float cross(const math::vec2& vec) const;
+		float dot(const vec2& vec) const;
+		float cross(const vec2& vec) const;
 		vec2& abs();
-		vec2& projected(const math::vec2& vec);
+		vec2& projected(const vec2& vec);
 		vec2& normalize();
 		vec2& rotate(const float deg);
 		vec2& rotateR(const float rad);
@@ -74,4 +73,4 @@ namespace greet{ namespace math{
 		}
 	};
 
-}}
+}

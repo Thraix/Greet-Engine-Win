@@ -2,7 +2,7 @@
 
 #include "particlepool.h"
 
-namespace greet { namespace graphics{
+namespace Greet {
 	ParticlePool::ParticlePool(int particles)
 		:m_particles(particles), m_usedParticles(0)
 	{
@@ -49,7 +49,7 @@ namespace greet { namespace graphics{
 		}
 	}
 
-	bool ParticlePool::create(math::vec2 pos, math::vec2 size, math::vec2 vel, math::vec2 acc, uint color, float minspeed, float maxspeed, float frameTime, Sprite* sprite)
+	bool ParticlePool::create(vec2 pos, vec2 size, vec2 vel, vec2 acc, uint color, float minspeed, float maxspeed, float frameTime, Sprite* sprite)
 	{
 		if (m_free.begin() != m_free.end()){
 			(*m_free.begin())->define(pos, size, vel, acc, color, minspeed, maxspeed, frameTime, sprite);
@@ -76,6 +76,6 @@ namespace greet { namespace graphics{
 	{
 		return m_particles-m_usedParticles;
 	}
-}}
+}
 
 #endif

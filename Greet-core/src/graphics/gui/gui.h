@@ -15,7 +15,7 @@
 
 #define GUI_DEFAULT_BACKGROUND 0xff444444
 
-namespace greet{ namespace graphics {
+namespace Greet{
 	class GUI : public Group
 	{
 		protected:
@@ -26,17 +26,17 @@ namespace greet{ namespace graphics {
 		public:
 			LTRB m_padding;
 			LTRB m_margin;
-			math::vec2 m_position;
-			math::vec2 m_size;
+			vec2 m_position;
+			vec2 m_size;
 			uint m_backgroundColor;
 			bool m_renderBackground = true;
-			std::vector<listener::OnClickListener*> m_onClickListeners;
+			std::vector<OnClickListener*> m_onClickListeners;
 			static Sprite* m_mask;
 
 
 		public:
-			GUI(const math::vec2& position, const math::vec2& size);
-			GUI(const math::vec2& position, const math::vec2& size, const LTRB& margin, const LTRB& padding);
+			GUI(const vec2& position, const vec2& size);
+			GUI(const vec2& position, const vec2& size, const LTRB& margin, const LTRB& padding);
 			virtual ~GUI();
 			void setBackgroundColor(uint bgColor) { m_backgroundColor = bgColor;}
 			//void renderBackground(bool renderBackground) {m_background->render = renderBackground;}
@@ -47,21 +47,21 @@ namespace greet{ namespace graphics {
 
 			virtual void onMouseEnter() { /*Log::info("mouse entered"); */};
 			virtual void onMouseExit() { /*Log::info("mouse exited");*/ };
-			virtual bool onPressed(event::KeyPressedEvent& event);
-			virtual bool onReleased(event::KeyReleasedEvent& event);
-			virtual bool onPressed(const event::MousePressedEvent& event, math::vec2 relativeMousePos);
-			virtual bool onReleased(const event::MouseReleasedEvent& event, math::vec2 relativeMousePos);
-			virtual bool onMoved(const event::MouseMovedEvent& event, math::vec2 relativeMousePos);
+			virtual bool onPressed(KeyPressedEvent& event);
+			virtual bool onReleased(KeyReleasedEvent& event);
+			virtual bool onPressed(const MousePressedEvent& event, vec2 relativeMousePos);
+			virtual bool onReleased(const MouseReleasedEvent& event, vec2 relativeMousePos);
+			virtual bool onMoved(const MouseMovedEvent& event, vec2 relativeMousePos);
 
-			void addOnClickListener(listener::OnClickListener* onClick) { m_onClickListeners.push_back(onClick); };
-			void removeOnClickListener(listener::OnClickListener* onClick) { m_onClickListeners.erase(std::remove(m_onClickListeners.begin(), m_onClickListeners.end(),onClick), m_onClickListeners.end()); };
+			void addOnClickListener(OnClickListener* onClick) { m_onClickListeners.push_back(onClick); };
+			void removeOnClickListener(OnClickListener* onClick) { m_onClickListeners.erase(std::remove(m_onClickListeners.begin(), m_onClickListeners.end(),onClick), m_onClickListeners.end()); };
 
-			bool isInside(const math::vec2& position);
-			math::vec2 getContentSize() const { return m_size -math::vec2(m_padding.left+m_padding.right,m_padding.top+m_padding.bottom); }
-			const math::vec2& getRealPosition();
-			inline const math::vec2& getPosition() const override { return m_position;}
-			inline const math::vec2& getSize() const override { return m_size;}
+			bool isInside(const vec2& position);
+			vec2 getContentSize() const { return m_size -vec2(m_padding.left+m_padding.right,m_padding.top+m_padding.bottom); }
+			const vec2& getRealPosition();
+			inline const vec2& getPosition() const override { return m_position;}
+			inline const vec2& getSize() const override { return m_size;}
 			inline uint getBackgroundColor() const {return m_backgroundColor;}
 			inline bool isRenderBackground() const { return m_renderBackground;}
 	};
-}}
+}

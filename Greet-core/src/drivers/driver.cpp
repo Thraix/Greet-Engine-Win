@@ -4,7 +4,7 @@
 
 #include <logging/log.h>
 
-namespace greet { namespace drivers {
+namespace Greet {
 	Driver::Driver(float time, DriverListener* listener) 
 		: m_time(time), m_elapsed(0), m_listener(listener)
 	{
@@ -41,4 +41,4 @@ namespace greet { namespace drivers {
 	{
 		m_listener->onFinished();
 	}
-}}
+}

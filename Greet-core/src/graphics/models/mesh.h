@@ -1,6 +1,6 @@
 #pragma once
 
-#include <internal/greetgl.h>
+#include <internal/Greetgl.h>
 #include <math/maths.h>
 #include <logging\logger.h>
 #include <map>
@@ -9,7 +9,7 @@
 #include <graphics/models/meshdata.h>
 #include <utils/errorhandler.h>
 
-namespace greet { namespace model {
+namespace Greet {
 	class Mesh
 	{
 	private:
@@ -23,9 +23,9 @@ namespace greet { namespace model {
 		bool m_clockwise = false;
 
 	public:
-		Mesh(const math::vec3* vertices, uint vertexCount, const uint* indices, uint indexCount);
+		Mesh(const vec3* vertices, uint vertexCount, const uint* indices, uint indexCount);
 		Mesh(MeshData* data);
-		void init(const math::vec3* vertices, uint vertexCount, const uint* indices, uint indexCount);
+		void init(const vec3* vertices, uint vertexCount, const uint* indices, uint indexCount);
 		virtual ~Mesh();
 		inline uint getVAO()  const { return m_vaoId; };
 
@@ -39,15 +39,15 @@ namespace greet { namespace model {
 
 		inline void setEnableCulling(bool culling) { m_culling = culling; }
 		inline bool isEnableCulling() const { return m_culling; }
-		void addAttribute(uint location, const math::vec3* data);
-		void addAttribute(uint location, const math::vec2* data);
+		void addAttribute(uint location, const vec3* data);
+		void addAttribute(uint location, const vec2* data);
 		//void addAttribute(uint location, uint attributeSize, const float* data);
 		void addAttribute(uint location, uint attributeSize, const uint* data);
 		void addAttribute(AttributeData* data);
-		void setDefaultAttribute4f(uint location, const math::vec4& data);
-		void setDefaultAttribute3f(uint location, const math::vec3& data);
+		void setDefaultAttribute4f(uint location, const vec4& data);
+		void setDefaultAttribute3f(uint location, const vec3& data);
 	private:
 		void enableAttributes() const;
 		void disableAttributes() const;
 	};
-}}
+}

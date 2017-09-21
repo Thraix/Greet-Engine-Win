@@ -1,15 +1,15 @@
 #pragma once
 
 #include <math/maths.h>
-#include <internal/greet_types.h>
+#include <internal/Greet_types.h>
 
-namespace greet {
+namespace Greet {
 	class KeyboardControl
 	{
 	public:
 		
 	private:
-		math::vec2 velocity;
+		vec2 velocity;
 		float speed;
 		bool yPos;
 		bool yNeg;
@@ -30,9 +30,9 @@ namespace greet {
 			xNeg = false;
 		}
 
-		math::vec2 getVelocity()
+		vec2 getVelocity()
 		{
-			velocity = math::vec2(0, 0);
+			velocity = vec2(0, 0);
 			velocity.x += xPos ? speed : 0;
 			velocity.x -= xNeg ? speed : 0;
 			velocity.y += yPos ? speed : 0;

@@ -1,7 +1,7 @@
 #include "driverdispatcher.h"
 
-namespace greet { namespace drivers {
-		
+namespace Greet {
+
 	std::vector<Driver*> DriverDispatcher::m_drivers;
 
 	void DriverDispatcher::addDriver(Driver* driver)
@@ -25,4 +25,4 @@ namespace greet { namespace drivers {
 		}
 	}
 
-}}
+}

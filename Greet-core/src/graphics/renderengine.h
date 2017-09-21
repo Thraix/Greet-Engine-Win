@@ -5,7 +5,7 @@
 #include <graphics/layers/layer3d.h>
 #include <graphics/layers/guilayer.h>
 
-namespace greet { namespace graphics {
+namespace Greet {
 	class RenderEngine
 	{
 
@@ -27,4 +27,4 @@ namespace greet { namespace graphics {
 
 		
 	};
-}}
+}

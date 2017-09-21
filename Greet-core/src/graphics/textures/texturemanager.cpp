@@ -1,16 +1,16 @@
 #include "texturemanager.h"
 
-namespace greet{ namespace graphics{
+namespace Greet{
 
-	std::vector<graphics::Texture*> TextureManager::m_textures;
+	std::vector<Texture*> TextureManager::m_textures;
 
-	void TextureManager::add(graphics::Texture* texture)
+	void TextureManager::add(Texture* texture)
 	{
 		for (int i = 0;i < m_textures.size();i++)
 		{
 			if (texture->getName() == m_textures[i]->getName())
 			{
-				utils::ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_ADD);
+				ErrorHandle::setErrorCode(Greet_ERROR_MANAGER_ADD);
 				Log::error("Given texture name already exists: ", texture->getName().c_str());
 				return;
 			}
@@ -18,7 +18,7 @@ namespace greet{ namespace graphics{
 		m_textures.push_back(texture);
 	}
 
-	graphics::Texture* TextureManager::get(const std::string& texturename)
+	Texture* TextureManager::get(const std::string& texturename)
 	{
 		uint size = m_textures.size();
 		for (uint i = 0; i < size; i++)
@@ -28,7 +28,7 @@ namespace greet{ namespace graphics{
 				return m_textures[i];
 			}
 		}
-		utils::ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_GET);
+		ErrorHandle::setErrorCode(Greet_ERROR_MANAGER_GET);
 		Log::error("Could not find the given texture: ", texturename.c_str());
 		return m_textures[0];
 	}
@@ -51,4 +51,4 @@ namespace greet{ namespace graphics{
 		}
 	}
 
-}}
+}

@@ -1,6 +1,6 @@
 #include "atlas.h"
 
-namespace greet { namespace graphics{
+namespace Greet {
 
 	Atlas::Atlas(std::string atlasName, uint atlasSize, uint textureSize)
 		: Texture2D(0,atlasSize,atlasSize,atlasName), m_textureSize(textureSize)
@@ -55,7 +55,7 @@ namespace greet { namespace graphics{
 		uint width;
 		uint height;
 		uint bpp;
-		BYTE* bits = utils::loadImage(filePath.c_str(), &width, &height,&bpp);
+		BYTE* bits = ImageUtils::loadImage(filePath.c_str(), &width, &height,&bpp);
 		if (width != m_textureSize || height != m_textureSize)
 		{
 			Log::error("The given textures size is not valid: ",name.c_str()," (",width,",",height,")");
@@ -116,10 +116,10 @@ namespace greet { namespace graphics{
 
 	Sprite* Atlas::getSprite(std::string name)
 	{
-		return getSpriteFromSheet(name, math::vec2(0, 0), math::vec2(1, 1));
+		return getSpriteFromSheet(name, vec2(0, 0), vec2(1, 1));
 	}
 
-	Sprite* Atlas::getSpriteFromSheet(std::string sheetName, math::vec2 texPos, math::vec2 texSize)
+	Sprite* Atlas::getSpriteFromSheet(std::string sheetName, vec2 texPos, vec2 texSize)
 	{
 		uint size = m_textureNames.size();
 		for (uint i = 0; i < size; i++)
@@ -130,8 +130,8 @@ namespace greet { namespace graphics{
 				uint x = j % (m_width / m_textureSize);
 				uint y = (j - x) / (m_width / m_textureSize);
 				float size = (float)m_textureSize / (float)m_width;
-				math::vec2 spriteSize = math::vec2(size,size);
-				math::vec2 spritePos = spriteSize*math::vec2(x, y);
+				vec2 spriteSize = vec2(size,size);
+				vec2 spritePos = spriteSize*vec2(x, y);
 				spritePos += texPos * spriteSize;
 				spriteSize *= texSize;
 				return new Sprite(this, spritePos, spriteSize);
@@ -170,4 +170,4 @@ namespace greet { namespace graphics{
 			}
 		}
 	}
-}}
+}

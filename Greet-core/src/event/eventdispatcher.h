@@ -11,15 +11,15 @@
 
 #define DISPATCHER_GUI BIT(24)
 
-namespace greet { namespace graphics {
+namespace Greet {
 	class Window;
-} }
+}
 
-namespace greet { namespace event {
+namespace Greet {
 	class EventDispatcher
 	{
 	public:
-		friend class greet::graphics::Window;
+		friend class Window;
 		static void addMouseListener(uint priority, MouseListener& listener);
 		static void addKeyListener(uint priority, KeyListener& listener);
 		static void removeMouseListener(MouseListener& listener);
@@ -37,4 +37,4 @@ namespace greet { namespace event {
 		static void onKeyReleased(const KeyReleasedEvent& e);
 		static void onKeyTyped(const KeyTypedEvent& e);
 	};
-}}
+}

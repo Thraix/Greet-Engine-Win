@@ -8,11 +8,35 @@
 #include <Box2D/Dynamics/b2Body.h>
 #include <Box2D/Dynamics/b2Fixture.h>
 #include <Box2D/Collision/Shapes/b2PolygonShape.h>
-#include <internal/greet_types.h>
+#include <internal/Greet_types.h>
 #include <iostream>
 
 
-namespace greet{ namespace math{
+namespace Greet{ namespace Math {
+
+	inline float roundDown(float numToRound, float multiple)
+	{
+		if (multiple == 0)
+			return 0;
+		return ((int)(numToRound / multiple))*multiple;
+	}
+
+	inline float roundUp(float numToRound, float multiple)
+	{
+		if (multiple == 0)
+			return 0;
+		float ans = ((int)(numToRound / multiple))*multiple;
+		return ans < numToRound ? ans + multiple : ans;
+	}
+
+	inline float roundClose(float numToRound, float multiple)
+	{
+		if (multiple == 0)
+			return 0;
+		float down = ((int)(numToRound / multiple))*multiple;
+		float up = down < numToRound ? down + multiple : down;
+		return (numToRound - down) < (up - numToRound) ? down : up;
+	}
 
 	inline bool isPositive(float val)
 	{
@@ -46,7 +70,7 @@ namespace greet{ namespace math{
 			vec2* vertices = new vec2[shape->GetVertexCount()];
 			for (uint i = 0; i < shape->GetVertexCount(); i++)
 			{
-				vertices[i] = math::vec2(shape->GetVertex(i)).rotateR(body->GetAngle());
+				vertices[i] = vec2(shape->GetVertex(i)).rotateR(body->GetAngle());
 			}
 			return vertices;
 		}
@@ -75,25 +99,25 @@ namespace greet{ namespace math{
 			b2PolygonShape* shape = (b2PolygonShape*)f->GetShape();
 			if (shape->GetVertexCount() == 4)
 			{
-				math::vec2 pos1 = shape->GetVertex(0);
-				math::vec2 pos2 = shape->GetVertex(2);
+				vec2 pos1 = shape->GetVertex(0);
+				vec2 pos2 = shape->GetVertex(2);
 
-				math::vec2 pos3 = shape->GetVertex(1);
-				math::vec2 pos4 = shape->GetVertex(3);
+				vec2 pos3 = shape->GetVertex(1);
+				vec2 pos4 = shape->GetVertex(3);
 
 				// Check if the polygon is a rectangle
 				if ((pos3.x == pos1.x || pos3.x == pos2.x) && (pos4.x == pos1.x || pos4.x == pos2.x))
 				{
 					if ((pos3.y == pos1.y || pos3.y == pos2.y) && (pos4.y == pos1.y || pos4.y == pos2.y))
 					{
-						math::vec2 pos = body->GetPosition() + pos1;
-						math::vec2 size = (pos1 - pos2).abs();
-						return math::vec4(pos.x, pos.y, size.x, size.y);
+						vec2 pos = body->GetPosition() + pos1;
+						vec2 size = (pos1 - pos2).abs();
+						return vec4(pos.x, pos.y, size.x, size.y);
 					}
 				}
 			}
 		}
-		return math::vec4(0, 0, 0, 0);
+		return vec4(0, 0, 0, 0);
 	}
 
 	inline b2Vec2* getPoly(uint vertices, float size, bool min = true, float rotation = 0)
@@ -109,13 +133,13 @@ namespace greet{ namespace math{
 
 		for (uint i = 0; i < vertices; i++)
 		{
-			math::vec2 v = math::vec2(0, -size).rotateR(rotation + rad*i);
+			vec2 v = vec2(0, -size).rotateR(rotation + rad*i);
 			triangle[i] = b2Vec2(v.x, v.y);
 		}
 		return triangle;
 	}
 
-	inline b2Vec2* getRectangle(const math::vec2& size)
+	inline b2Vec2* getRectangle(const vec2& size)
 	{
 
 		b2Vec2* rectangle = new b2Vec2[4];
@@ -133,7 +157,7 @@ namespace greet{ namespace math{
 
 		for (uint i = 0; i < vertexCount; i++)
 		{
-			vec[i] = math::vec2(vecs[i]);
+			vec[i] = vec2(vecs[i]);
 		}
 		return vec;
 	}

@@ -1,5 +1,5 @@
 #include "uuid.h"
-namespace greet {namespace utils {
+namespace Greet {
 
 	UUID* UUID::s_instance;
 
@@ -24,4 +24,4 @@ namespace greet {namespace utils {
 	{
 		delete s_instance;
 	}
-}}
+}

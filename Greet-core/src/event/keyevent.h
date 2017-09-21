@@ -3,7 +3,7 @@
 #include <math/maths.h>
 #include <event/event.h>
 
-namespace greet { namespace event {
+namespace Greet {
 
 	class KeyButtonEvent : public Event
 	{
@@ -40,4 +40,4 @@ namespace greet { namespace event {
 		uint getCharCode() const { return m_charCode; }
 	};
 
-}}
+}

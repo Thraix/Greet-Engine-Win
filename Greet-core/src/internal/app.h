@@ -5,13 +5,12 @@
 #include <logging\Log.h>
 #include <graphics/renderengine.h>
 
-namespace greet { namespace internal {
+namespace Greet {
 
-
-	class App : public listener::WindowListener, public listener::JoystickStateListener
+	class App : public WindowListener, public JoystickStateListener
 	{
 	protected:
-		utils::Timer* m_timer;
+		Timer* m_timer;
 		uint m_fps;
 		uint m_ups;
 		double frameCap = 0;
@@ -56,4 +55,4 @@ namespace greet { namespace internal {
 	private:
 		void run();
 	};
-}}
+}

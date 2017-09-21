@@ -1,12 +1,12 @@
 #pragma once
 
 #include <string>
-#include <internal/greet_types.h>
-#include <internal/greetgl.h>
+#include <internal/Greet_types.h>
+#include <internal/Greetgl.h>
 #include <utils/imageutils.h>
 #include <graphics/textures/texture.h>
 
-namespace greet { namespace graphics {
+namespace Greet {
 
 	class CubeMap : public Texture
 	{
@@ -21,4 +21,4 @@ namespace greet { namespace graphics {
 		void loadImage(const std::string& image, uint mapLocation);
 		void loadImage(BYTE* bits, uint width, uint height, uint bpp, uint mapLocation);
 	};
-}}
+}

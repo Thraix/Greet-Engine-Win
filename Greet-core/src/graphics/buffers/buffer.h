@@ -1,8 +1,8 @@
 #pragma once
 
-#include <internal/greetgl.h>
+#include <internal/Greetgl.h>
 
-namespace greet { namespace graphics {
+namespace Greet {
 	class Buffer
 	{
 	private:
@@ -18,4 +18,4 @@ namespace greet { namespace graphics {
 		inline GLuint getComponentCount() const { return m_componentCount; }
 
 	};
-}}
+}

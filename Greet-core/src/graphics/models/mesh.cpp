@@ -1,8 +1,8 @@
 #include "mesh.h"
 
-namespace greet { namespace model {
+namespace Greet {
 
-	Mesh::Mesh(const math::vec3* vertices, uint vertexCount, const uint* indices, uint indexCount)
+	Mesh::Mesh(const vec3* vertices, uint vertexCount, const uint* indices, uint indexCount)
 	{
 		init(vertices, vertexCount, indices, indexCount);
 	}
@@ -16,7 +16,7 @@ namespace greet { namespace model {
 		}
 	}
 
-	void Mesh::init(const math::vec3* vertices, uint vertexCount, const uint* indices, uint indexCount)
+	void Mesh::init(const vec3* vertices, uint vertexCount, const uint* indices, uint indexCount)
 	{
 		m_vertexCount = vertexCount;
 		m_indexCount = indexCount;
@@ -96,12 +96,12 @@ namespace greet { namespace model {
 		}
 	}
 
-	void Mesh::addAttribute(uint location, const math::vec3* data)
+	void Mesh::addAttribute(uint location, const vec3* data)
 	{
 
 		if (m_vbos.find(location) != m_vbos.end())
 		{
-			utils::ErrorHandle::setErrorCode(GREET_ERROR_MESH_LOCATION);
+			ErrorHandle::setErrorCode(Greet_ERROR_MESH_LOCATION);
 			Log::error("Shader location already used in mesh: ", location);
 			return;
 		}
@@ -118,11 +118,11 @@ namespace greet { namespace model {
 		glBindVertexArray(0);
 	}
 
-	void Mesh::addAttribute(uint location, const math::vec2* data)
+	void Mesh::addAttribute(uint location, const vec2* data)
 	{
 		if (m_vbos.find(location) != m_vbos.end())
 		{
-			utils::ErrorHandle::setErrorCode(GREET_ERROR_MESH_LOCATION);
+			ErrorHandle::setErrorCode(Greet_ERROR_MESH_LOCATION);
 			Log::error("Shader location already used in mesh: ", location);
 			return;
 		}
@@ -143,7 +143,7 @@ namespace greet { namespace model {
 	{
 		if (m_vbos.find(location) != m_vbos.end())
 		{
-			utils::ErrorHandle::setErrorCode(GREET_ERROR_MESH_LOCATION);
+			ErrorHandle::setErrorCode(Greet_ERROR_MESH_LOCATION);
 			Log::error("Shader location already used in mesh: ",location);
 			return;
 		}
@@ -164,7 +164,7 @@ namespace greet { namespace model {
 	{
 		if (m_vbos.find(data->location) != m_vbos.end())
 		{
-			utils::ErrorHandle::setErrorCode(GREET_ERROR_MESH_LOCATION);
+			ErrorHandle::setErrorCode(Greet_ERROR_MESH_LOCATION);
 			Log::error("Shader location already used in mesh: ",data->location);
 			return;
 		}
@@ -180,17 +180,17 @@ namespace greet { namespace model {
 		glBindVertexArray(0);
 	}
 
-	void Mesh::setDefaultAttribute4f(uint location, const math::vec4& data)
+	void Mesh::setDefaultAttribute4f(uint location, const vec4& data)
 	{
 		glBindVertexArray(m_vaoId);
 		glVertexAttrib4f(location,data.x,data.y,data.z,data.w);
 		glBindVertexArray(0);	
 	}
 
-	void Mesh::setDefaultAttribute3f(uint location, const math::vec3& data)
+	void Mesh::setDefaultAttribute3f(uint location, const vec3& data)
 	{
 		glBindVertexArray(m_vaoId);
 		glVertexAttrib3f(location,data.x,data.y,data.z);
 		glBindVertexArray(0);
 	}
-}}
+}

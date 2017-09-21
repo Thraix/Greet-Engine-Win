@@ -1,13 +1,13 @@
 #include "entitymodel.h"
 
-namespace greet { namespace model {
+namespace Greet {
 	EntityModel::EntityModel(const MaterialModel& model, float x, float y, float z, float sx, float sy, float sz, float rx, float ry, float rz)
-		: m_model(model), m_position(math::vec3(x,y,z)), m_scale(math::vec3(sx,sy,sz)), m_rotation(math::vec3(rx,ry,rz))
+		: m_model(model), m_position(vec3(x,y,z)), m_scale(vec3(sx,sy,sz)), m_rotation(vec3(rx,ry,rz))
 	{
 		updateTransformation();
 	}
 
-	EntityModel::EntityModel(const MaterialModel& model, math::vec3 position, math::vec3 scale, math::vec3 rotation)
+	EntityModel::EntityModel(const MaterialModel& model, vec3 position, vec3 scale, vec3 rotation)
 		: m_model(model), m_position(position), m_scale(scale), m_rotation(rotation)
 	{
 		updateTransformation();
@@ -24,7 +24,7 @@ namespace greet { namespace model {
 
 	void EntityModel::updateTransformation()
 	{
-		m_transformationMatrix = math::mat4::transformationMatrix(m_position, m_rotation, m_scale);
+		m_transformationMatrix = mat4::transformationMatrix(m_position, m_rotation, m_scale);
 		m_hasChanged = false;
 	}
-}}
+}

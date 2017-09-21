@@ -1,15 +1,14 @@
 #pragma once
 
-#include <utils/logutils.h>
 #include <logging/log.h>
-#include <internal/greetgl.h>
+#include <internal/Greetgl.h>
 #include <iostream>
-#include <internal/greet_types.h>
+#include <internal/Greet_types.h>
 #include <graphics/textures/imagefactory.h>
 #include <fstream>
 #include <utils/errorhandler.h>
 
-namespace greet {namespace utils{
+namespace Greet { namespace ImageUtils {
 	
 	inline void printImage(BYTE* bits, uint width, uint height, uint bpp)
 	{
@@ -19,10 +18,10 @@ namespace greet {namespace utils{
 			BYTE* pixel = (BYTE*)bits;
 			for (uint x = 0;x<width;x++)
 			{
-				std::string s = "pixel(" + utils::toString(x) + "," + utils::toString(y) + ")";
-				s += "(" + utils::toString((uint)pixel[FI_RGBA_RED]) + ",";
-				s += utils::toString((uint)pixel[FI_RGBA_GREEN]) + ",";
-				s += utils::toString((uint)pixel[FI_RGBA_BLUE]) + ")";
+				std::string s = "pixel(" + StringUtils::toString(x) + "," + StringUtils::toString(y) + ")";
+				s += "(" + StringUtils::toString((uint)pixel[FI_RGBA_RED]) + ",";
+				s += StringUtils::toString((uint)pixel[FI_RGBA_GREEN]) + ",";
+				s += StringUtils::toString((uint)pixel[FI_RGBA_BLUE]) + ")";
 				pixel += bpp;
 				Log::info(s);
 			}
@@ -66,8 +65,8 @@ namespace greet {namespace utils{
 		if (fif == FIF_UNKNOWN)
 		{
 			Log::error("FreeImage file format is not supported or file not exist: ", filepath);
-			ErrorHandle::setErrorCode(GREET_ERROR_IMAGE_FORMAT);
-			return graphics::ImageFactory::getBadFormatImage(width,height,bpp);
+			ErrorHandle::setErrorCode(Greet_ERROR_IMAGE_FORMAT);
+			return ImageFactory::getBadFormatImage(width,height,bpp);
 		}
 
 		if (FreeImage_FIFSupportsReading(fif))
@@ -75,8 +74,8 @@ namespace greet {namespace utils{
 		if (!dib)
 		{
 			Log::error("FreeImage file Cannot be read: ", filepath);
-			ErrorHandle::setErrorCode(GREET_ERROR_IMAGE_READ);
-			return graphics::ImageFactory::getCantReadImage(width,height,bpp);
+			ErrorHandle::setErrorCode(Greet_ERROR_IMAGE_READ);
+			return ImageFactory::getCantReadImage(width,height,bpp);
 		}
 
 
@@ -88,13 +87,13 @@ namespace greet {namespace utils{
 		if (*bpp != 24 && *bpp != 32)
 		{
 			Log::error("Bits per pixel is not valid (24 or 32): ", filepath);
-			ErrorHandle::setErrorCode(GREET_ERROR_IMAGE_BPP);
+			ErrorHandle::setErrorCode(Greet_ERROR_IMAGE_BPP);
 			delete[] bits;
-			return graphics::ImageFactory::getBadBPPImage(width,height,bpp);
+			return ImageFactory::getBadBPPImage(width,height,bpp);
 		}
 
 		//printImage(bits,*width, *height, *bpp);
-		//return graphics::ImageFactory::getBadBPPImage(width, height, bpp);
+		//return ImageFactory::getBadBPPImage(width, height, bpp);
 
 		int size = (*width) * (*height) * (*bpp >> 3);
 		BYTE* result = new BYTE[size];
@@ -109,8 +108,8 @@ namespace greet {namespace utils{
 		if (cx >= width || cy >= height || cx + cwidth > width || cy + cheight > height)
 		{
 			Log::error("Invalid bounds when cropping image. ", cx, ", ", cy, ", ", cwidth, ", ", cheight);
-			ErrorHandle::setErrorCode(GREET_ERROR_IMAGE_CROP);
-			return graphics::ImageFactory::getCropErrorImage(&width,&height,&bpp);
+			ErrorHandle::setErrorCode(Greet_ERROR_IMAGE_CROP);
+			return ImageFactory::getCropErrorImage(&width,&height,&bpp);
 		}
 		cy = height - cheight - cy;
 		bpp = bpp >> 3;

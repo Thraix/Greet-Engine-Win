@@ -1,10 +1,10 @@
 #include "JSONLoader.h"
 
-namespace greet { namespace utils {
+namespace Greet {
 
 	JSONObject JSONLoader::loadJSON(const std::string& filename)
 	{
-		std::string file = read_file(filename.c_str());
+		std::string file = FileUtils::read_file(filename.c_str());
 		uint currentPos = file.find("{");
 		while (isIndent(file, currentPos));
 		JSONObject obj;
@@ -225,14 +225,14 @@ namespace greet { namespace utils {
 		std::string retValue;
 		setString(file,lastPos,currentPos,&retValue);
 		retValue = retValue.substr(1,retValue.size()-2); // remove both " around string
-		replace_all(retValue, "\\\"", "\"");
-		replace_all(retValue, "\\\\", "\\");
-		replace_all(retValue, "\\/", "\/");
-		replace_all(retValue, "\\b", "\b");
-		replace_all(retValue, "\\f", "\f");
-		replace_all(retValue, "\\n", "\n");
-		replace_all(retValue, "\\r", "\r");
-		replace_all(retValue, "\\t", "\t");
+		StringUtils::replace_all(retValue, "\\\"", "\"");
+		StringUtils::replace_all(retValue, "\\\\", "\\");
+		StringUtils::replace_all(retValue, "\\/", "\/");
+		StringUtils::replace_all(retValue, "\\b", "\b");
+		StringUtils::replace_all(retValue, "\\f", "\f");
+		StringUtils::replace_all(retValue, "\\n", "\n");
+		StringUtils::replace_all(retValue, "\\r", "\r");
+		StringUtils::replace_all(retValue, "\\t", "\t");
 		//replace_all(retValue, "\\u", "\u");
 		*value = retValue;
 		return true;
@@ -315,4 +315,4 @@ namespace greet { namespace utils {
 		}
 		return true;
 	}
-}}
+}

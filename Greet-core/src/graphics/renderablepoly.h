@@ -3,19 +3,19 @@
 #include "renderable.h"
 
 
-namespace greet { namespace graphics {
+namespace Greet {
 	class RenderablePoly : public Renderable
 	{
 	public:
-		math::vec2 m_position;
+		vec2 m_position;
 		uint m_color;
 	private:
-		math::vec2* m_vertices;
+		vec2* m_vertices;
 		uint m_vertexCount;
 		
 	public:
 
-		RenderablePoly(math::vec2 position, math::vec2* vertices, uint vertexCount, uint color)
+		RenderablePoly(vec2 position, vec2* vertices, uint vertexCount, uint color)
 			: m_position(position),m_vertices(vertices), m_vertexCount(vertexCount), m_color(color)
 		{
 
@@ -26,7 +26,7 @@ namespace greet { namespace graphics {
 			delete[] m_vertices;
 		}
 
-		void setVertices(math::vec2* vertices, uint vertexCount)
+		void setVertices(vec2* vertices, uint vertexCount)
 		{
 			m_vertices = vertices;
 			m_vertexCount = vertexCount;
@@ -43,14 +43,14 @@ namespace greet { namespace graphics {
 			return true;
 		}
 
-		void setPosition(const math::vec2& position) override { m_position = position; }
-		inline const math::vec2& getPosition() const { return m_position; }
+		void setPosition(const vec2& position) override { m_position = position; }
+		inline const vec2& getPosition() const { return m_position; }
 		void setColor(uint color) override { m_color = color; }
 		inline uint getColor() const override { return m_color; }
-		void setSize(const math::vec2& size) override { }
-		inline const math::vec2& getSize() const override { return math::vec2(1,1);}
+		void setSize(const vec2& size) override { }
+		inline const vec2& getSize() const override { return vec2(1,1);}
 
-		inline const math::vec2* getVertices() const { return m_vertices; }
+		inline const vec2* getVertices() const { return m_vertices; }
 		inline const uint getVertexCount() const { return m_vertexCount; }
 	};
-}}
+}

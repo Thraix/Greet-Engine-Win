@@ -7,7 +7,7 @@
 
 
 
-namespace greet { namespace graphics {
+namespace Greet {
 
 	class Frame : public GUI
 	{
@@ -19,12 +19,12 @@ namespace greet { namespace graphics {
 		bool m_holdFrame;
 
 	public:
-		Frame(const math::vec2& position, const math::vec2& size, const std::string& title);
+		Frame(const vec2& position, const vec2& size, const std::string& title);
 		virtual void render(Renderer2D* renderer) const override;
-		bool onMoved(const event::MouseMovedEvent& event, math::vec2 relativeMousePos) override;
-		bool onPressed(const event::MousePressedEvent& event, math::vec2 relativeMousePos) override;
-		bool onReleased(const event::MouseReleasedEvent& event, math::vec2 relativeMousePos) override;
-		bool isInsideFrameHeader(const math::vec2& mouse) const;
+		bool onMoved(const MouseMovedEvent& event, vec2 relativeMousePos) override;
+		bool onPressed(const MousePressedEvent& event, vec2 relativeMousePos) override;
+		bool onReleased(const MouseReleasedEvent& event, vec2 relativeMousePos) override;
+		bool isInsideFrameHeader(const vec2& mouse) const;
 	};
 
-}}
+}

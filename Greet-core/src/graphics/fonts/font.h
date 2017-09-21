@@ -1,14 +1,14 @@
 #pragma once
 
-#include <internal/greetgl.h>
-#include <internal/greet_types.h>
+#include <internal/Greetgl.h>
+#include <internal/Greet_types.h>
 #include <graphics/textures/texture.h>
 #include <string>
 #include <math/maths.h>
 #include <logging/log.h>
 #include <graphics/fonts/fontcontainer.h>
 
-namespace greet{ namespace graphics{
+namespace Greet{
 
 
 	class Font
@@ -21,11 +21,11 @@ namespace greet{ namespace graphics{
 		
 	public:
 		Font(FontContainer* container, uint size);
-		Font(FontContainer* container, uint size, math::vec2 scale);
+		Font(FontContainer* container, uint size, vec2 scale);
 		void init();
 		inline ftgl::texture_font_t* getFTFont() const { return m_font;}
 		inline float getSize() const {return m_size;}
 		inline uint getAtlasID() const {return m_atlas->id;}
 		float getWidthOfText(const std::string& text) const;
 	};
-}}
+}

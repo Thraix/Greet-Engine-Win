@@ -3,7 +3,7 @@
 #include "particle.h"
 #include <list>
 
-namespace greet { namespace graphics{
+namespace Greet {
 	class ParticlePool : public Renderable2D 
 	{
 	private:
@@ -14,12 +14,12 @@ namespace greet { namespace graphics{
 	public:
 		ParticlePool(int particles);
 		~ParticlePool();
-		bool create(math::vec2 pos, math::vec2 size, math::vec2 vel, math::vec2 acc, uint color, float minspeed, float maxspeed, float frameTime, Sprite* sprite);
+		bool create(vec2 pos, vec2 size, vec2 vel, vec2 acc, uint color, float minspeed, float maxspeed, float frameTime, Sprite* sprite);
 		bool update(float elapsedTime);
 		void submit(Renderer2D* renderer) const override;
 		uint usedParticles() const;
 		uint freeParticles() const;
 	};
-}}
+}
 
 #endif

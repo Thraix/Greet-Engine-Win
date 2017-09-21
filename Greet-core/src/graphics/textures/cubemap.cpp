@@ -1,6 +1,6 @@
 #include "cubemap.h"
 
-namespace greet { namespace graphics {
+namespace Greet {
 	CubeMap::CubeMap(const std::string& top, const std::string& bottom, const std::string& left, const std::string& right, const std::string& front, const std::string& back, const std::string& name)
 		: Texture(name, GL_TEXTURE_CUBE_MAP)
 	{
@@ -29,17 +29,17 @@ namespace greet { namespace graphics {
 		uint height;
 		uint bpp;
 		BYTE* bits;
-		bits = utils::loadImage(image.c_str(), &width, &height, &bpp);
+		bits = ImageUtils::loadImage(image.c_str(), &width, &height, &bpp);
 		uint w = width / 4;
 		uint h = height / 3;
-		loadImage(utils::cropImage(bits,width,height,bpp,0,h,w,h),w,h,bpp,GL_TEXTURE_CUBE_MAP_POSITIVE_X);
-		loadImage(utils::cropImage(bits,width,height,bpp,w*2,h,w,h),w,h,bpp,GL_TEXTURE_CUBE_MAP_NEGATIVE_X);
+		loadImage(ImageUtils::cropImage(bits,width,height,bpp,0,h,w,h),w,h,bpp,GL_TEXTURE_CUBE_MAP_POSITIVE_X);
+		loadImage(ImageUtils::cropImage(bits,width,height,bpp,w*2,h,w,h),w,h,bpp,GL_TEXTURE_CUBE_MAP_NEGATIVE_X);
 
-		loadImage(utils::cropImage(bits,width,height,bpp,w,0,w,h),w,h,bpp,GL_TEXTURE_CUBE_MAP_POSITIVE_Y);
-		loadImage(utils::cropImage(bits,width,height,bpp,w,h*2,w,h),w,h,bpp,GL_TEXTURE_CUBE_MAP_NEGATIVE_Y);
+		loadImage(ImageUtils::cropImage(bits,width,height,bpp,w,0,w,h),w,h,bpp,GL_TEXTURE_CUBE_MAP_POSITIVE_Y);
+		loadImage(ImageUtils::cropImage(bits,width,height,bpp,w,h*2,w,h),w,h,bpp,GL_TEXTURE_CUBE_MAP_NEGATIVE_Y);
 
-		loadImage(utils::cropImage(bits,width,height,bpp,w,h,w,h),w,h,bpp,GL_TEXTURE_CUBE_MAP_POSITIVE_Z);
-		loadImage(utils::cropImage(bits,width,height,bpp,w*3,h,w,h),w,h,bpp,GL_TEXTURE_CUBE_MAP_NEGATIVE_Z);
+		loadImage(ImageUtils::cropImage(bits,width,height,bpp,w,h,w,h),w,h,bpp,GL_TEXTURE_CUBE_MAP_POSITIVE_Z);
+		loadImage(ImageUtils::cropImage(bits,width,height,bpp,w*3,h,w,h),w,h,bpp,GL_TEXTURE_CUBE_MAP_NEGATIVE_Z);
 		loadParameters();
 		delete[] bits;
 		glBindTexture(GL_TEXTURE_CUBE_MAP,0);
@@ -79,15 +79,15 @@ namespace greet { namespace graphics {
 		uint height;
 		uint bpp;
 		BYTE* bits;
-		bits = utils::loadImage(image.c_str(), &width, &height, &bpp);
+		bits = ImageUtils::loadImage(image.c_str(), &width, &height, &bpp);
 		loadImage(bits,width,height,bpp,mapLocation);
 	}
 
 	void CubeMap::loadImage(BYTE* bits, uint width, uint height, uint bpp, uint mapLocation)
 	{
-		utils::flipImage(bits,width,height,bpp);
+		ImageUtils::flipImage(bits,width,height,bpp);
 		glTexImage2D(mapLocation, 0, bpp == 32 ? GL_RGBA : GL_RGB, width, height, 0, bpp == 32 ? GL_BGRA : GL_BGR, GL_UNSIGNED_BYTE, bits);
 		delete[] bits;
 		
 	}
-}}
+}

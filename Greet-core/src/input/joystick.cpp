@@ -1,6 +1,6 @@
 #include "joystick.h"
 
-namespace greet { namespace input {
+namespace Greet {
 	Joystick::Joystick(uint jsNum, float calibrateLeft, float calibrateRight)
 		: m_jsNum(jsNum), m_calibrateLeft(calibrateLeft), m_calibrateRight(calibrateRight)
 	{
@@ -27,13 +27,13 @@ namespace greet { namespace input {
 				return;
 			}
 			ASSERT((count == GLFW_JOYSTICK_AXES), "CONTROLLER NOT SUPPORTED. INVALID AMOUNT OF AXES, found ", count, ", wanted ", GLFW_JOYSTICK_AXES, ".");
-			m_leftStick = math::vec2(axes[0], axes[1]);
+			m_leftStick = vec2(axes[0], axes[1]);
 			if (m_leftStick.length()<m_calibrateLeft)
-				m_leftStick = math::vec2(0, 0);
+				m_leftStick = vec2(0, 0);
 
-			m_rightStick = math::vec2(axes[3], axes[4]);
+			m_rightStick = vec2(axes[3], axes[4]);
 			if (m_rightStick.length()<m_calibrateRight)
-				m_rightStick = math::vec2(0, 0);
+				m_rightStick = vec2(0, 0);
 
 			const unsigned char* buttons = glfwGetJoystickButtons(m_jsNum,&count);
 			if (count == 0)
@@ -77,8 +77,8 @@ namespace greet { namespace input {
 	{
 		memset(buttonPas, false, GLFW_JOYSTICK_BUTTONS);
 		memset(buttonCur, false, GLFW_JOYSTICK_BUTTONS);
-		m_leftStick = math::vec2(0, 0);
-		m_rightStick = math::vec2(0, 0);
+		m_leftStick = vec2(0, 0);
+		m_rightStick = vec2(0, 0);
 	}
 
 	bool Joystick::buttonExists(uint buttoncode) const
@@ -135,4 +135,4 @@ namespace greet { namespace input {
 			return buttonCur[buttoncode];
 		return false;
 	}
-}}
+}

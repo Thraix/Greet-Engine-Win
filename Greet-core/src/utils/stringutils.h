@@ -5,7 +5,15 @@
 #include <vector>
 #include <regex>
 
-namespace greet { namespace utils{
+namespace Greet { namespace StringUtils{
+
+	template <typename T>
+	inline std::string toString(T t)
+	{
+		std::stringstream ss;
+		ss << t;
+		return ss.str().c_str();
+	}
 
 	inline bool is_number(const std::string& str)
 	{
@@ -48,4 +56,6 @@ namespace greet { namespace utils{
 		return s.compare(0, prefix.size(), prefix) == 0;
 			
 	}
+
+
 }}

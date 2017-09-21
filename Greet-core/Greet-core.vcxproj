@@ -88,8 +88,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\audio\channel.cpp" />
-    <ClCompile Include="src\audio\channelmanager.cpp" />
+    <ClCompile Include="src\audio\audiochannel.cpp" />
+    <ClCompile Include="src\audio\audiochannelmanager.cpp" />
     <ClCompile Include="src\audio\sound.cpp" />
     <ClCompile Include="src\audio\soundmanager.cpp" />
     <ClCompile Include="src\drivers\driver.cpp" />
@@ -130,7 +130,6 @@
     <ClCompile Include="src\graphics\layers\group.cpp" />
     <ClCompile Include="src\graphics\layers\layer3d.cpp" />
     <ClCompile Include="src\graphics\models\entitymodel.cpp" />
-    <ClCompile Include="src\graphics\models\modelformat.cpp" />
     <ClCompile Include="src\graphics\models\material.cpp" />
     <ClCompile Include="src\graphics\models\materialmodel.cpp" />
     <ClCompile Include="src\graphics\models\mesh.cpp" />
@@ -170,8 +169,8 @@
     <ClCompile Include="src\utils\uuid.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\audio\channel.h" />
-    <ClInclude Include="src\audio\channelmanager.h" />
+    <ClInclude Include="src\audio\audiochannel.h" />
+    <ClInclude Include="src\audio\audiochannelmanager.h" />
     <ClInclude Include="src\audio\sound.h" />
     <ClInclude Include="src\audio\soundmanager.h" />
     <ClInclude Include="src\drivers\driver1.h" />
@@ -226,11 +225,9 @@
     <ClInclude Include="src\graphics\gui\panel.h" />
     <ClInclude Include="src\graphics\layers\box2dlayer.h" />
     <ClInclude Include="src\graphics\layers\group.h" />
-    <ClInclude Include="src\graphics\layers\layer.h" />
     <ClInclude Include="src\graphics\layers\layer3d.h" />
     <ClInclude Include="src\graphics\models\camera.h" />
     <ClInclude Include="src\graphics\models\entitymodel.h" />
-    <ClInclude Include="src\graphics\models\modelformat.h" />
     <ClInclude Include="src\graphics\Light.h" />
     <ClInclude Include="src\graphics\models\material.h" />
     <ClInclude Include="src\graphics\models\materialmodel.h" />
@@ -300,7 +297,6 @@
     <ClInclude Include="src\utils\json\JSONLoader.h" />
     <ClInclude Include="src\utils\json\JSONObject.h" />
     <ClInclude Include="src\utils\log.h" />
-    <ClInclude Include="src\utils\logutils.h" />
     <ClInclude Include="src\utils\noise.h" />
     <ClInclude Include="src\utils\objutils.h" />
     <ClInclude Include="src\utils\physics.h" />

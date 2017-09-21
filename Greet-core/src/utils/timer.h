@@ -1,6 +1,6 @@
 #pragma once
 #include <chrono>
-namespace greet { namespace utils{
+namespace Greet {
 	class Timer
 	{
 	private:
@@ -22,4 +22,4 @@ namespace greet { namespace utils{
 			return std::chrono::duration_cast<std::chrono::duration<float,std::milli>>(std::chrono::high_resolution_clock::now() - m_start).count() / 1000.0f;
 		}
 	};
-}}
+}

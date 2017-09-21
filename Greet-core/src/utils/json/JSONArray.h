@@ -4,7 +4,7 @@
 #include <vector>
 #include <set>
 
-namespace greet { namespace utils {
+namespace Greet {
 
 	class JSONObject;
 
@@ -24,4 +24,4 @@ namespace greet { namespace utils {
 		friend std::ostream& operator<<(std::ostream& os, const JSONArray& dt);
 	};
 
-}}
+}

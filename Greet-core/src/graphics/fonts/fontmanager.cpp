@@ -1,16 +1,16 @@
 #include "fontmanager.h"
 
-namespace greet{ namespace graphics {
+namespace Greet{
 
-	std::vector<graphics::FontContainer*> FontManager::m_fonts;
+	std::vector<FontContainer*> FontManager::m_fonts;
 
-	void FontManager::add(graphics::FontContainer* font)
+	void FontManager::add(FontContainer* font)
 	{
 		for (int i = 0;i < m_fonts.size();i++)
 		{
 			if (font->getName() == m_fonts[i]->getName())
 			{
-				utils::ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_ADD);
+				ErrorHandle::setErrorCode(Greet_ERROR_MANAGER_ADD);
 				Log::error("Given font name already exists: ", font->getName().c_str());
 				return;
 			}
@@ -27,7 +27,7 @@ namespace greet{ namespace graphics {
 				return m_fonts[i]->getSize(size);
 			}
 		}
-		utils::ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_GET);
+		ErrorHandle::setErrorCode(Greet_ERROR_MANAGER_GET);
 		Log::error("Could not find the given font: ", fontname.c_str());
 		if (m_fonts.size() > 0)
 			return m_fonts[0]->getSize(size);
@@ -45,4 +45,4 @@ namespace greet{ namespace graphics {
 		m_fonts.clear();
 	}
 
-}}
+}

@@ -3,9 +3,9 @@
 #include "windowfocus.h"
 #include "windowresize.h"
 
-namespace greet { namespace listener {
+namespace Greet {
 	class WindowListener : public WindowFocusListener, public WindowResizeListener
 	{
 
 	};
-}}
+}

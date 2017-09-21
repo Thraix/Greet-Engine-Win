@@ -1,6 +1,6 @@
 #include "texture.h"
 
-namespace greet { namespace graphics{
+namespace Greet {
 	
 	Texture::Texture(const std::string& name, uint textureType)
 		: m_name(name), m_textureType(textureType)
@@ -29,4 +29,4 @@ namespace greet { namespace graphics{
 		glBindTexture(m_textureType, 0);
 	}
 
-}}
+}

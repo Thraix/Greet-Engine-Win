@@ -1,7 +1,7 @@
 #include "fontcontainer.h"
 #include "font.h"
 
-namespace greet{ namespace graphics{
+namespace Greet{
 
 	FontContainer::FontContainer(const std::string& filename, const std::string& name)
 	: m_filename(filename),m_data(nullptr),m_datasize(0), m_name(name)
@@ -43,4 +43,4 @@ namespace greet{ namespace graphics{
 		return font;
 	}
 
-}}
+}

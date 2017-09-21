@@ -6,7 +6,7 @@
 /* *
 	Not currently supported
 */
-namespace greet { namespace utils {
+namespace Greet {
 
 	JSONArrayObject::JSONArrayObject(std::vector<std::string> values, std::vector<JSONObject> objects, std::vector<JSONArray> arrays)
 		: m_values(values), m_objects(objects), m_arrays(arrays)
@@ -20,4 +20,4 @@ namespace greet { namespace utils {
 		m_objects = std::vector<JSONObject>(objects, objects + objectSize);
 		m_arrays = std::vector<JSONArray>(arrays,arrays+arraySize);
 	}
-}}
+}

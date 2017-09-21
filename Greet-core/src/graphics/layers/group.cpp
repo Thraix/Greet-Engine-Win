@@ -1,15 +1,15 @@
 #include "group.h"
 
-namespace greet { namespace graphics{
+namespace Greet {
 	
 
-	Group::Group(const math::vec2& position)
-		: m_transformationMatrix(math::mat3::translate(position))
+	Group::Group(const vec2& position)
+		: m_transformationMatrix(mat3::translate(position))
 	{
 		enable = true;
 	}
 	
-	Group::Group(const math::mat3& transform)
+	Group::Group(const mat3& transform)
 		:m_transformationMatrix(transform)
 	{
 		enable = true;
@@ -59,4 +59,4 @@ namespace greet { namespace graphics{
 			renderer->popMatrix();
 	}
 
-}}
+}

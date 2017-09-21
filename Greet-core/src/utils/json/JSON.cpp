@@ -1,7 +1,7 @@
 #include "JSON.h"
 
-namespace greet { namespace utils {
+namespace Greet {
 
 	char* JSON::m_indent;
 	uint JSON::ostream_indent;
-} }
+}

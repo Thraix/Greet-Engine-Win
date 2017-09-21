@@ -2,7 +2,7 @@
 
 #include <drivers/driver.h>
 
-namespace greet { namespace drivers {
+namespace Greet {
 	
 	class Driver1 : public Driver
 	{
@@ -16,4 +16,4 @@ namespace greet { namespace drivers {
 		{}
 	};
 
-}}
+}

@@ -5,7 +5,7 @@
 #include <list>
 #include <vector>
 
-namespace greet{ namespace graphics {
+namespace Greet{
 	class Atlas : public Texture2D
 	{
 	private:
@@ -25,9 +25,9 @@ namespace greet{ namespace graphics {
 		void removeTexture(std::string textureName);
 		void addTexture(BYTE* bits, uint bpp, std::string name);
 		Sprite* getSprite(std::string name);
-		Sprite* getSpriteFromSheet(std::string sheetName, math::vec2 texPos, math::vec2 texSize);
+		Sprite* getSpriteFromSheet(std::string sheetName, vec2 texPos, vec2 texSize);
 	private:
 		void fillTexture(uint x, uint y, BYTE* bits, uint bpp);
 		void updateTexture();
 	};
-}}
+}

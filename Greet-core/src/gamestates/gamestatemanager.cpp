@@ -1,10 +1,10 @@
 #include "gamestatemanager.h"
 
-namespace greet{ namespace gamestate {
+namespace Greet{
 
-	gamestate::GameState* GameStateManager::m_gamestate;
+	GameState* GameStateManager::m_gamestate;
 
-	void GameStateManager::set(gamestate::GameState* gamestate)
+	void GameStateManager::set(GameState* gamestate)
 	{
 		if (m_gamestate!=nullptr)
 			gamestate->parent = m_gamestate;
@@ -28,7 +28,7 @@ namespace greet{ namespace gamestate {
 	{
 		if (m_gamestate->parent != nullptr)
 		{
-			gamestate::GameState* state = m_gamestate->parent;
+			GameState* state = m_gamestate->parent;
 			delete m_gamestate;
 			m_gamestate = state;
 		}
@@ -39,4 +39,4 @@ namespace greet{ namespace gamestate {
 		delete m_gamestate;
 	}
 
-}}
+}

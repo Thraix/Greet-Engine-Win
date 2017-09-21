@@ -2,7 +2,7 @@
 #include "LinearDriver.h"
 #include "logging\logger.h"
 
-namespace greet { namespace drivers {
+namespace Greet {
 
 	LinearDriver::LinearDriver(float& value, float change, float time, bool relativeChange, DriverListener* listener) 
 		: Driver1(value, time, listener)
@@ -17,4 +17,4 @@ namespace greet { namespace drivers {
 	{	
 		m_value += m_elapsed * m_speed;
 	}
-} }
+}

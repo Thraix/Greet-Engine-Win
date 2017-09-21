@@ -1,9 +1,9 @@
 #pragma once
 
-namespace greet {namespace listener{
+namespace Greet {
 	class WindowResizeListener
 	{
 	public:
 		virtual void windowResize(int width, int height) = 0;
 	};
-}}
+}

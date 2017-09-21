@@ -1,40 +1,38 @@
 #include "window.h"
 
-namespace greet { namespace graphics {
+namespace Greet {
 
-	using namespace listener;
-
-	std::vector<input::Joystick> Window::joysticks;
+	std::vector<Joystick> Window::joysticks;
 	bool Window::focus;
-	math::vec2 Window::mousePos;
-	math::vec2 Window::mousePosPixel;
+	vec2 Window::mousePos;
+	vec2 Window::mousePosPixel;
 	uint Window::width;
 	uint Window::height;
 	std::string Window::title;
 	GLFWwindow *Window::window;
-	math::vec4 Window::bgColor;
+	vec4 Window::bgColor;
 	bool Window::mouseButtonDown[MAX_MOUSEBUTTONS];
 	bool Window::isMouseButtonDown;
 	uint Window::joystickCheck;
 
 
-	std::vector<listener::WindowResizeListener*> Window::windowResize;
-	std::vector<listener::WindowFocusListener*> Window::windowFocus;
-	std::vector<listener::JoystickStateListener*> Window::joystickState;
+	std::vector<WindowResizeListener*> Window::windowResize;
+	std::vector<WindowFocusListener*> Window::windowFocus;
+	std::vector<JoystickStateListener*> Window::joystickState;
 
 	void Window::createWindow(std::string title, uint width, uint height)
 	{
-		bgColor = math::vec4(0.0f, 0.0f, 0.0f, 0.0f);
+		bgColor = vec4(0.0f, 0.0f, 0.0f, 0.0f);
 		focus = true;
 		Window::title = title;
 		Window::width = width;
 		Window::height = height;
 
-		audio::SoundManager::init();
+		SoundManager::init();
 		memset(mouseButtonDown,false,MAX_MOUSEBUTTONS);
 		for (int i = 0; i < MAX_JOYSTICKS; i++)
 		{
-			joysticks.push_back(input::Joystick(i, 0.3f, 0.3f));
+			joysticks.push_back(Joystick(i, 0.3f, 0.3f));
 		}
 		if (!init())
 		{
@@ -45,10 +43,10 @@ namespace greet { namespace graphics {
 	void Window::destroyWindow()
 	{
 		FontManager::destroy();
-		audio::ChannelManager::destroy();
-		audio::SoundManager::destroy();
+		AudioChannelManager::destroy();
+		SoundManager::destroy();
 		TextureManager::destroy();
-		utils::UUID::cleanUp();
+		UUID::cleanUp();
 		glfwTerminate();
 	}
 
@@ -84,7 +82,7 @@ namespace greet { namespace graphics {
 		FontManager::add(new FontContainer("Roboto-thin.ttf","roboto"));
 		uint width,height,bpp;
 		TextureManager::add(new Texture2D("frame.png","frame"));
-		utils::UUID::init();
+		UUID::init();
 
 		Log::info("OpenGL Version: ", glGetString(GL_VERSION));
 		Log::info("GLFW Version: ", glfwGetVersionString());
@@ -138,12 +136,12 @@ namespace greet { namespace graphics {
 
 	void Window::render()
 	{
-		audio::SoundManager::update();
+		SoundManager::update();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
 
-	void Window::setBackgroundColor(math::vec4 color)
+	void Window::setBackgroundColor(vec4 color)
 	{
 		bgColor = color;
 		glClearColor(color.x, color.y, color.z, color.w);
@@ -192,18 +190,18 @@ namespace greet { namespace graphics {
 	void Window::key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
 	{
 		if (action == GLFW_RELEASE)
-			event::EventDispatcher::onKeyReleased(event::KeyReleasedEvent(key));
+			EventDispatcher::onKeyReleased(KeyReleasedEvent(key));
 		else if(action == GLFW_PRESS)
-			event::EventDispatcher::onKeyPressed(event::KeyPressedEvent(key));
+			EventDispatcher::onKeyPressed(KeyPressedEvent(key));
 	}
 
 	void Window::mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 	{
 		mouseButtonDown[action] = action == GLFW_PRESS;
 		if (action == GLFW_RELEASE)
-			event::EventDispatcher::onMouseReleased(event::MouseReleasedEvent(mousePosPixel.x,mousePosPixel.y,button));
+			EventDispatcher::onMouseReleased(MouseReleasedEvent(mousePosPixel.x,mousePosPixel.y,button));
 		else if (action == GLFW_PRESS)
-			event::EventDispatcher::onMousePressed(event::MousePressedEvent(mousePosPixel.x, mousePosPixel.y, button));
+			EventDispatcher::onMousePressed(MousePressedEvent(mousePosPixel.x, mousePosPixel.y, button));
 		isMouseButtonDown = mouseButtonDown[action];
 		if(!isMouseButtonDown)
 			for (uint i = 0;i < MAX_MOUSEBUTTONS;i++)
@@ -214,19 +212,19 @@ namespace greet { namespace graphics {
 
 	void Window::mouse_position_callback(GLFWwindow* window, double xpos, double ypos)
 	{
-		event::EventDispatcher::onMouseMoved(event::MouseMovedEvent(xpos, ypos, xpos - mousePosPixel.x, ypos - mousePosPixel.y, isMouseButtonDown));
-		mousePos = math::vec2(xpos / width, 1.0f - (ypos / height))*2.0f - 1.0f;
-		mousePosPixel = math::vec2(xpos, ypos);
+		EventDispatcher::onMouseMoved(MouseMovedEvent(xpos, ypos, xpos - mousePosPixel.x, ypos - mousePosPixel.y, isMouseButtonDown));
+		mousePos = vec2(xpos / width, 1.0f - (ypos / height))*2.0f - 1.0f;
+		mousePosPixel = vec2(xpos, ypos);
 	}
 
 	void Window::mouse_scroll_callback(GLFWwindow* window, double scrollX, double scrollY)
 	{
-		event::EventDispatcher::onMouseScrolled(event::MouseScrollEvent(scrollY));
+		EventDispatcher::onMouseScrolled(MouseScrollEvent(scrollY));
 	}
 
 	void Window::key_char_callback(GLFWwindow* window, uint charCode)
 	{
-		event::EventDispatcher::onKeyTyped(event::KeyTypedEvent(charCode));
+		EventDispatcher::onKeyTyped(KeyTypedEvent(charCode));
 	}
 
 	void Window::window_focus_callback(GLFWwindow* window,int state)
@@ -241,4 +239,4 @@ namespace greet { namespace graphics {
 			}
 		}
 	}
-}}
+}

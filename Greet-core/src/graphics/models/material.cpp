@@ -1,8 +1,6 @@
 #include "material.h"
 
-namespace greet { namespace model{
-
-	using namespace graphics;
+namespace Greet {
 
 	Material::Material(Shader* shader, Texture* texture)
 		: m_shader(shader), m_texture(texture)
@@ -20,7 +18,7 @@ namespace greet { namespace model{
 		m_shader->enable();
 		m_shader->setUniform1f("reflectivity", m_reflectivity);
 		m_shader->setUniform1f("shineDamper", m_shineDamper);
-		m_shader->setUniform3f("fogColor", math::vec3(0.2,0.2,0.2));
+		m_shader->setUniform3f("fogColor", vec3(0.2,0.2,0.2));
 		m_shader->setUniform1f("shineDamper", m_shineDamper);
 		if (m_texture != NULL)
 			m_texture->enable();
@@ -62,4 +60,4 @@ namespace greet { namespace model{
 		m_shineDamper = shineDamper;
 		return this;
 	}
-}}
+}

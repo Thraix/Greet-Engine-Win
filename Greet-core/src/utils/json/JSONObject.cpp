@@ -1,6 +1,6 @@
 #include "JSONObject.h"
 
-namespace greet { namespace utils {
+namespace Greet {
 
 	std::string JSONObject::valueNull;
 	JSONObject JSONObject::objectNull;
@@ -140,7 +140,7 @@ namespace greet { namespace utils {
 		for (auto it = obj.m_values.begin();it != obj.m_values.end(); ++it, ++i)
 		{
 			os << JSON::get_indent() << "\"" << it->first << "\"" << ": ";
-			if (it->second == "null" || it->second == "true" || it->second == "false" || is_number(it->second))
+			if (it->second == "null" || it->second == "true" || it->second == "false" || StringUtils::is_number(it->second))
 			{
 				os << it->second;
 			}
@@ -178,4 +178,4 @@ namespace greet { namespace utils {
 		os << "\n" << JSON::get_indent() << "}";
 		return os;
 	}
-}}
+}

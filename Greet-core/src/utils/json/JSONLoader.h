@@ -6,7 +6,7 @@
 #include <utils/stringutils.h>
 
 
-namespace greet { namespace utils{
+namespace Greet {
 	
 	class JSONLoader
 	{
@@ -25,4 +25,4 @@ namespace greet { namespace utils{
 
 	};
 
-}}
+}

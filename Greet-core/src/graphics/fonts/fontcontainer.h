@@ -1,10 +1,10 @@
 #pragma once
 
-#include <internal\greet_types.h>
+#include <internal\Greet_types.h>
 #include <string>
 #include <vector>
 
-namespace greet{ namespace graphics{
+namespace Greet{
 
 	class Font;
 	class FontContainer
@@ -31,4 +31,4 @@ namespace greet{ namespace graphics{
 		inline uint getDataSize() const { return m_datasize;}
 
 	};
-}}
+}

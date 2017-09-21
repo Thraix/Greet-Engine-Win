@@ -2,7 +2,7 @@
 
 #include <drivers/driver4.h>
 
-namespace greet { namespace drivers {
+namespace Greet {
 
 	class RectDriver : public Driver4
 	{
@@ -16,4 +16,4 @@ namespace greet { namespace drivers {
 		void update() override;
 	};
 
-}}
+}

@@ -1,6 +1,6 @@
 #include "framebufferobject.h"
 
-namespace greet { namespace graphics{
+namespace Greet {
 
 	FrameBufferObject::FrameBufferObject(uint width, uint height)
 		: m_width(width), m_height(height)
@@ -102,4 +102,4 @@ namespace greet { namespace graphics{
 		Log::error("There is no Texture with the given attachmentId: ",attachmentId);
 		return m_colorTextures.begin()->second;
 	}
-}}
+}

@@ -2,11 +2,11 @@
 
 #include <vector>
 #include <logging/log.h>
-#include <internal/greet_types.h>
+#include <internal/Greet_types.h>
 #include <utils/errorhandler.h>
 #include <graphics\fonts\font.h>
 
-namespace greet { namespace graphics {
+namespace Greet {
 	class FontManager
 	{
 	private:
@@ -19,4 +19,4 @@ namespace greet { namespace graphics {
 	private:
 		FontManager(){}
 	};
-}}
+}

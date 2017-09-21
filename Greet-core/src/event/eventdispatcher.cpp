@@ -1,6 +1,6 @@
 #include "eventdispatcher.h"
 
-namespace greet { namespace event {
+namespace Greet {
 
 	std::map<uint, std::vector<MouseListener*>, std::greater<uint>> EventDispatcher::m_mouseListeners;
 	std::map<uint, std::vector<KeyListener*>, std::greater<uint>> EventDispatcher::m_keyListeners;
@@ -167,4 +167,4 @@ namespace greet { namespace event {
 			}
 		}
 	}
-}}
+}

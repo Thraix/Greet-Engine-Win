@@ -1,11 +1,11 @@
 #pragma once
 
-#include <internal/greetgl.h>
+#include <internal/Greetgl.h>
 #include "buffer.h"
 #include <vector>
-#include <internal/greet_types.h>
+#include <internal/Greet_types.h>
 
-namespace greet { namespace graphics {
+namespace Greet {
 
 	class VertexArray
 	{
@@ -20,4 +20,4 @@ namespace greet { namespace graphics {
 		void disable() const;
 	};
 
-}}
+}

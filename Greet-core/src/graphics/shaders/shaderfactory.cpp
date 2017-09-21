@@ -1,6 +1,6 @@
 #include "shader.h"
 
-namespace greet {namespace graphics{namespace ShaderFactory {
+namespace Greet { namespace ShaderFactory {
 
 	const std::string default_shader_vert =
 	#include "default2dshader.vert"
@@ -53,4 +53,4 @@ namespace greet {namespace graphics{namespace ShaderFactory {
 	{
 		return Shader::fromSource(skybox_shader_vert, skybox_shader_frag);
 	}
-}}}
+}}

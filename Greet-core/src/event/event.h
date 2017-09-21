@@ -1,6 +1,6 @@
 #pragma once
 
-namespace greet { namespace event{
+namespace Greet {
 	class Event
 	{
 	public:
@@ -23,4 +23,4 @@ namespace greet { namespace event{
 		inline const EventType& getType() const { return m_type; }
 
 	};
-}}
+}

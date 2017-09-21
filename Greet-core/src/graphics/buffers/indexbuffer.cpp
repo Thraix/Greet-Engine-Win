@@ -1,6 +1,6 @@
 #include "indexbuffer.h"
 
-namespace greet { namespace graphics {
+namespace Greet {
 	IndexBuffer::IndexBuffer(GLushort* data, GLsizei count)
 	{
 		m_count = count;
@@ -33,4 +33,4 @@ namespace greet { namespace graphics {
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
-}}
+}

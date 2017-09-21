@@ -5,7 +5,7 @@
 #include <graphics/renderers/renderer2d.h>
 #include <logging/log.h>
 
-namespace greet { namespace graphics{
+namespace Greet {
 
 	class Layer
 	{
@@ -14,9 +14,9 @@ namespace greet { namespace graphics{
 		std::vector<Renderable*> m_renderables;
 		Shader* m_shader;
 
-		math::mat3 m_projectionMatrix;
+		mat3 m_projectionMatrix;
 	public:
-		Layer(Renderer2D* renderer, Shader* shader, math::mat3 projectionMatrix)
+		Layer(Renderer2D* renderer, Shader* shader, mat3 projectionMatrix)
 			: m_renderer(renderer), m_shader(shader), m_projectionMatrix(projectionMatrix)
 		{
 			GLint texIDs[32];
@@ -68,7 +68,7 @@ namespace greet { namespace graphics{
 				m_renderables[i]->update(timeElapsed);
 		}
 
-		void setProjectionMatrix(math::mat3 projectionMatrix)
+		void setProjectionMatrix(mat3 projectionMatrix)
 		{
 			m_projectionMatrix = projectionMatrix;
 			m_shader->enable();
@@ -78,7 +78,7 @@ namespace greet { namespace graphics{
 
 		virtual void viewportResize(float x, float y, float width, float height) {}
 		virtual void windowResize(int width, int height) {}
-		math::mat3 getProjectionMatrix() const { return m_projectionMatrix; };
+		mat3 getProjectionMatrix() const { return m_projectionMatrix; };
 		inline Shader* getShader() const { return m_shader; }
 		inline uint size() const { return m_renderables.size(); }
 
@@ -86,4 +86,4 @@ namespace greet { namespace graphics{
 	protected:
 		virtual void setUniforms() const {}
 	};
-}}
+}

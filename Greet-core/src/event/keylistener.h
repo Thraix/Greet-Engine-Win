@@ -4,7 +4,7 @@
 
 #include <logging/log.h>
 
-namespace greet { namespace event {
+namespace Greet {
 
 	class KeyListener
 	{
@@ -19,4 +19,4 @@ namespace greet { namespace event {
 		virtual bool onReleased(const KeyReleasedEvent& e) = 0;// { return false; };
 		virtual bool onTyped(const KeyTypedEvent& e) = 0;// { return false; };
 	};
-}}
+}

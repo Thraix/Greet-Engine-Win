@@ -1,8 +1,8 @@
 #pragma once
 
-#include <internal/greet_types.h>
+#include <internal/Greet_types.h>
 
-namespace greet { namespace utils {
+namespace Greet {
 	class Noise
 	{
 
@@ -44,4 +44,4 @@ public:
 		*/
 		static float interpolate(float v1, float v2, float d);
 	};
-} }
+}

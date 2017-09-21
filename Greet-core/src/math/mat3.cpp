@@ -1,5 +1,5 @@
 #include "mat3.h"
-namespace greet{ namespace math{
+namespace Greet{
 	mat3::mat3()
 	{
 		for (int i = 0; i < 9; i++)
@@ -105,7 +105,7 @@ namespace greet{ namespace math{
 	mat3 mat3::rotate(float deg)
 	{
 		mat3 result(1.0f);
-		float r = toRadians(deg);
+		float r = Math::toRadians(deg);
 		float s = sin(r);
 		float c = cos(r);
 
@@ -238,4 +238,4 @@ namespace greet{ namespace math{
 	{
 		return first.multiply(second);
 	}
-}}
+}
