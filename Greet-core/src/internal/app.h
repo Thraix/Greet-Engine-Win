@@ -47,7 +47,7 @@ namespace Greet {
 		}
 
 		const uint getFPS() const { return m_fps; }
-		const uint getUPS() const { return m_fps; }
+		const uint getUPS() const { return m_ups; }
 
 	public:
 		void start();

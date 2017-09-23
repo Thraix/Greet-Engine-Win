@@ -36,7 +36,7 @@ namespace Greet {
 
 	void TPCamera::update(float timeElapsed)
 	{
-		m_rotation += (m_rotationWanted - m_rotation) * (timeElapsed * 20.0f); // 0.33 ish
+		m_rotation += (m_rotationWanted - m_rotation) * (timeElapsed * 10.0f); // 0.33 ish
 		calculateInformation();
 	}
 
@@ -156,6 +156,10 @@ namespace Greet {
 		{
 			m_mouse3 = true;
 		}
+		if (e.getButton() == GLFW_MOUSE_BUTTON_2)
+		{
+			m_mouse2 = true;
+		}
 		return false;
 	}
 
@@ -164,6 +168,10 @@ namespace Greet {
 		if (e.getButton() == GLFW_MOUSE_BUTTON_1)
 		{
 			m_mouse1 = false;
+		}
+		if (e.getButton() == GLFW_MOUSE_BUTTON_2)
+		{
+			m_mouse2 = false;
 		}
 		if (e.getButton() == GLFW_MOUSE_BUTTON_3)
 		{
@@ -177,6 +185,10 @@ namespace Greet {
 			m_height += e.getDY() * m_heightSpeed;
 			Math::clamp(&m_height, m_heightMin, m_heightMax);
 			m_rotationWanted += m_rotationSpeed * e.getDX();
+		}
+		if (m_mouse2)
+		{
+			m_position.y += e.getDeltaPosition().y * 0.1f;
 		}
 		else if (m_mouse1)
 		{

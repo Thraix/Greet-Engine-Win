@@ -130,7 +130,7 @@ public:
 		//	models.push_back(EntityModel(*modelModelMaterial, vec3(random()*100, random() * 100, random() * 100), vec3(1.0f, 1.0f, 1.0f), vec3(random() * 360, random() * 360, random() * 360)));
 		//}
 
-		Light* l = new Light(vec3(25, 25,12.5), 0xffffffff);
+		Light* l = new Light(vec3(0, 0,10), 0xffffffff);
 		modelShader->enable();
 		l->setToUniform(modelShader, "light");
 		modelShader->disable();
@@ -162,11 +162,11 @@ public:
 
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(frame->m_position.x, 100, 5, true, new drivers::DriverAdapter()));
 
-		renderer3d->submit(stall);
+		//renderer3d->submit(stall);
 		//renderer3d->submit(dragon);
 		renderer3d->submit(grid);
-		renderer3d->submit(cube);
-		renderer3d->submit(tetrahedron);
+		//renderer3d->submit(cube);
+		//renderer3d->submit(tetrahedron);
 		//for (uint i = 0;i < 2000;i++)
 		//{
 		//	renderer3d->submit(&models[i]);
@@ -176,8 +176,8 @@ public:
 		//Tree t(renderer3d,0,0,0);
 		uint pos = 0;
 //		Log::info(JSONLoader::isNumber("0.1234s",pos));
-		RenderEngine::add_layer2d(uilayer, "uilayer");
-		RenderEngine::add_layer2d(guilayer, "guilayer");
+		//RenderEngine::add_layer2d(uilayer, "uilayer");
+		//RenderEngine::add_layer2d(guilayer, "guilayer");
 		RenderEngine::add_layer3d(new Layer3D(renderer3d), "3dWorld");
 		Log::info(sizeof(vec3));
 	}
@@ -193,7 +193,7 @@ public:
 				float y = vertices[z + x*(gridWidth + 1)].y;
 				if (y < 0.45)
 				{
-					uint blue = (uint)(pow(y + 0.65, 4.0f) * 255);
+					uint blue = (uint)(pow(1, 4.0f) * 255);
 					blue = blue > 255 ? 255 : blue;
 					colors[z + x*(gridWidth + 1)] = 0xff000000 | ((blue / 2) << 16) | ((uint)(blue * 0.9) << 8) | blue;
 					y = 0.45 + 0.03f*(rand() / (float)RAND_MAX - 0.5f);
@@ -231,8 +231,8 @@ public:
 
 	void tick()
 	{
-		std::string s = StringUtils::toString(getFPS()) + " fps";
-		//fps->text = s;
+		std::string s = StringUtils::toString(getFPS()) + " fps | " + StringUtils::toString(getUPS())+ " ups";
+		fps->text = s;
 		Window::setTitle("Best Game Ever | " + s);
 	}
 

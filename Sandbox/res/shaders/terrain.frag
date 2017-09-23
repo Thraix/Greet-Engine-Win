@@ -12,7 +12,7 @@ flat in float visibility;
 out vec4 out_color;
 
 uniform vec3 light_color = vec3(1.0f,1.0f,1.0f);
-uniform vec3 fogColor = vec3(0,0,0);
+uniform vec3 fogColor = vec3(124/255.0,214/255.0,99/255.0)*0.2;
 uniform float shadeDamper = 10.0;
 uniform float reflectivity = 1;
 
@@ -25,10 +25,10 @@ void main()
 	//out_color = vec4(unitNormal,1.0);
 
 	float nDot = dot(unitNormal, unitLightVector);
-	float brightness = max(nDot,0.3);
+	float brightness = max(nDot,0.4);
 	vec3 diffuse = light_color * brightness;
 	out_color *= vec4(diffuse,1.0f);
-	out_color = mix(vec4(fogColor.rgb,out_color.a),vec4(out_color.rgb,out_color.a),visibility);
+	//out_color = mix(vec4(fogColor.rgb,out_color.a),vec4(out_color.rgb,out_color.a),visibility);
 
 	//float luminance = (out_color.r + out_color.g + out_color.b)/3.0;
 	//out_color.rgb = floor(luminance * 4.0)/4.0 * fogColor;

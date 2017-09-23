@@ -1,6 +1,7 @@
 #include "app.h"
 #include <drivers/driverdispatcher.h>
-
+#include <chrono>
+#include <thread>
 namespace Greet {
 
 	App::App()
@@ -42,16 +43,14 @@ namespace Greet {
 		m_timer = new Timer();
 		double timer = 0.0f;
 		double updateTimer = 0.0f;
-		double updateTick = 1.0 / 60.0;
+		double updateTick = 1.0 / 300.0;
 		double renderTimer = 0.0f;
 
 		uint frames = 0;
 		uint updates = 0;
 
-		bool rendered = false;
 		while (!Window::closed())
 		{
-			rendered = false;
 			double elapsed = m_timer->elapsed();
 			if (elapsed - updateTimer >= updateTick)
 			{
@@ -60,7 +59,7 @@ namespace Greet {
 				Window::update();
 				RenderEngine::update(elapsed - updateTimer);
 				updates++;
-				updateTimer += elapsed - updateTimer;
+				updateTimer = elapsed;
 			}
 			if (elapsed - renderTimer >= frameCap)
 			{
@@ -69,8 +68,7 @@ namespace Greet {
 				RenderEngine::render();
 				Window::render();
 				frames++;
-				renderTimer += elapsed - renderTimer;
-				rendered = true;
+				renderTimer = elapsed;
 			}
 
 			if (elapsed - timer >= 1.0)
@@ -83,6 +81,10 @@ namespace Greet {
 				updates = 0;
 				timer += 1.0;
 			}
+			elapsed = m_timer->elapsed();
+			double timeToNext = fmin(frameCap - (elapsed - renderTimer),updateTick - (elapsed-updateTimer))*1000*0.5;
+			if (timeToNext >= 1)
+				std::this_thread::sleep_for(std::chrono::milliseconds((long long)timeToNext));
 		}
 	}
 }

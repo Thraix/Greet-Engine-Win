@@ -10,6 +10,7 @@ flat out vec3 surfaceNormal;
 flat out vec3 toLightVector;
 flat out float visibility;
 
+uniform float time;
 uniform mat4 transformationMatrix;
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
@@ -25,7 +26,7 @@ void main()
 	gl_Position = projectionMatrix * positionRelativeToCamera;
 
 	surfaceNormal = (transformationMatrix * vec4(normal,0.0)).xyz;
-	toLightVector = light_position - worldPosition.xyz;
+	toLightVector = vec3(-10, 10, 0);
 	toCameraVector = (inverse(viewMatrix) * vec4(0,0,0,1)).xyz - worldPosition.xyz;
 
 	float distance = length(positionRelativeToCamera.xyz);

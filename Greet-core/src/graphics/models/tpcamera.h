@@ -10,6 +10,7 @@ namespace Greet {
 	{
 	private:
 		bool m_mouse1 = false;
+		bool m_mouse2 = false;
 		bool m_mouse3 = false;
 
 		// Clamps to the camera position

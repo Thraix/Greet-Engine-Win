@@ -103,6 +103,7 @@ namespace Greet {
 	void Window::tick()
 	{
 		checkJoysticks();
+
 	}
 
 	void Window::checkJoysticks()
