@@ -93,6 +93,7 @@ public:
 		uint gridWidth = 999;
 		uint gridLength = 999;
 		float* noise = Noise::genNoise(gridWidth+1, gridWidth + 1,5,64, 64,0.5f);
+		noise[0] = 10;
 		MeshData* gridMesh = MeshFactory::lowPolyGrid(0, 0, 0, gridWidth+1, gridLength+1, gridWidth, gridLength, noise,1);
 		recalcGrid(gridMesh, gridWidth, gridLength);
 		
@@ -135,9 +136,6 @@ public:
 		modelShader->enable();
 		l->setToUniform(modelShader, "light");
 		modelShader->disable();
-		terrainShader->enable();
-		l->setToUniform(terrainShader, "light");
-		terrainShader->disable();
 	
 		delete l;
 
@@ -180,7 +178,6 @@ public:
 		//RenderEngine::add_layer2d(uilayer, "uilayer");
 		//RenderEngine::add_layer2d(guilayer, "guilayer");
 		RenderEngine::add_layer3d(new Layer3D(renderer3d), "3dWorld");
-		Log::info(sizeof(vec3));
 	}
 
 	void recalcVertex(vec3* vertex, uint* color)
@@ -220,6 +217,7 @@ public:
 		vec3* vertices = data->getVertices();
 		uint indexCount = data->getIndexCount();
 		uint* indices = data->getIndices();
+		vec3* normals = (vec3*)data->getAttribute(ATTRIBUTE_NORMAL)->floats;
 		for (int i = 0;i < indexCount;i+=3)
 		{
 			uint index = indices[i];
@@ -229,9 +227,15 @@ public:
 		recalcVertex(&vertices[MeshFactory::indexGrid(gridWidth,gridLength-1,gridWidth,gridLength)], &colors[index]);
 		index = MeshFactory::indexGrid(0, gridLength, gridWidth, gridLength);
 		recalcVertex(&vertices[index], &colors[index]);
-
-
-		MeshFactory::calculateNormals(vertices, data->getVertexCount(), data->getIndices(), data->getIndexCount(), (vec3*)data->getAttribute(ATTRIBUTE_NORMAL)->floats);
+		for (int i = 0;i < indexCount;i += 3)
+		{
+			normals[indices[i]] = MeshFactory::calculateNormal(vertices[indices[i]], vertices[indices[i + 1]], vertices[indices[i + 2]]);
+		}
+		//index = MeshFactory::indexGrid(gridWidth, gridLength - 1, gridWidth, gridLength);
+		//normals[index] = MeshFactory::calculateNormal(vertices[index], vertices[index], vertices[index]);
+		//index = MeshFactory::indexGrid(0, gridLength, gridWidth, gridLength);
+		//normals[index] = MeshFactory::calculateNormal(vertices[index], vertices[index], vertices[index]);
+		//MeshFactory::calculateNormals(vertices, data->getVertexCount(), data->getIndices(), data->getIndexCount(), (vec3*)data->getAttribute(ATTRIBUTE_NORMAL)->floats);
 		data->addAttribute(new AttributeData(ATTRIBUTE_COLOR, colors));
 	}
 
@@ -324,9 +328,9 @@ public:
 			modelShader->enable();
 			l->setToUniform(modelShader, "light");
 			modelShader->disable();
-			terrainShader->enable();
-			l->setToUniform(terrainShader, "light");
-			terrainShader->disable();
+			//terrainShader->enable();
+			//l->setToUniform(terrainShader, "light");
+			//terrainShader->disable();
 			delete l;
 		}
 		if (e.getButton() == GLFW_KEY_F1)
