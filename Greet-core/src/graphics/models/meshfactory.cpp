@@ -180,22 +180,139 @@ namespace Greet { namespace MeshFactory {
 			{
 				if (ix % 2 == iz % 2)
 				{
-					indices[i++] = ix + iz*(gridWidth + 1);
-					indices[i++] = ix + (iz + 1)*(gridWidth + 1);
-					indices[i++] = ix + 1 + (iz + 1)*(gridWidth + 1);
-					indices[i++] = ix + iz*(gridWidth + 1);
-					indices[i++] = ix + 1 + (iz + 1)*(gridWidth + 1);
-					indices[i++] = ix + 1 + iz*(gridWidth + 1);
+					indices[i++] = ix + iz * (gridWidth + 1);
+					indices[i++] = ix + (iz + 1) * (gridWidth + 1);
+					indices[i++] = ix + 1 + (iz + 1) * (gridWidth + 1);
+					indices[i++] = ix + 1 + iz * (gridWidth + 1);
+					indices[i++] = ix + iz * (gridWidth + 1);
+					indices[i++] = ix + 1 + (iz + 1) * (gridWidth + 1);
 				}
 				else
 				{
-					indices[i++] = ix + iz*(gridWidth + 1);
-					indices[i++] = ix + (iz + 1)*(gridWidth + 1);
-					indices[i++] = ix + 1 + iz*(gridWidth + 1);
-					indices[i++] = ix + 1 + iz*(gridWidth + 1);
-					indices[i++] = ix + (iz + 1)*(gridWidth + 1);
+					indices[i++] = ix + iz * (gridWidth + 1);
+					indices[i++] = ix + (iz + 1) * (gridWidth + 1);
+					indices[i++] = ix + 1 + iz * (gridWidth + 1);
+					indices[i++] = ix + 1 + iz * (gridWidth + 1);
+					indices[i++] = ix + (iz + 1) * (gridWidth + 1);
 					indices[i++] = ix + 1 + (iz + 1) * (gridWidth + 1);
 				}
+			}
+		}
+
+		vec3* normals = calculateNormals(vertices, vertexCount, indices, indexCount);
+		MeshData* data = new MeshData(vertices, vertexCount, indices, indexCount);
+		data->addAttribute(new AttributeData(ATTRIBUTE_NORMAL, normals));
+
+		return data;
+	}
+
+	uint indexGrid(uint x, uint z, uint gridWidth, uint gridLength)
+	{
+		if (z >= gridLength - 1)
+		{
+			return x + (z - (gridLength - 1)) * (gridWidth+1) + (gridLength - 1) * gridWidth * 2;
+		}
+		else if (x == 0)
+		{
+			return z * 2 * gridWidth;
+		}
+		else if (x == gridWidth)
+		{
+			return x * 2 - 1 + z * 2 * gridWidth;
+		}
+		else 
+		{
+			return x * 2 - 1 + z * 2 * gridWidth;
+		}
+		return 0;
+	}
+
+	MeshData* lowPolyGrid(float x, float y, float z, float width, float length, uint gridWidth, uint gridLength, float* heightMap, float height)
+	{
+		if (gridWidth < 1 || gridLength < 1)
+			return quad(x, y, z, width, length);
+
+		float tileWidth = width / (float)gridWidth;
+		float tileLength = length / (float)gridLength;
+
+		uint vertexCount = (gridWidth + 1) * (gridLength + 1) + (gridWidth - 1)*(gridLength - 1);
+
+		vec3* vertices = new vec3[vertexCount];
+
+		// decenter x and y
+		x -= width / 2.0f;
+		z -= length / 2.0f;
+
+		for (uint iz = 0; iz <= gridLength; iz++)
+		{
+			for (uint ix = 0; ix <= gridWidth; ix++)
+			{
+				float heightM = heightMap == NULL ? 0 : heightMap[ix + iz*(gridWidth + 1)];
+				vec3 vec = vec3(x + ix*tileWidth, y + heightM*height, z + iz*tileLength);
+				uint index = indexGrid(ix,iz,gridWidth, gridLength);
+				vertices[index] = vec;
+				if(iz < gridLength - 1 && ix != 0 && ix != gridWidth)
+				{
+					vertices[index + 1] = vec;
+				}
+			}
+		}
+
+		uint indexCount = 6 * gridWidth * gridLength;
+		uint* indices = new uint[indexCount];
+
+
+		#define GRID(argx,argy) ((argx)*2-1)+(argy) * 2 * gridWidth;
+		// Loop through every square
+		uint i = 0;
+		for (uint iz = 0; iz < gridLength; iz++)
+		{
+			for (uint ix = 0; ix < gridWidth; ix++)
+			{
+				if (iz < gridLength - 1)
+				{
+					uint add = (ix != 0) ? 1 : 0;
+					if (ix % 2 == iz % 2)
+					{
+						indices[i++] = indexGrid(ix, iz,gridWidth,gridLength) + add;
+						indices[i++] = indexGrid(ix, iz + 1, gridWidth, gridLength);
+						indices[i++] = indexGrid(ix + 1, iz + 1, gridWidth, gridLength);
+						indices[i++] = indexGrid(ix + 1, iz, gridWidth, gridLength);
+						indices[i++] = indexGrid(ix, iz, gridWidth, gridLength);
+						indices[i++] = indexGrid(ix + 1, iz + 1, gridWidth, gridLength);
+					}
+					else
+					{
+						indices[i++] = indexGrid(ix, iz, gridWidth, gridLength) + add;
+						indices[i++] = indexGrid(ix, iz + 1, gridWidth, gridLength);
+						indices[i++] = indexGrid(ix + 1, iz, gridWidth, gridLength);
+						indices[i++] = indexGrid(ix + 1, iz, gridWidth, gridLength);
+						indices[i++] = indexGrid(ix, iz + 1, gridWidth, gridLength);
+						indices[i++] = indexGrid(ix + 1, iz + 1, gridWidth, gridLength);
+					}
+				}
+				else
+				{
+					if (ix % 2 == iz % 2)
+					{
+						indices[i++] = indexGrid(ix, iz, gridWidth, gridLength);
+						indices[i++] = indexGrid(ix, iz + 1, gridWidth, gridLength);
+						indices[i++] = indexGrid(ix + 1, iz + 1, gridWidth, gridLength);
+						indices[i++] = indexGrid(ix + 1, iz + 1, gridWidth, gridLength);
+						indices[i++] = indexGrid(ix + 1, iz, gridWidth, gridLength);
+						indices[i++] = indexGrid(ix, iz, gridWidth, gridLength);
+					}
+					else
+					{
+						indices[i++] = indexGrid(ix, iz, gridWidth, gridLength);
+						indices[i++] = indexGrid(ix, iz + 1, gridWidth, gridLength);
+						indices[i++] = indexGrid(ix + 1, iz, gridWidth, gridLength);
+						indices[i++] = indexGrid(ix + 1, iz + 1, gridWidth, gridLength);
+						indices[i++] = indexGrid(ix + 1, iz, gridWidth, gridLength);
+						indices[i++] = indexGrid(ix, iz + 1, gridWidth, gridLength);
+					}
+				}
+
 			}
 		}
 

@@ -69,7 +69,8 @@ namespace Greet {
 
 	void TPCamera::setRotation(float rotation)
 	{
-		m_rotation = rotation;
+		//m_rotation = rotation;
+		m_rotationWanted = rotation; // smooth transition
 		calculateViewMatrix();
 	}
 

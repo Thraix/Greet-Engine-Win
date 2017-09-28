@@ -48,6 +48,7 @@ namespace Greet {
 		const mat4& getViewMatrix() const override;
 		void update(float timeElapsed) override;
 
+		const vec3& getPosition() const { return m_position; }
 		float getHeight() const { return m_height; }
 		float getRotation() const { return m_rotation; }
 		float getDistance() const { return m_distance; }

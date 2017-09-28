@@ -73,7 +73,8 @@ public:
 		FontManager::add(new FontContainer("Anonymous Pro.ttf", "anonymous"));
 
 		fbo = new FrameBufferObject(960,540);
-		camera = new TPCamera(vec3(0,0,0),15,0,0,15,80,0,0.8f);
+		//camera = new TPCamera(vec3(-3.5, -7.8, 5.5), 18, 0.66, 38.5, 15, 80, 0, 0.8f); // Profile shot
+		camera = new TPCamera(vec3(0, 0, 0), 15, 0, 0, 15, 80, 0, 0.8f);
 		Skybox* skybox = new Skybox((CubeMap*)TextureManager::get("skybox"));
 		renderer3d = new BatchRenderer3D(Window::getWidth(), Window::getHeight(), camera,90,0.001f,1000.0f, skybox);
 
@@ -89,10 +90,10 @@ public:
 		terrainMaterial = new Material(terrainShader, NULL);
 		terrainMaterial->setReflectivity(0.5f);
 		terrainMaterial->setShineDamper(5.0f);
-		uint gridWidth = 499;
-		uint gridLength = 499;
-		float* noise = Noise::genNoise(500,500,5,64,64,0.5f);
-		MeshData* gridMesh = MeshFactory::grid(0, 0, 0, gridWidth+1, gridLength+1, gridWidth, gridLength, noise,1);
+		uint gridWidth = 999;
+		uint gridLength = 999;
+		float* noise = Noise::genNoise(gridWidth+1, gridWidth + 1,5,64, 64,0.5f);
+		MeshData* gridMesh = MeshFactory::lowPolyGrid(0, 0, 0, gridWidth+1, gridLength+1, gridWidth, gridLength, noise,1);
 		recalcGrid(gridMesh, gridWidth, gridLength);
 		
 		//gridMesh->setDefaultAttribute4f(MESH_COLORS_LOCATION, vec4(1.0f, 0.0f, 0.0f, 1.0f));
@@ -145,7 +146,7 @@ public:
 		fps = new Label("144 fps", vec2(50, 300), "roboto", 72, ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(120 / 360.0f, 9)));
 		cursor = new Renderable2D(vec2(0,0),vec2(32,32),0xffffffff, new Sprite(TextureManager::get2D("cursor")), new Sprite(TextureManager::get2D("mask")));
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(driverTest->m_position.x, -20, 0.5f, true, new drivers::DriverAdapter()));
-		guilayer = new GUILayer(new BatchRenderer(),ShaderFactory::DefaultShader());
+		//guilayer = new GUILayer(new BatchRenderer(),ShaderFactory::DefaultShader());
 		slider = new Slider(vec2(10,100),vec2(200,30),0,255,1);
 		button = new Button(vec2(10,120+30),vec2(100,40),"Test");
 		frame = new Frame(vec2(10, 10), vec2(500, 500),"GUI Frame");
@@ -157,7 +158,7 @@ public:
 		uilayer->add(fps);
 		frame->add(slider);
 		frame->add(button);
-		guilayer->add(frame);
+		//guilayer->add(frame);
 		uilayer->add(cursor);
 
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(frame->m_position.x, 100, 5, true, new drivers::DriverAdapter()));
@@ -182,47 +183,59 @@ public:
 		Log::info(sizeof(vec3));
 	}
 
+	void recalcVertex(vec3* vertex, uint* color)
+	{
+		float y = vertex->y;
+		if (y < 0.45)
+		{
+			uint blue = (uint)(pow(1, 4.0f) * 255);
+			blue = blue > 255 ? 255 : blue;
+			*color = 0xff000000 | ((blue / 2) << 16) | ((uint)(blue * 0.9) << 8) | blue;
+			y = 0.45f + Noise::prng(vertex->x, vertex->z)*0.01f;// + 0.03f*(rand() / (float)RAND_MAX - 0.5f);
+		}
+		else if (y < 0.48)
+		{
+			*color = 0xffF0E5A5;
+		}
+		else if (y < 0.58)
+		{
+			*color = 0xff7CD663;
+		}
+		else if (y < 0.65)
+		{
+			*color = 0xffB5B0A8;
+			y = (pow(y - 0.58, 0.6) + 0.58);
+		}
+		else
+		{
+			*color = 0xeffDCF2F2;
+			y = (pow(y - 0.58, 0.6) + 0.58);
+		}
+		vertex->y = y * 20;
+	}
+
 	void recalcGrid(MeshData* data, uint gridWidth, uint gridLength)
 	{
 		uint* colors = new uint[data->getVertexCount()];
 		vec3* vertices = data->getVertices();
-		for (uint z = 0; z <= gridLength; z++)
+		uint indexCount = data->getIndexCount();
+		uint* indices = data->getIndices();
+		for (int i = 0;i < indexCount;i+=3)
 		{
-			for (uint x = 0; x <= gridLength; x++)
-			{
-				float y = vertices[z + x*(gridWidth + 1)].y;
-				if (y < 0.45)
-				{
-					uint blue = (uint)(pow(1, 4.0f) * 255);
-					blue = blue > 255 ? 255 : blue;
-					colors[z + x*(gridWidth + 1)] = 0xff000000 | ((blue / 2) << 16) | ((uint)(blue * 0.9) << 8) | blue;
-					y = 0.45 + 0.03f*(rand() / (float)RAND_MAX - 0.5f);
-				}
-				else if (y < 0.48)
-				{
-					colors[z + x*(gridWidth + 1)] = 0xffD6BF63;
-				}
-				else if (y < 0.58)
-				{
-					colors[z + x*(gridWidth + 1)] = 0xff7CD663;
-				}
-				else if (y < 0.65)
-				{
-					colors[z + x*(gridWidth + 1)] = 0xffB5B0A8;
-					y = (pow(y - 0.58, 0.6) + 0.58);
-				}
-				else
-				{
-					colors[z + x*(gridWidth + 1)] = 0xeffDCF2F2;
-					y = (pow(y - 0.58, 0.6) + 0.58);
-				}
-
-				vertices[z + x*(gridWidth + 1)].y = y*20;
-			}
+			uint index = indices[i];
+			recalcVertex(&vertices[index], &colors[index]);	
 		}
+		uint index = MeshFactory::indexGrid(gridWidth, gridLength - 1, gridWidth, gridLength);
+		recalcVertex(&vertices[MeshFactory::indexGrid(gridWidth,gridLength-1,gridWidth,gridLength)], &colors[index]);
+		index = MeshFactory::indexGrid(0, gridLength, gridWidth, gridLength);
+		recalcVertex(&vertices[index], &colors[index]);
+
+
 		MeshFactory::calculateNormals(vertices, data->getVertexCount(), data->getIndices(), data->getIndexCount(), (vec3*)data->getAttribute(ATTRIBUTE_NORMAL)->floats);
 		data->addAttribute(new AttributeData(ATTRIBUTE_COLOR, colors));
 	}
+
+
 
 	float random()
 	{
@@ -315,6 +328,17 @@ public:
 			l->setToUniform(terrainShader, "light");
 			terrainShader->disable();
 			delete l;
+		}
+		if (e.getButton() == GLFW_KEY_F1)
+		{
+			Log::info("pos=", camera->getPosition(), " height=", camera->getHeight(), " distance=", camera->getDistance(), ", rotation=", camera->getRotation());
+		}
+		if (e.getButton() == GLFW_KEY_F2)
+		{
+			camera->setPosition(vec3(-3.5, -7.8, 5.5));
+			camera->setDistance(18);
+			camera->setHeight(0.66);
+			camera->setRotation(38.5);
 		}
 		if (e.getButton() == GLFW_KEY_F10)
 		{

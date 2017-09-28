@@ -3,7 +3,7 @@
 #include "Logger.h"
 #include "LogLevel.h"
 
-#define ASSERT(x,...) if(!x) {Greet::Log::error(__VA_ARGS__);abort();}
+#define ASSERT(x,...) if(!(x)) {Greet::Log::error(__VA_ARGS__);abort();}
 
 namespace Greet {
 	/*

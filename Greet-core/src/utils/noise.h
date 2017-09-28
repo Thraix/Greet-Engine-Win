@@ -23,6 +23,7 @@ public:
 		static float* genNoise(uint width, uint height, uint octave, uint frequencyX, uint frequencyY, float persistance);
 	private:
 		static float smooth(uint noiseX, uint noiseY, const float* noise, uint noiseWidth, uint noiseHeight);
+	public:
 		static float prng(int x, int y);
 		/*
 		   |---| d1

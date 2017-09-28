@@ -11,5 +11,7 @@ namespace Greet { namespace MeshFactory {
 	MeshData* cube(float x, float y, float z, float width, float height, float length);
 	MeshData* tetrahedron(float x, float y, float z, float size);
 	MeshData* grid(float x, float y, float z, float width, float length, uint gridWidth, uint gridLength, float* heightMap, float height);
+	uint indexGrid(uint x, uint z, uint gridWidth, uint gridLength);
+	MeshData* lowPolyGrid(float x, float y, float z, float width, float length, uint gridWidth, uint gridLength, float* heightMap, float height);
 	MeshData* grid(float x, float y, float z, float width, float length, uint gridWidth, uint gridLength);
 }}
