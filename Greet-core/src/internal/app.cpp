@@ -7,9 +7,9 @@ namespace Greet {
 	App::App()
 	: m_fps(0), m_ups(0)
 	{
-		std::ofstream file(".logging", std::fstream::out | std::fstream::app);
-		LogStream fileStream = LogStream(file, LogLevel::error, "fileStream");
-		Log::addLogStream(fileStream);
+		//std::ofstream file(".logging");
+		//LogStream* fileStream = new LogStream(file, LogLevel::error, "fileStream");
+		//Log::addLogStream(fileStream);
 	}
 
 	App::~App()

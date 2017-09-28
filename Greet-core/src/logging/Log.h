@@ -27,17 +27,17 @@ namespace Greet {
 		/*
 			Add a log stream to the logging system.
 		*/
-		static void addLogStream(LogStream stream);
+		static void addLogStream(LogStream* stream);
 
 		/*
 		Remove a log stream from the logging system.
 		*/
-		static LogStream& removeLogStream(const std::string& name);
+		static LogStream* removeLogStream(const std::string& name);
 
 		/*
 			Remove a log stream from the logging system.
 		*/
-		static LogStream& removeLogStream(LogStream stream);
+		static LogStream* removeLogStream(LogStream* stream);
 
 		// Default logging capabilities
 

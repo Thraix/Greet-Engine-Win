@@ -2,8 +2,6 @@
 #include "Log.h"
 namespace Greet {
 
-	LogStream Logger::invalid;
-
 	Logger::Logger()
 	{
 	
@@ -11,50 +9,53 @@ namespace Greet {
 
 	Logger::~Logger()
 	{
+		for (std::vector<LogStream*>::iterator it = m_streams.begin(); it != m_streams.end(); it++)
+		{
+			delete *it;
+		}
 		m_streams.clear();
 	}
 
-	void Logger::addLogStream(const LogStream& stream)
+	void Logger::addLogStream(LogStream* stream)
 	{
-		// Check if there already is a stream with the given stream name. (getLogStream returns a stream with an empty name if none is found)
-		if (getLogStream(stream.getName()) != "")
+		// Check if there already is a stream with the given stream name.
+		if (getLogStream(stream->getName()))
 		{
-			Log::error("Stream with name ", stream.getName(), " already exists.");
+			Log::error("Stream with name ", stream->getName(), " already exists.");
 		}
 		else
 			m_streams.push_back(stream);
 	}
 
-	const LogStream& Logger::getLogStream(const std::string& name)
+	LogStream* Logger::getLogStream(const std::string& name)
 	{
-		for (std::vector<LogStream>::iterator it = m_streams.begin(); it != m_streams.end(); it++)
+		for (std::vector<LogStream*>::iterator it = m_streams.begin(); it != m_streams.end(); it++)
 		{
 			// it -> pointer to pointer to stream
-			if (*it == name)
+			if (**it == name)
 			{
 				return *it;
 			}
 		}
-		return invalid;
+		return NULL;
 	}
 
-	LogStream Logger::removeLogStream(const std::string& name)
+	LogStream* Logger::removeLogStream(const std::string& name)
 	{
-		for (std::vector<LogStream>::iterator it = m_streams.begin(); it != m_streams.end(); it++)
+		for (std::vector<LogStream*>::iterator it = m_streams.begin(); it != m_streams.end(); it++)
 		{
-			if (*it == name)
+			if (**it == name)
 			{
-				LogStream& s = *it;
 				m_streams.erase(it);
-				return s;
+				return *it;
 			}
 		}
 		Log::warning("No stream removed with name: ", name, ". Could not find.");
 	}
 
-	LogStream Logger::removeLogStream(LogStream stream)
+	LogStream* Logger::removeLogStream(LogStream* stream)
 	{
-		return removeLogStream(stream.getName());
+		return removeLogStream(stream->getName());
 	}
 
 }
