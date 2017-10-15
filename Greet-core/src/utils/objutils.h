@@ -207,7 +207,7 @@ namespace Greet { namespace ObjUtils {
 		if (!file)
 		{
 			Log::error("Obj could not be read: ", filename);
-			ErrorHandle::setErrorCode(Greet_ERROR_GOBJ_READ);
+			ErrorHandle::setErrorCode(GREET_ERROR_GOBJ_READ);
 			return errorModel();
 		}
 		uint pointer = 0;
@@ -220,7 +220,7 @@ namespace Greet { namespace ObjUtils {
 		{
 			fclose(file);
 			Log::error("File format not supported, if you are using obj you need to compile it to gobj: ", filename);
-			ErrorHandle::setErrorCode(Greet_ERROR_GOBJ_FORMAT);
+			ErrorHandle::setErrorCode(GREET_ERROR_GOBJ_FORMAT);
 			return errorModel();
 		}
 		data[4] = '\0';
@@ -229,7 +229,7 @@ namespace Greet { namespace ObjUtils {
 		{
 			fclose(file);
 			Log::error("File format not supported, if you are using obj you need to compile it to gobj: ",filename);
-			ErrorHandle::setErrorCode(Greet_ERROR_GOBJ_FORMAT);
+			ErrorHandle::setErrorCode(GREET_ERROR_GOBJ_FORMAT);
 			return errorModel();
 		}
 		delete[] data;
@@ -245,7 +245,7 @@ namespace Greet { namespace ObjUtils {
 		{
 			fclose(file);
 			Log::error("GOBJ file could not be read: ",filename);
-			ErrorHandle::setErrorCode(Greet_ERROR_GOBJ_READ);
+			ErrorHandle::setErrorCode(GREET_ERROR_GOBJ_READ);
 			return errorModel();
 		}
 		vec3* vertices = new vec3[vertexCount];

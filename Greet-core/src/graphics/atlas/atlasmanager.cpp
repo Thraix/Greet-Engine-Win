@@ -8,7 +8,7 @@ namespace Greet{
 		{
 			if (atlas->getName() == m_atlas[i]->getName())
 			{
-				ErrorHandle::setErrorCode(Greet_ERROR_MANAGER_ADD);
+				ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_ADD);
 				Log::error("Given atlas name already exists: ", atlas->getName().c_str());
 				return;
 			}
@@ -26,7 +26,7 @@ namespace Greet{
 				return m_atlas[i];
 			}
 		}
-		ErrorHandle::setErrorCode(Greet_ERROR_MANAGER_GET);
+		ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_GET);
 		Log::error("Could not find the given atlas: ", atlasName.c_str());
 		return m_atlas[0];
 	}

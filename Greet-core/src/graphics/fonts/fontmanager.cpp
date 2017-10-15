@@ -10,7 +10,7 @@ namespace Greet{
 		{
 			if (font->getName() == m_fonts[i]->getName())
 			{
-				ErrorHandle::setErrorCode(Greet_ERROR_MANAGER_ADD);
+				ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_ADD);
 				Log::error("Given font name already exists: ", font->getName().c_str());
 				return;
 			}
@@ -27,7 +27,7 @@ namespace Greet{
 				return m_fonts[i]->getSize(size);
 			}
 		}
-		ErrorHandle::setErrorCode(Greet_ERROR_MANAGER_GET);
+		ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_GET);
 		Log::error("Could not find the given font: ", fontname.c_str());
 		if (m_fonts.size() > 0)
 			return m_fonts[0]->getSize(size);

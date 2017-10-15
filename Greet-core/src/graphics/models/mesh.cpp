@@ -101,7 +101,7 @@ namespace Greet {
 
 		if (m_vbos.find(location) != m_vbos.end())
 		{
-			ErrorHandle::setErrorCode(Greet_ERROR_MESH_LOCATION);
+			ErrorHandle::setErrorCode(GREET_ERROR_MESH_LOCATION);
 			Log::error("Shader location already used in mesh: ", location);
 			return;
 		}
@@ -122,7 +122,7 @@ namespace Greet {
 	{
 		if (m_vbos.find(location) != m_vbos.end())
 		{
-			ErrorHandle::setErrorCode(Greet_ERROR_MESH_LOCATION);
+			ErrorHandle::setErrorCode(GREET_ERROR_MESH_LOCATION);
 			Log::error("Shader location already used in mesh: ", location);
 			return;
 		}
@@ -143,7 +143,7 @@ namespace Greet {
 	{
 		if (m_vbos.find(location) != m_vbos.end())
 		{
-			ErrorHandle::setErrorCode(Greet_ERROR_MESH_LOCATION);
+			ErrorHandle::setErrorCode(GREET_ERROR_MESH_LOCATION);
 			Log::error("Shader location already used in mesh: ",location);
 			return;
 		}
@@ -164,7 +164,7 @@ namespace Greet {
 	{
 		if (m_vbos.find(data->location) != m_vbos.end())
 		{
-			ErrorHandle::setErrorCode(Greet_ERROR_MESH_LOCATION);
+			ErrorHandle::setErrorCode(GREET_ERROR_MESH_LOCATION);
 			Log::error("Shader location already used in mesh: ",data->location);
 			return;
 		}

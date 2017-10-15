@@ -10,7 +10,7 @@ namespace Greet{
 		{
 			if (channel->getName() == m_channels[i]->getName())
 			{
-				ErrorHandle::setErrorCode(Greet_ERROR_MANAGER_ADD);
+				ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_ADD);
 				Log::error("Given channel name already exists: ", channel->getName().c_str());
 				return;
 			}
@@ -25,7 +25,7 @@ namespace Greet{
 		for (uint i = 0; i < size; i++)
 			if (channelname.compare(m_channels[i]->getName().c_str()) == 0)
 				return m_channels[i];
-		ErrorHandle::setErrorCode(Greet_ERROR_MANAGER_GET);
+		ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_GET);
 		Log::error("Could not find the given channel: ", channelname.c_str());
 		return m_channels[0];
 	}

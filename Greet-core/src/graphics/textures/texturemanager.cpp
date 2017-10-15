@@ -10,7 +10,7 @@ namespace Greet{
 		{
 			if (texture->getName() == m_textures[i]->getName())
 			{
-				ErrorHandle::setErrorCode(Greet_ERROR_MANAGER_ADD);
+				ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_ADD);
 				Log::error("Given texture name already exists: ", texture->getName().c_str());
 				return;
 			}
@@ -28,7 +28,7 @@ namespace Greet{
 				return m_textures[i];
 			}
 		}
-		ErrorHandle::setErrorCode(Greet_ERROR_MANAGER_GET);
+		ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_GET);
 		Log::error("Could not find the given texture: ", texturename.c_str());
 		return m_textures[0];
 	}

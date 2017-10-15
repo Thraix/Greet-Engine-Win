@@ -22,7 +22,7 @@ void main()
 	gl_Position = projectionMatrix * positionRelativeToCamera;
 
 	vec3 surfaceNormal = (transformationMatrix * vec4(normal,0.0)).xyz;
-	vec3 toLightVector = vec3(-10, 10, 0);
+	vec3 toLightVector = vec3(-100, 100, 0);
 	vec3 toCameraVector = (inverse(viewMatrix) * vec4(0,0,0,1)).xyz - worldPosition.xyz;
 
 	float distance = length(positionRelativeToCamera.xyz);
@@ -33,7 +33,10 @@ void main()
 	vec3 unitLightVector = normalize(toLightVector);
 
 	float nDot = dot(unitNormal, unitLightVector);
-	float brightness = max(nDot,0.4);
+	float brightness = nDot;//max(nDot,0.6);
+	if(brightness < 0.6)
+		brightness = mix(0.4,0.6,brightness/0.6);
+		
 	vec3 diffuse = light_color * brightness;
 	vert_color *= vec4(diffuse,1.0f);
 }

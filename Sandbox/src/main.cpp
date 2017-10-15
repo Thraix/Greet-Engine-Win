@@ -180,15 +180,40 @@ public:
 		RenderEngine::add_layer3d(new Layer3D(renderer3d), "3dWorld");
 	}
 
-	void recalcVertex(vec3* vertex, uint* color)
+	void recalcPositions(vec3* vertex)
 	{
 		float y = vertex->y;
 		if (y < 0.45)
 		{
+			y = 0.45f + Noise::prng(vertex->x, vertex->z)*0.01f;// + 0.03f*(rand() / (float)RAND_MAX - 0.5f);
+		}
+		else if (y < 0.48)
+		{
+			
+		}
+		else if (y < 0.58)
+		{
+			
+		}
+		else if (y < 0.65)
+		{
+			y = (pow(y - 0.58, 0.6) + 0.58);
+		}
+		else
+		{
+			y = (pow(y - 0.58, 0.6) + 0.58);
+		}
+		vertex->y = y * 20;
+	}
+
+	void recalcColors(const vec3& v1, const vec3& v2, const vec3& v3, uint* color)
+	{
+		float y = (v1.y + v2.y + v3.y) / 3.0f / 20.0f;
+		if (y < 0.45+0.01f)
+		{
 			uint blue = (uint)(pow(1, 4.0f) * 255);
 			blue = blue > 255 ? 255 : blue;
 			*color = 0xff000000 | ((blue / 2) << 16) | ((uint)(blue * 0.9) << 8) | blue;
-			y = 0.45f + Noise::prng(vertex->x, vertex->z)*0.01f;// + 0.03f*(rand() / (float)RAND_MAX - 0.5f);
 		}
 		else if (y < 0.48)
 		{
@@ -198,17 +223,14 @@ public:
 		{
 			*color = 0xff7CD663;
 		}
-		else if (y < 0.65)
+		else if (y < pow(0.07, 0.6) + 0.58)
 		{
 			*color = 0xffB5B0A8;
-			y = (pow(y - 0.58, 0.6) + 0.58);
 		}
 		else
 		{
 			*color = 0xeffDCF2F2;
-			y = (pow(y - 0.58, 0.6) + 0.58);
 		}
-		vertex->y = y * 20;
 	}
 
 	void recalcGrid(MeshData* data, uint gridWidth, uint gridLength)
@@ -220,22 +242,17 @@ public:
 		vec3* normals = (vec3*)data->getAttribute(ATTRIBUTE_NORMAL)->floats;
 		for (int i = 0;i < indexCount;i+=3)
 		{
-			uint index = indices[i];
-			recalcVertex(&vertices[index], &colors[index]);	
+			recalcPositions(&vertices[indices[i]]);
 		}
 		uint index = MeshFactory::indexGrid(gridWidth, gridLength - 1, gridWidth, gridLength);
-		recalcVertex(&vertices[MeshFactory::indexGrid(gridWidth,gridLength-1,gridWidth,gridLength)], &colors[index]);
+		recalcPositions(&vertices[MeshFactory::indexGrid(gridWidth,gridLength-1,gridWidth,gridLength)]);
 		index = MeshFactory::indexGrid(0, gridLength, gridWidth, gridLength);
-		recalcVertex(&vertices[index], &colors[index]);
+		recalcPositions(&vertices[index]);
 		for (int i = 0;i < indexCount;i += 3)
 		{
 			normals[indices[i]] = MeshFactory::calculateNormal(vertices[indices[i]], vertices[indices[i + 1]], vertices[indices[i + 2]]);
+			recalcColors(vertices[indices[i]], vertices[indices[i+1]], vertices[indices[i+2]], &colors[indices[i]]);
 		}
-		//index = MeshFactory::indexGrid(gridWidth, gridLength - 1, gridWidth, gridLength);
-		//normals[index] = MeshFactory::calculateNormal(vertices[index], vertices[index], vertices[index]);
-		//index = MeshFactory::indexGrid(0, gridLength, gridWidth, gridLength);
-		//normals[index] = MeshFactory::calculateNormal(vertices[index], vertices[index], vertices[index]);
-		//MeshFactory::calculateNormals(vertices, data->getVertexCount(), data->getIndices(), data->getIndexCount(), (vec3*)data->getAttribute(ATTRIBUTE_NORMAL)->floats);
 		data->addAttribute(new AttributeData(ATTRIBUTE_COLOR, colors));
 	}
 

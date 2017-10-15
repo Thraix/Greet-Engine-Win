@@ -21,7 +21,7 @@ namespace Greet{
 		{
 			if (sound->getName() == m_sounds[i]->getName())
 			{
-				ErrorHandle::setErrorCode(Greet_ERROR_MANAGER_ADD);
+				ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_ADD);
 				Log::error("Given sound name already exists: ", sound->getName().c_str());
 				return;
 			}
@@ -36,7 +36,7 @@ namespace Greet{
 		for (uint i = 0; i < size; i++)
 			if (soundname.compare(m_sounds[i]->getName().c_str()) == 0)
 				return m_sounds[i];
-		ErrorHandle::setErrorCode(Greet_ERROR_MANAGER_GET);
+		ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_GET);
 		Log::error("Could not find the given sound: ", soundname.c_str());
 		return m_sounds[0];
 	}
