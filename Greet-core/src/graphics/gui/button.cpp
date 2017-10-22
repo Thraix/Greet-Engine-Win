@@ -40,14 +40,13 @@ namespace Greet {
 		return false;
 	}
 
-	bool Button::onPressed(const MousePressedEvent& event, vec2 relativeMousePos)
+	GUI* Button::onPressed(const MousePressedEvent& event, vec2 relativeMousePos)
 	{
-		GUI::onPressed(event, relativeMousePos);
-		return false;
+		return GUI::onPressed(event, relativeMousePos);
 	}
-	bool Button::onReleased(const MouseReleasedEvent& event, vec2 relativeMousePos)
+	GUI* Button::onReleased(const MouseReleasedEvent& event, vec2 relativeMousePos)
 	{
 		GUI::onReleased(event, relativeMousePos);
-		return false;
+		return NULL;
 	}
 }

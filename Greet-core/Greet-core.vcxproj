@@ -108,6 +108,7 @@
     <ClCompile Include="src\graphics\fonts\fontcontainer.cpp" />
     <ClCompile Include="src\graphics\gui\button.cpp" />
     <ClCompile Include="src\graphics\gui\slider.cpp" />
+    <ClCompile Include="src\graphics\gui\slidercontroller.cpp" />
     <ClCompile Include="src\graphics\layers\guilayer.cpp" />
     <ClCompile Include="src\graphics\models\meshdata.cpp" />
     <ClCompile Include="src\graphics\models\meshfactory.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="src\graphics\fonts\fontcontainer.h" />
     <ClInclude Include="src\graphics\gui\button.h" />
     <ClInclude Include="src\graphics\gui\ltrb.h" />
+    <ClInclude Include="src\graphics\gui\slidercontroller.h" />
     <ClInclude Include="src\graphics\layers\guilayer.h" />
     <ClInclude Include="src\graphics\models\fpcamera.h" />
     <ClInclude Include="src\graphics\models\meshdata.h" />

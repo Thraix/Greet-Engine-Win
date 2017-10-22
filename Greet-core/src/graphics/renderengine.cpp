@@ -8,11 +8,21 @@ namespace Greet {
 
 	void RenderEngine::add_layer2d(Layer* renderer, const std::string& name)
 	{
+		if (renderer == NULL)
+		{
+			Log::error("Trying to add Renderer2D to RenderEngine but it is NULL.");
+			return;
+		}
 		m_renderer2ds.emplace(name, renderer);
 	}
 
 	void RenderEngine::add_layer3d(Layer3D* renderer, const std::string& name)
 	{
+		if (renderer == NULL)
+		{
+			Log::error("Trying to add Renderer3D to RenderEngine but it is NULL.");
+			return;
+		}
 		m_renderer3ds.emplace(name, renderer);
 	}
 

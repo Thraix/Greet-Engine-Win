@@ -80,6 +80,7 @@
     <ClCompile Include="src\logging\LogLevel.cpp" />
     <ClCompile Include="src\audio\audiochannel.cpp" />
     <ClCompile Include="src\audio\audiochannelmanager.cpp" />
+    <ClCompile Include="src\graphics\gui\slidercontroller.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\font.h" />
@@ -218,6 +219,7 @@
     <ClInclude Include="src\logging\LogStream.h" />
     <ClInclude Include="src\audio\audiochannel.h" />
     <ClInclude Include="src\audio\audiochannelmanager.h" />
+    <ClInclude Include="src\graphics\gui\slidercontroller.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Performance4.psess" />

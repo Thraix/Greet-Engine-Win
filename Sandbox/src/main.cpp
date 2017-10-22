@@ -144,8 +144,8 @@ public:
 		fps = new Label("144 fps", vec2(50, 300), "roboto", 72, ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(120 / 360.0f, 9)));
 		cursor = new Renderable2D(vec2(0,0),vec2(32,32),0xffffffff, new Sprite(TextureManager::get2D("cursor")), new Sprite(TextureManager::get2D("mask")));
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(driverTest->m_position.x, -20, 0.5f, true, new drivers::DriverAdapter()));
-		//guilayer = new GUILayer(new BatchRenderer(),ShaderFactory::DefaultShader());
-		slider = new Slider(vec2(10,100),vec2(200,30),0,255,1);
+		guilayer = new GUILayer(new BatchRenderer(),ShaderFactory::DefaultShader());
+		slider = new Slider(vec2(0,0),vec2(200,30),0,255,1);
 		button = new Button(vec2(10,120+30),vec2(100,40),"Test");
 		frame = new Frame(vec2(10, 10), vec2(500, 500),"GUI Frame");
 
@@ -156,7 +156,7 @@ public:
 		uilayer->add(fps);
 		frame->add(slider);
 		frame->add(button);
-		//guilayer->add(frame);
+		guilayer->add(frame);
 		uilayer->add(cursor);
 
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(frame->m_position.x, 100, 5, true, new drivers::DriverAdapter()));
@@ -175,8 +175,8 @@ public:
 		//Tree t(renderer3d,0,0,0);
 		uint pos = 0;
 //		Log::info(JSONLoader::isNumber("0.1234s",pos));
-		//RenderEngine::add_layer2d(uilayer, "uilayer");
-		//RenderEngine::add_layer2d(guilayer, "guilayer");
+		RenderEngine::add_layer2d(uilayer, "uilayer");
+		RenderEngine::add_layer2d(guilayer, "guilayer");
 		RenderEngine::add_layer3d(new Layer3D(renderer3d), "3dWorld");
 	}
 

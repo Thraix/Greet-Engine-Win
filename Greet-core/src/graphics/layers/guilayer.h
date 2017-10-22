@@ -13,6 +13,7 @@ namespace Greet {
 	{
 
 	private:
+		GUI* m_focusedGUI;
 		GUI* getGUI(uint i) { return (GUI*)m_renderables[i]; };
 	public:
 		GUILayer(Renderer2D* renderer, Shader* shader);

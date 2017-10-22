@@ -22,7 +22,7 @@ namespace Greet {
 
 	void GUILayer::add(Renderable* renderable)
 	{
-		Log::error("Doesn't accept Renderables only GUIs.");
+		Log::error("GUILayer doesn't accept Renderables only GUIs.");
 	}
 
 	void GUILayer::add(GUI* renderable)
@@ -48,40 +48,49 @@ namespace Greet {
 
 	bool GUILayer::onPressed(const MousePressedEvent& e)
 	{
-
-		bool pressed = false;
-		vec2 relativePos;
+		//if (m_focusedGUI != NULL && m_focusedGUI->onPressed(e, e.getPosition() - m_focusedGUI->m_position))
+		{
+		//	return true;
+		}
 		for (uint i = 0;i < m_renderables.size();i++)
 		{
 			GUI* gui = getGUI(i);
-			relativePos = (e.getPosition() - gui->m_position) - vec2(gui->m_margin.left, gui->m_margin.top);
-			pressed |= gui->onPressed(e, relativePos);
+			if (m_focusedGUI == gui)
+				continue;
+			GUI* focusedGUI = gui->onPressed(e, e.getPosition() - gui->m_position);
+			if (focusedGUI != NULL)
+			{
+				if (m_focusedGUI != focusedGUI)
+				{
+					focusedGUI->setFocused(true);
+					if(m_focusedGUI != NULL)
+						m_focusedGUI->setFocused(false);
+				}
+				m_focusedGUI = focusedGUI;
+				return true;
+			}
 		}
-		return pressed;
+		m_focusedGUI = NULL;
+		return false;
 	}
 
 	bool GUILayer::onReleased(const MouseReleasedEvent& e)
 	{
-		bool released = false;
-		vec2 relativePos;
 		for (uint i = 0;i < m_renderables.size();i++)
 		{
 			GUI* gui = getGUI(i);
-			relativePos = (e.getPosition() - gui->m_position) - vec2(gui->m_margin.left, gui->m_margin.top);
-			released |= gui->onReleased(e, relativePos);
+			gui->onReleased(e, e.getPosition() - gui->m_position);
 		}
-		return released;
+		return false;
 	}
 
 	bool GUILayer::onMoved(const MouseMovedEvent& e)
 	{
 		bool moved = false;
-		vec2 relativePos;
 		for (uint i = 0;i < m_renderables.size();i++)
 		{
 			GUI* gui = getGUI(i);
-			relativePos = (e.getPosition() - gui->m_position) - vec2(gui->m_margin.left, gui->m_margin.top);
-			moved |= gui->onMoved(e,relativePos);
+			moved |= gui->onMoved(e, e.getPosition() - gui->m_position);
 		}
 		return moved;
 	}

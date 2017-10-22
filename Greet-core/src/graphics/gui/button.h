@@ -26,7 +26,7 @@ namespace Greet {
 		void onMouseEnter();
 		void onMouseExit();
 		bool onMoved(const MouseMovedEvent& event, vec2 relativeMousePos) override;
-		bool onPressed(const MousePressedEvent& event, vec2 relativeMousePos) override;
-		bool onReleased(const MouseReleasedEvent& event, vec2 relativeMousePos) override;
+		GUI* onPressed(const MousePressedEvent& event, vec2 relativeMousePos) override;
+		GUI* onReleased(const MouseReleasedEvent& event, vec2 relativeMousePos) override;
 	};
 }
