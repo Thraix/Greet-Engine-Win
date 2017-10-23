@@ -46,7 +46,16 @@ namespace Greet{ namespace Math {
 	//struct vec2;
 	inline void clamp(float* value, float min, float max)
 	{
-		*value = *value < min ? min : (*value > max ? max : *value);
+		if(min < max)
+			*value = *value < min ? min : (*value > max ? max : *value);
+		else
+			*value = *value < max ? max : (*value > min ? min : *value);
+	}
+
+	// Returns half the value, removes one to value if it is odd.
+	inline int half(int value)
+	{
+		return (value - (value % 2)) / 2;
 	}
 
 

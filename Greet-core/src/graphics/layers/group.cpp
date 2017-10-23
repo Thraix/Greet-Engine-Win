@@ -27,6 +27,18 @@ namespace Greet {
 		m_renderables.push_back(renderable);
 	}
 
+	void Group::remove(Renderable* renderable)
+	{
+		for (auto it = m_renderables.begin();it != m_renderables.end();it++)
+		{
+			if (*it == renderable)
+			{
+				m_renderables.erase(it);
+				return;
+			}
+		}
+	}
+
 	bool Group::update(float timeElapsed)
 	{
 		bool update = false;

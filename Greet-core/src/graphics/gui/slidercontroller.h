@@ -13,7 +13,7 @@ namespace Greet {
 		bool m_wasInside;
 
 	public:
-		SliderController(vec2 sliderSize, vec2 size);
+		SliderController(const vec2& position, const vec2& size);
 
 		virtual bool isInside(const vec2& position) const override;
 		virtual void submit(Renderer2D* renderer) const override;

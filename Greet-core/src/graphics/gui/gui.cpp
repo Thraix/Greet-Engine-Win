@@ -26,7 +26,7 @@ namespace Greet {
 
 	void GUI::add(Renderable* renderable)
 	{
-		Log::error("GUI doesn't accept Renderables only GUIs.");
+		ASSERT(false, "GUI doesn't accept Renderables only GUIs.");
 	}
 
 	void GUI::add(GUI* renderable)
@@ -55,7 +55,7 @@ namespace Greet {
 		{
 			GUI* gui = ((GUI*)m_renderables[i]);
 			// Check if mouse is within child-GUIs
-			if (gui->onPressed(event, getMousePosition(relativeMousePos) - gui->getPosition()))
+			if (gui->onPressed(event, translateMouse(relativeMousePos, gui)))
 				return gui;
 		}
 		return this;
@@ -69,7 +69,7 @@ namespace Greet {
 		{
 			GUI* gui = ((GUI*)m_renderables[i]);
 			// Check if mouse is within child-GUIs
-			gui->onReleased(event, getMousePosition(relativeMousePos)-gui->getPosition());
+			gui->onReleased(event, translateMouse(relativeMousePos, gui));
 		}
 		return NULL;
 	}
@@ -92,7 +92,7 @@ namespace Greet {
 		for (uint i = 0;i < m_renderables.size();i++)
 		{
 			GUI* gui = ((GUI*)m_renderables[i]);
-			gui->onMoved(event, getMousePosition(relativeMousePos) - gui->getPosition());
+			gui->onMoved(event, translateMouse(relativeMousePos, gui));
 		}
 		return m_mouseInside;
 	}
@@ -126,14 +126,14 @@ namespace Greet {
 		return m_position;
 	}
 
-	vec2 GUI::getMousePosition(const vec2& parentMousePos) const
-	{
-		return parentMousePos - vec2(m_margin.left, m_margin.top);
-	}
-
 	bool GUI::isInside(const vec2& position) const
 	{
 		return position.x >= 0 && position.x < m_size.x && position.y >= 0 && position.y < m_size.y;
 //		return MOUSE_INSIDE_GUI(position, m_size.x, m_size.y);
+	}
+
+	vec2 GUI::translateMouse(const vec2& mousePos, GUI* target) const
+	{	
+		return mousePos - target->m_position - vec2(m_margin.left, m_margin.top);
 	}
 }

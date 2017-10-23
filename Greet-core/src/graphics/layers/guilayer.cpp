@@ -55,8 +55,8 @@ namespace Greet {
 		for (uint i = 0;i < m_renderables.size();i++)
 		{
 			GUI* gui = getGUI(i);
-			if (m_focusedGUI == gui)
-				continue;
+			//if (m_focusedGUI == gui)
+			//	continue;
 			GUI* focusedGUI = gui->onPressed(e, e.getPosition() - gui->m_position);
 			if (focusedGUI != NULL)
 			{

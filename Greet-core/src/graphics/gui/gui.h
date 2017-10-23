@@ -69,8 +69,7 @@ namespace Greet{
 			void removeOnClickListener(OnClickListener* onClick) { m_onClickListeners.erase(std::remove(m_onClickListeners.begin(), m_onClickListeners.end(),onClick), m_onClickListeners.end()); };
 
 			virtual bool isInside(const vec2& position) const;
-			//vec2 getContentSize() const { return m_size; }
-			vec2 getMousePosition(const vec2& mousePos) const;
+			vec2 translateMouse(const vec2& mousePos, GUI* target) const;
 			const vec2& getRealPosition();
 			inline const vec2& getPosition() const override { return m_position;}
 			inline const vec2& getSize() const override { return m_size;}

@@ -1,16 +1,22 @@
 #include "slider.h"
 
-#define SLIDER_WIDTH_BASE 7
-
 namespace Greet {
-	Slider::Slider(const vec2& position, const vec2& size, float start, float end, float stepSize)
-		: GUI(position, vec2(size.x, size.y), LTRB(0, 0, 0, 0)), m_stepSize(stepSize), m_sliderPos(size.x/2), m_startValue(start), m_endValue(end),
-		m_sliderFont(FontManager::get("anonymous",24)), m_sliderController(new SliderController(size, vec2(SLIDER_WIDTH_BASE, size.y+6)))
-		, m_sliderColor()
+
+	Slider::Slider(const vec2& position, const vec2& size, float start, float end, float stepSize, float sliderWidth)
+		: GUI(position, vec2(size.x, size.y), LTRB(0, 0, 0, 0)), m_stepSize(stepSize), m_startValue(start), m_endValue(end), m_snap(false),
+			m_sliderFont(FontManager::get("anonymous",24)), m_sliderController(new SliderController(size/2, vec2(sliderWidth, size.y+6)))
 	{
 		m_renderBackground = true;
 		m_backgroundColor = ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(120 / 360.0f, 15));
 		add(m_sliderController);
+		m_sliderController->m_position.x = getPosFromValue();
+	}
+
+	Slider::Slider(const vec2& position, const vec2& size, const std::vector<std::string>& labels, float sliderWidth)
+		: Slider(position, size, 0,labels.size()-1,1,sliderWidth)
+	{
+		m_labels = labels;
+		setSnapping(true);
 	}
 
 	Slider::~Slider()
@@ -25,8 +31,10 @@ namespace Greet {
 		{
 			if (m_holdSlider)
 			{
-				m_sliderPos = relativeMousePos.x < 0 ? 0 : (relativeMousePos.x >= m_size.x ? m_size.x - 1 : relativeMousePos.x);
-				m_sliderController->m_position.x = m_sliderPos;
+				m_sliderController->m_position.x = relativeMousePos.x;
+				Math::clamp(&m_sliderController->m_position.x, 0, m_size.x-1);
+				if(m_snap)
+					snapSlider();
 			}
 		}
 		return moved;
@@ -40,8 +48,10 @@ namespace Greet {
 		if (event.getButton() == GLFW_MOUSE_BUTTON_1)
 		{
 			m_holdSlider = true;
-			m_sliderPos = relativeMousePos.x < 0 ? 0 : (relativeMousePos.x >= m_size.x ? m_size.x - 1 : relativeMousePos.x);
-			m_sliderController->m_position.x = m_sliderPos;
+			m_sliderController->m_position.x = relativeMousePos.x;
+			Math::clamp(&m_sliderController->m_position.x, 0, m_size.x);
+			if (m_snap)
+				snapSlider();
 			return pressed;
 		}
 
@@ -59,21 +69,77 @@ namespace Greet {
 		return NULL;
 	}
 
-
-
 	void Slider::render(Renderer2D* renderer) const
 	{
 		GUI::render(renderer);
 
 		uint sliderColor = ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(120 / 360.0f, 3));
 		// Start and end values
-		std::string value = StringUtils::toString(getValue());
+		std::string value;
+		if (m_labels.size() == 0)
+		{
+			if(m_percentage)
+				value = StringUtils::toString((int)(getValue() / (m_endValue - m_startValue) * 100))+"%";
+			else
+				value = StringUtils::toString(getValue());
+		}
+		else
+		{
+			value = m_labels[getValue()];
+		}
 		float yPos = m_size.y / 2.0f + m_sliderFont->getSize()*0.25f;
 		renderer->submitString(value, vec2((m_size.x - m_sliderFont->getWidthOfText(value)) / 2.0f, yPos), m_sliderFont, sliderColor);
 	}
 
-	bool Slider::isInsideSlider(const vec2& pos) const
+	void Slider::snapSlider()
 	{
-		return false;//m_sliderController.//MOUSE_INSIDE(pos, m_sliderPos - (m_sliderSize.x - SLIDER_WIDTH_BASE) / 2 - m_padding.left, (m_size.y - m_sliderSize.y)/2 - m_padding.top, m_sliderSize.x, m_sliderSize.y);
+		m_sliderController->m_position.x = getPosFromValue();
+	}
+
+	bool Slider::isInside(const vec2& position) const
+	{
+		return GUI::isInside(position) || m_sliderController->isInside(translateMouse(position, m_sliderController));
+	}
+
+	void Slider::setSnapping(bool snapping)
+	{
+		m_snap = snapping;
+		if(m_snap)
+			snapSlider();
+	}
+
+	void Slider::setRenderPercentage(bool percentage)
+	{
+		m_percentage = percentage;
+	}
+
+	void Slider::setSliderController(SliderController* controller)
+	{
+		controller->m_position.x = m_sliderController->m_position.x;
+		GUI::remove(m_sliderController);
+		delete m_sliderController;
+		m_sliderController = controller;
+		GUI::add(controller);
+	}
+
+	void Slider::setValue(float value)
+	{
+		Math::clamp(&value, m_startValue, m_endValue);
+		m_sliderController->m_position.x = getPosFromValue(value);
+	}
+
+	float Slider::getValue() const
+	{ 
+		return Math::roundClose((m_sliderController->m_position.x / (m_size.x-1))*(m_endValue - m_startValue) + m_startValue, m_stepSize);
+	}
+
+	float Slider::getPosFromValue(float value) const
+	{
+		return (value - m_startValue) / (m_endValue - m_startValue)*(m_size.x-1);
+	}
+
+	float Slider::getPosFromValue() const 
+	{ 
+		return getPosFromValue(getValue()); 
 	}
 }

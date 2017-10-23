@@ -34,7 +34,6 @@ namespace Greet {
 
 	GUI* Frame::onPressed(const MousePressedEvent& event, vec2 relativeMousePos)
 	{
-		Log::info(relativeMousePos);
 		GUI* pressed = GUI::onPressed(event, relativeMousePos);
 		if (pressed != this)
 			return pressed;

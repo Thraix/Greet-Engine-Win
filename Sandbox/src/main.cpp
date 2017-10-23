@@ -31,6 +31,7 @@ private:
 	Layer* uilayer;
 	GUILayer* guilayer;
 	Slider* slider;
+	Slider* slider2;
 	Frame* frame;
 	Button* button;
 	Label* fps;
@@ -145,7 +146,13 @@ public:
 		cursor = new Renderable2D(vec2(0,0),vec2(32,32),0xffffffff, new Sprite(TextureManager::get2D("cursor")), new Sprite(TextureManager::get2D("mask")));
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(driverTest->m_position.x, -20, 0.5f, true, new drivers::DriverAdapter()));
 		guilayer = new GUILayer(new BatchRenderer(),ShaderFactory::DefaultShader());
-		slider = new Slider(vec2(0,0),vec2(200,30),0,255,1);
+		std::vector<std::string> labels{ "Babymode", "Softcore",  "Easy", "Medium", "Hard", "Hardcore", "Expert" };
+		slider = new Slider(vec2(0, 0), vec2(200, 30), 0, 255, 1);
+		slider2 = new Slider(vec2(0, 40), vec2(200, 30), labels);
+		slider2->setValue(3);
+		Slider* slider3 = new Slider(vec2(0, 80), vec2(200, 30), 0, 255, 1);
+		slider3->setRenderPercentage(true);
+		slider3->setSliderController(new SliderController(vec2(0, 15), vec2(30, 30)));
 		button = new Button(vec2(10,120+30),vec2(100,40),"Test");
 		frame = new Frame(vec2(10, 10), vec2(500, 500),"GUI Frame");
 
@@ -155,6 +162,8 @@ public:
 
 		uilayer->add(fps);
 		frame->add(slider);
+		frame->add(slider2);
+		frame->add(slider3);
 		frame->add(button);
 		guilayer->add(frame);
 		uilayer->add(cursor);

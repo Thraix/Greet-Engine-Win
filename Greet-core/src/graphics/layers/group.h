@@ -15,6 +15,7 @@ namespace Greet {
 		Group(const mat3& transform);
 		virtual ~Group();
 		virtual void add(Renderable* renderable);
+		virtual void remove(Renderable* renderable);
 		virtual bool update(float timeElapsed);
 		virtual void begin(Renderer2D* renderer) const override;
 		virtual void submit(Renderer2D* renderer) const override;

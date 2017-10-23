@@ -3,8 +3,8 @@
 namespace Greet
 {
 
-	SliderController::SliderController(vec2 sliderSize, vec2 size)
-		: GUI(vec2(sliderSize.x / 2, sliderSize.y / 2), size, LTRB(0, 0, 0, 0))
+	SliderController::SliderController(const vec2& position, const vec2& size)
+		: GUI(position, size, LTRB(0, 0, 0, 0))
 	{
 		setBackgroundColor(ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(120 / 360.0f, 9)));
 	}
@@ -12,7 +12,7 @@ namespace Greet
 	void SliderController::submit(Renderer2D* renderer) const
 	{
 		if (m_renderBackground)
-			renderer->fillRect(vec2(-(m_size.x - 1)/2,-m_size.y/2), m_size, m_backgroundColor, m_mask);
+			renderer->fillRect(vec2(-Math::half(m_size.x),-Math::half(m_size.y)), m_size, m_backgroundColor, m_mask);
 		render(renderer);
 	}
 
@@ -39,6 +39,6 @@ namespace Greet
 
 	bool SliderController::isInside(const vec2& position) const
 	{
-		return position.x >= -(m_size.x - 1) / 2 && position.x < m_size.x - (m_size.x - 1)/2 && position.y >= -m_size.y / 2 && position.y < m_size.y/2;
+		return position.x >= -Math::half(m_size.x) && position.x < m_size.x - Math::half(m_size.x) && position.y >= -Math::half(m_size.y) && position.y < m_size.y - Math::half(m_size.y);
 	}
 }
