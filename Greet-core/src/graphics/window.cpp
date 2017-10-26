@@ -194,6 +194,8 @@ namespace Greet {
 			EventDispatcher::onKeyReleased(KeyReleasedEvent(key));
 		else if(action == GLFW_PRESS)
 			EventDispatcher::onKeyPressed(KeyPressedEvent(key));
+		else if(action == GLFW_REPEAT)
+			EventDispatcher::onKeyPressed(KeyPressedEvent(key));
 	}
 
 	void Window::mouse_button_callback(GLFWwindow *window, int button, int action, int mods)

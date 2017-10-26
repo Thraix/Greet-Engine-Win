@@ -3,7 +3,7 @@
 namespace Greet {
 
 	Slider::Slider(const vec2& position, const vec2& size, float start, float end, float stepSize, float sliderWidth)
-		: GUI(position, vec2(size.x, size.y), LTRB(0, 0, 0, 0)), m_stepSize(stepSize), m_startValue(start), m_endValue(end), m_snap(false),
+		: GUI(position, vec2(size.x, size.y)), m_stepSize(stepSize), m_startValue(start), m_endValue(end), m_snap(false),
 			m_sliderFont(FontManager::get("anonymous",24)), m_sliderController(new SliderController(size/2, vec2(sliderWidth, size.y+6)))
 	{
 		m_renderBackground = true;

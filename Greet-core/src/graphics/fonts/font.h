@@ -26,6 +26,8 @@ namespace Greet{
 		inline ftgl::texture_font_t* getFTFont() const { return m_font;}
 		inline float getSize() const {return m_size;}
 		inline uint getAtlasID() const {return m_atlas->id;}
+		float getWidthOfText(const std::string& text, uint startPos, uint endPos) const;
 		float getWidthOfText(const std::string& text) const;
+		float* Font::getPartialWidths(const std::string& text);
 	};
 }

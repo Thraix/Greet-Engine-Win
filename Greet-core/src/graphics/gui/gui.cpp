@@ -35,13 +35,18 @@ namespace Greet {
 		renderable->m_parent = this;
 	}
 
-	bool GUI::onPressed(KeyPressedEvent& event)
+	bool GUI::onPressed(const KeyPressedEvent& e)
 	{ 
 		return false;
 	}
 
-	bool GUI::onReleased(KeyReleasedEvent& event) 
+	bool GUI::onReleased(const KeyReleasedEvent& e)
 	{ 
+		return false;
+	}
+
+	bool GUI::onTyped(const KeyTypedEvent& e)
+	{
 		return false;
 	}
 
@@ -119,11 +124,20 @@ namespace Greet {
 		Group::submit(renderer);
 	}
 
-	const vec2& GUI::getRealPosition()
+	const vec2& GUI::getRealPosition() const
 	{
 		if(m_parent)
 			return m_parent->getPosition()+m_position;
 		return m_position;
+	}
+
+	void GUI::setFocused(bool focused)
+	{
+		if (m_focused != focused)
+		{
+			onFocused(focused);
+			m_focused = focused;
+		}
 	}
 
 	bool GUI::isInside(const vec2& position) const

@@ -26,6 +26,9 @@ private:
 	std::vector<EntityModel> models;
 	FrameBufferObject* fbo;
 
+
+	float progressFloat;
+
 	TPCamera* camera;
 	Layer* scene3d;
 	Layer* uilayer;
@@ -153,7 +156,12 @@ public:
 		Slider* slider3 = new Slider(vec2(0, 80), vec2(200, 30), 0, 255, 1);
 		slider3->setRenderPercentage(true);
 		slider3->setSliderController(new SliderController(vec2(0, 15), vec2(30, 30)));
-		button = new Button(vec2(10,120+30),vec2(100,40),"Test");
+		TextBox* textBox = new TextBox(vec2(0, 120), vec2(200, 30));
+		textBox->setText("Text Box");
+		progressFloat = 0;
+		ProgressBar* progressBar = new ProgressBar(vec2(0, 160), vec2(200, 30),&progressFloat,0,1000);
+		
+		button = new Button(vec2(10,300),vec2(100,40),"Test");
 		frame = new Frame(vec2(10, 10), vec2(500, 500),"GUI Frame");
 
 		scene3d = new Layer(new BatchRenderer(),blurShader, mat3::orthographic(0.0f, (float)Window::getWidth(), 0.0f, (float)Window::getHeight()));
@@ -165,6 +173,8 @@ public:
 		frame->add(slider2);
 		frame->add(slider3);
 		frame->add(button);
+		frame->add(textBox);
+		frame->add(progressBar);
 		guilayer->add(frame);
 		uilayer->add(cursor);
 
@@ -285,6 +295,9 @@ public:
 
 	void update(float elapsedTime)
 	{
+		progressFloat++;
+		if (progressFloat > 1000)
+			progressFloat = 0;
 		//fps->text = toString(slider->getValue());
 #if 0 // FPCamera
 		vec2 velocityY = movement->getVelocity();
@@ -408,8 +421,6 @@ public:
 
 	bool onTyped(const KeyTypedEvent& e) override
 	{
-		Log::info((unsigned char)e.getCharCode());
-		fps->text = (char)e.getCharCode();
 		return false;
 	}
 

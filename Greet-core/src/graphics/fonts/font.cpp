@@ -25,22 +25,52 @@ namespace Greet{
 	
 	}
 	
-	float Font::getWidthOfText(const std::string& text) const
+	float Font::getWidthOfText(const std::string& text, uint startPos, uint endPos) const
 	{
 		float width = 0;
-		uint length = text.length();
-		for (uint i = 0;i < length;i++)
+		if (startPos > text.size() || endPos < startPos || endPos > text.size())
+		{
+			Log::error("Invalid start and endpos.");
+			return 0;
+		}
+
+		for (uint i = startPos;i < endPos;i++)
 		{
 			const char& c = text[i];
 			ftgl::texture_glyph_t* glyph = ftgl::texture_font_get_glyph(getFTFont(), c);
 			if (glyph != NULL)
 			{
-				if (i != length - 1)
+				width += glyph->advance_x;
+			}
+		}
+		return width;
+	}
+
+	float Font::getWidthOfText(const std::string& text) const
+	{
+		return getWidthOfText(text,0,text.size());
+	}
+
+	float* Font::getPartialWidths(const std::string& text)
+	{
+		float width = 0;
+
+		float* widths = new float[text.size()+1];
+
+		for (uint i = 0;i < text.size();i++)
+		{
+			const char& c = text[i+1];
+			ftgl::texture_glyph_t* glyph = ftgl::texture_font_get_glyph(getFTFont(), c);
+			if (glyph != NULL)
+			{
+				widths[i] = width;
+				if (i != text.size() - 1 || c == ' ')
 					width += glyph->advance_x;
 				else
 					width += glyph->width;
 			}
 		}
-		return width;
+		widths[text.size()] = width;
+		return widths;
 	}
 }

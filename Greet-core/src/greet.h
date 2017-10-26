@@ -123,7 +123,10 @@
 #include <graphics\gui\border.h>
 #include <graphics\gui\gui.h>
 #include <graphics\gui\panel.h>
+#include <graphics\gui\slidercontroller.h>
 #include <graphics\gui\slider.h>
+#include <graphics\gui\textbox.h>
+#include <graphics\gui\progressbar.h>
 #include <graphics\gui\label.h>
 #include <graphics\gui\frame.h>
 #include <graphics\gui\button.h>

@@ -18,6 +18,7 @@
 namespace Greet{
 	class GUI : public Group
 	{
+		friend class GUILayer;
 		protected:
 
 			GUI* m_parent;
@@ -37,7 +38,8 @@ namespace Greet{
 			bool m_renderBackground = true;
 			std::vector<OnClickListener*> m_onClickListeners;
 			static Sprite* m_mask;
-
+		private:
+			void setFocused(bool focused);
 
 		public:
 			GUI(const vec2& position, const vec2& size);
@@ -45,19 +47,19 @@ namespace Greet{
 			void add(Renderable* renderable) override;
 			void add(GUI* renderable);
 			virtual ~GUI();
-			void setFocused(bool focused) { m_focused = focused; };
 			bool isFocused() const { return m_focused; }
 			void setBackgroundColor(uint bgColor) { m_backgroundColor = bgColor;}
-			//void renderBackground(bool renderBackground) {m_background->render = renderBackground;}
 			bool update(float timeElapsed) override;
 
 			virtual void submit(Renderer2D* renderer) const override;
 			virtual void render(Renderer2D* renderer) const;
 
-			virtual void onMouseEnter() { /*Log::info("mouse entered"); */};
-			virtual void onMouseExit() { /*Log::info("mouse exited");*/ };
-			virtual bool onPressed(KeyPressedEvent& event);
-			virtual bool onReleased(KeyReleasedEvent& event);
+			virtual void onFocused(bool focused) {};
+			virtual void onMouseEnter() { };
+			virtual void onMouseExit() { };
+			virtual bool onPressed(const KeyPressedEvent& event);
+			virtual bool onReleased(const KeyReleasedEvent& event);
+			virtual bool onTyped(const KeyTypedEvent& event);
 			// Returns the pressed GUI
 			virtual GUI* onPressed(const MousePressedEvent& event, vec2 relativeMousePos);
 			// Returns the released GUI
@@ -70,7 +72,7 @@ namespace Greet{
 
 			virtual bool isInside(const vec2& position) const;
 			vec2 translateMouse(const vec2& mousePos, GUI* target) const;
-			const vec2& getRealPosition();
+			const vec2& getRealPosition() const;
 			inline const vec2& getPosition() const override { return m_position;}
 			inline const vec2& getSize() const override { return m_size;}
 			inline uint getBackgroundColor() const {return m_backgroundColor;}

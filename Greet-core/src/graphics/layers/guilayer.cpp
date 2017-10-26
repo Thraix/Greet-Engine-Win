@@ -32,17 +32,22 @@ namespace Greet {
 
 	bool GUILayer::onPressed(const KeyPressedEvent& e)
 	{
-		
+		if(m_focusedGUI!=NULL)
+			return m_focusedGUI->onPressed(e);
 		return false;
 	}
 
 	bool GUILayer::onReleased(const KeyReleasedEvent& e)
 	{
+		if (m_focusedGUI != NULL)
+			return m_focusedGUI->onReleased(e);
 		return false;
 	}
 
 	bool GUILayer::onTyped(const KeyTypedEvent& e)
 	{
+		if (m_focusedGUI != NULL)
+			return m_focusedGUI->onTyped(e);
 		return false;
 	}
 
@@ -70,6 +75,8 @@ namespace Greet {
 				return true;
 			}
 		}
+		if (m_focusedGUI != NULL)
+			m_focusedGUI->setFocused(false);
 		m_focusedGUI = NULL;
 		return false;
 	}
