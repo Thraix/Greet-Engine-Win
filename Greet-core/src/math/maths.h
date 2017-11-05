@@ -1,10 +1,10 @@
 #pragma once
 
-#include "math_func.h"
-#include "quaternion.h"
-#include "vec2.h"
-#include "vec3.h"
-#include "vec4.h"
-#include "mat3.h"
-#include "mat4.h"
-#include "transform.h"
+#include <math/math_func.h>
+#include <math/quaternion.h>
+#include <math/vec2.h>
+#include <math/vec3.h>
+#include <math/vec4.h>
+#include <math/mat3.h>
+#include <math/mat4.h>
+#include <math/transform.h>
