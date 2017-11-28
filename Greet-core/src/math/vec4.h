@@ -15,13 +15,13 @@ namespace Greet{
 		vec4();
 		vec4(float x, float y, float z, float w);
 
-		float length();
+		float Length();
 		
-		vec4& add(const vec4& other);
-		vec4& subtract(const vec4& other);
-		vec4& multiply(const vec4& other);
-		vec4& divide(const vec4& other);
-		bool compare(const vec4& other);
+		vec4& Add(const vec4& other);
+		vec4& Subtract(const vec4& other);
+		vec4& Multiply(const vec4& other);
+		vec4& Divide(const vec4& other);
+		bool Compare(const vec4& other);
 
 		friend vec4& operator+(vec4& first, const vec4 &second);
 		friend vec4& operator-(vec4& first, const vec4 &second);

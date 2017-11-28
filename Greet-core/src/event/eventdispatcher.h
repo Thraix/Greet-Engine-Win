@@ -20,21 +20,21 @@ namespace Greet {
 	{
 	public:
 		friend class Window;
-		static void addMouseListener(uint priority, MouseListener& listener);
-		static void addKeyListener(uint priority, KeyListener& listener);
-		static void removeMouseListener(MouseListener& listener);
-		static void removeKeyListener(KeyListener& listener);
+		static void AddMouseListener(uint priority, MouseListener& listener);
+		static void AddKeyListener(uint priority, KeyListener& listener);
+		static void RemoveMouseListener(MouseListener& listener);
+		static void RemoveKeyListener(KeyListener& listener);
 	private:
 		static std::map<uint, std::vector<MouseListener*>, std::greater<uint>> m_mouseListeners;
 		static std::map<uint, std::vector<KeyListener*>, std::greater<uint>> m_keyListeners;
 
-		static void onMousePressed(const MousePressedEvent& e);
-		static void onMouseReleased(const MouseReleasedEvent& e);
-		static void onMouseMoved(const MouseMovedEvent& e);
-		static void onMouseScrolled(const MouseScrollEvent& e);
+		static void OnMousePressed(const MousePressedEvent& e);
+		static void OnMouseReleased(const MouseReleasedEvent& e);
+		static void OnMouseMoved(const MouseMovedEvent& e);
+		static void OnMouseScrolled(const MouseScrollEvent& e);
 
-		static void onKeyPressed(const KeyPressedEvent& e);
-		static void onKeyReleased(const KeyReleasedEvent& e);
-		static void onKeyTyped(const KeyTypedEvent& e);
+		static void OnKeyPressed(const KeyPressedEvent& e);
+		static void OnKeyReleased(const KeyReleasedEvent& e);
+		static void OnKeyTyped(const KeyTypedEvent& e);
 	};
 }

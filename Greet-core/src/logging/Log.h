@@ -3,7 +3,7 @@
 #include "Logger.h"
 #include "LogLevel.h"
 
-#define ASSERT(x,...) if(!(x)) {Greet::Log::error(__VA_ARGS__);abort();}
+#define ASSERT(x,...) if(!(x)) {Greet::Log::Error(__VA_ARGS__);abort();}
 
 namespace Greet {
 	/*
@@ -27,17 +27,17 @@ namespace Greet {
 		/*
 			Add a log stream to the logging system.
 		*/
-		static void addLogStream(LogStream* stream);
+		static void AddLogStream(LogStream* stream);
 
 		/*
 		Remove a log stream from the logging system.
 		*/
-		static LogStream* removeLogStream(const std::string& name);
+		static LogStream* RemoveLogStream(const std::string& name);
 
 		/*
 			Remove a log stream from the logging system.
 		*/
-		static LogStream* removeLogStream(LogStream* stream);
+		static LogStream* RemoveLogStream(LogStream* stream);
 
 		// Default logging capabilities
 
@@ -45,36 +45,36 @@ namespace Greet {
 			Logging at information log level.
 		*/
 		template <typename... Args>
-		static void info(const Args&... args)
+		static void Info(const Args&... args)
 		{
-			m_log.m_logger.log(LogLevel::information, "[INF] ", args...);
+			m_log.m_logger.Log(LogLevel::information, "[INF] ", args...);
 		}
 
 		/*
 			Logging at warning log level.
 		*/
 		template <typename... Args>
-		static void warning(const Args&... args)
+		static void Warning(const Args&... args)
 		{
-			m_log.m_logger.log(LogLevel::warning, "[WRN] ", args...);
+			m_log.m_logger.Log(LogLevel::warning, "[WRN] ", args...);
 		}
 
 		/*
 			Logging at error log level.
 		*/
 		template <typename... Args>
-		static void error(const Args&... args)
+		static void Error(const Args&... args)
 		{
-			m_log.m_logger.log(LogLevel::error,"[ERR] ",args...);
+			m_log.m_logger.Log(LogLevel::error,"[ERR] ",args...);
 		}
 
 		/*
 			Logging at user defined log level.
 		*/
 		template <typename... Args>
-		static void log(const LogLevel& level, const Args&... args)
+		static void LogAt(const LogLevel& level, const Args&... args)
 		{
-			m_log.m_logger.log(level, args...);
+			m_log.m_logger.Log(level, args...);
 		}
 
 	};

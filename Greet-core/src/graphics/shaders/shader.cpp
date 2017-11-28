@@ -5,32 +5,32 @@ namespace Greet {
 
 	Shader::Shader(const std::string& geomSrc, const std::string& vertSrc, const std::string& fragSrc)
 	{
-		m_shaderID = load(geomSrc, vertSrc, fragSrc,true);
+		m_shaderID = Load(geomSrc, vertSrc, fragSrc,true);
 	}
 
 	Shader::Shader(const std::string& vertSrc, const std::string& fragSrc)
 	{
-		m_shaderID = load(vertSrc,fragSrc);
+		m_shaderID = Load(vertSrc,fragSrc);
 	}
 
-	GLuint Shader::load(const std::string& vertSrc, const std::string& fragSrc)
+	GLuint Shader::Load(const std::string& vertSrc, const std::string& fragSrc)
 	{
-		return load("", vertSrc, fragSrc, false);
+		return Load("", vertSrc, fragSrc, false);
 	}
 
-	GLuint Shader::load(const std::string& geomSrc, const std::string& vertSrc, const std::string& fragSrc, bool hasGeometry)
+	GLuint Shader::Load(const std::string& geomSrc, const std::string& vertSrc, const std::string& fragSrc, bool hasGeometry)
 	{
 		GLuint program = glCreateProgram();
 
-		uint shader = attachShader(program, vertSrc, GL_VERTEX_SHADER);
+		uint shader = AttachShader(program, vertSrc, GL_VERTEX_SHADER);
 		if (shader != 0)
 			return shader;
-		shader = attachShader(program, fragSrc, GL_FRAGMENT_SHADER);
+		shader = AttachShader(program, fragSrc, GL_FRAGMENT_SHADER);
 		if (shader != 0)
 			return shader;
 		if (hasGeometry)
 		{
-			attachShader(program, geomSrc, GL_GEOMETRY_SHADER);
+			AttachShader(program, geomSrc, GL_GEOMETRY_SHADER);
 			if (shader != 0)
 				return shader;
 		}
@@ -41,7 +41,7 @@ namespace Greet {
 		return program;
 	}
 
-	GLuint Shader::attachShader(const GLuint program, const std::string& shaderSrc, const GLuint shaderType)
+	GLuint Shader::AttachShader(const GLuint program, const std::string& shaderSrc, const GLuint shaderType)
 	{
 		GLuint shader = glCreateShader(shaderType);
 		const char* src = shaderSrc.c_str();
@@ -58,18 +58,18 @@ namespace Greet {
 			glGetShaderInfoLog(shader, length, &length, &error[0]);
 			if (shaderType == GL_FRAGMENT_SHADER)
 			{
-				Log::error("Failed to compile fragment Shader!\n", &error[0]);
-				ErrorHandle::setErrorCode(GREET_ERROR_SHADER_FRAGMENT);
+				Log::Error("Failed to compile fragment Shader!\n", &error[0]);
+				ErrorHandle::SetErrorCode(GREET_ERROR_SHADER_FRAGMENT);
 			}
 			else if (shaderType == GL_VERTEX_SHADER)
 			{
-				Log::error("Failed to compile vertex Shader!\n", &error[0]);
-				ErrorHandle::setErrorCode(GREET_ERROR_SHADER_VERTEX);
+				Log::Error("Failed to compile vertex Shader!\n", &error[0]);
+				ErrorHandle::SetErrorCode(GREET_ERROR_SHADER_VERTEX);
 			}
 			else if (shaderType == GL_GEOMETRY_SHADER)
 			{
-				Log::error("Failed to compile geometry Shader!\n", &error[0]);
-				ErrorHandle::setErrorCode(GREET_ERROR_SHADER_GEOMETRY);
+				Log::Error("Failed to compile geometry Shader!\n", &error[0]);
+				ErrorHandle::SetErrorCode(GREET_ERROR_SHADER_GEOMETRY);
 			}
 			glDeleteShader(shader);
 			return ShaderFactory::DefaultShader()->m_shaderID;
@@ -79,72 +79,72 @@ namespace Greet {
 		return 0;
 	}
 
-	void Shader::bindAttributeOutput(uint attachmentId, const std::string& name)
+	void Shader::BindAttributeOutput(uint attachmentId, const std::string& name)
 	{
 		glBindFragDataLocation(m_shaderID,attachmentId,name.c_str());
 	}
 
-	GLuint Shader::getUniformLocation(const GLchar *name) const
+	GLuint Shader::GetUniformLocation(const GLchar *name) const
 	{
 		return glGetUniformLocation(m_shaderID,name);
 	}
 
-	void Shader::setUniformBoolean(const GLchar *name, bool value) const
+	void Shader::SetUniformBoolean(const GLchar *name, bool value) const
 	{
-		glUniform1f(getUniformLocation(name), value ? 1.0f : 0.0f);
+		glUniform1f(GetUniformLocation(name), value ? 1.0f : 0.0f);
 	}
 
-	void Shader::setUniform1f(const GLchar *name, float value) const
+	void Shader::SetUniform1f(const GLchar *name, float value) const
 	{
-		glUniform1f(getUniformLocation(name), value);
+		glUniform1f(GetUniformLocation(name), value);
 	}
 
-	void Shader::setUniform1fv(const GLchar *name, int count, float* value) const
+	void Shader::SetUniform1fv(const GLchar *name, int count, float* value) const
 	{
-		glUniform1fv(getUniformLocation(name), count, value);
+		glUniform1fv(GetUniformLocation(name), count, value);
 	}
 
-	void Shader::setUniform1i(const GLchar *name, int value) const
+	void Shader::SetUniform1i(const GLchar *name, int value) const
 	{
-		glUniform1i(getUniformLocation(name), value);
+		glUniform1i(GetUniformLocation(name), value);
 	}
 
-	void Shader::setUniform1iv(const GLchar *name, int count, int* value) const
+	void Shader::SetUniform1iv(const GLchar *name, int count, int* value) const
 	{
-		glUniform1iv(getUniformLocation(name), count, value);
+		glUniform1iv(GetUniformLocation(name), count, value);
 	}
 
-	void Shader::setUniform2f(const GLchar *name, const vec2 &value) const
+	void Shader::SetUniform2f(const GLchar *name, const Vec2 &value) const
 	{
-		glUniform2f(getUniformLocation(name), value.x, value.y);
+		glUniform2f(GetUniformLocation(name), value.x, value.y);
 	}
 
-	void Shader::setUniform3f(const GLchar *name, const vec3 &value) const
+	void Shader::SetUniform3f(const GLchar *name, const Vec3 &value) const
 	{
-		glUniform3f(getUniformLocation(name), value.x, value.y, value.z);
+		glUniform3f(GetUniformLocation(name), value.x, value.y, value.z);
 	}
 
-	void Shader::setUniform4f(const GLchar *name, const vec4 &value) const
+	void Shader::SetUniform4f(const GLchar *name, const vec4 &value) const
 	{
-		glUniform4f(getUniformLocation(name), value.x, value.y, value.z, value.w);
+		glUniform4f(GetUniformLocation(name), value.x, value.y, value.z, value.w);
 	}
 
-	void Shader::setUniformMat3(const GLchar *name, const mat3 &value) const
+	void Shader::SetUniformMat3(const GLchar *name, const Mat3 &value) const
 	{
-		glUniformMatrix3fv(getUniformLocation(name), 1, GL_FALSE, value.elements);
+		glUniformMatrix3fv(GetUniformLocation(name), 1, GL_FALSE, value.elements);
 	}
 
-	void Shader::setUniformMat4(const GLchar *name, const mat4 &value) const
+	void Shader::SetUniformMat4(const GLchar *name, const Mat4 &value) const
 	{
-		glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, value.elements);
+		glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, value.elements);
 	}
 
-	void Shader::enable() const
+	void Shader::Enable() const
 	{
 		glUseProgram(m_shaderID);
 	}
 
-	void Shader::disable()
+	void Shader::Disable()
 	{
 		glUseProgram(0);
 	}
@@ -154,7 +154,7 @@ namespace Greet {
 		glDeleteProgram(m_shaderID);
 	}
 
-	Shader* Shader::fromFile(const std::string& vertPath, const std::string& fragPath)
+	Shader* Shader::FromFile(const std::string& vertPath, const std::string& fragPath)
 	{	
 		std::string vertSourceString = FileUtils::read_file(vertPath.c_str());
 		std::string fragSourceString = FileUtils::read_file(fragPath.c_str());
@@ -162,7 +162,7 @@ namespace Greet {
 	}
 
 
-	Shader* Shader::fromFile(const std::string& geomPath, const std::string& vertPath, const std::string& fragPath)
+	Shader* Shader::FromFile(const std::string& geomPath, const std::string& vertPath, const std::string& fragPath)
 	{	
 		std::string vertSourceString = FileUtils::read_file(vertPath.c_str());
 		std::string fragSourceString = FileUtils::read_file(fragPath.c_str());
@@ -170,12 +170,12 @@ namespace Greet {
 		return new Shader(geomSourceString, vertSourceString,fragSourceString); 
 	}
 
-	Shader* Shader::fromSource(const std::string& vertSrc, const std::string& fragSrc)
+	Shader* Shader::FromSource(const std::string& vertSrc, const std::string& fragSrc)
 	{
 		return new Shader(vertSrc, fragSrc);
 	}
 
-	Shader* Shader::fromSource(const std::string& geomSrc, const std::string& vertSrc, const std::string& fragSrc)
+	Shader* Shader::FromSource(const std::string& geomSrc, const std::string& vertSrc, const std::string& fragSrc)
 	{
 		return new Shader(vertSrc, fragSrc);
 	}

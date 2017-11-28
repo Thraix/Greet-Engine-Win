@@ -23,12 +23,12 @@ namespace Greet{
 		FontContainer(const byte* data, uint datasize, const std::string& name);
 		virtual ~FontContainer();
 
-		Font* getSize(uint size);
+		Font* GetSize(uint size);
 
-		inline const std::string& getName() const { return m_name; }
-		inline const std::string& getFileName() const { return m_filename; }
-		inline const byte* getData() const { return m_data;}
-		inline uint getDataSize() const { return m_datasize;}
+		inline const std::string& GetName() const { return m_name; }
+		inline const std::string& GetFileName() const { return m_filename; }
+		inline const byte* GetData() const { return m_data;}
+		inline uint GetDataSize() const { return m_datasize;}
 
 	};
 }

@@ -12,21 +12,21 @@ namespace Greet {
 		delete m_renderer;
 	}
 
-	void Layer3D::add(const EntityModel* renderable)
+	void Layer3D::Add(const EntityModel* renderable)
 	{
-		m_renderer->submit(renderable);
+		m_renderer->Submit(renderable);
 	}
 
-	void Layer3D::render() const
+	void Layer3D::Render() const
 	{
-		setUniforms();
-		m_renderer->begin();
-		m_renderer->render();
-		m_renderer->end();
+		SetUniforms();
+		m_renderer->Begin();
+		m_renderer->Render();
+		m_renderer->End();
 	}
 
-	void Layer3D::update(float timeElapsed)
+	void Layer3D::Update(float timeElapsed)
 	{
-		m_renderer->update(timeElapsed);
+		m_renderer->Update(timeElapsed);
 	}
 }

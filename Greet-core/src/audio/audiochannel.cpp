@@ -22,17 +22,17 @@ namespace Greet{
 
 	}
 
-	void AudioChannel::setVolume(float volume)
+	void AudioChannel::SetVolume(float volume)
 	{
 		m_volume = volume;
 	}
 
-	void AudioChannel::setPitch(float pitch)
+	void AudioChannel::SetPitch(float pitch)
 	{
 		m_pitch = pitch;
 	}
 
-	void AudioChannel::setPan(float pan)
+	void AudioChannel::SetPan(float pan)
 	{
 		m_pan = pan;
 	}

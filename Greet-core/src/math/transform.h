@@ -6,76 +6,76 @@ namespace Greet {
 	class Transform
 	{
 	public:
-		mat3 m_matrix;
+		Mat3 m_matrix;
 	private:
 
 	public:
 		Transform()
-			: m_matrix(mat3(1))
+			: m_matrix(Mat3(1))
 		{
 
 		}
 
-		Transform(mat3 matrix)
+		Transform(Mat3 matrix)
 
 		{
 			m_matrix = matrix;
 		}
 
-		Transform& init(float diagonal = 1)
+		Transform& Init(float diagonal = 1)
 		{
-			m_matrix = mat3(diagonal);
+			m_matrix = Mat3(diagonal);
 			return *this;
 		}
 
-		Transform& scale(float x, float y)
+		Transform& Scale(float x, float y)
 		{
-			m_matrix *= mat3::scale(x, y);
+			m_matrix *= Mat3::Scale(x, y);
 			return *this;
 		}
 
-		Transform& scale(vec2 scale)
+		Transform& Scale(Vec2 scale)
 		{
-			m_matrix *= mat3::scale(scale);
+			m_matrix *= Mat3::Scale(scale);
 			return *this;
 		}
 
-		Transform& translate(float x, float y)
+		Transform& Translate(float x, float y)
 		{
-			m_matrix *= mat3::translate(x,y);
+			m_matrix *= Mat3::Translate(x,y);
 			return *this;
 		}
 
-		Transform& translate(vec2 translate)
+		Transform& Translate(Vec2 translate)
 		{
-			m_matrix *= mat3::translate(translate);
+			m_matrix *= Mat3::Translate(translate);
 			return *this;
 		}
 
-		Transform& rotate(float deg)
+		Transform& Rotate(float deg)
 		{
-			m_matrix *= mat3::rotate(deg);
+			m_matrix *= Mat3::Rotate(deg);
 			return *this;
 		}
 
-		Transform& rotateR(float rad)
+		Transform& RotateR(float rad)
 		{
-			m_matrix *= mat3::rotateR(rad);
+			m_matrix *= Mat3::RotateR(rad);
 			return *this;
 		}
 
-		Transform& shear(float x, float y)
+		Transform& Shear(float x, float y)
 		{
-			m_matrix *= mat3::shear(x, y);
+			m_matrix *= Mat3::Shear(x, y);
 			return *this;
 		}
 
-		Transform& shear(vec2 shear)
+		Transform& Shear(Vec2 shear)
 		{
-			m_matrix *= mat3::shear(shear);
+			m_matrix *= Mat3::Shear(shear);
 			return *this;
 		}
 
-		inline const mat3& getMatrix() const { return m_matrix; }
+		inline const Mat3& GetMatrix() const { return m_matrix; }
 	};
 }

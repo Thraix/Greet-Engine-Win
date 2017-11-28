@@ -37,7 +37,7 @@ namespace Greet {
 			}
 			else
 			{
-				Log::error("Maximum output indention reached.");
+				Log::Error("Maximum output indention reached.");
 			}
 		}
 

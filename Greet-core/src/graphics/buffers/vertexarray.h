@@ -15,9 +15,9 @@ namespace Greet {
 	public:
 		VertexArray();
 		~VertexArray();
-		void addBuffer(Buffer* buffer,GLuint index);
-		void enable() const;
-		void disable() const;
+		void AddBuffer(Buffer* buffer,GLuint index);
+		void Enable() const;
+		void Disable() const;
 	};
 
 }

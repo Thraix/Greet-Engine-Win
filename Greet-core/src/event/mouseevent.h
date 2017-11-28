@@ -9,18 +9,18 @@ namespace Greet {
 	class MouseButtonEvent : public Event
 	{
 	protected:
-		vec2 m_position;
+		Vec2 m_position;
 		uint m_button;
 	protected:
 		MouseButtonEvent(float x, float y, uint button, EventType type)
 			: Event(type),m_position(x,y),m_button(button){}
 	public:
-		inline const float getX() const { return m_position.x; }
-		inline const float getY() const { return m_position.y; }
-		inline const void setX(float x) { m_position.x = x; }
-		inline const void setY(float y) { m_position.y = y; }
-		inline const vec2& getPosition() const { return m_position; }
-		inline const uint getButton() const { return m_button; }
+		inline const float GetX() const { return m_position.x; }
+		inline const float GetY() const { return m_position.y; }
+		inline const void SetX(float x) { m_position.x = x; }
+		inline const void SetY(float y) { m_position.y = y; }
+		inline const Vec2& GetPosition() const { return m_position; }
+		inline const uint GetButton() const { return m_button; }
 	};
 
 	class MousePressedEvent : public MouseButtonEvent
@@ -40,23 +40,23 @@ namespace Greet {
 	class MouseMovedEvent : public Event
 	{
 	private:
-		vec2 m_position;
-		vec2 m_deltaPosition;
+		Vec2 m_position;
+		Vec2 m_deltaPosition;
 		bool m_dragged;
 
 	public:
 		MouseMovedEvent(float x, float y, float dx, float dy, bool dragged)
-			:Event(MOUSE_MOVED),m_position(vec2(x,y)), m_deltaPosition(vec2(dx,dy)),m_dragged(dragged){}
+			:Event(MOUSE_MOVED),m_position(Vec2(x,y)), m_deltaPosition(Vec2(dx,dy)),m_dragged(dragged){}
 	public:
-		inline const float getX() const { return m_position.x; }
-		inline const float getY() const { return m_position.y; }
-		inline const float getDX() const { return m_deltaPosition.x; }
-		inline const float getDY() const { return m_deltaPosition.y; }
-		inline const void setX(float x) { m_position.x = x; }
-		inline const void setY(float y) { m_position.y = y; }
-		inline const vec2& getPosition() const { return m_position; }
-		inline const vec2& getDeltaPosition() const { return m_deltaPosition; }
-		inline const bool isDragged() const { return m_dragged; }
+		inline const float GetX() const { return m_position.x; }
+		inline const float GetY() const { return m_position.y; }
+		inline const float GetDX() const { return m_deltaPosition.x; }
+		inline const float GetDY() const { return m_deltaPosition.y; }
+		inline const void SetX(float x) { m_position.x = x; }
+		inline const void SetY(float y) { m_position.y = y; }
+		inline const Vec2& GetPosition() const { return m_position; }
+		inline const Vec2& GetDeltaPosition() const { return m_deltaPosition; }
+		inline const bool IsDragged() const { return m_dragged; }
 	};
 
 	class MouseScrollEvent : public Event
@@ -69,8 +69,8 @@ namespace Greet {
 			//															Calculate the direction, keeping in mind div by 0
 			:Event(MOUSE_SCROLLED), m_scroll(scroll), m_scrollDirection(scroll / (scroll < 0 ? -scroll : (scroll == 0 ? 1 : scroll))) {}
 
-		inline const int getScroll() const { return m_scroll; };
-		inline const int getDirection() const { return m_scrollDirection; }
+		inline const int GetScroll() const { return m_scroll; };
+		inline const int GetDirection() const { return m_scrollDirection; }
 
 	};
 }

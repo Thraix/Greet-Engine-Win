@@ -10,17 +10,17 @@ namespace Greet{
 	class Renderer
 	{
 	protected:
-		std::vector<mat3> m_transformationStack;
-		const mat3* m_transformationBack;
+		std::vector<Mat3> m_transformationStack;
+		const Mat3* m_transformationBack;
 
 		Renderer()
 		{
-			m_transformationStack.push_back(mat3::identity());
+			m_transformationStack.push_back(Mat3::Identity());
 			m_transformationBack = &m_transformationStack.back();
 		}
 
 	public:
-		void pushMatrix(const mat3 &matrix, bool override = false)
+		void PushMatrix(const Mat3 &matrix, bool override = false)
 		{
 			if (override)
 				m_transformationStack.push_back(matrix);
@@ -29,25 +29,25 @@ namespace Greet{
 			m_transformationBack = &m_transformationStack.back();
 
 		}
-		void popMatrix()
+		void PopMatrix()
 		{
 			if (m_transformationStack.size() > 1)
 				m_transformationStack.pop_back();
 			else
-				Log::warning("Trying to pop the last matrix.");
+				Log::Warning("Trying to pop the last matrix.");
 			m_transformationBack = &m_transformationStack.back();
 		}
 
-		const mat3& getMatrix()
+		const Mat3& GetMatrix()
 		{
 			return *m_transformationBack;
 		}
 
-		const mat3& getMatrix(uint index)
+		const Mat3& GetMatrix(uint index)
 		{
 			if (index >= 0 && index<m_transformationStack.size())
 				return m_transformationStack[index];
-			Log::warning("Index out of bound: ", "index: ", index, ",size: ", m_transformationStack.size());
+			Log::Warning("Index out of bound: ", "index: ", index, ",size: ", m_transformationStack.size());
 			return m_transformationStack[0];
 		}
 	};

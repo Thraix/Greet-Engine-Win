@@ -7,6 +7,6 @@ namespace Greet {
 	class JoystickStateListener
 	{
 	public:
-		virtual void joystickState(uint joystickIndex, bool state) = 0;
+		virtual void JoystickState(uint joystickIndex, bool state) = 0;
 	};
 }

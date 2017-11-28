@@ -22,7 +22,7 @@ namespace Greet {
 		}
 	}
 
-	void RectDriver::update()
+	void RectDriver::Update()
 	{
 		m_value1 += m_elapsed * m_speed1;
 		m_value2 += m_elapsed * m_speed2;

@@ -18,13 +18,13 @@ namespace Greet {
 		Texture(const std::string& name, uint textureType);
 		Texture(uint texId, const std::string& name, uint textureType);
 		virtual ~Texture();
-		virtual void enable() const;
-		virtual void disable() const;
+		virtual void Enable() const;
+		virtual void Disable() const;
 
-		inline uint getTexId() const { return m_texId; }
-		inline const std::string& getName() const { return m_name; }
+		inline uint GetTexId() const { return m_texId; }
+		inline const std::string& GetName() const { return m_name; }
 	protected:
-		inline void setTexId(uint texId) { m_texId = texId; }
+		inline void SetTexId(uint texId) { m_texId = texId; }
 	};
 
 }

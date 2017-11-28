@@ -2,50 +2,50 @@
 
 namespace Greet {
 
-	Box2DLayer::Box2DLayer(Shader* shader, mat3 projectionMatrix, b2World* world)
-			:Layer(new BatchRenderer(),shader,projectionMatrix), m_world(world)
+	Box2DLayer::Box2DLayer(Shader* shader, Mat3 projectionMatrix, b2World* world)
+		:Layer(new BatchRenderer(),shader,projectionMatrix), m_world(world)
 	{
 		for (b2Body* b = m_world->GetBodyList();b;b = b->GetNext())
 		{
-			vec2* vertices = Math::getVertices(b);
+			Vec2* vertices = Math::GetVertices(b);
 			if (vertices != NULL)
 			{
-				uint vertexCount = Math::getVertexCount(b);
-				add(new RenderablePoly(vec2(b->GetPosition()),vertices,vertexCount, 0xffffffff));
+				uint vertexCount = Math::GetVertexCount(b);
+				Add(new RenderablePoly(Vec2(b->GetPosition()),vertices,vertexCount, 0xffffffff));
 			}
 		}
 	}
 	
-	void Box2DLayer::update(float timeElapsed)
+	void Box2DLayer::Update(float timeElapsed)
 	{
 		uint length = m_world->GetBodyCount();
-		uint renderables = size();
+		uint renderables = Size();
 		uint i = 0;
 		b2Body* b = m_world->GetBodyList();
 		for (;b && i < renderables;i++,b = b->GetNext())
 		{
-			vec2* vertices = Math::getVertices(b);
+			Vec2* vertices = Math::GetVertices(b);
 			if (vertices != NULL)
 			{
-				((RenderablePoly*)m_renderables[i])->setVertices(vertices, Math::getVertexCount(b));
-				((RenderablePoly*)m_renderables[i])->m_position = vec2(b->GetPosition());
+				((RenderablePoly*)m_renderables[i])->SetVertices(vertices, Math::GetVertexCount(b));
+				((RenderablePoly*)m_renderables[i])->m_position = Vec2(b->GetPosition());
 			}
 		}
 		for (;b; b = b->GetNext())
 		{
-			vec2* vertices = Math::getVertices(b);
+			Vec2* vertices = Math::GetVertices(b);
 			if (vertices != NULL)
 			{
-				uint vertexCount = Math::getVertexCount(b);
-				add(new RenderablePoly(vec2(b->GetPosition()),vertices, vertexCount, 0xffffffff));
+				uint vertexCount = Math::GetVertexCount(b);
+				Add(new RenderablePoly(Vec2(b->GetPosition()),vertices, vertexCount, 0xffffffff));
 			}
 		}
 	}
 	
-	void Box2DLayer::render() const
+	void Box2DLayer::Render() const
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		Layer::render();
+		Layer::Render();
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }

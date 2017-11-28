@@ -20,12 +20,12 @@ namespace Greet {
 	public:
 		FrameBufferObject(uint width, uint height);
 		virtual ~FrameBufferObject();
-		void bind();
-		void unbind();
-		void attachColorTexture(uint attachementId);
-		Texture2D* getColorTexture(uint attachmentId) const;
-		inline Texture2D* getDepthTexture() const { return m_depthTexture; }
+		void Bind();
+		void Unbind();
+		void AttachColorTexture(uint attachementId);
+		Texture2D* GetColorTexture(uint attachmentId) const;
+		inline Texture2D* GetDepthTexture() const { return m_depthTexture; }
 	private:
-		void attachDepthTexture();
+		void AttachDepthTexture();
 	};
 }

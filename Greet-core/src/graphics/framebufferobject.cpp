@@ -10,7 +10,7 @@ namespace Greet {
 
 		// Color buffer
 		//attachDepthTexture();
-		attachColorTexture(GL_COLOR_ATTACHMENT0);
+		AttachColorTexture(GL_COLOR_ATTACHMENT0);
 
 		//return;
 		glBindFramebuffer(GL_FRAMEBUFFER,m_fbo);
@@ -34,17 +34,17 @@ namespace Greet {
 		delete m_depthTexture;
 	}
 
-	void FrameBufferObject::attachColorTexture(uint attachmentId)
+	void FrameBufferObject::AttachColorTexture(uint attachmentId)
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 		if (attachmentId < GL_COLOR_ATTACHMENT0 || attachmentId > GL_COLOR_ATTACHMENT15)
 		{
-			Log::error("Color attachment is out of range: ",attachmentId);
+			Log::Error("Color attachment is out of range: ",attachmentId);
 			return;
 		}
 		if (m_colorTextures.find(attachmentId) != m_colorTextures.end())
 		{
-			Log::error("The given attachment is already in use: ", attachmentId);
+			Log::Error("The given attachment is already in use: ", attachmentId);
 		}
 		uint texId;
 		glGenTextures(1, &texId);
@@ -64,7 +64,7 @@ namespace Greet {
 		glBindFramebuffer(GL_FRAMEBUFFER,0);
 	}
 
-	void FrameBufferObject::attachDepthTexture()
+	void FrameBufferObject::AttachDepthTexture()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 
@@ -80,7 +80,7 @@ namespace Greet {
 		glBindFramebuffer(GL_FRAMEBUFFER,0);
 	}
 
-	void FrameBufferObject::bind()
+	void FrameBufferObject::Bind()
 	{
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER,m_fbo);
 		glClearColor(0,0,0,0);
@@ -88,18 +88,18 @@ namespace Greet {
 		glViewport(0,0,m_width,m_height);
 	}
 
-	void FrameBufferObject::unbind()
+	void FrameBufferObject::Unbind()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glViewport(0,0,Window::getWidth(),Window::getHeight());
+		glViewport(0,0,Window::GetWidth(),Window::GetHeight());
 	}
 
-	Texture2D* FrameBufferObject::getColorTexture(uint attachmentId) const 
+	Texture2D* FrameBufferObject::GetColorTexture(uint attachmentId) const 
 	{ 
 		auto it = m_colorTextures.find(attachmentId);
 		if (it != m_colorTextures.end())
 			return it->second;
-		Log::error("There is no Texture with the given attachmentId: ",attachmentId);
+		Log::Error("There is no Texture with the given attachmentId: ",attachmentId);
 		return m_colorTextures.begin()->second;
 	}
 }

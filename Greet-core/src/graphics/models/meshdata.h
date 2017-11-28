@@ -33,7 +33,7 @@ namespace Greet {
 		float* floats = NULL;
 		byte* bytes = NULL;
 	public:
-		AttributeData(AttributeDefaults defaults, vec3* data) : location(defaults.location), vertexValueSize(defaults.vertexValueSize), memoryValueSize(defaults.memoryValueSize), glType(defaults.glType), normalized(defaults.normalized), data(data), floats((float*)data) {}
+		AttributeData(AttributeDefaults defaults, Vec3* data) : location(defaults.location), vertexValueSize(defaults.vertexValueSize), memoryValueSize(defaults.memoryValueSize), glType(defaults.glType), normalized(defaults.normalized), data(data), floats((float*)data) {}
 		AttributeData(AttributeDefaults defaults, float* data) : location(defaults.location),vertexValueSize(defaults.vertexValueSize), memoryValueSize(defaults.memoryValueSize), glType(defaults.glType), normalized(defaults.normalized), data(data), floats(data) {}
 		AttributeData(AttributeDefaults defaults, uint* data) : location(defaults.location),vertexValueSize(defaults.vertexValueSize), memoryValueSize(defaults.memoryValueSize), glType(defaults.glType), normalized(defaults.normalized), data(data), uints(data){}
 		AttributeData(AttributeDefaults defaults, byte* data) : location(defaults.location),vertexValueSize(defaults.vertexValueSize), memoryValueSize(defaults.memoryValueSize), glType(defaults.glType), normalized(defaults.normalized), data(data), bytes(data){}
@@ -46,7 +46,7 @@ namespace Greet {
 			else if (bytes != NULL)
 				delete[] bytes;
 			else
-				Log::error("Could not delete data, unknown type.");
+				Log::Error("Could not delete data, unknown type.");
 		}
 	};
 
@@ -55,20 +55,20 @@ namespace Greet {
 		friend class Mesh;
 	private:
 		std::vector<AttributeData*> m_data;
-		vec3* m_vertices;
+		Vec3* m_vertices;
 		uint* m_indices;
 		uint m_vertexCount;
 		uint m_indexCount;
 	public:
-		MeshData(vec3* vertices, uint vertexCount, uint* indices, uint indexCount);
+		MeshData(Vec3* vertices, uint vertexCount, uint* indices, uint indexCount);
 		virtual ~MeshData();
-		void addAttribute(AttributeData* data);
-		AttributeData* getAttribute(AttributeDefaults defaults) const;
+		void AddAttribute(AttributeData* data);
+		AttributeData* GetAttribute(AttributeDefaults defaults) const;
 		
-		vec3* getVertices() const { return m_vertices; }
-		uint* getIndices() const { return m_indices; }
-		uint getVertexCount() const { return m_vertexCount; }
-		uint getIndexCount() const { return m_indexCount; }
+		Vec3* GetVertices() const { return m_vertices; }
+		uint* GetIndices() const { return m_indices; }
+		uint GetVertexCount() const { return m_vertexCount; }
+		uint GetIndexCount() const { return m_indexCount; }
 	};
 }
 

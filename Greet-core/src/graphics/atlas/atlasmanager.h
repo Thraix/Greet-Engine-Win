@@ -12,9 +12,9 @@ namespace Greet {
 	private:
 		static std::vector<Atlas*> m_atlas;
 	public:
-		static void add(Atlas* atlas);
-		static Atlas* get(const std::string& atlasname);
-		static void destroy();
+		static void Add(Atlas* atlas);
+		static Atlas* Get(const std::string& atlasname);
+		static void Destroy();
 	private:
 		AtlasManager(){}
 	};

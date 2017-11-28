@@ -19,7 +19,7 @@ namespace Greet {
 		const MaterialModel& m_material;
 		std::vector<const EntityModel*> m_models;
 		BatchRenderer3DMap(const MaterialModel& material) : m_material(material) {}
-		void addEntity(const EntityModel* model) { m_models.push_back(model); };
+		void AddEntity(const EntityModel* model) { m_models.push_back(model); };
 	};
 
 	class BatchRenderer3D : public Renderer3D
@@ -33,13 +33,13 @@ namespace Greet {
 			
 		}
 
-		void submit(const EntityModel* model) override;
-		void render() const override;
+		void Submit(const EntityModel* model) override;
+		void Render() const override;
 
-		inline const mat4& getProjectionMatrix() const { return m_projectionMatrix; }
-		inline const Camera& getCamera() const { return *m_camera; }
+		inline const Mat4& GetProjectionMatrix() const { return m_projectionMatrix; }
+		inline const Camera& GetCamera() const { return *m_camera; }
 
-		vec3 getScreenCoordination(const vec3& coordinate, uint screenWidth, uint screenHeight);
+		Vec3 GetScreenCoordination(const Vec3& coordinate, uint screenWidth, uint screenHeight);
 
 	};
 }

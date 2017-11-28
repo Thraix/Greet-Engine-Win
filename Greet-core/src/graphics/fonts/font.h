@@ -21,13 +21,13 @@ namespace Greet{
 		
 	public:
 		Font(FontContainer* container, uint size);
-		Font(FontContainer* container, uint size, vec2 scale);
-		void init();
-		inline ftgl::texture_font_t* getFTFont() const { return m_font;}
-		inline float getSize() const {return m_size;}
-		inline uint getAtlasID() const {return m_atlas->id;}
-		float getWidthOfText(const std::string& text, uint startPos, uint endPos) const;
-		float getWidthOfText(const std::string& text) const;
-		float* Font::getPartialWidths(const std::string& text);
+		Font(FontContainer* container, uint size, Vec2 scale);
+		void Init();
+		inline ftgl::texture_font_t* GetFTFont() const { return m_font;}
+		inline float GetSize() const {return m_size;}
+		inline uint GetAtlasID() const {return m_atlas->id;}
+		float GetWidthOfText(const std::string& text, uint startPos, uint endPos) const;
+		float GetWidthOfText(const std::string& text) const;
+		float* Font::GetPartialWidths(const std::string& text);
 	};
 }

@@ -13,7 +13,7 @@ namespace Greet {
 		float m_speed4;
 	public:
 		RectDriver(float& x, float& y, float& width, float& height, float dx, float dy, float dwidth, float dheight, float time, bool relativeChange, DriverListener* listener);
-		void update() override;
+		void Update() override;
 	};
 
 }

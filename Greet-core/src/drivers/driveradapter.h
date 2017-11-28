@@ -8,7 +8,7 @@ namespace Greet {
 	{
 	public:
 	public:
-		void onFinished() override {}
+		void OnFinished() override {}
 	};
 
 }

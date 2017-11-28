@@ -2,65 +2,65 @@
 
 namespace Greet{
 
-	vec2::vec2()
+	Vec2::Vec2()
 	{
 		this->x = 0;
 		this->y = 0;
 	}
 
-	vec2::vec2(float x, float y)
+	Vec2::Vec2(float x, float y)
 	{
 		this->x = x;
 		this->y = y;
 	}
 
-	vec2::vec2(const b2Vec2& vec)
+	Vec2::Vec2(const b2Vec2& vec)
 	{
 		this->x = vec.x;
 		this->y = vec.y;
 	}
 
-	float vec2::length()
+	float Vec2::Length()
 	{
 		return sqrt(x*x + y*y);
 	}
 
-	float vec2::lengthSQ()
+	float Vec2::LengthSQ()
 	{
 		return x*x + y*y;
 	}
 
-	float vec2::dot(const vec2& vec) const 
+	float Vec2::Dot(const Vec2& vec) const 
 	{
 		return x*vec.x + y*vec.y;
 	}
 
-	float vec2::cross(const vec2& vec) const
+	float Vec2::Cross(const Vec2& vec) const
 	{
 		return x * vec.y - y * vec.x;
 	}
 
-	vec2& vec2::abs()
+	Vec2& Vec2::Abs()
 	{
 		x = x < 0 ? -x : x;
 		y = y < 0 ? -y : y;
 		return *this;
 	}
 
-	vec2& vec2::projected(const vec2& vec)
+	Vec2& Vec2::Projected(const Vec2& vec)
 	{
-		return multiply(dot(vec) / lengthSQ());
+		return Multiply(Dot(vec) / LengthSQ());
 	}
 
-	vec2& vec2::normalize()
+	Vec2& Vec2::Normalize()
 	{
-		float len = length();
+		float len = Length();
 		x /= len;
 		y /= len;
 		return *this;
 	}
 
-	vec2& vec2::rotate(const float deg)
+	Vec2& Vec2::Rotate(const float deg)
 	{
 		float rad = toRadians(deg);
 		float c = cos(rad);
@@ -74,7 +74,7 @@ namespace Greet{
 		return *this;
 	}
 
-	vec2& vec2::rotateR(const float rad)
+	Vec2& Vec2::RotateR(const float rad)
 	{
 		float c = cos(rad);
 		float s = sin(rad);
@@ -90,166 +90,166 @@ namespace Greet{
 
 
 
-	vec2& vec2::add(const vec2& other)
+	Vec2& Vec2::Add(const Vec2& other)
 	{
 		x += other.x;
 		y += other.y;
 		return *this;
 	}
 
-	vec2& vec2::subtract(const vec2& other)
+	Vec2& Vec2::Subtract(const Vec2& other)
 	{
 		x -= other.x;
 		y -= other.y;
 		return *this;
 	}
 
-	vec2& vec2::multiply(const vec2& other)
+	Vec2& Vec2::Multiply(const Vec2& other)
 	{
 		x *= other.x;
 		y *= other.y;
 		return *this;
 	}
 
-	vec2& vec2::divide(const vec2& other)
+	Vec2& Vec2::Divide(const Vec2& other)
 	{
 		x /= other.x;
 		y /= other.y;
 		return *this;
 	}
 
-	vec2& vec2::add(const float c)
+	Vec2& Vec2::Add(const float c)
 	{
 		x += c;
 		y += c;
 		return *this;
 	}
 
-	vec2& vec2::subtract(const float c)
+	Vec2& Vec2::Subtract(const float c)
 	{
 		x -= c;
 		y -= c;
 		return *this;
 	}
 
-	vec2& vec2::multiply(const float c)
+	Vec2& Vec2::Multiply(const float c)
 	{
 		x *= c;
 		y *= c;
 		return *this;
 	}
 
-	vec2& vec2::divide(const float c)
+	Vec2& Vec2::Divide(const float c)
 	{
 		x /= c;
 		y /= c;
 		return *this;
 	}
 
-	bool vec2::compare(const vec2& other)
+	bool Vec2::Compare(const Vec2& other)
 	{
 		return x == other.x && y == other.y;
 	}
 
-	vec2 operator+(const vec2& first, const vec2 &second)
+	Vec2 operator+(const Vec2& first, const Vec2 &second)
 	{
-		return vec2(first.x,first.y).add(second);
+		return Vec2(first.x,first.y).Add(second);
 	}
 
-	vec2 operator-(const vec2& first, const vec2 &second)
+	Vec2 operator-(const Vec2& first, const Vec2 &second)
 	{
-		return vec2(first.x, first.y).subtract(second);
+		return Vec2(first.x, first.y).Subtract(second);
 	}
 
-	vec2 operator*(const vec2& first, const vec2 &second)
+	Vec2 operator*(const Vec2& first, const Vec2 &second)
 	{
-		return vec2(first.x, first.y).multiply(second);
+		return Vec2(first.x, first.y).Multiply(second);
 	}
 
-	vec2 operator/(const vec2& first, const vec2 &second)
+	Vec2 operator/(const Vec2& first, const Vec2 &second)
 	{
-		return vec2(first.x, first.y).divide(second);
+		return Vec2(first.x, first.y).Divide(second);
 	}
 
-	vec2 operator+(const vec2& first, const float c)
+	Vec2 operator+(const Vec2& first, const float c)
 	{
-		return vec2(first.x, first.y).add(c);
+		return Vec2(first.x, first.y).Add(c);
 	}
 
-	vec2 operator-(const vec2& first, const float c)
+	Vec2 operator-(const Vec2& first, const float c)
 	{
-		return vec2(first.x, first.y).subtract(c);
+		return Vec2(first.x, first.y).Subtract(c);
 	}
 
-	vec2 operator*(const vec2&  first, const float c)
+	Vec2 operator*(const Vec2&  first, const float c)
 	{
-		return vec2(first.x, first.y).multiply(c);
+		return Vec2(first.x, first.y).Multiply(c);
 	}
 
-	vec2 operator/(const vec2& first, const float c)
+	Vec2 operator/(const Vec2& first, const float c)
 	{
-		return vec2(first.x, first.y).divide(c);
+		return Vec2(first.x, first.y).Divide(c);
 	}
 
-	vec2& vec2::operator+=(const vec2 &other)
+	Vec2& Vec2::operator+=(const Vec2 &other)
 	{
-		return add(other);
+		return Add(other);
 	}
 
-	vec2& vec2::operator-=(const vec2 &other)
+	Vec2& Vec2::operator-=(const Vec2 &other)
 	{
-		return subtract(other);
+		return Subtract(other);
 	}
 
-	vec2& vec2::operator*=(const vec2 &other)
+	Vec2& Vec2::operator*=(const Vec2 &other)
 	{
-		return multiply(other);
+		return Multiply(other);
 	}
 
-	vec2& vec2::operator/=(const vec2 &other)
+	Vec2& Vec2::operator/=(const Vec2 &other)
 	{
-		return divide(other);
+		return Divide(other);
 	}
 
-	vec2& vec2::operator+=(const float other)
+	Vec2& Vec2::operator+=(const float other)
 	{
 		x += other;
 		y += other;
 		return *this;
 	}
 
-	vec2& vec2::operator-=(const float other)
+	Vec2& Vec2::operator-=(const float other)
 	{
 		x -= other;
 		y -= other;
 		return *this;
 	}
 
-	vec2& vec2::operator*=(const float other)
+	Vec2& Vec2::operator*=(const float other)
 	{
 		x *= other;
 		y *= other;
 		return *this;
 	}
 
-	vec2& vec2::operator/=(const float other)
+	Vec2& Vec2::operator/=(const float other)
 	{
 		x /= other;
 		y /= other;
 		return *this;
 	}
 
-	bool vec2::operator==(const vec2 &other)
+	bool Vec2::operator==(const Vec2 &other)
 	{
-		return compare(other);
+		return Compare(other);
 	}
 
-	bool vec2::operator!=(const vec2 &other)
+	bool Vec2::operator!=(const Vec2 &other)
 	{
-		return !compare(other);
+		return !Compare(other);
 	}
 
-	std::ostream& operator<<(std::ostream& stream, const vec2& vec)
+	std::ostream& operator<<(std::ostream& stream, const Vec2& vec)
 	{
 		return stream << vec.x << ", " << vec.y;
 	}

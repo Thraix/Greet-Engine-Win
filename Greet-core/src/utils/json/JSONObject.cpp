@@ -22,7 +22,7 @@ namespace Greet {
 
 	}
 
-	bool JSONObject::hasKey(const std::string& key)
+	bool JSONObject::HasKey(const std::string& key)
 	{
 		if (m_values.find(key) != m_values.end())
 			return true;
@@ -33,96 +33,96 @@ namespace Greet {
 		return false;
 	}
 
-	void JSONObject::addValue(std::string key, std::string value)
+	void JSONObject::AddValue(std::string key, std::string value)
 	{
-		if (hasKey(key))
+		if (HasKey(key))
 		{
-			Log::error("Key already defined in JSONObject: ", key);
+			Log::Error("Key already defined in JSONObject: ", key);
 			return;
 		}
 		m_values[key] = value;
 	}
-	void JSONObject::addArray(std::string key, JSONArray value)
+	void JSONObject::AddArray(std::string key, JSONArray value)
 	{
-		if (hasKey(key))
+		if (HasKey(key))
 		{
-			Log::error("Key already defined in JSONObject: ", key);
+			Log::Error("Key already defined in JSONObject: ", key);
 			return;
 		}
 		m_arrays[key] = value;
 	}
-	void JSONObject::addObject(std::string key, JSONObject value)
+	void JSONObject::AddObject(std::string key, JSONObject value)
 	{
-		if (hasKey(key))
+		if (HasKey(key))
 		{
-			Log::error("Key already defined in JSONObject: ", key);
+			Log::Error("Key already defined in JSONObject: ", key);
 			return;
 		}
 		m_objects[key] = value;
 	}
 
-	const std::string& JSONObject::getValue(const std::string& key) const
+	const std::string& JSONObject::GetValue(const std::string& key) const
 	{
 		auto it = m_values.find(key);
 		if (it == m_values.end())
 		{
-			Log::error("Key does not exist in JSONObject: ", key);
+			Log::Error("Key does not exist in JSONObject: ", key);
 			return valueNull;
 		}
 		return it->second;
 	}
 
-	float JSONObject::getValueAsFloat(const std::string& key) const
+	float JSONObject::GetValueAsFloat(const std::string& key) const
 	{
 		auto it = m_values.find(key);
 		if (it == m_values.end())
 		{
-			Log::error("Key does not exist in JSONObject: ", key);
+			Log::Error("Key does not exist in JSONObject: ", key);
 			return 0.0f;
 		}
 		return atof(it->second.c_str());
 	}
 	
-	bool JSONObject::getValueAsBool(const std::string& key) const
+	bool JSONObject::GetValueAsBool(const std::string& key) const
 	{
 		auto it = m_values.find(key);
 		if (it == m_values.end())
 		{
-			Log::error("Key does not exist in JSONObject: ", key);
+			Log::Error("Key does not exist in JSONObject: ", key);
 			return 0.0f;
 		}
 		return it->second == "true";
 	}
 
-	bool JSONObject::isNull(const std::string& key) const
+	bool JSONObject::IsNull(const std::string& key) const
 	{
 		auto it = m_values.find(key);
 		if (it == m_values.end())
 		{
-			Log::error("Key does not exist in JSONObject: ", key);
+			Log::Error("Key does not exist in JSONObject: ", key);
 			return 0.0f;
 		}
 		return it->second == "null";
 	}
 
-	const JSONArray& JSONObject::getArray(const std::string& key) const
+	const JSONArray& JSONObject::GetArray(const std::string& key) const
 	{
 		auto it = m_arrays.find(key);
 		if (it == m_arrays.end())
 		{
-			Log::error("Key does not exist in JSONObject: ", key);
+			Log::Error("Key does not exist in JSONObject: ", key);
 			return arrayNull;
 		}
 		return it->second;
 		
 	}
 
-	const JSONObject& JSONObject::getObject(const std::string& key) const
+	const JSONObject& JSONObject::GetObject(const std::string& key) const
 	{
 		auto it = m_objects.find(key);
 		if (it == m_objects.end())
 		{
-			Log::error("Key does not exist in JSONObject: ", key);
+			Log::Error("Key does not exist in JSONObject: ", key);
 			return objectNull;
 		}
 		return it->second;

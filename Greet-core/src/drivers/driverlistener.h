@@ -6,7 +6,7 @@ namespace Greet {
 	class DriverListener
 	{
 	public:
-		virtual void onFinished() = 0;
+		virtual void OnFinished() = 0;
 	};
 
 }

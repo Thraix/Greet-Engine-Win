@@ -20,13 +20,13 @@ namespace Greet {
 		bool m_buttonBigger;
 
 	public:
-		Button(const vec2& position, const vec2 size, const std::string& text);
-		void render(Renderer2D* renderer) const override;
+		Button(const Vec2& position, const Vec2 size, const std::string& text);
+		void Render(Renderer2D* renderer) const override;
 
-		void onMouseEnter();
-		void onMouseExit();
-		bool onMoved(const MouseMovedEvent& event, vec2 relativeMousePos) override;
-		GUI* onPressed(const MousePressedEvent& event, vec2 relativeMousePos) override;
-		GUI* onReleased(const MouseReleasedEvent& event, vec2 relativeMousePos) override;
+		void OnMouseEnter();
+		void OnMouseExit();
+		bool OnMoved(const MouseMovedEvent& event, Vec2 relativeMousePos) override;
+		GUI* OnPressed(const MousePressedEvent& event, Vec2 relativeMousePos) override;
+		GUI* OnReleased(const MouseReleasedEvent& event, Vec2 relativeMousePos) override;
 	};
 }

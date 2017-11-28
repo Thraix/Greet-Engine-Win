@@ -32,13 +32,13 @@ namespace Greet {
 			Output the given arguments to the stream with a given LogLevel
 		*/
 		template<typename... Args>
-		void output(const LogLevel& level, const Args&... args)
+		void Output(const LogLevel& level, const Args&... args)
 		{
 			// Check if the given level is allowed to be streamed.
 			if (m_levelCheck(m_logLevel, level))
 			{
 				// Output all the arguments with an endline
-				put("[Greet]", args..., '\n');
+				Put("[Greet]", args..., '\n');
 			}
 		}
 
@@ -46,12 +46,12 @@ namespace Greet {
 		/*
 			return the name of the stream.
 		*/
-		const std::string& getName() const { return m_name; }
+		const std::string& GetName() const { return m_name; }
 
 		/* 
 			Set the loglevel for the stream
 		*/
-		void setLogLevel(LogLevel level);
+		void SetLogLevel(LogLevel level);
 
 		/*
 		Checks if the stream name is equal to the given name parameter
@@ -74,12 +74,12 @@ namespace Greet {
 		LogStream& operator=(const LogStream& stream);
 
 		// Default level checks, returns true if the given stream should stream with the given output level.
-		static bool eqCheck(const LogLevel& myLevel, const LogLevel& outputLevel);
-		static bool neqCheck(const LogLevel& myLevel, const LogLevel& outputLevel);
-		static bool gteCheck(const LogLevel& myLevel, const LogLevel& outputLevel);
-		static bool gtCheck(const LogLevel& myLevel, const LogLevel& outputLevel);
-		static bool lteCheck(const LogLevel& myLevel, const LogLevel& outputLevel);
-		static bool ltCheck(const LogLevel& myLevel, const LogLevel& outputLevel);
+		static bool EQCheck(const LogLevel& myLevel, const LogLevel& outputLevel);
+		static bool NEQCheck(const LogLevel& myLevel, const LogLevel& outputLevel);
+		static bool GTECheck(const LogLevel& myLevel, const LogLevel& outputLevel);
+		static bool GTCheck(const LogLevel& myLevel, const LogLevel& outputLevel);
+		static bool LTECheck(const LogLevel& myLevel, const LogLevel& outputLevel);
+		static bool LTCheck(const LogLevel& myLevel, const LogLevel& outputLevel);
 
 	private:
 
@@ -87,19 +87,19 @@ namespace Greet {
 			Put all the arguments to the stream.
 		*/
 		template<typename T, typename... Args>
-		void put(const T& t, const Args&... args)
+		void Put(const T& t, const Args&... args)
 		{
 			// Put one argument to the stream.
-			put(t);
+			Put(t);
 			// Put the rest of the arguments to the stream (if only one, put(const T&) is called)
-			put(args...);
+			Put(args...);
 		}
 
 		/*
 			Put the arguments to the stream.
 		*/
 		template <typename T>
-		void put(const T& t)
+		void Put(const T& t)
 		{
 			m_stream << t;
 		}

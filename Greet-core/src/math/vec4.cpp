@@ -18,12 +18,12 @@ namespace Greet{
 		this->w = w;
 	}
 
-	float vec4::length()
+	float vec4::Length()
 	{
 		return sqrt(x*x + y*y + z*z+ w*w);
 	}
 
-	vec4& vec4::add(const vec4& other)
+	vec4& vec4::Add(const vec4& other)
 	{
 		x += other.x;
 		y += other.y;
@@ -32,7 +32,7 @@ namespace Greet{
 		return *this;
 	}
 
-	vec4& vec4::subtract(const vec4& other)
+	vec4& vec4::Subtract(const vec4& other)
 	{
 		x -= other.x;
 		y -= other.y;
@@ -41,7 +41,7 @@ namespace Greet{
 		return *this;
 	}
 
-	vec4& vec4::multiply(const vec4& other)
+	vec4& vec4::Multiply(const vec4& other)
 	{
 		x *= other.x;
 		y *= other.y;
@@ -50,7 +50,7 @@ namespace Greet{
 		return *this;
 	}
 
-	vec4& vec4::divide(const vec4& other)
+	vec4& vec4::Divide(const vec4& other)
 	{
 		x /= other.x;
 		y /= other.y;
@@ -59,59 +59,59 @@ namespace Greet{
 		return *this;
 	}
 
-	bool vec4::compare(const vec4& other)
+	bool vec4::Compare(const vec4& other)
 	{
 		return x == other.x && y == other.y && z == other.z && w == other.w;
 	}
 
 	vec4& operator+(vec4& first, const vec4 &second)
 	{
-		return first.add(second);
+		return first.Add(second);
 	}
 
 	vec4& operator-(vec4& first, const vec4 &second)
 	{
-		return first.subtract(second);
+		return first.Subtract(second);
 	}
 
 	vec4& operator*(vec4& first, const vec4 &second)
 	{
-		return first.multiply(second);
+		return first.Multiply(second);
 	}
 
 	vec4& operator/(vec4& first, const vec4 &second)
 	{
-		return first.divide(second);
+		return first.Divide(second);
 	}
 
 	vec4& vec4::operator+=(const vec4 &other)
 	{
-		return add(other);
+		return Add(other);
 	}
 
 	vec4& vec4::operator-=(const vec4 &other)
 	{
-		return subtract(other);
+		return Subtract(other);
 	}
 
 	vec4& vec4::operator*=(const vec4 &other)
 	{
-		return multiply(other);
+		return Multiply(other);
 	}
 
 	vec4& vec4::operator/=(const vec4 &other)
 	{
-		return divide(other);
+		return Divide(other);
 	}
 
 	bool vec4::operator==(const vec4 &other)
 	{
-		return compare(other);
+		return Compare(other);
 	}
 
 	bool vec4::operator!=(const vec4 &other)
 	{
-		return !compare(other);
+		return !Compare(other);
 	}
 
 	std::ostream& operator<<(std::ostream& stream, const vec4& vec)

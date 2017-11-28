@@ -6,53 +6,53 @@
 #include <string.h>
 
 namespace Greet{
-	struct mat3
+	struct Mat3
 	{
 		union
 		{
 			float elements[3 * 3];
 			struct
 			{
-				vec3 columns[3];
+				Vec3 columns[3];
 			};
 		};
 
-		mat3();
-		mat3(float diagonal);
-		mat3(float* elem);
+		Mat3();
+		Mat3(float diagonal);
+		Mat3(float* elem);
 
-		vec3 getColumn(int index)
+		Vec3 getColumn(int index)
 		{
 			return columns[index];
 		}
 
-		static mat3 identity();
-		static mat3 orthographic(float left, float right, float top, float bottom);
-		static mat3 quad(float x, float y, float width, float height);
-		static mat3 quad(const vec2& pos, const vec2& size);
+		static Mat3 Identity();
+		static Mat3 Orthographic(float left, float right, float top, float bottom);
+		static Mat3 Quad(float x, float y, float width, float height);
+		static Mat3 Quad(const Vec2& pos, const Vec2& size);
 
-		static mat3 translate(const vec2& translation);
-		static mat3 scale(const vec2& scaling);
-		static mat3 shear(const vec2& shearing);
+		static Mat3 Translate(const Vec2& translation);
+		static Mat3 Scale(const Vec2& scaling);
+		static Mat3 Shear(const Vec2& shearing);
 
-		static mat3 translate(const float& x, const float& y);
-		static mat3 scale(const float& x, const float& y);
-		static mat3 rotate(float deg);
-		static mat3 rotateR(float rad);
-		static mat3 shear(const float& x, const float& y);
+		static Mat3 Translate(const float& x, const float& y);
+		static Mat3 Scale(const float& x, const float& y);
+		static Mat3 Rotate(float deg);
+		static Mat3 RotateR(float rad);
+		static Mat3 Shear(const float& x, const float& y);
 
-		mat3& inverse();
-		mat3 cpy();
+		Mat3& Inverse();
+		Mat3 Cpy();
 
-		mat3& multiply(const mat3 &other);
-		vec2 multiply(const vec2 &other) const;
-		vec3 multiply(const vec3 &other) const;
+		Mat3& Multiply(const Mat3 &other);
+		Vec2 Multiply(const Vec2 &other) const;
+		Vec3 Multiply(const Vec3 &other) const;
 
-		friend mat3 operator*(mat3 first, const mat3 &second);
-		mat3& operator*=(const mat3 &other);
+		friend Mat3 operator*(Mat3 first, const Mat3 &second);
+		Mat3& operator*=(const Mat3 &other);
 
-		friend vec2 operator*(const mat3& first, const vec2 &second);
-		friend vec3 operator*(const mat3& first, const vec3 &second);
+		friend Vec2 operator*(const Mat3& first, const Vec2 &second);
+		friend Vec3 operator*(const Mat3& first, const Vec3 &second);
 
 	};
 }

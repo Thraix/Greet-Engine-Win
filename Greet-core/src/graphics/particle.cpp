@@ -11,7 +11,7 @@ namespace Greet {
 		delete m_sprite;
 	}
 
-	void Particle::define(vec2 pos, vec2 size, vec2 vel, vec2 acc, uint color, float minspeed, float maxspeed, float frameTime, Sprite* sprite)
+	void Particle::Define(Vec2 pos, Vec2 size, Vec2 vel, Vec2 acc, uint color, float minspeed, float maxspeed, float frameTime, Sprite* sprite)
 	{
 		m_startPos = pos;
 		m_pos = pos;
@@ -25,18 +25,18 @@ namespace Greet {
 		m_sprite = sprite;
 	}
 
-	bool Particle::update(float elapsedTime)
+	bool Particle::Update(float elapsedTime)
 	{
 		m_frameTime -= elapsedTime;
 
 		m_velocity *= m_acceleration;
-		if (m_velocity.length() > m_maxspeed)
+		if (m_velocity.Length() > m_maxspeed)
 		{
-			m_velocity.normalize() *= m_maxspeed;
+			m_velocity.Normalize() *= m_maxspeed;
 		}
-		else if (m_velocity.length() < m_minspeed)
+		else if (m_velocity.Length() < m_minspeed)
 		{
-			m_velocity.normalize() *= m_minspeed;
+			m_velocity.Normalize() *= m_minspeed;
 		}
 		m_pos += m_velocity;
 		return m_frameTime<=0;

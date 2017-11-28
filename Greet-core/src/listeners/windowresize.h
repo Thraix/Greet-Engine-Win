@@ -4,6 +4,6 @@ namespace Greet {
 	class WindowResizeListener
 	{
 	public:
-		virtual void windowResize(int width, int height) = 0;
+		virtual void WindowResize(int width, int height) = 0;
 	};
 }

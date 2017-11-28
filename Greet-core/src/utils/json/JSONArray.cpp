@@ -21,20 +21,20 @@ namespace Greet {
 	
 	}
 
-	void JSONArray::addObject(JSONObject object)
+	void JSONArray::AddObject(JSONObject object)
 	{
 		m_objects.push_back(object);
 	}
 
-	JSONObject JSONArray::getObject(size_t i) const
+	JSONObject JSONArray::GetObject(size_t i) const
 	{
 		size_t size = m_objects.size();
 		if (i >= size)
 		{
-			Log::error("Index is out of bounds: ",i," >= ",size);
+			Log::Error("Index is out of bounds: ",i," >= ",size);
 			if (size != 0)
 			{
-				return getObject(0);
+				return GetObject(0);
 			}
 			return JSONObject();
 		}
@@ -43,7 +43,7 @@ namespace Greet {
 
 	JSONObject JSONArray::operator[](size_t i) const
 	{
-		return getObject(i);
+		return GetObject(i);
 	}
 
 	std::ostream& operator<<(std::ostream& os, const JSONArray& arr)
@@ -53,7 +53,7 @@ namespace Greet {
 		uint size = arr.m_objects.size();
 		for (uint i = 0;i<size;++i)
 		{
-			os << arr.getObject(i);
+			os << arr.GetObject(i);
 			if(i != size - 1)
 			{ 
 				os << ",\n" << JSON::get_indent();

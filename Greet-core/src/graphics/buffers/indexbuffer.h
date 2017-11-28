@@ -13,10 +13,10 @@ namespace Greet {
 		IndexBuffer(GLushort* data, GLsizei count);
 		IndexBuffer(GLuint* data, GLsizei count);
 		~IndexBuffer();
-		void enable() const;
-		void disable() const;
+		void Enable() const;
+		void Disable() const;
 
-		inline GLuint getCount() const { return m_count; }
+		inline GLuint GetCount() const { return m_count; }
 
 	};
 }

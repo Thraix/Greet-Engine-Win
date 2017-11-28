@@ -49,7 +49,7 @@ namespace Greet {
 		}
 	}
 
-	bool ParticlePool::create(vec2 pos, vec2 size, vec2 vel, vec2 acc, uint color, float minspeed, float maxspeed, float frameTime, Sprite* sprite)
+	bool ParticlePool::create(Vec2 pos, Vec2 size, Vec2 vel, Vec2 acc, uint color, float minspeed, float maxspeed, float frameTime, Sprite* sprite)
 	{
 		if (m_free.begin() != m_free.end()){
 			(*m_free.begin())->define(pos, size, vel, acc, color, minspeed, maxspeed, frameTime, sprite);

@@ -4,7 +4,7 @@
 
 namespace Greet {
 
-class quaternion
+class Quaternion
 {
 public:
 	float x;
@@ -13,20 +13,20 @@ public:
 	float w;
 
 public:
-	quaternion(float x, float y, float z, float w);
+	Quaternion(float x, float y, float z, float w);
 
-	float length();
-	quaternion& normalize();
-	quaternion& conjugate();
+	float Length();
+	Quaternion& Normalize();
+	Quaternion& Conjugate();
 
-	quaternion& multiply(const quaternion& other);
-	quaternion& multiply(const vec3& other);
+	Quaternion& Multiply(const Quaternion& other);
+	Quaternion& Multiply(const Vec3& other);
 
-	friend quaternion operator*(const quaternion& first, const quaternion &second);
-	friend quaternion operator*(const quaternion& first, const vec3 &second);
+	friend Quaternion operator*(const Quaternion& first, const Quaternion &second);
+	friend Quaternion operator*(const Quaternion& first, const Vec3 &second);
 
-	quaternion& operator*=(const quaternion &other);
-	quaternion& operator*=(const vec3 &other);
+	Quaternion& operator*=(const Quaternion &other);
+	Quaternion& operator*=(const Vec3 &other);
 };
 
 }

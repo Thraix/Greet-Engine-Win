@@ -20,18 +20,18 @@ namespace Greet {
 
 		virtual ~App();
 
-		void createWindow(std::string title, int width, int height);
+		void CreateWindow(std::string title, int width, int height);
 
 
-		virtual void init() = 0;
-		virtual void tick() = 0;
-		virtual void update(float elapsedTime) = 0;
-		virtual void render() = 0;
-		virtual void windowResize(int width, int height){}
-		virtual void joystickState(uint joystick, bool connect){}
-		virtual void windowFocus(bool focused) {}
+		virtual void Init() = 0;
+		virtual void Tick() = 0;
+		virtual void Update(float elapsedTime) = 0;
+		virtual void Render() = 0;
+		virtual void WindowResize(int width, int height){}
+		virtual void JoystickState(uint joystick, bool connect){}
+		virtual void WindowFocus(bool focused) {}
 
-		void setFrameCap(uint frameCap)
+		void SetFrameCap(uint frameCap)
 		{
 			if (frameCap == 0)
 				this->frameCap = 0;
@@ -39,20 +39,20 @@ namespace Greet {
 				this->frameCap = 1.0 / (double)frameCap;
 		}
 
-		uint getFrameCap()
+		uint GetFrameCap()
 		{
 			if (frameCap == 0)
 				return 0;
 			return (uint)(1.0 / frameCap);
 		}
 
-		const uint getFPS() const { return m_fps; }
-		const uint getUPS() const { return m_ups; }
+		const uint GetFPS() const { return m_fps; }
+		const uint GetUPS() const { return m_ups; }
 
 	public:
-		void start();
+		void Start();
 
 	private:
-		void run();
+		void Run();
 	};
 }

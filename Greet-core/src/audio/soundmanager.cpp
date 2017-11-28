@@ -8,40 +8,40 @@ namespace Greet{
 	ga_Mixer* SoundManager::m_mixer = nullptr;
 	std::vector<Sound*> SoundManager::m_sounds;
 
-	void SoundManager::init()
+	void SoundManager::Init()
 	{
 		gc_initialize(0);
 		m_manager = gau_manager_create();
 		m_mixer = gau_manager_mixer(m_manager);
 	}
 
-	void SoundManager::add(Sound* sound)
+	void SoundManager::Add(Sound* sound)
 	{
 		for (int i = 0;i < m_sounds.size();i++)
 		{
-			if (sound->getName() == m_sounds[i]->getName())
+			if (sound->GetName() == m_sounds[i]->GetName())
 			{
-				ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_ADD);
-				Log::error("Given sound name already exists: ", sound->getName().c_str());
+				ErrorHandle::SetErrorCode(GREET_ERROR_MANAGER_ADD);
+				Log::Error("Given sound name already exists: ", sound->GetName().c_str());
 				return;
 			}
 		}
 		m_sounds.push_back(sound);
 	}
 
-	Sound* SoundManager::get(const std::string& soundname)
+	Sound* SoundManager::Get(const std::string& soundname)
 	{
 		uint size = m_sounds.size();
 
 		for (uint i = 0; i < size; i++)
-			if (soundname.compare(m_sounds[i]->getName().c_str()) == 0)
+			if (soundname.compare(m_sounds[i]->GetName().c_str()) == 0)
 				return m_sounds[i];
-		ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_GET);
-		Log::error("Could not find the given sound: ", soundname.c_str());
+		ErrorHandle::SetErrorCode(GREET_ERROR_MANAGER_GET);
+		Log::Error("Could not find the given sound: ", soundname.c_str());
 		return m_sounds[0];
 	}
 
-	void SoundManager::destroy()
+	void SoundManager::Destroy()
 	{
 		for (uint i = 0; i < m_sounds.size(); i++)
 			delete m_sounds[i];
@@ -50,7 +50,7 @@ namespace Greet{
 		gc_shutdown();
 	}
 
-	void SoundManager::update()
+	void SoundManager::Update()
 	{
 		gau_manager_update(m_manager);
 	}

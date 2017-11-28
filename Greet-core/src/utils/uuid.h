@@ -19,14 +19,14 @@ namespace Greet {
 		~UUID() { }
 
 	public:
-		uint getUUID();
+		uint GetUUID();
 	public:
-		static UUID* getInstance() { return s_instance; }
+		static UUID* GetInstance() { return s_instance; }
 	private:
 
 		static UUID* s_instance;
 
-		static void init();
-		static void cleanUp();
+		static void Init();
+		static void CleanUp();
 	};
 }

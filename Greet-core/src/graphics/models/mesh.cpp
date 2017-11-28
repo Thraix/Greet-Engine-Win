@@ -2,21 +2,21 @@
 
 namespace Greet {
 
-	Mesh::Mesh(const vec3* vertices, uint vertexCount, const uint* indices, uint indexCount)
+	Mesh::Mesh(const Vec3* vertices, uint vertexCount, const uint* indices, uint indexCount)
 	{
 		init(vertices, vertexCount, indices, indexCount);
 	}
 
 	Mesh::Mesh(MeshData* data)
 	{
-		init(data->getVertices(),data->getVertexCount(),data->getIndices(),data->getIndexCount());
+		init(data->GetVertices(),data->GetVertexCount(),data->GetIndices(),data->GetIndexCount());
 		for (uint i = 0;i < data->m_data.size();i++)
 		{
-			addAttribute(data->m_data[i]);
+			AddAttribute(data->m_data[i]);
 		}
 	}
 
-	void Mesh::init(const vec3* vertices, uint vertexCount, const uint* indices, uint indexCount)
+	void Mesh::init(const Vec3* vertices, uint vertexCount, const uint* indices, uint indexCount)
 	{
 		m_vertexCount = vertexCount;
 		m_indexCount = indexCount;
@@ -31,7 +31,7 @@ namespace Greet {
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(uint), indices, GL_STATIC_DRAW);
 
 		// Attributes 
-		addAttribute(MESH_VERTICES_LOCATION, vertices); // vertices
+		AddAttribute(MESH_VERTICES_LOCATION, vertices); // vertices
 		
 		// Set default color to white
 		glVertexAttrib4f(MESH_COLORS_LOCATION,1.0f,1.0f,1.0f,1.0f);
@@ -50,12 +50,12 @@ namespace Greet {
 		glDeleteVertexArrays(1,&m_vaoId);
 	}
 
-	void Mesh::render() const
+	void Mesh::Render() const
 	{
 		glDrawElements(GL_TRIANGLES, m_indexCount * sizeof(uint), GL_UNSIGNED_INT,0);
 	}
 
-	void Mesh::bind() const
+	void Mesh::Bind() const
 	{
 		if (m_culling)
 		{	
@@ -68,19 +68,19 @@ namespace Greet {
 		}
 
 		glBindVertexArray(m_vaoId);
-		enableAttributes();
+		EnableAttributes();
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId);
 	}
 
-	void Mesh::unbind() const
+	void Mesh::Unbind() const
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		disableAttributes();
+		DisableAttributes();
 		glBindVertexArray(0);
 		glDisable(GL_CULL_FACE);
 	}
 
-	void Mesh::enableAttributes() const
+	void Mesh::EnableAttributes() const
 	{
 		for (auto it = m_vbos.begin();it != m_vbos.end(); it++)
 		{
@@ -88,7 +88,7 @@ namespace Greet {
 		}	
 	}
 
-	void Mesh::disableAttributes() const
+	void Mesh::DisableAttributes() const
 	{
 		for (auto it = m_vbos.begin();it != m_vbos.end(); it++)
 		{
@@ -96,13 +96,13 @@ namespace Greet {
 		}
 	}
 
-	void Mesh::addAttribute(uint location, const vec3* data)
+	void Mesh::AddAttribute(uint location, const Vec3* data)
 	{
 
 		if (m_vbos.find(location) != m_vbos.end())
 		{
-			ErrorHandle::setErrorCode(GREET_ERROR_MESH_LOCATION);
-			Log::error("Shader location already used in mesh: ", location);
+			ErrorHandle::SetErrorCode(GREET_ERROR_MESH_LOCATION);
+			Log::Error("Shader location already used in mesh: ", location);
 			return;
 		}
 		glBindVertexArray(m_vaoId);
@@ -118,12 +118,12 @@ namespace Greet {
 		glBindVertexArray(0);
 	}
 
-	void Mesh::addAttribute(uint location, const vec2* data)
+	void Mesh::AddAttribute(uint location, const Vec2* data)
 	{
 		if (m_vbos.find(location) != m_vbos.end())
 		{
-			ErrorHandle::setErrorCode(GREET_ERROR_MESH_LOCATION);
-			Log::error("Shader location already used in mesh: ", location);
+			ErrorHandle::SetErrorCode(GREET_ERROR_MESH_LOCATION);
+			Log::Error("Shader location already used in mesh: ", location);
 			return;
 		}
 		glBindVertexArray(m_vaoId);
@@ -139,12 +139,12 @@ namespace Greet {
 		glBindVertexArray(0);
 	}
 
-	void Mesh::addAttribute(uint location, uint attributeSize, const uint* data)
+	void Mesh::AddAttribute(uint location, uint attributeSize, const uint* data)
 	{
 		if (m_vbos.find(location) != m_vbos.end())
 		{
-			ErrorHandle::setErrorCode(GREET_ERROR_MESH_LOCATION);
-			Log::error("Shader location already used in mesh: ",location);
+			ErrorHandle::SetErrorCode(GREET_ERROR_MESH_LOCATION);
+			Log::Error("Shader location already used in mesh: ",location);
 			return;
 		}
 		glBindVertexArray(m_vaoId);
@@ -160,12 +160,12 @@ namespace Greet {
 
 	}
 
-	void Mesh::addAttribute(AttributeData* data)
+	void Mesh::AddAttribute(AttributeData* data)
 	{
 		if (m_vbos.find(data->location) != m_vbos.end())
 		{
-			ErrorHandle::setErrorCode(GREET_ERROR_MESH_LOCATION);
-			Log::error("Shader location already used in mesh: ",data->location);
+			ErrorHandle::SetErrorCode(GREET_ERROR_MESH_LOCATION);
+			Log::Error("Shader location already used in mesh: ",data->location);
 			return;
 		}
 		glBindVertexArray(m_vaoId);
@@ -180,14 +180,14 @@ namespace Greet {
 		glBindVertexArray(0);
 	}
 
-	void Mesh::setDefaultAttribute4f(uint location, const vec4& data)
+	void Mesh::SetDefaultAttribute4f(uint location, const vec4& data)
 	{
 		glBindVertexArray(m_vaoId);
 		glVertexAttrib4f(location,data.x,data.y,data.z,data.w);
 		glBindVertexArray(0);	
 	}
 
-	void Mesh::setDefaultAttribute3f(uint location, const vec3& data)
+	void Mesh::SetDefaultAttribute3f(uint location, const Vec3& data)
 	{
 		glBindVertexArray(m_vaoId);
 		glVertexAttrib3f(location,data.x,data.y,data.z);

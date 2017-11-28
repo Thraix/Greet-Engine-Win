@@ -25,17 +25,17 @@ namespace Greet{
 		m_fonts.clear();
 	}
 
-	Font* FontContainer::getSize(uint size)
+	Font* FontContainer::GetSize(uint size)
 	{
 		for (auto it = m_fonts.begin();it!=m_fonts.end();it++)
 		{
-			if ((*it)->getSize() > size)
+			if ((*it)->GetSize() > size)
 			{
 				Font* font = new Font(this,size);
 				m_fonts.insert(it,font);
 				return font;
 			}
-			if ((*it)->getSize() == size)
+			if ((*it)->GetSize() == size)
 				return *it;
 		}
 		Font* font = new Font(this,size);

@@ -4,53 +4,53 @@ namespace Greet {
 	
 	Sprite* GUI::m_mask;
 
-	GUI::GUI(const vec2& position, const vec2& size)
-	:Group(vec2(0, 0)), m_position(position), m_size(size), m_margin(LTRB()), m_backgroundColor(GUI_DEFAULT_BACKGROUND)
+	GUI::GUI(const Vec2& position, const Vec2& size)
+	:Group(Vec2(0, 0)), m_position(position), m_size(size), m_margin(LTRB()), m_backgroundColor(GUI_DEFAULT_BACKGROUND)
 	{
-		m_transformationMatrix = mat3::translate(m_position);
+		m_transformationMatrix = Mat3::Translate(m_position);
 		if (m_mask == NULL)
-			m_mask = new Sprite(TextureManager::get2D("mask2"));
+			m_mask = new Sprite(TextureManager::Get2D("mask2"));
 	}
 	
-	GUI::GUI(const vec2& position, const vec2& size, const LTRB& margin)
-		: Group(vec2(0,0)), m_position(position), m_size(size), m_margin(margin), m_backgroundColor(GUI_DEFAULT_BACKGROUND)
+	GUI::GUI(const Vec2& position, const Vec2& size, const LTRB& margin)
+		: Group(Vec2(0,0)), m_position(position), m_size(size), m_margin(margin), m_backgroundColor(GUI_DEFAULT_BACKGROUND)
 	{
-		m_transformationMatrix = mat3::translate(m_position);
+		m_transformationMatrix = Mat3::Translate(m_position);
 		if (m_mask == NULL)
-			m_mask = new Sprite(TextureManager::get2D("mask2"));
+			m_mask = new Sprite(TextureManager::Get2D("mask2"));
 	}
 
 	GUI::~GUI()
 	{
 	}
 
-	void GUI::add(Renderable* renderable)
+	void GUI::Add(Renderable* renderable)
 	{
 		ASSERT(false, "GUI doesn't accept Renderables only GUIs.");
 	}
 
-	void GUI::add(GUI* renderable)
+	void GUI::Add(GUI* renderable)
 	{
-		Group::add(renderable);
+		Group::Add(renderable);
 		renderable->m_parent = this;
 	}
 
-	bool GUI::onPressed(const KeyPressedEvent& e)
+	bool GUI::OnPressed(const KeyPressedEvent& e)
 	{ 
 		return false;
 	}
 
-	bool GUI::onReleased(const KeyReleasedEvent& e)
+	bool GUI::OnReleased(const KeyReleasedEvent& e)
 	{ 
 		return false;
 	}
 
-	bool GUI::onTyped(const KeyTypedEvent& e)
+	bool GUI::OnTyped(const KeyTypedEvent& e)
 	{
 		return false;
 	}
 
-	GUI* GUI::onPressed(const MousePressedEvent& event, vec2 relativeMousePos) 
+	GUI* GUI::OnPressed(const MousePressedEvent& event, Vec2 relativeMousePos) 
 	{ 
 		// If we are not inside the GUI return
 		if (!m_enabled || !m_mouseInside)
@@ -60,13 +60,13 @@ namespace Greet {
 		{
 			GUI* gui = ((GUI*)m_renderables[i]);
 			// Check if mouse is within child-GUIs
-			if (gui->onPressed(event, translateMouse(relativeMousePos, gui)))
+			if (gui->OnPressed(event, TranslateMouse(relativeMousePos, gui)))
 				return gui;
 		}
 		return this;
 	}
 
-	GUI* GUI::onReleased(const MouseReleasedEvent& event, vec2 relativeMousePos) 
+	GUI* GUI::OnReleased(const MouseReleasedEvent& event, Vec2 relativeMousePos) 
 	{ 
 		if (!m_enabled)
 			return NULL;
@@ -74,80 +74,80 @@ namespace Greet {
 		{
 			GUI* gui = ((GUI*)m_renderables[i]);
 			// Check if mouse is within child-GUIs
-			gui->onReleased(event, translateMouse(relativeMousePos, gui));
+			gui->OnReleased(event, TranslateMouse(relativeMousePos, gui));
 		}
 		return NULL;
 	}
 
-	bool GUI::onMoved(const MouseMovedEvent& event, vec2 relativeMousePos)
+	bool GUI::OnMoved(const MouseMovedEvent& event, Vec2 relativeMousePos)
 	{
-		if (isInside(relativeMousePos))
+		if (IsInside(relativeMousePos))
 		{
 			if (!m_mouseInside)
-				onMouseEnter();
+				OnMouseEnter();
 			m_mouseInside = true;
 		}
 		else
 		{
 			if (m_mouseInside)
-				onMouseExit();
+				OnMouseExit();
 			m_mouseInside = false;
 		}
 
 		for (uint i = 0;i < m_renderables.size();i++)
 		{
 			GUI* gui = ((GUI*)m_renderables[i]);
-			gui->onMoved(event, translateMouse(relativeMousePos, gui));
+			gui->OnMoved(event, TranslateMouse(relativeMousePos, gui));
 		}
 		return m_mouseInside;
 	}
 
 
-	bool GUI::update(float timeElapsed) 
+	bool GUI::Update(float timeElapsed) 
 	{
 		if(m_parent == NULL)
-			m_transformationMatrix = mat3::translate(m_position);
+			m_transformationMatrix = Mat3::Translate(m_position);
 		else
-			m_transformationMatrix = mat3::translate(m_position + vec2(m_parent->m_margin.left, m_parent->m_margin.top));
-		return Group::update(timeElapsed);
+			m_transformationMatrix = Mat3::Translate(m_position + Vec2(m_parent->m_margin.left, m_parent->m_margin.top));
+		return Group::Update(timeElapsed);
 	}
 
-	void GUI::submit(Renderer2D* renderer) const
+	void GUI::Submit(Renderer2D* renderer) const
 	{
 		if(m_renderBackground)
-			renderer->fillRect(vec2(0,0), m_size, m_backgroundColor, m_mask);
-		render(renderer);
+			renderer->FillRect(Vec2(0,0), m_size, m_backgroundColor, m_mask);
+		Render(renderer);
 	}
 
-	void GUI::render(Renderer2D* renderer) const
+	void GUI::Render(Renderer2D* renderer) const
 	{
-		Group::submit(renderer);
+		Group::Submit(renderer);
 	}
 
-	const vec2& GUI::getRealPosition() const
+	const Vec2& GUI::GetRealPosition() const
 	{
 		if(m_parent)
-			return m_parent->getPosition()+m_position;
+			return m_parent->GetPosition()+m_position;
 		return m_position;
 	}
 
-	void GUI::setFocused(bool focused)
+	void GUI::SetFocused(bool focused)
 	{
 		if (m_focused != focused)
 		{
-			onFocused(focused);
+			OnFocused(focused);
 			m_focused = focused;
 		}
 	}
 
-	bool GUI::isInside(const vec2& position) const
+	bool GUI::IsInside(const Vec2& position) const
 	{
 		return position.x >= 0 && position.x < m_size.x && position.y >= 0 && position.y < m_size.y;
 //		return MOUSE_INSIDE_GUI(position, m_size.x, m_size.y);
 	}
 
-	vec2 GUI::translateMouse(const vec2& mousePos, GUI* target) const
+	Vec2 GUI::TranslateMouse(const Vec2& mousePos, GUI* target) const
 	{	
-		return mousePos - target->m_position - vec2(m_margin.left, m_margin.top);
+		return mousePos - target->m_position - Vec2(m_margin.left, m_margin.top);
 	}
 }

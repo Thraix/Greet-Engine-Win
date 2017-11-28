@@ -14,11 +14,11 @@ namespace Greet {
 		static std::vector<Texture*> m_textures;
 	public:
 
-		static void add(Texture* texture);
-		static Texture* get(const std::string& texturename);
-		static Texture2D* get2D(const std::string& texturename);
-		static CubeMap* get3D(const std::string& texturename);
-		static void destroy();
+		static void Add(Texture* texture);
+		static Texture* Get(const std::string& texturename);
+		static Texture2D* Get2D(const std::string& texturename);
+		static CubeMap* Get3D(const std::string& texturename);
+		static void Destroy();
 	private:
 		TextureManager(){}
 	};

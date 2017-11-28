@@ -17,8 +17,8 @@ namespace Greet {
 		Mesh* m_mesh;
 	public:
 		Skybox(CubeMap* map);
-		const CubeMap* getCubeMap() const { return m_map; };
+		const CubeMap* GetCubeMap() const { return m_map; };
 		virtual ~Skybox();
-		void render(const mat4& projectionMatrix, const Camera& camera) const;
+		void Render(const Mat4& projectionMatrix, const Camera& camera) const;
 	};
 }

@@ -19,10 +19,10 @@ namespace Greet {
 
 		~Driver();
 
-		void preupdate(float timeElapsed);
-		virtual void update() = 0;
-		bool postupdate();
-		void onFinished();
+		void Preupdate(float timeElapsed);
+		virtual void Update() = 0;
+		bool Postupdate();
+		void OnFinished();
 	};
 
 }

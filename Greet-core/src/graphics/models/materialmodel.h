@@ -16,18 +16,18 @@ namespace Greet {
 		MaterialModel(Mesh* mesh, const Material& material);
 		virtual ~MaterialModel();
 
-		inline const Material& getMaterial() const { return m_material; }
-		inline const Mesh& getMesh() const { return *m_mesh; }
-		bool operator < (const MaterialModel & rhs)
+		inline const Material& GetMaterial() const { return m_material; }
+		inline const Mesh& GetMesh() const { return *m_mesh; }
+		friend bool operator < (const MaterialModel & lhs, const MaterialModel & rhs)
 		{
-			uint idl = getMaterial().getTexture().getTexId();
-			uint idr = rhs.getMaterial().getTexture().getTexId();
+			uint idl = lhs.GetMaterial().GetTexture().GetTexId();
+			uint idr = rhs.GetMaterial().GetTexture().GetTexId();
 			if (idl < idr) { return true; }
 			if (idl > idr) { return false; }
 			return (idl < idr);
 		}
 
-		inline uint getId() const { return m_id; }
+		inline uint GetId() const { return m_id; }
 
 		bool operator==(const MaterialModel& second) const;
 	};

@@ -17,8 +17,8 @@ namespace Greet {
 		JSONArray();
 		JSONArray(const JSONArray& jsonArray);
 		JSONArray(std::vector<JSONObject> objects);
-		void addObject(JSONObject object);
-		inline JSONObject getObject(size_t i) const;
+		void AddObject(JSONObject object);
+		inline JSONObject GetObject(size_t i) const;
 		JSONObject operator[](size_t i) const;
 
 		friend std::ostream& operator<<(std::ostream& os, const JSONArray& dt);

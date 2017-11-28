@@ -54,8 +54,8 @@ namespace Greet {
 		static bool focus;
 		static bool mouseButtonDown[MAX_MOUSEBUTTONS];
 		static bool isMouseButtonDown;
-		static vec2 mousePos;
-		static vec2 mousePosPixel;
+		static Vec2 mousePos;
+		static Vec2 mousePosPixel;
 		static uint joystickCheck;
 	private:
 		static bool init();
@@ -69,44 +69,44 @@ namespace Greet {
 		static void mouse_position_callback(GLFWwindow* window, double xpos, double ypos);
 		static void mouse_scroll_callback(GLFWwindow* window, double scrollX, double scrollY);
 
-		static void checkJoysticks();
+		static void CheckJoysticks();
 	public:
 		//Window(const char *title, int width, int height);
 		//~Window();
 
-		static void createWindow(std::string title, uint width, uint height);
-		static void destroyWindow();
+		static void CreateWindow(std::string title, uint width, uint height);
+		static void DestroyWindow();
 
-		static bool closed();
-		static void clear();
+		static bool Closed();
+		static void Clear();
 
-		static void render();
-		static void update();
-		static void tick();
+		static void Render();
+		static void Update();
+		static void Tick();
 
-		static void setBackgroundColor(vec4 color);
-		static void addResizeCallback(WindowResizeListener* listenter);
-		static void removeResizeCallback(WindowResizeListener* listener);
-		static void addWindowFocusCallback(WindowFocusListener* listener);
-		static void removeWindowFocusCallback(WindowFocusListener* listener);
-		static void addJoystickCallback(JoystickStateListener* listener);
-		static void removeJoystickCallback(JoystickStateListener* listener);
+		static void SetBackgroundColor(vec4 color);
+		static void AddResizeCallback(WindowResizeListener* listenter);
+		static void RemoveResizeCallback(WindowResizeListener* listener);
+		static void AddWindowFocusCallback(WindowFocusListener* listener);
+		static void RemoveWindowFocusCallback(WindowFocusListener* listener);
+		static void AddJoystickCallback(JoystickStateListener* listener);
+		static void RemoveJoystickCallback(JoystickStateListener* listener);
 
-		inline static vec4 getBackgroundColor() { return bgColor; }
-		inline static int getWidth() { return width; };
-		inline static int getHeight() { return height; };
-		inline static void setTitle(const std::string& title) { glfwSetWindowTitle(window,title.c_str()); }
+		inline static vec4 GetBackgroundColor() { return bgColor; }
+		inline static int GetWidth() { return width; };
+		inline static int GetHeight() { return height; };
+		inline static void SetTitle(const std::string& title) { glfwSetWindowTitle(window,title.c_str()); }
 
 		//Mouse Positions
-		inline static vec2 getMousePos(mat3 transform) { return transform.inverse()*mousePos; }
-		inline static float getMouseX(mat3 transform) { return (transform.inverse()*mousePos).x; }
-		inline static float getMouseY(mat3 transform) { return (transform.inverse()*mousePos).y; }
+		inline static Vec2 GetMousePos(Mat3 transform) { return transform.Inverse()*mousePos; }
+		inline static float GetMouseX(Mat3 transform) { return (transform.Inverse()*mousePos).x; }
+		inline static float GetMouseY(Mat3 transform) { return (transform.Inverse()*mousePos).y; }
 
-		inline static vec2 getMousePosPixel() { return mousePosPixel; }
-		inline static float getMouseXPixel() { return mousePosPixel.x; }
-		inline static float getMouseYPixel() { return mousePosPixel.y; }
-		inline static Joystick &getJoystick(uint joystick){ ASSERT(joystick < GLFW_JOYSTICKS, "WINDOW","Invalid Joystick. Ranges from 0-3: ", joystick); return joysticks[joystick]; }
-		inline static bool isJoystickConnected(uint joystick){ ASSERT(joystick < GLFW_JOYSTICKS, "WINDOW", "Invalid Joystick. Ranges from 0-3: ", joystick); return joysticks[joystick].m_connected; }
+		inline static Vec2 GetMousePosPixel() { return mousePosPixel; }
+		inline static float GetMouseXPixel() { return mousePosPixel.x; }
+		inline static float GetMouseYPixel() { return mousePosPixel.y; }
+		inline static Joystick& GetJoystick(uint joystick){ ASSERT(joystick < GLFW_JOYSTICKS, "WINDOW","Invalid Joystick. Ranges from 0-3: ", joystick); return joysticks[joystick]; }
+		inline static bool IsJoystickConnected(uint joystick){ ASSERT(joystick < GLFW_JOYSTICKS, "WINDOW", "Invalid Joystick. Ranges from 0-3: ", joystick); return joysticks[joystick].m_connected; }
 
 
 		inline static void* getUserPointer(Window* window) { return window->pointer; }

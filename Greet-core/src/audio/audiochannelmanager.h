@@ -12,9 +12,9 @@ namespace Greet {
 	private:
 		static std::vector<AudioChannel*> m_channels;
 	public:
-		static void add(AudioChannel* channel);
-		static AudioChannel* get(const std::string& channelname);
-		static void destroy();
+		static void Add(AudioChannel* channel);
+		static AudioChannel* Get(const std::string& channelname);
+		static void Destroy();
 	private:
 		AudioChannelManager(){}
 	};

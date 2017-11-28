@@ -3,10 +3,10 @@
 namespace Greet {
 
 
-	Entity::Entity(const vec2& position, const vec2& size, uint color, b2World* world)
-		: RenderablePoly(position,Math::b2Vec2ToVec2(Math::getRectangle(size),4),4,color)
+	Entity::Entity(const Vec2& position, const Vec2& size, uint color, b2World* world)
+		: RenderablePoly(position,Math::B2Vec2ToVec2(Math::GetRectangle(size),4),4,color)
 	{
-		createBody(position, size, world);
+		CreateBody(position, size, world);
 	}
 
 	Entity::~Entity()
@@ -14,10 +14,10 @@ namespace Greet {
 		m_body->GetWorld()->DestroyBody(m_body);
 	}
 
-	bool Entity::update(float timeElapsed)
+	bool Entity::Update(float timeElapsed)
 	{
 		m_position = m_body->GetPosition();
-		vec4 rectangle = Math::getRectangle(m_body);
+		vec4 rectangle = Math::GetRectangle(m_body);
 		if (rectangle.z != 0 && rectangle.w != 0)
 		{
 			//m_transform = Transform().translate(m_body->GetPosition()).rotateR(m_body->GetAngle()).translate(-rectangle.z / 2.0f, -rectangle.w / 2.0f).scale(rectangle.z, rectangle.w);
@@ -26,7 +26,7 @@ namespace Greet {
 		return false;
 	}
 
-	void Entity::createBody(vec2 pos, vec2 size, b2World* world)
+	void Entity::CreateBody(Vec2 pos, Vec2 size, b2World* world)
 	{
 		b2BodyDef def;
 		def.type = b2_dynamicBody;

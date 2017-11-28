@@ -19,12 +19,12 @@ namespace Greet {
 		glDeleteTextures(1,&m_texId);
 	}
 
-	void Texture::enable() const
+	void Texture::Enable() const
 	{
 		glBindTexture(m_textureType, m_texId);
 	}
 
-	void Texture::disable() const
+	void Texture::Disable() const
 	{
 		glBindTexture(m_textureType, 0);
 	}

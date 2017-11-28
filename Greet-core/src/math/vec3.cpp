@@ -5,54 +5,54 @@
 
 namespace Greet{
 
-	vec3::vec3(float x, float y, float z)
+	Vec3::Vec3(float x, float y, float z)
 	{
 		this->x = x;
 		this->y = y;
 		this->z = z;
 	}
 
-	float vec3::length() const
+	float Vec3::Length() const
 	{
 		return sqrt(x*x + y*y + z*z);
 	}
 
-	float vec3::dot(const vec3& vec) const
+	float Vec3::Dot(const Vec3& vec) const
 	{
 		return x * vec.x + y * vec.y + z * vec.z;
 	}
 
-	vec3 vec3::cross(const vec3& vec) const
+	Vec3 Vec3::Cross(const Vec3& vec) const
 	{
 		float x_ = y * vec.z - z * vec.y;
 		float y_ = z * vec.x - x * vec.z;
 		float z_ = x * vec.y - y * vec.x;
-		return vec3(x_, y_, z_);
+		return Vec3(x_, y_, z_);
 	}
 
-	vec3& vec3::normalize()
+	Vec3& Vec3::Normalize()
 	{
-		float len = length();
+		float len = Length();
 		x /= len;
 		y /= len;
 		z /= len;
 		return *this;
 	}
 
-	vec3& vec3::rotate(const float& angle, const vec3& axis)
+	Vec3& Vec3::Rotate(const float& angle, const Vec3& axis)
 	{
-		float sh = (float)sin(Math::toRadians(angle / 2.0));
-		float ch = (float)cos(Math::toRadians(angle / 2.0));
+		float sh = (float)sin(Math::ToRadians(angle / 2.0));
+		float ch = (float)cos(Math::ToRadians(angle / 2.0));
 
 		float rX = axis.x * sh;
 		float rY = axis.y * sh;
 		float rZ = axis.z * sh;
 		float rW = ch;
 
-		quaternion rotation(rX,rY,rZ,rW);
-		quaternion conjugate = rotation.conjugate();
+		Quaternion rotation(rX,rY,rZ,rW);
+		Quaternion conjugate = rotation.Conjugate();
 
-		quaternion w = rotation * (*this) * conjugate;
+		Quaternion w = rotation * (*this) * conjugate;
 
 		x = w.x;
 		y = w.y;
@@ -61,7 +61,7 @@ namespace Greet{
 		return *this;
 	}
 
-	vec3& vec3::add(const vec3& other)
+	Vec3& Vec3::Add(const Vec3& other)
 	{
 		x += other.x;
 		y += other.y;
@@ -69,7 +69,7 @@ namespace Greet{
 		return *this;
 	}
 
-	vec3& vec3::subtract(const vec3& other)
+	Vec3& Vec3::Subtract(const Vec3& other)
 	{
 		x -= other.x;
 		y -= other.y;
@@ -77,7 +77,7 @@ namespace Greet{
 		return *this;
 	}
 
-	vec3& vec3::multiply(const vec3& other)
+	Vec3& Vec3::Multiply(const Vec3& other)
 	{
 		x *= other.x;
 		y *= other.y;
@@ -85,7 +85,7 @@ namespace Greet{
 		return *this;
 	}
 
-	vec3& vec3::divide(const vec3& other)
+	Vec3& Vec3::Divide(const Vec3& other)
 	{
 		x /= other.x;
 		y /= other.y;
@@ -93,7 +93,7 @@ namespace Greet{
 		return *this;
 	}
 
-	vec3& vec3::add(const float c)
+	Vec3& Vec3::Add(const float c)
 	{
 		x += c;
 		y += c;
@@ -101,7 +101,7 @@ namespace Greet{
 		return *this;
 	}
 
-	vec3& vec3::subtract(const float c)
+	Vec3& Vec3::Subtract(const float c)
 	{
 		x -= c;
 		y -= c;
@@ -109,7 +109,7 @@ namespace Greet{
 		return *this;
 	}
 
-	vec3& vec3::multiply(const float c)
+	Vec3& Vec3::Multiply(const float c)
 	{
 		x *= c;
 		y *= c;
@@ -117,7 +117,7 @@ namespace Greet{
 		return *this;
 	}
 
-	vec3& vec3::divide(const float c)
+	Vec3& Vec3::Divide(const float c)
 	{
 		x /= c;
 		y /= c;
@@ -125,71 +125,71 @@ namespace Greet{
 		return *this;
 	}
 
-	bool vec3::compare(const vec3& other)
+	bool Vec3::Compare(const Vec3& other)
 	{
 		return x == other.x && y == other.y && z == other.z;
 	}
 
-	vec3 operator+(const vec3& first, const vec3 &second)
+	Vec3 operator+(const Vec3& first, const Vec3 &second)
 	{
-		return vec3(first.x, first.y,first.z).add(second);
+		return Vec3(first.x, first.y,first.z).Add(second);
 	}
 
-	vec3 operator-(const vec3& first, const vec3 &second)
+	Vec3 operator-(const Vec3& first, const Vec3 &second)
 	{
-		return vec3(first.x, first.y, first.z).subtract(second);
+		return Vec3(first.x, first.y, first.z).Subtract(second);
 	}
 
-	vec3 operator*(const vec3& first, const vec3 &second)
+	Vec3 operator*(const Vec3& first, const Vec3 &second)
 	{
-		return vec3(first.x, first.y, first.z).multiply(second);
+		return Vec3(first.x, first.y, first.z).Multiply(second);
 	}
 
-	vec3 operator/(const vec3& first, const vec3 &second)
+	Vec3 operator/(const Vec3& first, const Vec3 &second)
 	{
-		return vec3(first.x, first.y, first.z).divide(second);
+		return Vec3(first.x, first.y, first.z).Divide(second);
 	}
-	vec3 operator+(const vec3& first, const float c)
+	Vec3 operator+(const Vec3& first, const float c)
 	{
-		return vec3(first.x, first.y,first.z).add(c);
-	}
-
-	vec3 operator-(const vec3& first, const float c)
-	{
-		return vec3(first.x, first.y,first.z).subtract(c);
+		return Vec3(first.x, first.y,first.z).Add(c);
 	}
 
-	vec3 operator*(const vec3&  first, const float c)
+	Vec3 operator-(const Vec3& first, const float c)
 	{
-		return vec3(first.x, first.y,first.z).multiply(c);
+		return Vec3(first.x, first.y,first.z).Subtract(c);
 	}
 
-	vec3 operator/(const vec3& first, const float c)
+	Vec3 operator*(const Vec3&  first, const float c)
 	{
-		return vec3(first.x, first.y, first.z).divide(c);
+		return Vec3(first.x, first.y,first.z).Multiply(c);
 	}
 
-	vec3& vec3::operator+=(const vec3 &other)
+	Vec3 operator/(const Vec3& first, const float c)
 	{
-		return add(other);
+		return Vec3(first.x, first.y, first.z).Divide(c);
 	}
 
-	vec3& vec3::operator-=(const vec3 &other)
+	Vec3& Vec3::operator+=(const Vec3 &other)
 	{
-		return subtract(other);
+		return Add(other);
 	}
 
-	vec3& vec3::operator*=(const vec3 &other)
+	Vec3& Vec3::operator-=(const Vec3 &other)
 	{
-		return multiply(other);
+		return Subtract(other);
 	}
 
-	vec3& vec3::operator/=(const vec3 &other)
+	Vec3& Vec3::operator*=(const Vec3 &other)
 	{
-		return divide(other);
+		return Multiply(other);
 	}
 
-	vec3& vec3::operator+=(const float other)
+	Vec3& Vec3::operator/=(const Vec3 &other)
+	{
+		return Divide(other);
+	}
+
+	Vec3& Vec3::operator+=(const float other)
 	{
 		x += other;
 		y += other;
@@ -197,7 +197,7 @@ namespace Greet{
 		return *this;
 	}
 
-	vec3& vec3::operator-=(const float other)
+	Vec3& Vec3::operator-=(const float other)
 	{
 		x -= other;
 		y -= other;
@@ -205,7 +205,7 @@ namespace Greet{
 		return *this;
 	}
 
-	vec3& vec3::operator*=(const float other)
+	Vec3& Vec3::operator*=(const float other)
 	{
 		x *= other;
 		y *= other;
@@ -213,7 +213,7 @@ namespace Greet{
 		return *this;
 	}
 
-	vec3& vec3::operator/=(const float other)
+	Vec3& Vec3::operator/=(const float other)
 	{
 		x /= other;
 		y /= other;
@@ -221,17 +221,17 @@ namespace Greet{
 		return *this;
 	}
 
-	bool vec3::operator==(const vec3 &other)
+	bool Vec3::operator==(const Vec3 &other)
 	{
-		return compare(other);
+		return Compare(other);
 	}
 
-	bool vec3::operator!=(const vec3 &other)
+	bool Vec3::operator!=(const Vec3 &other)
 	{
-		return !compare(other);
+		return !Compare(other);
 	}
 
-	std::ostream& operator<<(std::ostream& stream, const vec3& vec)
+	std::ostream& operator<<(std::ostream& stream, const Vec3& vec)
 	{
 		return stream << vec.x << ", " << vec.y << ", " << vec.z;
 	}

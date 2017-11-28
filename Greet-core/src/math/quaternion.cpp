@@ -5,16 +5,16 @@
 
 namespace Greet {
 
-	quaternion::quaternion(float x, float y, float z, float w) :x(x), y(y), z(z), w(w) {}
+	Quaternion::Quaternion(float x, float y, float z, float w) :x(x), y(y), z(z), w(w) {}
 
-	float quaternion::length()
+	float Quaternion::Length()
 	{
 		return (float)sqrt(x*x + y*y + z*z + w*w);
 	}
 
-	quaternion& quaternion::normalize()
+	Quaternion& Quaternion::Normalize()
 	{
-		float len = length();
+		float len = Length();
 		x /= len;
 		y /= len;
 		z /= len;
@@ -22,7 +22,7 @@ namespace Greet {
 		return *this;
 	}
 
-	quaternion& quaternion::conjugate()
+	Quaternion& Quaternion::Conjugate()
 	{
 		x = -x;
 		y = -y;
@@ -30,7 +30,7 @@ namespace Greet {
 		return *this;
 	}
 
-	quaternion& quaternion::multiply(const quaternion& other)
+	Quaternion& Quaternion::Multiply(const Quaternion& other)
 	{
 		float w_ = w  * other.w - x  * other.x - y  * other.y - z  * other.z;
 		float x_ = x  * other.w + w  * other.x + y  * other.z - z  * other.y;
@@ -43,7 +43,7 @@ namespace Greet {
 		return *this;
 	}
 
-	quaternion& quaternion::multiply(const vec3& other)
+	Quaternion& Quaternion::Multiply(const Vec3& other)
 	{
 		float w_ = -x * other.x - y * other.y - z * other.z;
 		float x_ =  w * other.x + y * other.z - z * other.y;
@@ -56,24 +56,24 @@ namespace Greet {
 		return *this;
 	}
 
-	quaternion operator*(const quaternion& first, const quaternion &second)
+	Quaternion operator*(const Quaternion& first, const Quaternion &second)
 	{
-		return quaternion(first.x,first.y,first.z,first.w).multiply(second);
+		return Quaternion(first.x,first.y,first.z,first.w).Multiply(second);
 	}
 
-	quaternion operator*(const quaternion& first, const vec3 &second)
+	Quaternion operator*(const Quaternion& first, const Vec3 &second)
 	{
-		return quaternion(first.x, first.y, first.z, first.w).multiply(second);
+		return Quaternion(first.x, first.y, first.z, first.w).Multiply(second);
 	}
 
-	quaternion& quaternion::operator*=(const quaternion &other)
+	Quaternion& Quaternion::operator*=(const Quaternion &other)
 	{
-		return multiply(other);
+		return Multiply(other);
 	}
 
-	quaternion& quaternion::operator*=(const vec3 &other)
+	Quaternion& Quaternion::operator*=(const Vec3 &other)
 	{
-		return multiply(other);
+		return Multiply(other);
 	}
 
 }

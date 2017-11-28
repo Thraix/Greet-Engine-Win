@@ -2,48 +2,48 @@
 #include <graphics/Window.h>
 namespace Greet {
 
-	Frame::Frame(const vec2& position, const vec2& size, const std::string& title)
-	: GUI(position,size, LTRB(10,40,10,10)), m_title(title),m_titleFont(FontManager::get("anonymous", 20))
-		,m_titleColor(ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(120 / 360.0f, 3)))
-		,m_titleBackgroundColor(ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(120 / 360.0f, 9)))
+	Frame::Frame(const Vec2& position, const Vec2& size, const std::string& title)
+	: GUI(position,size, LTRB(10,40,10,10)), m_title(title),m_titleFont(FontManager::Get("anonymous", 20))
+		,m_titleColor(ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 3)))
+		,m_titleBackgroundColor(ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 9)))
 	{
 		
 	}
 
-	void Frame::render(Renderer2D* renderer) const 
+	void Frame::Render(Renderer2D* renderer) const 
 	{
-		GUI::render(renderer);
-		renderer->fillRect(vec2(0, 0), vec2(m_size.x, m_margin.top-10),m_titleBackgroundColor,GUI::m_mask);
-		renderer->submitString(m_title, vec2(m_margin.left, 22),m_titleFont,m_titleColor);
+		GUI::Render(renderer);
+		renderer->FillRect(Vec2(0, 0), Vec2(m_size.x, m_margin.top-10),m_titleBackgroundColor,GUI::m_mask);
+		renderer->SubmitString(m_title, Vec2(m_margin.left, 22),m_titleFont,m_titleColor);
 	}
 
-	bool Frame::onMoved(const MouseMovedEvent& event, vec2 relativeMousePos)
+	bool Frame::OnMoved(const MouseMovedEvent& event, Vec2 relativeMousePos)
 	{
-		bool moved = GUI::onMoved(event, relativeMousePos);
-		if (event.isDragged())
+		bool moved = GUI::OnMoved(event, relativeMousePos);
+		if (event.IsDragged())
 		{
 			if (m_holdFrame)
 			{
-				m_position = m_holdPosition + event.getPosition();
-				m_position.x = m_position.x < 0 ? 0 : m_position.x + m_size.x >= Window::getWidth() ? Window::getWidth() - m_size.x : m_position.x;
-				m_position.y = m_position.y < 0 ? 0 : m_position.y + m_size.y >= Window::getHeight() ? Window::getHeight() - m_size.y : m_position.y;
+				m_position = m_holdPosition + event.GetPosition();
+				m_position.x = m_position.x < 0 ? 0 : m_position.x + m_size.x >= Window::GetWidth() ? Window::GetWidth() - m_size.x : m_position.x;
+				m_position.y = m_position.y < 0 ? 0 : m_position.y + m_size.y >= Window::GetHeight() ? Window::GetHeight() - m_size.y : m_position.y;
 			}
 		}
 		return moved;
 	}
 
-	GUI* Frame::onPressed(const MousePressedEvent& event, vec2 relativeMousePos)
+	GUI* Frame::OnPressed(const MousePressedEvent& event, Vec2 relativeMousePos)
 	{
-		GUI* pressed = GUI::onPressed(event, relativeMousePos);
+		GUI* pressed = GUI::OnPressed(event, relativeMousePos);
 		if (pressed != this)
 			return pressed;
 
-		if (event.getButton() == GLFW_MOUSE_BUTTON_1)
+		if (event.GetButton() == GLFW_MOUSE_BUTTON_1)
 		{
 			m_holdFrame = false;
-			if (isInsideFrameHeader(relativeMousePos))
+			if (IsInsideFrameHeader(relativeMousePos))
 			{
-				m_holdPosition = m_position - event.getPosition();
+				m_holdPosition = m_position - event.GetPosition();
 				m_holdFrame = true;
 				return this;
 			}
@@ -51,17 +51,17 @@ namespace Greet {
 		return NULL;
 	}
 
-	GUI* Frame::onReleased(const MouseReleasedEvent& event, vec2 relativeMousePos)
+	GUI* Frame::OnReleased(const MouseReleasedEvent& event, Vec2 relativeMousePos)
 	{
-		GUI::onReleased(event, relativeMousePos);
-		if (event.getButton() == GLFW_MOUSE_BUTTON_1)
+		GUI::OnReleased(event, relativeMousePos);
+		if (event.GetButton() == GLFW_MOUSE_BUTTON_1)
 		{
 			m_holdFrame = false;
 		}
 		return NULL;
 	}
 
-	bool Frame::isInsideFrameHeader(const vec2& mouse) const
+	bool Frame::IsInsideFrameHeader(const Vec2& mouse) const
 	{
 		return MOUSE_INSIDE(mouse,0,0,m_size.x,m_margin.top-10);
 	}

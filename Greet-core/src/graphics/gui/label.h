@@ -16,23 +16,23 @@ namespace Greet {
 		
 		public:
 			std::string text;
-			vec2 position;
+			Vec2 position;
 			uint color;
 			
 			
 		public:
-			Label(const std::string& text, vec2 pos,Font* font, uint color);
-			Label(const std::string& text, vec2 pos,std::string fontname, uint fontsize, uint color);
+			Label(const std::string& text, Vec2 pos,Font* font, uint color);
+			Label(const std::string& text, Vec2 pos,std::string fontname, uint fontsize, uint color);
 			
-			void submit(Renderer2D* renderer) const override;
-			bool update(float timeElapsed) override;
+			void Submit(Renderer2D* renderer) const override;
+			bool Update(float timeElapsed) override;
 
-			void setColor(uint c) override { color = c; }
-			inline uint getColor() const override { return color;}
-			void setPosition(const vec2& pos) override { position = pos; }
-			inline const vec2& getPosition() const override { return position;}
-			void setSize(const vec2& size) override {  }
-			inline const vec2& getSize() const override { return vec2(getWidth(),m_font->getSize());} // TODO: RETURN SIZE OF TEXT
-			float getWidth() const;
+			void SetColor(uint c) override { color = c; }
+			inline uint GetColor() const override { return color;}
+			void SetPosition(const Vec2& pos) override { position = pos; }
+			inline const Vec2& GetPosition() const override { return position;}
+			void SetSize(const Vec2& size) override {  }
+			inline const Vec2& GetSize() const override { return Vec2(GetWidth(),m_font->GetSize());} // TODO: RETURN SIZE OF TEXT
+			float GetWidth() const;
 	};
 }

@@ -14,26 +14,26 @@ namespace Greet {
 		glDeleteVertexArrays(1, &m_arrayID);
 	}
 
-	void VertexArray::addBuffer(Buffer* buffer, GLuint index)
+	void VertexArray::AddBuffer(Buffer* buffer, GLuint index)
 	{
-		enable();
-		buffer->enable();
+		Enable();
+		buffer->Enable();
 
 		glEnableVertexAttribArray(index);
-		glVertexAttribPointer(index, buffer->getComponentCount(), GL_FLOAT,GL_FALSE, 0, 0);
+		glVertexAttribPointer(index, buffer->GetComponentCount(), GL_FLOAT,GL_FALSE, 0, 0);
 
-		buffer->disable();
-		disable();
+		buffer->Disable();
+		Disable();
 
 		m_buffers.push_back(buffer);
 	}
 
-	void VertexArray::enable() const
+	void VertexArray::Enable() const
 	{
 		glBindVertexArray(m_arrayID);
 	}
 
-	void VertexArray::disable() const
+	void VertexArray::Disable() const
 	{
 		glBindVertexArray(0);
 	}

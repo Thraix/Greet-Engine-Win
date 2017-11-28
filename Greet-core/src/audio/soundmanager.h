@@ -17,11 +17,11 @@ namespace Greet {
 		static ga_Mixer* m_mixer;
 		static std::vector<Sound*> m_sounds;
 	public:
-		static void init();
-		static void add(Sound* sound);
-		static Sound* get(const std::string& soundname);
-		static void destroy();
-		static void update();
+		static void Init();
+		static void Add(Sound* sound);
+		static Sound* Get(const std::string& soundname);
+		static void Destroy();
+		static void Update();
 	private:
 		SoundManager(){}
 	};

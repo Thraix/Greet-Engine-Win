@@ -11,12 +11,12 @@ namespace Greet {
 	private:
 		static GameState* m_gamestate;
 	public:
-		static void set(GameState* gamestate);
-		static void render();
-		static void update(float timeElapsed);
-		static GameState* get() { return m_gamestate; }
-		static void goBack();
-		static void destroy();
+		static void Set(GameState* gamestate);
+		static void Render();
+		static void Update(float timeElapsed);
+		static GameState* Get() { return m_gamestate; }
+		static void GoBack();
+		static void Destroy();
 	private:
 		GameStateManager(){}
 	};

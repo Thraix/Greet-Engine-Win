@@ -17,19 +17,19 @@ namespace Greet {
 		Material(Shader* shader, Texture* texture);
 		virtual ~Material();
 
-		void bind() const;
-		void unbind() const;
-		void setShader(Shader* shader);
-		Material* setReflectivity(float reflectivity);
-		Material* setShineDamper(float shineDamper);
+		void Bind() const;
+		void Unbind() const;
+		void SetShader(Shader* shader);
+		Material* SetReflectivity(float reflectivity);
+		Material* SetShineDamper(float shineDamper);
 
-		inline float getReflectivity() const { return m_reflectivity; }
-		inline float getShineDamper() const { return m_shineDamper; }
-		inline const Shader& getShader() const { return *m_shader; }
-		inline const Texture& getTexture() const { return *m_texture; }
-		inline uint getTextureId() const { return m_texture == NULL ? 0 : m_texture->getTexId(); }
+		inline float GetReflectivity() const { return m_reflectivity; }
+		inline float GetShineDamper() const { return m_shineDamper; }
+		inline const Shader& GetShader() const { return *m_shader; }
+		inline const Texture& GetTexture() const { return *m_texture; }
+		inline uint GetTextureId() const { return m_texture == NULL ? 0 : m_texture->GetTexId(); }
 	private:
-		void updateTexture();
+		void UpdateTexture();
 	};
 
 }

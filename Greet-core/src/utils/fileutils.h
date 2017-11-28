@@ -18,10 +18,10 @@ namespace Greet { namespace FileUtils {
 		char cCurrentPath[FILENAME_MAX];
 
 		if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath))){
-			Log::error("Cannot print working directory");
+			Log::Error("Cannot print working directory");
 			return;
 		}
-		Log::info(cCurrentPath);
+		Log::Info(cCurrentPath);
 	}
 
 	inline std::string read_file(const char* filepath)
@@ -29,7 +29,7 @@ namespace Greet { namespace FileUtils {
 		FILE *file = fopen(filepath, "rt");
 		if (!file)
 		{
-			Log::error("File could not be read: ", filepath);
+			Log::Error("File could not be read: ", filepath);
 			return "";
 		}
 		fseek(file, 0, SEEK_END);
@@ -44,7 +44,7 @@ namespace Greet { namespace FileUtils {
 		return result;
 	}
 
-	inline void write_file(const char* filepath, std::string write)
+	inline void write_file(const char* filepath, const std::string& write)
 	{
 		FILE *file = fopen(filepath,"wt");
 		fseek(file, 0, SEEK_END);

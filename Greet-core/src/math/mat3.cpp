@@ -1,12 +1,12 @@
 #include "Mat3.h"
 namespace Greet{
-	mat3::mat3()
+	Mat3::Mat3()
 	{
 		for (int i = 0; i < 9; i++)
 			elements[i] = 0.0f;
 	}
 
-	mat3::mat3(float diagonal)
+	Mat3::Mat3(float diagonal)
 	{
 		for (int i = 0; i < 9; i++)
 			elements[i] = 0.0f;
@@ -15,20 +15,20 @@ namespace Greet{
 		elements[8] = diagonal;
 	}
 
-	mat3::mat3(float* elem)
+	Mat3::Mat3(float* elem)
 	{
 		for (int i = 0;i < 9;i++)
 			elements[i] = elem[i];
 	}
 
-	mat3 mat3::identity()
+	Mat3 Mat3::Identity()
 	{
-		return mat3(1.0f);
+		return Mat3(1.0f);
 	}
 
-	mat3 mat3::orthographic(float left, float right, float top, float bottom)
+	Mat3 Mat3::Orthographic(float left, float right, float top, float bottom)
 	{
-		mat3 result(1.0f);
+		Mat3 result(1.0f);
 
 		result.elements[0] = 2.0f / (right - left);
 		result.elements[4] = 2.0f / (top - bottom);
@@ -38,9 +38,9 @@ namespace Greet{
 		return result;
 	}
 
-	mat3 mat3::quad(float x, float y, float width, float height)
+	Mat3 Mat3::Quad(float x, float y, float width, float height)
 	{
-		mat3 result(1.0f);
+		Mat3 result(1.0f);
 
 		result.elements[6] = x;
 		result.elements[7] = y;
@@ -50,9 +50,9 @@ namespace Greet{
 		return result;
 	}
 
-	mat3 mat3::quad(const vec2& pos, const vec2& size)
+	Mat3 Mat3::Quad(const Vec2& pos, const Vec2& size)
 	{
-		mat3 result(1.0f);
+		Mat3 result(1.0f);
 
 		result.elements[6] = pos.x;
 		result.elements[7] = pos.y;
@@ -62,9 +62,9 @@ namespace Greet{
 		return result;
 	}
 
-	mat3 mat3::translate(const vec2& translation)
+	Mat3 Mat3::Translate(const Vec2& translation)
 	{
-		mat3 result(1.0f);
+		Mat3 result(1.0f);
 
 		result.elements[6] = translation.x;
 		result.elements[7] = translation.y;
@@ -72,9 +72,9 @@ namespace Greet{
 		return result;
 	}
 
-	mat3 mat3::translate(const float& x, const float& y)
+	Mat3 Mat3::Translate(const float& x, const float& y)
 	{
-		mat3 result(1.0f);
+		Mat3 result(1.0f);
 
 		result.elements[6] = x;
 		result.elements[7] = y;
@@ -82,9 +82,9 @@ namespace Greet{
 		return result;
 	}
 
-	mat3 mat3::scale(const vec2& scaling)
+	Mat3 Mat3::Scale(const Vec2& scaling)
 	{
-		mat3 result(1.0f);
+		Mat3 result(1.0f);
 
 		result.elements[0] = scaling.x;
 		result.elements[4] = scaling.y;
@@ -92,9 +92,9 @@ namespace Greet{
 		return result;
 	}
 
-	mat3 mat3::scale(const float& x, const float& y)
+	Mat3 Mat3::Scale(const float& x, const float& y)
 	{
-		mat3 result(1.0f);
+		Mat3 result(1.0f);
 
 		result.elements[0] = x;
 		result.elements[4] = y;
@@ -102,10 +102,10 @@ namespace Greet{
 		return result;
 	}
 
-	mat3 mat3::rotate(float deg)
+	Mat3 Mat3::Rotate(float deg)
 	{
-		mat3 result(1.0f);
-		float r = Math::toRadians(deg);
+		Mat3 result(1.0f);
+		float r = Math::ToRadians(deg);
 		float s = sin(r);
 		float c = cos(r);
 
@@ -117,9 +117,9 @@ namespace Greet{
 		return result;
 	}
 
-	mat3 mat3::rotateR(float rad)
+	Mat3 Mat3::RotateR(float rad)
 	{
-		mat3 result(1.0f);
+		Mat3 result(1.0f);
 		float s = sin(rad);
 		float c = cos(rad);
 
@@ -131,9 +131,9 @@ namespace Greet{
 		return result;
 	}
 
-	mat3 mat3::shear(const vec2& shearing)
+	Mat3 Mat3::Shear(const Vec2& shearing)
 	{
-		mat3 result(1.0f);
+		Mat3 result(1.0f);
 
 		result.elements[3] = shearing.x;
 		result.elements[1] = shearing.y;
@@ -141,9 +141,9 @@ namespace Greet{
 		return result;
 	}
 
-	mat3 mat3::shear(const float& x, const float& y)
+	Mat3 Mat3::Shear(const float& x, const float& y)
 	{
-		mat3 result(1.0f);
+		Mat3 result(1.0f);
 
 		result.elements[3] = x;
 		result.elements[1] = y;
@@ -151,7 +151,7 @@ namespace Greet{
 		return result;
 	}
 
-	mat3& mat3::inverse()
+	Mat3& Mat3::Inverse()
 	{
 		float temp[9],det;
 
@@ -180,12 +180,12 @@ namespace Greet{
 		return *this;
 	}
 
-	mat3 mat3::cpy()
+	Mat3 Mat3::Cpy()
 	{
-		return mat3(elements);
+		return Mat3(elements);
 	}
 
-	mat3& mat3::multiply(const mat3 &other)
+	Mat3& Mat3::Multiply(const Mat3 &other)
 	{
 		float data[9];
 		for (int row = 0; row < 3; row++)
@@ -205,37 +205,37 @@ namespace Greet{
 		return *this;
 	}
 
-	vec2 mat3::multiply(const vec2 &other) const
+	Vec2 Mat3::Multiply(const Vec2 &other) const
 	{
 		float x = columns[0].x * other.x + columns[1].x * other.y + columns[2].x;
 		float y = columns[0].y * other.x + columns[1].y * other.y + columns[2].y;
-		return vec2(x, y);
+		return Vec2(x, y);
 	}
 
-	vec3 mat3::multiply(const vec3 &other) const
+	Vec3 Mat3::Multiply(const Vec3 &other) const
 	{
 		float x = columns[0].x * other.x + columns[1].x * other.y + columns[2].x * other.z;
 		float y = columns[0].y * other.x + columns[1].y * other.y + columns[2].y * other.z;
 		float z = columns[0].z * other.x + columns[1].z * other.y + columns[2].z * other.z;
-		return vec3(x,y,z);
+		return Vec3(x,y,z);
 	}
 
-	mat3 operator*(mat3 first, const mat3 &second)
+	Mat3 operator*(Mat3 first, const Mat3 &second)
 	{
-		return first.multiply(second);
+		return first.Multiply(second);
 	}
 
-	mat3& mat3::operator*=(const mat3 &other){
-		return multiply(other);
+	Mat3& Mat3::operator*=(const Mat3 &other){
+		return Multiply(other);
 	}
 
-	vec2 operator*(const mat3 &first, const vec2 &second)
+	Vec2 operator*(const Mat3 &first, const Vec2 &second)
 	{
-		return first.multiply(second);
+		return first.Multiply(second);
 	}
 
-	vec3 operator*(const mat3 &first, const vec3 &second)
+	Vec3 operator*(const Mat3 &first, const Vec3 &second)
 	{
-		return first.multiply(second);
+		return first.Multiply(second);
 	}
 }

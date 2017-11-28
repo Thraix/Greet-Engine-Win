@@ -18,12 +18,12 @@ namespace Greet {
 		Texture2D(BYTE* bits, uint width, uint height, uint bpp, const std::string& name);
 		Texture2D(uint texID, uint width, uint height, const std::string& name);
 		virtual ~Texture2D();
-		inline uint getWidth() const { return m_width; }
-		inline uint getHeight() const { return m_height; }
+		inline uint GetWidth() const { return m_width; }
+		inline uint GetHeight() const { return m_height; }
 	protected:
-		void loadTexture(const std::string& filename);
-		void genTexture(uint width, uint height, uint bpp);
-		void genTexture(BYTE* bits, uint bpp);
+		void LoadTexture(const std::string& filename);
+		void GenTexture(uint width, uint height, uint bpp);
+		void GenTexture(BYTE* bits, uint bpp);
 
 	};
 }

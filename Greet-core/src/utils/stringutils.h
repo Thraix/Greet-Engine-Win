@@ -8,7 +8,7 @@
 namespace Greet { namespace StringUtils{
 
 	template <typename T>
-	inline std::string toString(T t)
+	inline std::string to_string(T t)
 	{
 		std::stringstream ss;
 		ss << t;

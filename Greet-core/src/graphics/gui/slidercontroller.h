@@ -3,6 +3,7 @@
 #include <graphics/gui/GUI.h>
 #include <drivers/RectDriver.h>
 #include <drivers/DriverDispatcher.h>
+#include <drivers/DriverAdapter.h>
 #include <graphics/layers/GUILayer.h>
 
 namespace Greet {
@@ -13,12 +14,12 @@ namespace Greet {
 		bool m_wasInside;
 
 	public:
-		SliderController(const vec2& position, const vec2& size);
+		SliderController(const Vec2& position, const Vec2& size);
 
-		virtual bool isInside(const vec2& position) const override;
-		virtual void submit(Renderer2D* renderer) const override;
+		virtual bool IsInside(const Vec2& position) const override;
+		virtual void Submit(Renderer2D* renderer) const override;
 
-		bool onMoved(const MouseMovedEvent& event, vec2 relativeMousePos) override;
+		bool OnMoved(const MouseMovedEvent& event, Vec2 relativeMousePos) override;
 	};
 
 };

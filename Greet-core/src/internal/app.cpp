@@ -15,29 +15,29 @@ namespace Greet {
 	App::~App()
 	{
 		delete m_timer;
-		Window::destroyWindow();
+		Window::DestroyWindow();
 	}
 
-	void App::createWindow(std::string title, int width, int height)
+	void App::CreateWindow(std::string title, int width, int height)
 	{
-		Window::createWindow(title, width, height);
-		Window::addResizeCallback(this);
-		Window::addJoystickCallback(this);
-		Window::addWindowFocusCallback(this);
+		Window::CreateWindow(title, width, height);
+		Window::AddResizeCallback(this);
+		Window::AddJoystickCallback(this);
+		Window::AddWindowFocusCallback(this);
 		m_initialized = true;
 	}
 
-	void App::start()
+	void App::Start()
 	{
-		init();
-		run();
+		Init();
+		Run();
 	}
 
-	void App::run()
+	void App::Run()
 	{
 		if (!m_initialized)
 		{
-			Log::error("Window is not initalized, set it in App::createWindow");
+			Log::Error("Window is not initalized, set it in App::createWindow");
 			return;
 		}
 		m_timer = new Timer();
@@ -49,24 +49,24 @@ namespace Greet {
 		uint frames = 0;
 		uint updates = 0;
 
-		while (!Window::closed())
+		while (!Window::Closed())
 		{
-			double elapsed = m_timer->elapsed();
+			double elapsed = m_timer->Elapsed();
 			if (elapsed - updateTimer >= updateTick)
 			{
-				DriverDispatcher::update(updateTick);
-				update(elapsed - updateTimer);
-				Window::update();
-				RenderEngine::update(elapsed - updateTimer);
+				DriverDispatcher::Update(updateTick);
+				Update(elapsed - updateTimer);
+				Window::Update();
+				RenderEngine::Update(elapsed - updateTimer);
 				updates++;
 				updateTimer = elapsed;
 			}
 			if (elapsed - renderTimer >= frameCap)
 			{
-				Window::clear();
-				render();
-				RenderEngine::render();
-				Window::render();
+				Window::Clear();
+				Render();
+				RenderEngine::Render();
+				Window::Render();
 				frames++;
 				renderTimer = elapsed;
 			}
@@ -75,13 +75,13 @@ namespace Greet {
 			{
 				m_fps = frames;
 				m_ups = updates;
-				Window::tick();
-				tick();
+				Window::Tick();
+				Tick();
 				frames = 0;
 				updates = 0;
 				timer += 1.0;
 			}
-			elapsed = m_timer->elapsed();
+			elapsed = m_timer->Elapsed();
 			double timeToNext = fmin(frameCap - (elapsed - renderTimer),updateTick - (elapsed-updateTimer))*1000*0.5;
 			if (timeToNext >= 1)
 				std::this_thread::sleep_for(std::chrono::milliseconds((long long)timeToNext));

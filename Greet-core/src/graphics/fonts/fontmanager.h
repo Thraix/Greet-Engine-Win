@@ -13,9 +13,9 @@ namespace Greet {
 		static std::vector<FontContainer*> m_fonts;
 	public:
 
-		static void add(FontContainer* font);
-		static Font* get(const std::string& fontname, uint size);
-		static void destroy();
+		static void Add(FontContainer* font);
+		static Font* Get(const std::string& fontname, uint size);
+		static void Destroy();
 	private:
 		FontManager(){}
 	};

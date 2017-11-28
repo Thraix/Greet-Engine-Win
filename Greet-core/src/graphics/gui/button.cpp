@@ -2,51 +2,51 @@
 
 namespace Greet {
 
-	Button::Button(const vec2& position, const vec2 size, const std::string& text)
-		: GUI(position,size), m_text(text), m_font(FontManager::get("anonymous",size.y * 0.75))
+	Button::Button(const Vec2& position, const Vec2 size, const std::string& text)
+		: GUI(position,size), m_text(text), m_font(FontManager::Get("anonymous",size.y * 0.75))
 	{
 		m_renderBackground = true;
-		m_backgroundColor = ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(120 / 360.0f, 9));
+		m_backgroundColor = ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 9));
 		m_buttonBigger = false;
 	}
 
-	void Button::render(Renderer2D* renderer) const
+	void Button::Render(Renderer2D* renderer) const
 	{
-		GUI::render(renderer);
-		renderer->submitString(m_text, m_size/2.0f + vec2(-m_font->getWidthOfText(m_text)/2, m_font->getSize()*0.25f),m_font, ColorUtils::vec3ToColorHex(ColorUtils::getMaterialColor(120 / 360.0f, 5)));
+		GUI::Render(renderer);
+		renderer->SubmitString(m_text, m_size/2.0f + Vec2(-m_font->GetWidthOfText(m_text)/2, m_font->GetSize()*0.25f),m_font, ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 5)));
 	}
 
-	void Button::onMouseEnter()
+	void Button::OnMouseEnter()
 	{
 		if (!m_buttonBigger)
 		{
-			DriverDispatcher::addDriver(new RectDriver(m_position.x, m_position.y, m_size.x, m_size.y, -BUTTON_RESIZE_SIZE, -BUTTON_RESIZE_SIZE, BUTTON_RESIZE_SIZE * 2, BUTTON_RESIZE_SIZE * 2, BUTTON_RESIZE_TIME, true, new DriverAdapter()));
+			DriverDispatcher::AddDriver(new RectDriver(m_position.x, m_position.y, m_size.x, m_size.y, -BUTTON_RESIZE_SIZE, -BUTTON_RESIZE_SIZE, BUTTON_RESIZE_SIZE * 2, BUTTON_RESIZE_SIZE * 2, BUTTON_RESIZE_TIME, true, new DriverAdapter()));
 			m_buttonBigger = true;
 		}
 	}
 
-	void Button::onMouseExit()
+	void Button::OnMouseExit()
 	{
 		if (m_buttonBigger)
 		{
-			DriverDispatcher::addDriver(new RectDriver(m_position.x, m_position.y, m_size.x, m_size.y, BUTTON_RESIZE_SIZE, BUTTON_RESIZE_SIZE, -BUTTON_RESIZE_SIZE * 2, -BUTTON_RESIZE_SIZE * 2, BUTTON_RESIZE_TIME, true, new DriverAdapter()));
+			DriverDispatcher::AddDriver(new RectDriver(m_position.x, m_position.y, m_size.x, m_size.y, BUTTON_RESIZE_SIZE, BUTTON_RESIZE_SIZE, -BUTTON_RESIZE_SIZE * 2, -BUTTON_RESIZE_SIZE * 2, BUTTON_RESIZE_TIME, true, new DriverAdapter()));
 			m_buttonBigger = false;
 		}
 	}
 
-	bool Button::onMoved(const MouseMovedEvent& event, vec2 relativeMousePos)
+	bool Button::OnMoved(const MouseMovedEvent& event, Vec2 relativeMousePos)
 	{
-		GUI::onMoved(event, relativeMousePos);
+		GUI::OnMoved(event, relativeMousePos);
 		return false;
 	}
 
-	GUI* Button::onPressed(const MousePressedEvent& event, vec2 relativeMousePos)
+	GUI* Button::OnPressed(const MousePressedEvent& event, Vec2 relativeMousePos)
 	{
-		return GUI::onPressed(event, relativeMousePos);
+		return GUI::OnPressed(event, relativeMousePos);
 	}
-	GUI* Button::onReleased(const MouseReleasedEvent& event, vec2 relativeMousePos)
+	GUI* Button::OnReleased(const MouseReleasedEvent& event, Vec2 relativeMousePos)
 	{
-		GUI::onReleased(event, relativeMousePos);
+		GUI::OnReleased(event, relativeMousePos);
 		return NULL;
 	}
 }

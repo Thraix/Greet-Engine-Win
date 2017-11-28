@@ -14,50 +14,50 @@
 namespace Greet { namespace ObjUtils {
 
 
-	inline Mesh* errorModel()
+	inline Mesh* ErrorModel()
 	{
 		return NULL;// TODO return cube
 	}
 
-	inline vec3 loadVector3(std::vector<std::string> dataLine)
+	inline Vec3 LoadVector3(std::vector<std::string> dataLine)
 	{
-		return vec3(atof(dataLine[1].c_str()), atof(dataLine[2].c_str()), atof(dataLine[3].c_str()));
+		return Vec3(atof(dataLine[1].c_str()), atof(dataLine[2].c_str()), atof(dataLine[3].c_str()));
 	}
 
-	inline vec2 loadVector2(std::vector<std::string> dataLine)
+	inline Vec2 LoadVector2(std::vector<std::string> dataLine)
 	{
-		return vec2(atof(dataLine[1].c_str()), atof(dataLine[2].c_str()));
+		return Vec2(atof(dataLine[1].c_str()), atof(dataLine[2].c_str()));
 	}
 
-	inline void processVertex(const std::vector<std::string>& vertexData, std::vector<uint>& indices, std::vector<uint>& indicesArray, const std::vector<vec2>& texCoords, const std::vector<vec3>& normals, vec2* texCoordsArray, vec3* normalsArray)
+	inline void ProcessVertex(const std::vector<std::string>& vertexData, std::vector<uint>& indices, std::vector<uint>& indicesArray, const std::vector<Vec2>& texCoords, const std::vector<Vec3>& normals, Vec2* texCoordsArray, Vec3* normalsArray)
 	{
 		uint currentVertex = atoi(vertexData[0].c_str()) - 1;
 
 		indices.push_back(currentVertex);
 		indicesArray.push_back(currentVertex);
 		uint texPos = atoi(vertexData[1].c_str()) - 1;
-		vec2 currentTex = texCoords[texPos];
+		Vec2 currentTex = texCoords[texPos];
 		indicesArray.push_back(texPos);
 		texCoordsArray[currentVertex] = currentTex;
 		uint normalPos = atoi(vertexData[2].c_str()) - 1;
-		vec3 currentNormal = normals[normalPos];
+		Vec3 currentNormal = normals[normalPos];
 		indicesArray.push_back(normalPos);
 		normalsArray[currentVertex] = currentNormal;
 	}
 
-	inline Mesh* convertToGobj(const std::string& filename)
+	inline Mesh* ConvertToGobj(const std::string& filename)
 	{
 		std::vector<std::string> dataLine;
 
-		std::vector<vec3> vertices;
-		std::vector<vec2> texCoords;
-		std::vector<vec3> normals;
+		std::vector<Vec3> vertices;
+		std::vector<Vec2> texCoords;
+		std::vector<Vec3> normals;
 		std::vector<uint> indices;
 		std::vector<uint> indicesArray2;
 		bool atIndex = false;
 
-		vec2* texCoordsArray = NULL;
-		vec3* normalsArray = NULL;
+		Vec2* texCoordsArray = NULL;
+		Vec3* normalsArray = NULL;
 
 		std::ifstream input(filename);
 		for (std::string line; getline(input, line); )
@@ -65,42 +65,42 @@ namespace Greet { namespace ObjUtils {
 			dataLine = StringUtils::split_string(line, " ");
 			if (dataLine[0].compare("v") == 0)
 			{
-				vec3 vector = loadVector3(dataLine);
+				Vec3 vector = LoadVector3(dataLine);
 				vertices.push_back(vector);
 			}
 			else if (dataLine[0].compare("vt") == 0)
 			{
-				vec2 texCoord = loadVector2(dataLine);
+				Vec2 texCoord = LoadVector2(dataLine);
 				texCoords.push_back(texCoord);
 			}
 			else if (dataLine[0].compare("vn") == 0)
 			{
-				vec3 normal = loadVector3(dataLine);
+				Vec3 normal = LoadVector3(dataLine);
 				normals.push_back(normal);
 			}
 			else if (dataLine[0].compare("f") == 0)
 			{
 				if (!atIndex)
 				{
-					texCoordsArray = new vec2[vertices.size()];
-					normalsArray = new vec3[vertices.size()];
+					texCoordsArray = new Vec2[vertices.size()];
+					normalsArray = new Vec3[vertices.size()];
 					atIndex = true;
 				}
 				std::vector<std::string> vertex1 = StringUtils::split_string(dataLine[1], "/");
 				std::vector<std::string> vertex2 = StringUtils::split_string(dataLine[2], "/");
 				std::vector<std::string> vertex3 = StringUtils::split_string(dataLine[3], "/");
 
-				processVertex(vertex1, indices, indicesArray2, texCoords, normals, texCoordsArray, normalsArray);
-				processVertex(vertex2, indices, indicesArray2, texCoords, normals, texCoordsArray, normalsArray);
-				processVertex(vertex3, indices, indicesArray2, texCoords, normals, texCoordsArray, normalsArray);
+				ProcessVertex(vertex1, indices, indicesArray2, texCoords, normals, texCoordsArray, normalsArray);
+				ProcessVertex(vertex2, indices, indicesArray2, texCoords, normals, texCoordsArray, normalsArray);
+				ProcessVertex(vertex3, indices, indicesArray2, texCoords, normals, texCoordsArray, normalsArray);
 			}
 		}
 
 		input.close();
-		vec3* verticesArray = new vec3[vertices.size()];
+		Vec3* verticesArray = new Vec3[vertices.size()];
 		uint* indicesArray = new uint[indices.size()];
 		int i = 0;
-		for (vec3 vertex : vertices)
+		for (Vec3 vertex : vertices)
 		{
 			verticesArray[i++] = vertex;
 
@@ -113,8 +113,8 @@ namespace Greet { namespace ObjUtils {
 		FILE *file = fopen((filename + ".gobj").c_str(), "wb+");
 		if (!file)
 		{
-			Log::error("Obj could not be read: ", filename);
-			return errorModel(); // TODO return cube model
+			Log::Error("Obj could not be read: ", filename);
+			return ErrorModel(); // TODO return cube model
 		}
 
 		fwrite("GOBJ",4,1,file);
@@ -127,7 +127,7 @@ namespace Greet { namespace ObjUtils {
 		fwrite(&n, sizeof(uint), 1, file);
 		fwrite(&in, sizeof(uint), 1, file);
 		uint j = 0;
-		for (vec3 vertex : vertices)
+		for (Vec3 vertex : vertices)
 		{
 			uint f = ftell(file);
 			fwrite(&vertex.x, sizeof(float), 1, file);
@@ -136,13 +136,13 @@ namespace Greet { namespace ObjUtils {
 			j++;
 		}
 
-		for (vec2 texCoord : texCoords)
+		for (Vec2 texCoord : texCoords)
 		{
 			fwrite(&texCoord.x, sizeof(float), 1, file);
 			fwrite(&texCoord.y, sizeof(float), 1, file);
 		}
 
-		for (vec3 normal : normals)
+		for (Vec3 normal : normals)
 		{
 			fwrite(&normal.x, sizeof(float), 1, file);
 			fwrite(&normal.y, sizeof(float), 1, file);
@@ -155,34 +155,34 @@ namespace Greet { namespace ObjUtils {
 		fwrite("GOBJ", 1, 4, file);
 		fclose(file);
 		Mesh* mesh = new Mesh(verticesArray, vertices.size(), indicesArray, indices.size());
-		mesh->addAttribute(MESH_NORMALS_LOCATION, normalsArray);
-		mesh->addAttribute(MESH_TEXCOORDS_LOCATION, texCoordsArray);
+		mesh->AddAttribute(MESH_NORMALS_LOCATION, normalsArray);
+		mesh->AddAttribute(MESH_TEXCOORDS_LOCATION, texCoordsArray);
 		return mesh;
 	}
 
-	inline void readVec2s(FILE* file, uint& filePointer, vec2* vec2s, uint amount)
+	inline void ReadVec2s(FILE* file, uint& filePointer, Vec2* Vec2s, uint amount)
 	{
-		vec2* data = new vec2[amount + 1];
+		Vec2* data = new Vec2[amount + 1];
 		fread((float*)data, sizeof(float), amount * 2, file);
 		for (uint i = 0;i < amount;i++)
 		{
-			vec2s[i] = data[i];
+			Vec2s[i] = data[i];
 		}
 		delete[] data;
 	}
 
-	inline void readVec3s(FILE* file, uint& filePointer, vec3* vec3s, uint amount)
+	inline void ReadVec3s(FILE* file, uint& filePointer, Vec3* Vec3s, uint amount)
 	{
-		vec3* data = new vec3[amount + 1];
+		Vec3* data = new Vec3[amount + 1];
 		fread((float*)data, sizeof(float), amount * 3, file);
 		for (uint i = 0;i < amount;i++)
 		{
-			vec3s[i] = data[i];
+			Vec3s[i] = data[i];
 		}
 		delete[] data;
 	}
 
-	inline void readUints(FILE* file, uint& filePointer, uint* uints, uint count, vec3* normalsArray, vec2* texCoordsArray, vec3* normals, vec2* texCoords)
+	inline void ReadUints(FILE* file, uint& filePointer, uint* uints, uint count, Vec3* normalsArray, Vec2* texCoordsArray, Vec3* normals, Vec2* texCoords)
 	{
 		uint* data = new uint[count*3+1];
 		fread(data, sizeof(uint), count * 3, file);
@@ -200,15 +200,15 @@ namespace Greet { namespace ObjUtils {
 		delete[] data;
 	}
 
-	inline Mesh* loadObj(const std::string& filename)
+	inline Mesh* LoadObj(const std::string& filename)
 	{
 
 		FILE *file = fopen(filename.c_str(), "rb");
 		if (!file)
 		{
-			Log::error("Obj could not be read: ", filename);
-			ErrorHandle::setErrorCode(GREET_ERROR_GOBJ_READ);
-			return errorModel();
+			Log::Error("Obj could not be read: ", filename);
+			ErrorHandle::SetErrorCode(GREET_ERROR_GOBJ_READ);
+			return ErrorModel();
 		}
 		uint pointer = 0;
 
@@ -219,18 +219,18 @@ namespace Greet { namespace ObjUtils {
 		if (length < sizeof(char) * 4 + sizeof(uint) * 4)
 		{
 			fclose(file);
-			Log::error("File format not supported, if you are using obj you need to compile it to gobj: ", filename);
-			ErrorHandle::setErrorCode(GREET_ERROR_GOBJ_FORMAT);
-			return errorModel();
+			Log::Error("File format not supported, if you are using obj you need to compile it to gobj: ", filename);
+			ErrorHandle::SetErrorCode(GREET_ERROR_GOBJ_FORMAT);
+			return ErrorModel();
 		}
 		data[4] = '\0';
 		fread(data, sizeof(char), 4, file);
 		if (std::string(data).compare("GOBJ") != 0)
 		{
 			fclose(file);
-			Log::error("File format not supported, if you are using obj you need to compile it to gobj: ",filename);
-			ErrorHandle::setErrorCode(GREET_ERROR_GOBJ_FORMAT);
-			return errorModel();
+			Log::Error("File format not supported, if you are using obj you need to compile it to gobj: ",filename);
+			ErrorHandle::SetErrorCode(GREET_ERROR_GOBJ_FORMAT);
+			return ErrorModel();
 		}
 		delete[] data;
 
@@ -244,27 +244,27 @@ namespace Greet { namespace ObjUtils {
 		if (length < (vertexCount * 3 + texCoordCount * 2 + normalCount * 3) * sizeof(float) + indexCount * sizeof(uint))
 		{
 			fclose(file);
-			Log::error("GOBJ file could not be read: ",filename);
-			ErrorHandle::setErrorCode(GREET_ERROR_GOBJ_READ);
-			return errorModel();
+			Log::Error("GOBJ file could not be read: ",filename);
+			ErrorHandle::SetErrorCode(GREET_ERROR_GOBJ_READ);
+			return ErrorModel();
 		}
-		vec3* vertices = new vec3[vertexCount];
-		vec2* texCoords = new vec2[texCoordCount];
-		vec3* normals = new vec3[normalCount];
+		Vec3* vertices = new Vec3[vertexCount];
+		Vec2* texCoords = new Vec2[texCoordCount];
+		Vec3* normals = new Vec3[normalCount];
 		uint* indices = new uint[indexCount];
 
-		vec2* texCoordsArray = new vec2[vertexCount];
-		vec3* normalsArray = new vec3[vertexCount];
+		Vec2* texCoordsArray = new Vec2[vertexCount];
+		Vec3* normalsArray = new Vec3[vertexCount];
 
-		readVec3s(file, pointer, vertices, vertexCount);
-		readVec2s(file, pointer, texCoords, texCoordCount);
-		readVec3s(file, pointer, normals, normalCount);
-		readUints(file, pointer, indices, indexCount, normalsArray, texCoordsArray, normals, texCoords);
+		ReadVec3s(file, pointer, vertices, vertexCount);
+		ReadVec2s(file, pointer, texCoords, texCoordCount);
+		ReadVec3s(file, pointer, normals, normalCount);
+		ReadUints(file, pointer, indices, indexCount, normalsArray, texCoordsArray, normals, texCoords);
 		ulong pos = ftell(file);
 		fclose(file);
 		Mesh* mesh = new Mesh(vertices, vertexCount, indices, indexCount);
-		mesh->addAttribute(MESH_NORMALS_LOCATION, normalsArray); 
-		mesh->addAttribute(MESH_TEXCOORDS_LOCATION, texCoordsArray);
+		mesh->AddAttribute(MESH_NORMALS_LOCATION, normalsArray); 
+		mesh->AddAttribute(MESH_TEXCOORDS_LOCATION, texCoordsArray);
 		return mesh;
 	}
 

@@ -11,7 +11,7 @@ namespace Greet {
 	public:
 
 		LinearDriver(float& value, float change, float time, bool relativeChange, DriverListener* listener);
-		void update() override;
+		void Update() override;
 	};
 
 }

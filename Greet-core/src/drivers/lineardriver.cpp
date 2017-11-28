@@ -13,7 +13,7 @@ namespace Greet {
 			m_speed = (change - m_start) / m_time;
 	}
 
-	void LinearDriver::update()
+	void LinearDriver::Update()
 	{	
 		m_value += m_elapsed * m_speed;
 	}

@@ -15,11 +15,11 @@ namespace Greet {
 	friend class App;
 
 	public:
-		static void addDriver(Driver* driver);
+		static void AddDriver(Driver* driver);
 
 	private:
 		static std::vector<Driver*> m_drivers;
-		static void update(float timeElapsed);
+		static void Update(float timeElapsed);
 
 		
 	};

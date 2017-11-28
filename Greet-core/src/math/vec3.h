@@ -9,53 +9,55 @@
 
 namespace Greet{
 	
-	struct vec3
+	struct Vec3
 	{
 		float x, y, z;
-		vec3() = default;
-		vec3(float x, float y, float z);
+		Vec3() = default;
+		Vec3(float x, float y, float z);
 
-		float length() const;
-		float dot(const vec3& vec) const;
-		vec3 cross(const vec3& vec) const;
-		vec3& normalize();
-		vec3& rotate(const float& angle, const vec3& axis);
-		vec3& add(const vec3& other);
-		vec3& subtract(const vec3& other);
-		vec3& multiply(const vec3& other);
-		vec3& divide(const vec3& other);
+		float Length() const;
+		float Dot(const Vec3& vec) const;
+		Vec3 Cross(const Vec3& vec) const;
 
-		vec3& add(const float other);
-		vec3& subtract(const float other);
-		vec3& multiply(const float other);
-		vec3& divide(const float other);
+		// All These modifies the current vec3
+		Vec3& Normalize();
+		Vec3& Rotate(const float& angle, const Vec3& axis);
+		Vec3& Add(const Vec3& other);
+		Vec3& Subtract(const Vec3& other);
+		Vec3& Multiply(const Vec3& other);
+		Vec3& Divide(const Vec3& other);
 
-		bool compare(const vec3& other);
+		Vec3& Add(const float other);
+		Vec3& Subtract(const float other);
+		Vec3& Multiply(const float other);
+		Vec3& Divide(const float other);
 
-		friend vec3 operator+(const vec3& first, const vec3 &second);
-		friend vec3 operator-(const vec3& first, const vec3 &second);
-		friend vec3 operator*(const vec3& first, const vec3 &second);
-		friend vec3 operator/(const vec3& first, const vec3 &second);
+		bool Compare(const Vec3& other);
 
-		friend vec3 operator+(const vec3& first, const float c);
-		friend vec3 operator-(const vec3& first, const float c);
-		friend vec3 operator*(const vec3& first, const float c);
-		friend vec3 operator/(const vec3& first, const float c);
+		friend Vec3 operator+(const Vec3& first, const Vec3 &second);
+		friend Vec3 operator-(const Vec3& first, const Vec3 &second);
+		friend Vec3 operator*(const Vec3& first, const Vec3 &second);
+		friend Vec3 operator/(const Vec3& first, const Vec3 &second);
 
-		vec3& operator+=(const vec3 &other);
-		vec3& operator-=(const vec3 &other);
-		vec3& operator*=(const vec3 &other);
-		vec3& operator/=(const vec3 &other);
+		friend Vec3 operator+(const Vec3& first, const float c);
+		friend Vec3 operator-(const Vec3& first, const float c);
+		friend Vec3 operator*(const Vec3& first, const float c);
+		friend Vec3 operator/(const Vec3& first, const float c);
+
+		Vec3& operator+=(const Vec3 &other);
+		Vec3& operator-=(const Vec3 &other);
+		Vec3& operator*=(const Vec3 &other);
+		Vec3& operator/=(const Vec3 &other);
 
 
-		vec3& operator+=(const float c);
-		vec3& operator-=(const float c);
-		vec3& operator*=(const float c);
-		vec3& operator/=(const float c);
+		Vec3& operator+=(const float c);
+		Vec3& operator-=(const float c);
+		Vec3& operator*=(const float c);
+		Vec3& operator/=(const float c);
 
-		bool operator!=(const vec3 &second);
-		bool operator==(const vec3 &second);
+		bool operator!=(const Vec3 &second);
+		bool operator==(const Vec3 &second);
 
-		friend std::ostream& operator<<(std::ostream& stream, const vec3& vec);
+		friend std::ostream& operator<<(std::ostream& stream, const Vec3& vec);
 	};
 }

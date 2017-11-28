@@ -17,15 +17,15 @@ namespace Greet {
 		uint m_titleColor;
 		uint m_titleBackgroundColor;
 		bool m_holdFrame;
-		vec2 m_holdPosition;
+		Vec2 m_holdPosition;
 
 	public:
-		Frame(const vec2& position, const vec2& size, const std::string& title);
-		virtual void render(Renderer2D* renderer) const override;
-		bool onMoved(const MouseMovedEvent& event, vec2 relativeMousePos) override;
-		GUI* onPressed(const MousePressedEvent& event, vec2 relativeMousePos) override;
-		GUI* onReleased(const MouseReleasedEvent& event, vec2 relativeMousePos) override;
-		bool isInsideFrameHeader(const vec2& mouse) const;
+		Frame(const Vec2& position, const Vec2& size, const std::string& title);
+		virtual void Render(Renderer2D* renderer) const override;
+		bool OnMoved(const MouseMovedEvent& event, Vec2 relativeMousePos) override;
+		GUI* OnPressed(const MousePressedEvent& event, Vec2 relativeMousePos) override;
+		GUI* OnReleased(const MouseReleasedEvent& event, Vec2 relativeMousePos) override;
+		bool IsInsideFrameHeader(const Vec2& mouse) const;
 	};
 
 }

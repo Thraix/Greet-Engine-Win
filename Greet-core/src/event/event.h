@@ -20,7 +20,7 @@ namespace Greet {
 	protected:
 		Event(EventType type);
 	public:
-		inline const EventType& getType() const { return m_type; }
+		inline const EventType& GetType() const { return m_type; }
 
 	};
 }

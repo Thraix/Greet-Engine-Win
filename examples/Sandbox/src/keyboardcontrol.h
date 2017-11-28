@@ -9,7 +9,7 @@ namespace Greet {
 	public:
 		
 	private:
-		vec2 velocity;
+		Vec2 velocity;
 		float speed;
 		bool yPos;
 		bool yNeg;
@@ -30,15 +30,15 @@ namespace Greet {
 			xNeg = false;
 		}
 
-		vec2 getVelocity()
+		Vec2 GetVelocity()
 		{
-			velocity = vec2(0, 0);
+			velocity = Vec2(0, 0);
 			velocity.x += xPos ? speed : 0;
 			velocity.x -= xNeg ? speed : 0;
 			velocity.y += yPos ? speed : 0;
 			velocity.y -= yNeg ? speed : 0;
-			if(velocity.lengthSQ()!=0)
-				velocity = velocity.normalize()*speed;
+			if(velocity.LengthSQ()!=0)
+				velocity = velocity.Normalize()*speed;
 			return velocity;
 		}
 

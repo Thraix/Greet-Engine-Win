@@ -20,11 +20,11 @@ public:
 		* frequencyX = number of pixels in the first iteration in the x axis
 		* frequencyY = number of pixels in the first iteration in the y axis
 		*/
-		static float* genNoise(uint width, uint height, uint octave, uint frequencyX, uint frequencyY, float persistance);
+		static float* GenNoise(uint width, uint height, uint octave, uint frequencyX, uint frequencyY, float persistance);
 	private:
-		static float smooth(uint noiseX, uint noiseY, const float* noise, uint noiseWidth, uint noiseHeight);
+		static float Smooth(uint noiseX, uint noiseY, const float* noise, uint noiseWidth, uint noiseHeight);
 	public:
-		static float prng(int x, int y);
+		static float PRNG(int x, int y);
 		/*
 		   |---| d1
 	   --- v1 -------- v2
@@ -33,7 +33,7 @@ public:
 		d2 |			|
 		   v3 -------- v4
 		*/
-		static float interpolate(float v1, float v2, float v3, float v4, float d1, float d2);
+		static float Interpolate(float v1, float v2, float v3, float v4, float d1, float d2);
 		/*
 		* v1 = value of one of the nodes
 		* v2 = value of the other node
@@ -43,6 +43,6 @@ public:
 		* v1 ---x----- v2
 		*
 		*/
-		static float interpolate(float v1, float v2, float d);
+		static float Interpolate(float v1, float v2, float d);
 	};
 }

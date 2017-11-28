@@ -14,15 +14,15 @@ namespace Greet {
 		static std::map<std::string, Layer3D*> m_renderer3ds;
 
 	public:
-		static void add_layer2d(Layer* renderer, const std::string& name);
-		static void add_layer3d(Layer3D* renderer, const std::string& name);
+		static void AddLayer2d(Layer* renderer, const std::string& name);
+		static void AddLayer3d(Layer3D* renderer, const std::string& name);
 
-		static Layer* remove_layer2d(const std::string& name);
-		static Layer3D* remove_layer3d(const std::string& name);
-		static Layer* get_renderer2d(const std::string& name);
-		static Layer3D* get_renderer3d(const std::string& name);
-		static void render();
-		static void update(float timeElapsed);
+		static Layer* RemoveLayer2d(const std::string& name);
+		static Layer3D* RemoveLayer3d(const std::string& name);
+		static Layer* GetRenderer2d(const std::string& name);
+		static Layer3D* GetRenderer3d(const std::string& name);
+		static void Render();
+		static void Update(float timeElapsed);
 
 
 		

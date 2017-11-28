@@ -24,12 +24,12 @@ namespace Greet {
 		glDeleteBuffers(1,&m_bufferID);
 	}
 
-	void BatchIndexBuffer::enable() const
+	void BatchIndexBuffer::Enable() const
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_bufferID);
 	}
 
-	void BatchIndexBuffer::disable() const
+	void BatchIndexBuffer::Disable() const
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}

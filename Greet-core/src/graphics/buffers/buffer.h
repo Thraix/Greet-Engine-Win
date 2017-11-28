@@ -12,10 +12,10 @@ namespace Greet {
 	public:
 		Buffer(GLfloat* data, GLsizei count, GLuint componentCount);
 		~Buffer();
-		void enable() const;
-		void disable() const;
+		void Enable() const;
+		void Disable() const;
 
-		inline GLuint getComponentCount() const { return m_componentCount; }
+		inline GLuint GetComponentCount() const { return m_componentCount; }
 
 	};
 }

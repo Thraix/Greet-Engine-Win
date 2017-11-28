@@ -9,18 +9,18 @@ namespace Greet {
 		m_current = rand();
 	}
 
-	uint UUID::getUUID()
+	uint UUID::GetUUID()
 	{
 		return m_current++;
 	}
 
 
-	void UUID::init()
+	void UUID::Init()
 	{
 		s_instance = new UUID();
 	}
 
-	void UUID::cleanUp()
+	void UUID::CleanUp()
 	{
 		delete s_instance;
 	}

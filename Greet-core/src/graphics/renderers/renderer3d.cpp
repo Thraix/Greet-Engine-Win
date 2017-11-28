@@ -1,39 +1,39 @@
 #include "Renderer3D.h"
 
 namespace Greet{
-	void Renderer3D::render(const Mesh& mesh) const
+	void Renderer3D::Render(const Mesh& mesh) const
 	{
 		glEnable(GL_CULL_FACE);
-		glFrontFace(mesh.isClockwiseRender() ? GL_CW : GL_CCW);
-		mesh.bind();
-		mesh.render();
-		mesh.unbind();
+		glFrontFace(mesh.IsClockwiseRender() ? GL_CW : GL_CCW);
+		mesh.Bind();
+		mesh.Render();
+		mesh.Unbind();
 		glDisable(GL_CULL_FACE);
 	}
 
-	void Renderer3D::render(const MaterialModel& model) const
+	void Renderer3D::Render(const MaterialModel& model) const
 	{
-		render(model.getMesh());
+		Render(model.GetMesh());
 	}
 
-	void Renderer3D::renderSkybox() const
+	void Renderer3D::RenderSkybox() const
 	{
-		m_skybox->render(m_projectionMatrix, *m_camera);
+		m_skybox->Render(m_projectionMatrix, *m_camera);
 	}
 
-	void Renderer3D::render(const EntityModel& model) const
+	void Renderer3D::Render(const EntityModel& model) const
 	{
-		const MaterialModel& materialModel = model.getMaterialModel();
-		materialModel.getMaterial().bind();
-		materialModel.getMaterial().getShader().setUniformMat4("transformationMatrix", model.getTransformationMatrix());
-		materialModel.getMaterial().getShader().setUniformMat4("projectionMatrix", m_projectionMatrix);
-		materialModel.getMaterial().getShader().setUniformMat4("viewMatrix", m_camera->getViewMatrix());
-		render(materialModel.getMesh());
-		materialModel.getMaterial().unbind();
+		const MaterialModel& materialModel = model.GetMaterialModel();
+		materialModel.GetMaterial().Bind();
+		materialModel.GetMaterial().GetShader().SetUniformMat4("transformationMatrix", model.GetTransformationMatrix());
+		materialModel.GetMaterial().GetShader().SetUniformMat4("projectionMatrix", m_projectionMatrix);
+		materialModel.GetMaterial().GetShader().SetUniformMat4("viewMatrix", m_camera->GetViewMatrix());
+		Render(materialModel.GetMesh());
+		materialModel.GetMaterial().Unbind();
 	}
 
-	void Renderer3D::update(float timeElapsed)
+	void Renderer3D::Update(float timeElapsed)
 	{
-		m_camera->update(timeElapsed);
+		m_camera->Update(timeElapsed);
 	}
 }

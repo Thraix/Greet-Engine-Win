@@ -4,8 +4,8 @@ namespace Greet {
 
 	std::vector<Joystick> Window::joysticks;
 	bool Window::focus;
-	vec2 Window::mousePos;
-	vec2 Window::mousePosPixel;
+	Vec2 Window::mousePos;
+	Vec2 Window::mousePosPixel;
 	uint Window::width;
 	uint Window::height;
 	std::string Window::title;
@@ -20,7 +20,7 @@ namespace Greet {
 	std::vector<WindowFocusListener*> Window::windowFocus;
 	std::vector<JoystickStateListener*> Window::joystickState;
 
-	void Window::createWindow(std::string title, uint width, uint height)
+	void Window::CreateWindow(std::string title, uint width, uint height)
 	{
 		bgColor = vec4(0.0f, 0.0f, 0.0f, 0.0f);
 		focus = true;
@@ -28,7 +28,7 @@ namespace Greet {
 		Window::width = width;
 		Window::height = height;
 
-		SoundManager::init();
+		SoundManager::Init();
 		memset(mouseButtonDown,false,MAX_MOUSEBUTTONS);
 		for (int i = 0; i < MAX_JOYSTICKS; i++)
 		{
@@ -40,13 +40,13 @@ namespace Greet {
 		}
 	}
 
-	void Window::destroyWindow()
+	void Window::DestroyWindow()
 	{
-		FontManager::destroy();
-		AudioChannelManager::destroy();
-		SoundManager::destroy();
-		TextureManager::destroy();
-		UUID::cleanUp();
+		FontManager::Destroy();
+		AudioChannelManager::Destroy();
+		SoundManager::Destroy();
+		TextureManager::Destroy();
+		UUID::CleanUp();
 		glfwTerminate();
 	}
 
@@ -78,56 +78,56 @@ namespace Greet {
 		glProvokingVertex(GL_FIRST_VERTEX_CONVENTION);
 
 		// SET DEFAULT VALUES
-		FontManager::add(new FontContainer("Roboto-Black.ttf","roboto-bold"));
-		FontManager::add(new FontContainer("Roboto-thin.ttf","roboto"));
+		FontManager::Add(new FontContainer("Roboto-Black.ttf","roboto-bold"));
+		FontManager::Add(new FontContainer("Roboto-thin.ttf","roboto"));
 		uint width,height,bpp;
-		TextureManager::add(new Texture2D("frame.png","frame"));
-		UUID::init();
+		TextureManager::Add(new Texture2D("frame.png","frame"));
+		UUID::Init();
 
-		Log::info("OpenGL Version: ", glGetString(GL_VERSION));
-		Log::info("GLFW Version: ", glfwGetVersionString());
-		checkJoysticks();
+		Log::Info("OpenGL Version: ", glGetString(GL_VERSION));
+		Log::Info("GLFW Version: ", glfwGetVersionString());
+		CheckJoysticks();
 		return true;
 	}
 
-	bool Window::closed()
+	bool Window::Closed()
 	{
 		return glfwWindowShouldClose(window) == 1;
 	}
 
-	void Window::clear()
+	void Window::Clear()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
-	void Window::tick()
+	void Window::Tick()
 	{
-		checkJoysticks();
+		CheckJoysticks();
 
 	}
 
-	void Window::checkJoysticks()
+	void Window::CheckJoysticks()
 	{
-		if (joysticks[joystickCheck].checkConnect())
+		if (joysticks[joystickCheck].CheckConnect())
 		{
 			for (uint j = 0;j < joystickState.size();j++)
-				joystickState[joystickCheck]->joystickState(joystickCheck, JOYSTICK_STATE_CONNECTED);
+				joystickState[joystickCheck]->JoystickState(joystickCheck, JOYSTICK_STATE_CONNECTED);
 			joystickCheck++;
 		}
 	}
 
-	void Window::update()
+	void Window::Update()
 	{
 		if (focus){
 			for (int i = MAX_JOYSTICKS-1; i >= 0; i--)
 			{
 				if (joysticks[i].m_connected)
 				{
-					joysticks[i].update();
+					joysticks[i].Update();
 					if (joystickState.size()>0 && !joysticks[i].m_connected && joysticks[i].m_wasConnected)
 					{
 						for (uint j = 0;j < joystickState.size();j++)
-							joystickState[j]->joystickState(j, JOYSTICK_STATE_DISCONNECTED);
+							joystickState[j]->JoystickState(j, JOYSTICK_STATE_DISCONNECTED);
 						joystickCheck = i;
 					}
 				}
@@ -135,46 +135,46 @@ namespace Greet {
 		}
 	}
 
-	void Window::render()
+	void Window::Render()
 	{
-		SoundManager::update();
+		SoundManager::Update();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
 
-	void Window::setBackgroundColor(vec4 color)
+	void Window::SetBackgroundColor(vec4 color)
 	{
 		bgColor = color;
 		glClearColor(color.x, color.y, color.z, color.w);
 	}
 
-	void Window::addResizeCallback(WindowResizeListener* listener)
+	void Window::AddResizeCallback(WindowResizeListener* listener)
 	{
 		windowResize.push_back(listener);
 	}
 
-	void Window::removeResizeCallback(WindowResizeListener* listener)
+	void Window::RemoveResizeCallback(WindowResizeListener* listener)
 	{
 
 		windowResize.erase(std::remove(windowResize.begin(), windowResize.end(), listener));
 	}
 
-	void Window::addWindowFocusCallback(WindowFocusListener* listener)
+	void Window::AddWindowFocusCallback(WindowFocusListener* listener)
 	{
 		windowFocus.push_back(listener);
 	}
 
-	void Window::removeWindowFocusCallback(WindowFocusListener* listener)
+	void Window::RemoveWindowFocusCallback(WindowFocusListener* listener)
 	{
 		windowFocus.erase(std::remove(windowFocus.begin(), windowFocus.end(), listener));
 	}
 
-	void Window::addJoystickCallback(JoystickStateListener* listener)
+	void Window::AddJoystickCallback(JoystickStateListener* listener)
 	{
 		joystickState.push_back(listener);
 	}
 
-	void Window::removeJoystickCallback(JoystickStateListener* listener)
+	void Window::RemoveJoystickCallback(JoystickStateListener* listener)
 	{
 		joystickState.erase(std::remove(joystickState.begin(), joystickState.end(), listener));
 	}
@@ -185,26 +185,26 @@ namespace Greet {
 		Window::width = width;
 		Window::height = height;
 		for (uint i = 0;i < Window::windowResize.size();i++)
-			windowResize[i]->windowResize(width,height);
+			windowResize[i]->WindowResize(width,height);
 	}
 
 	void Window::key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
 	{
 		if (action == GLFW_RELEASE)
-			EventDispatcher::onKeyReleased(KeyReleasedEvent(key));
+			EventDispatcher::OnKeyReleased(KeyReleasedEvent(key));
 		else if(action == GLFW_PRESS)
-			EventDispatcher::onKeyPressed(KeyPressedEvent(key));
+			EventDispatcher::OnKeyPressed(KeyPressedEvent(key));
 		else if(action == GLFW_REPEAT)
-			EventDispatcher::onKeyPressed(KeyPressedEvent(key));
+			EventDispatcher::OnKeyPressed(KeyPressedEvent(key));
 	}
 
 	void Window::mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 	{
 		mouseButtonDown[action] = action == GLFW_PRESS;
 		if (action == GLFW_RELEASE)
-			EventDispatcher::onMouseReleased(MouseReleasedEvent(mousePosPixel.x,mousePosPixel.y,button));
+			EventDispatcher::OnMouseReleased(MouseReleasedEvent(mousePosPixel.x,mousePosPixel.y,button));
 		else if (action == GLFW_PRESS)
-			EventDispatcher::onMousePressed(MousePressedEvent(mousePosPixel.x, mousePosPixel.y, button));
+			EventDispatcher::OnMousePressed(MousePressedEvent(mousePosPixel.x, mousePosPixel.y, button));
 		isMouseButtonDown = mouseButtonDown[action];
 		if(!isMouseButtonDown)
 			for (uint i = 0;i < MAX_MOUSEBUTTONS;i++)
@@ -215,30 +215,30 @@ namespace Greet {
 
 	void Window::mouse_position_callback(GLFWwindow* window, double xpos, double ypos)
 	{
-		EventDispatcher::onMouseMoved(MouseMovedEvent(xpos, ypos, xpos - mousePosPixel.x, ypos - mousePosPixel.y, isMouseButtonDown));
-		mousePos = vec2(xpos / width, 1.0f - (ypos / height))*2.0f - 1.0f;
-		mousePosPixel = vec2(xpos, ypos);
+		EventDispatcher::OnMouseMoved(MouseMovedEvent(xpos, ypos, xpos - mousePosPixel.x, ypos - mousePosPixel.y, isMouseButtonDown));
+		mousePos = Vec2(xpos / width, 1.0f - (ypos / height))*2.0f - 1.0f;
+		mousePosPixel = Vec2(xpos, ypos);
 	}
 
 	void Window::mouse_scroll_callback(GLFWwindow* window, double scrollX, double scrollY)
 	{
-		EventDispatcher::onMouseScrolled(MouseScrollEvent(scrollY));
+		EventDispatcher::OnMouseScrolled(MouseScrollEvent(scrollY));
 	}
 
 	void Window::key_char_callback(GLFWwindow* window, uint charCode)
 	{
-		EventDispatcher::onKeyTyped(KeyTypedEvent(charCode));
+		EventDispatcher::OnKeyTyped(KeyTypedEvent(charCode));
 	}
 
 	void Window::window_focus_callback(GLFWwindow* window,int state)
 	{
 		focus = state == GL_TRUE;
 		for (uint i = 0;i < windowFocus.size();i++)
-			windowFocus[i]->windowFocus(state);
+			windowFocus[i]->WindowFocus(state);
 		if (!focus){
 			for (int i = 0; i < MAX_JOYSTICKS; i++)
 			{
-				joysticks[i].clearInput();
+				joysticks[i].ClearInput();
 			}
 		}
 	}

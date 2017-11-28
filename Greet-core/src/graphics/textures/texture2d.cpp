@@ -5,7 +5,7 @@ namespace Greet {
 	Texture2D::Texture2D(const std::string& filename, const std::string& name)
 		:Texture(name, GL_TEXTURE_2D)
 	{
-		loadTexture(filename);
+		LoadTexture(filename);
 	}
 
 	Texture2D::Texture2D(BYTE* bits, uint width, uint height, uint bpp, const std::string& name)
@@ -13,7 +13,7 @@ namespace Greet {
 	{
 		m_width = width;
 		m_height = height;
-		genTexture(bits, bpp);
+		GenTexture(bits, bpp);
 		delete[] bits;
 	}
 
@@ -28,22 +28,22 @@ namespace Greet {
 	
 	}
 
-	void Texture2D::loadTexture(const std::string& filename)
+	void Texture2D::LoadTexture(const std::string& filename)
 	{
 		uint bpp = 0;
 		BYTE* bits = ImageUtils::loadImage(filename.c_str(),&m_width,&m_height,&bpp);
-		genTexture(bits, bpp);
+		GenTexture(bits, bpp);
 		delete[] bits;
 	}
 
-	void Texture2D::genTexture(uint width, uint height, uint bpp)
+	void Texture2D::GenTexture(uint width, uint height, uint bpp)
 	{
 		m_width = width;
 		m_height = height;
-		genTexture(NULL,bpp);
+		GenTexture(NULL,bpp);
 	}
 
-	void Texture2D::genTexture(BYTE* bits, uint bpp)
+	void Texture2D::GenTexture(BYTE* bits, uint bpp)
 	{
 		if (m_texId != 0)
 			glDeleteTextures(1,&m_texId);

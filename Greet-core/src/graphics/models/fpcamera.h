@@ -5,13 +5,13 @@ namespace Greet {
 	class FPCamera : public Camera
 	{
 	public:
-		vec3 position;
+		Vec3 position;
 		float yaw;
 		float pitch;
 		float roll;
 
-		const vec3& getRotationVector() const { return vec3(yaw,pitch,roll); }
-		const mat4& getViewMatrix() const { return mat4::viewMatrix(position, getRotationVector()); }
+		const Vec3& GetRotationVector() const override { return Vec3(yaw,pitch,roll); }
+		const Mat4& GetViewMatrix() const override { return Mat4::ViewMatrix(position, GetRotationVector()); }
 
 	};
 }

@@ -22,12 +22,12 @@ namespace Greet {
 		/*
 			sets the level of the LogLevel
 		*/
-		void setLevel(unsigned int level) { m_level = level; }
+		void SetLevel(unsigned int level) { m_level = level; }
 
 		/*
 			Returns the level of the LogLevel
 		*/
-		unsigned int getLevel() const { return m_level; }
+		unsigned int GetLevel() const { return m_level; }
 
 		// Comparing LogLevels
 		friend bool operator==(const LogLevel& level1, const LogLevel& level2) { return level1.m_level == level2.m_level; }

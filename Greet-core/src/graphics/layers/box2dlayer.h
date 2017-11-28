@@ -6,6 +6,7 @@
 #include <graphics/Renderable2D.h>
 #include <logging/Log.h>
 #include <graphics/models/EntityModel.h>
+#include <graphics/renderers/BatchRenderer.h>
 
 namespace Greet {
 	class Box2DLayer : public Layer
@@ -15,10 +16,10 @@ namespace Greet {
 
 
 	public:
-		Box2DLayer(Shader* shader, mat3 projectionMatrix, b2World* world);
+		Box2DLayer(Shader* shader, Mat3 projectionMatrix, b2World* world);
 
-		void update(float timeElapsed) override;
+		void Update(float timeElapsed) override;
 
-		void render() const override;
+		void Render() const override;
 	};
 }

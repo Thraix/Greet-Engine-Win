@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <ctime>
 #include <internal/GreetTypes.h>
 #include <internal/GreetGL.h>
@@ -8,7 +9,7 @@
 
 namespace Greet { namespace Utils {
 
-	inline const std::string currentDateTime()
+	inline const std::string CurrentDateTime()
 	{
 		time_t now = time(0);
 		struct tm tstruct;
@@ -18,24 +19,24 @@ namespace Greet { namespace Utils {
 		return buf;
 	}
 
-	inline void screenshot(uint width, uint height)
+	inline void Screenshot(uint width, uint height)
 	{
 		BYTE* pixels = new BYTE[3 * width*height];
 		glReadPixels(0,0,width,height, GL_BGR, GL_UNSIGNED_BYTE, pixels);
 		FIBITMAP* Image = FreeImage_ConvertFromRawBits(pixels, width, height, 3*width, 24, 0xFF0000, 0x00FF00, 0x0000FF, false);
 		std::string s = "screenshot_";
-		s += currentDateTime();
+		s += CurrentDateTime();
 		s += ".png";
 		FreeImage_Save(FIF_PNG, Image, s.c_str(), 0);
 		delete[] pixels;
 	}
 
 	template<typename Base, typename T>
-	inline bool instanceof(const T *ptr) {
+	inline bool InstanceOf(const T *ptr) {
 		return dynamic_cast<const Base*>(ptr) != nullptr;
 	}
 
-	inline std::string getTime()
+	inline std::string GetTime()
 	{
 		time_t currentTime;
 		struct tm *localTime;
@@ -53,7 +54,7 @@ namespace Greet { namespace Utils {
 		return res;
 	}
 
-	inline byte* getBytesFromString(const std::string& s)
+	inline byte* GetBytesFromString(const std::string& s)
 	{
 		byte* bytes = new byte[s.length()];
 		for(uint i = 0;i<s.length();i++)
@@ -118,7 +119,7 @@ namespace Greet { namespace Utils {
 		return r;
 	}
 
-	inline uint hex16_to_dec(const char c)
+	inline uint Hex10ToDec16(const char c)
 	{
 		switch (c)
 		{
@@ -141,7 +142,7 @@ namespace Greet { namespace Utils {
 		}
 	}
 
-	inline char dec16_to_hex(int dec)
+	inline char Dec16ToHex10(int dec)
 	{
 		switch (dec)
 		{
@@ -182,13 +183,13 @@ namespace Greet { namespace Utils {
 		}
 	}
 
-	inline std::string dec_to_hex(uint dec, uint values = 1)
+	inline std::string DecToHex(uint dec, uint values = 1)
 	{
 		std::string s = "";
 		bool begin = true;
 		for (uint i = 8; i >= 1; i--)
 		{
-			char hex = dec16_to_hex(((dec >> (i * 4 - 4)) & 0xf));
+			char hex = Dec16ToHex10(((dec >> (i * 4 - 4)) & 0xf));
 			if (hex != '0' || !begin || values >= i)
 				s += hex;
 			else if (hex != '0')
@@ -197,7 +198,7 @@ namespace Greet { namespace Utils {
 		return s;
 	}
 
-	inline uint hex_to_dec(std::string hex)
+	inline uint HexToDec(std::string hex)
 	{
 		if (hex.length() > 8)
 		{
@@ -210,7 +211,7 @@ namespace Greet { namespace Utils {
 			int size = hex.length();
 			for (int i = 0; i < size; i++)
 			{
-				result += hex16_to_dec(hex[i]) << ((size - i) * 4 - 4);
+				result += Hex10ToDec16(hex[i]) << ((size - i) * 4 - 4);
 			}
 			return result;
 		}

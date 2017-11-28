@@ -5,7 +5,7 @@ namespace Greet {
 	Material::Material(Shader* shader, Texture* texture)
 		: m_shader(shader), m_texture(texture)
 	{
-		updateTexture();
+		UpdateTexture();
 	}
 
 	Material::~Material()
@@ -13,49 +13,49 @@ namespace Greet {
 		delete m_shader;
 	}
 
-	void Material::bind() const
+	void Material::Bind() const
 	{
-		m_shader->enable();
-		m_shader->setUniform1f("reflectivity", m_reflectivity);
-		m_shader->setUniform1f("shineDamper", m_shineDamper);
-		//m_shader->setUniform3f("fogColor", vec3(0.0,1.0,0.0));
-		m_shader->setUniform1f("shineDamper", m_shineDamper);
+		m_shader->Enable();
+		m_shader->SetUniform1f("reflectivity", m_reflectivity);
+		m_shader->SetUniform1f("shineDamper", m_shineDamper);
+		//m_shader->setUniform3f("fogColor", Vec3(0.0,1.0,0.0));
+		m_shader->SetUniform1f("shineDamper", m_shineDamper);
 		if (m_texture != NULL)
-			m_texture->enable();
+			m_texture->Enable();
 			
 	}
 
-	void Material::unbind() const
+	void Material::Unbind() const
 	{
 		if (m_texture != NULL)
-			m_texture->disable();
-		m_shader->disable();
+			m_texture->Disable();
+		m_shader->Disable();
 	}
 
-	void Material::setShader(Shader* shader)
+	void Material::SetShader(Shader* shader)
 	{
 		delete m_shader;
 		m_shader = shader;
-		updateTexture();
+		UpdateTexture();
 	}
 
-	void Material::updateTexture()
+	void Material::UpdateTexture()
 	{
 		if (m_texture == NULL)
 		{
-			m_shader->enable();
-			m_shader->setUniformBoolean("hasTexture", false);
-			m_shader->disable();
+			m_shader->Enable();
+			m_shader->SetUniformBoolean("hasTexture", false);
+			m_shader->Disable();
 		}
 	}
 
-	Material* Material::setReflectivity(float reflectivity) 
+	Material* Material::SetReflectivity(float reflectivity) 
 	{
 		m_reflectivity = reflectivity;
 		return this;
 	}
 
-	Material* Material::setShineDamper(float shineDamper)
+	Material* Material::SetShineDamper(float shineDamper)
 	{
 		m_shineDamper = shineDamper;
 		return this;

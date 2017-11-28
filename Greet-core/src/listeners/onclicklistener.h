@@ -5,6 +5,6 @@
 namespace Greet {
 	class OnClickListener
 	{
-		virtual void onClick(vec2 mousePosition) = 0;
+		virtual void OnClick(Vec2 mousePosition) = 0;
 	};
 }

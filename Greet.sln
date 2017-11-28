@@ -22,6 +22,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvorbis", "libraries\libvorbis\libvorbis.vcxproj", "{08FF162B-3108-4E9D-9FBF-66891F73B74C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "examples\Sandbox\Sandbox.vcxproj", "{A1F7F965-3BDD-40A9-B968-8AA3B69FCA2B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1852E022-CDED-44BA-BD38-27FC5AD916E6} = {1852E022-CDED-44BA-BD38-27FC5AD916E6}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "utils", "utils", "{541FB2C1-0533-4352-822E-5F0CFFA64FB9}"
 EndProject

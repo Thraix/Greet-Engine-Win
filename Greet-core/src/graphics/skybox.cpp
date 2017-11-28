@@ -5,9 +5,9 @@ namespace Greet {
 	Skybox::Skybox(CubeMap* cubemap) : m_map(cubemap) 
 	{
 		m_shader = ShaderFactory::SkyboxShader();
-		MeshData* data = MeshFactory::cube(0,0,0,1,1,1);
+		MeshData* data = MeshFactory::Cube(0,0,0,1,1,1);
 		m_mesh = new Mesh(data);
-		m_mesh->setClockwiseRender(true);
+		m_mesh->SetClockwiseRender(true);
 		delete data;
 	}
 
@@ -17,22 +17,22 @@ namespace Greet {
 		delete m_mesh;
 	}
 
-	void Skybox::render(const mat4& projectionMatrix, const Camera& camera) const
+	void Skybox::Render(const Mat4& projectionMatrix, const Camera& camera) const
 	{
-		m_shader->enable();
-		m_shader->setUniformMat4("projectionMatrix", projectionMatrix);
-		m_shader->setUniformMat4("viewMatrix", mat4::viewMatrix(vec3(0, 0, 0), camera.getRotationVector()));
+		m_shader->Enable();
+		m_shader->SetUniformMat4("projectionMatrix", projectionMatrix);
+		m_shader->SetUniformMat4("viewMatrix", Mat4::ViewMatrix(Vec3(0, 0, 0), camera.GetRotationVector()));
 		glActiveTexture(GL_TEXTURE0);
-		m_map->enable();
+		m_map->Enable();
 		glDisable(GL_DEPTH_BUFFER);
 		glDepthMask(GL_FALSE);
 		glFrontFace(GL_CCW);
-		m_mesh->bind();
-		m_mesh->render();
-		m_mesh->unbind();
+		m_mesh->Bind();
+		m_mesh->Render();
+		m_mesh->Unbind();
 		glEnable(GL_DEPTH_BUFFER);
 		glDepthMask(GL_TRUE);
-		m_map->disable();
-		m_shader->disable();
+		m_map->Disable();
+		m_shader->Disable();
 	}
 }

@@ -13,17 +13,17 @@ namespace Greet {
 	{
 	public:
 
-		vec2 m_size;
+		Vec2 m_size;
 		b2Body* m_body;
 
 	public:
-		Entity(const vec2& position, const vec2& size, uint color, b2World* world);
+		Entity(const Vec2& position, const Vec2& size, uint color, b2World* world);
 		virtual ~Entity();
-		bool update(float timeElapsed);
-		void createBody(vec2 pos, vec2 size, b2World* world);
+		bool Update(float timeElapsed);
+		void CreateBody(Vec2 pos, Vec2 size, b2World* world);
 
-		inline const vec2& getPosition() const { return m_position; }
-		inline const vec2& getSize() const { return m_size; }
-		inline const b2Body* getBody() const { return m_body; }
+		inline const Vec2& GetPosition() const { return m_position; }
+		inline const Vec2& GetSize() const { return m_size; }
+		inline const b2Body* GetBody() const { return m_body; }
 	};
 }

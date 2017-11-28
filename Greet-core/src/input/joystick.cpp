@@ -4,7 +4,7 @@ namespace Greet {
 	Joystick::Joystick(uint jsNum, float calibrateLeft, float calibrateRight)
 		: m_jsNum(jsNum), m_calibrateLeft(calibrateLeft), m_calibrateRight(calibrateRight)
 	{
-		clearInput();
+		ClearInput();
 		m_connected = false;
 		m_wasConnected = false;
 		for (uint i = 0; i < GLFW_JOYSTICK_BUTTONS; i++)
@@ -13,7 +13,7 @@ namespace Greet {
 		}
 	}
 
-	void Joystick::update()
+	void Joystick::Update()
 	{
 		m_wasConnected = m_connected;
 		if (m_connected)
@@ -23,23 +23,23 @@ namespace Greet {
 			if (count == 0)
 			{
 				m_connected = false;
-				clearInput();
+				ClearInput();
 				return;
 			}
 			ASSERT((count == GLFW_JOYSTICK_AXES), "CONTROLLER NOT SUPPORTED. INVALID AMOUNT OF AXES, found ", count, ", wanted ", GLFW_JOYSTICK_AXES, ".");
-			m_leftStick = vec2(axes[0], axes[1]);
-			if (m_leftStick.length()<m_calibrateLeft)
-				m_leftStick = vec2(0, 0);
+			m_leftStick = Vec2(axes[0], axes[1]);
+			if (m_leftStick.Length()<m_calibrateLeft)
+				m_leftStick = Vec2(0, 0);
 
-			m_rightStick = vec2(axes[3], axes[4]);
-			if (m_rightStick.length()<m_calibrateRight)
-				m_rightStick = vec2(0, 0);
+			m_rightStick = Vec2(axes[3], axes[4]);
+			if (m_rightStick.Length()<m_calibrateRight)
+				m_rightStick = Vec2(0, 0);
 
 			const unsigned char* buttons = glfwGetJoystickButtons(m_jsNum,&count);
 			if (count == 0)
 			{
 				m_connected = false;
-				clearInput();
+				ClearInput();
 				return;
 			}
 			ASSERT((count == GLFW_JOYSTICK_BUTTONS), "CONTROLLER NOT SUPPORTED. INVALID AMOUNT OF BUTTONS, found ", count, ", wanted ", GLFW_JOYSTICK_BUTTONS, ".");
@@ -52,7 +52,7 @@ namespace Greet {
 		}
 	}
 
-	void Joystick::remapButton(uint button, uint rebind)
+	void Joystick::RemapButton(uint button, uint rebind)
 	{
 		
 		uint b = m_mapping[button];
@@ -66,72 +66,72 @@ namespace Greet {
 		}
 		m_mapping[button] = rebind;
 	}
-	bool Joystick::checkConnect()
+	bool Joystick::CheckConnect()
 	{
 		m_wasConnected = m_connected;
 		m_connected = glfwJoystickPresent(m_jsNum);
 		return m_connected;
 	}
 
-	void Joystick::clearInput()
+	void Joystick::ClearInput()
 	{
 		memset(buttonPas, false, GLFW_JOYSTICK_BUTTONS);
 		memset(buttonCur, false, GLFW_JOYSTICK_BUTTONS);
-		m_leftStick = vec2(0, 0);
-		m_rightStick = vec2(0, 0);
+		m_leftStick = Vec2(0, 0);
+		m_rightStick = Vec2(0, 0);
 	}
 
-	bool Joystick::buttonExists(uint buttoncode) const
+	bool Joystick::ButtonExists(uint buttoncode) const
 	{
 		if (buttoncode >= GLFW_JOYSTICK_BUTTONS)
 		{
-			Log::error("Joystick button could not be found: ", buttoncode);
+			Log::Error("Joystick button could not be found: ", buttoncode);
 			return false;
 		}
 		return true;
 	}
 
-	bool Joystick::isButtonPressed(uint buttoncode) const
+	bool Joystick::IsButtonPressed(uint buttoncode) const
 	{
 		buttoncode = m_mapping[buttoncode];
-		if (buttonExists(buttoncode))
+		if (ButtonExists(buttoncode))
 			return buttonCur[buttoncode] && !buttonPas[buttoncode];
 		return false;
 	}
 
-	bool Joystick::isButtonReleased(uint buttoncode) const
+	bool Joystick::IsButtonReleased(uint buttoncode) const
 	{
 		buttoncode = m_mapping[buttoncode];
-		if (buttonExists(buttoncode))
+		if (ButtonExists(buttoncode))
 			return !buttonCur[buttoncode] && buttonPas[buttoncode];
 		return false;
 	}
 
-	bool Joystick::isButtonDown(uint buttoncode) const
+	bool Joystick::IsButtonDown(uint buttoncode) const
 	{
 		buttoncode = m_mapping[buttoncode];
-		if (buttonExists(buttoncode))
+		if (ButtonExists(buttoncode))
 			return buttonCur[buttoncode];
 		return false;
 	}
 
-	bool Joystick::isRealButtonPressed(uint buttoncode) const
+	bool Joystick::IsRealButtonPressed(uint buttoncode) const
 	{
-		if (buttonExists(buttoncode))
+		if (ButtonExists(buttoncode))
 			return buttonCur[buttoncode] && !buttonPas[buttoncode];
 		return false;
 	}
 
-	bool Joystick::isRealButtonReleased(uint buttoncode) const
+	bool Joystick::IsRealButtonReleased(uint buttoncode) const
 	{
-		if (buttonExists(buttoncode))
+		if (ButtonExists(buttoncode))
 			return !buttonCur[buttoncode] && buttonPas[buttoncode];
 		return false;
 	}
 
-	bool Joystick::isRealButtonDown(uint buttoncode) const
+	bool Joystick::IsRealButtonDown(uint buttoncode) const
 	{
-		if (buttonExists(buttoncode))
+		if (ButtonExists(buttoncode))
 			return buttonCur[buttoncode];
 		return false;
 	}

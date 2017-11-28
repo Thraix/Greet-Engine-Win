@@ -20,12 +20,12 @@
 #define FLOATS SIZE*SIZE
 
 namespace Greet {
-	mat4::mat4()
+	Mat4::Mat4()
 	{
 		memset(elements, 0.0f, FLOATS * sizeof(float));
 	}
 
-	mat4::mat4(float diagonal)
+	Mat4::Mat4(float diagonal)
 	{
 		memset(elements, 0.0f, FLOATS * sizeof(float));
 		elements[_0_0] = diagonal;
@@ -34,19 +34,19 @@ namespace Greet {
 		elements[_3_3] = diagonal;
 	}
 
-	mat4::mat4(float* elem)
+	Mat4::Mat4(float* elem)
 	{
 		memcpy(elements, elem, FLOATS * sizeof(float));
 	}
 
-	mat4 mat4::identity()
+	Mat4 Mat4::Identity()
 	{
-		return mat4(1.0f);
+		return Mat4(1.0f);
 	}
 
-	mat4 mat4::orthographic(float left, float right, float top, float bottom, float near, float far)
+	Mat4 Mat4::Orthographic(float left, float right, float top, float bottom, float near, float far)
 	{
-		mat4 result(1.0f);
+		Mat4 result(1.0f);
 
 		result.elements[_0_0] = 2.0f / (right - left);
 		result.elements[_1_1] = 2.0f / (top - bottom);
@@ -57,10 +57,10 @@ namespace Greet {
 		return result;
 	}
 
-	mat4 mat4::projectionMatrix(float aspect, float fov, float near, float far)
+	Mat4 Mat4::ProjectionMatrix(float aspect, float fov, float near, float far)
 	{
-		mat4 result(1.0f);
-		float tan2 = 1.0f / tan(Math::toRadians(fov * 0.5f));
+		Mat4 result(1.0f);
+		float tan2 = 1.0f / tan(Math::ToRadians(fov * 0.5f));
 		result.elements[_0_0] = tan2 / aspect;
 		result.elements[_1_1] = tan2;
 		result.elements[_2_2] = (far + near) / (near - far);
@@ -71,34 +71,34 @@ namespace Greet {
 		return result;
 	}
 
-	mat4 mat4::transformationMatrix(vec3 position, vec3 rotation, vec3 scale)
+	Mat4 Mat4::TransformationMatrix(Vec3 position, Vec3 rotation, Vec3 scale)
 	{
 		return
-			mat4::translate(position) *
-			mat4::rotateX(rotation.x) *
-			mat4::rotateY(rotation.y) *
-			mat4::rotateZ(rotation.z) *
-			mat4::scale(scale);
+			Mat4::Translate(position) *
+			Mat4::RotateX(rotation.x) *
+			Mat4::RotateY(rotation.y) *
+			Mat4::RotateZ(rotation.z) *
+			Mat4::Scale(scale);
 	}
 
-	mat4 mat4::viewMatrix(vec3 position, vec3 rotation)
+	Mat4 Mat4::ViewMatrix(Vec3 position, Vec3 rotation)
 	{
 		return
-			mat4::rotateX(rotation.x) *
-			mat4::rotateY(rotation.y) *
-			mat4::rotateZ(rotation.z) *
-			mat4::translate(-position.x, -position.y, -position.z);
+			Mat4::RotateX(rotation.x) *
+			Mat4::RotateY(rotation.y) *
+			Mat4::RotateZ(rotation.z) *
+			Mat4::Translate(-position.x, -position.y, -position.z);
 	}
 
-	mat4 mat4::tpCamera(vec3 position, float distance, float height, float rotation)
+	Mat4 Mat4::TPCamera(Vec3 position, float distance, float height, float rotation)
 	{
-		return rotateRX(asin(height)) * mat4::rotateY(90) * mat4::translate(vec3(sqrt(1 - height*height) * distance, -height * distance, 0)) * mat4::rotateY(rotation) * mat4::translate(-position.x, -position.y, -position.z);
+		return RotateRX(asin(height)) * Mat4::RotateY(90) * Mat4::Translate(Vec3(sqrt(1 - height*height) * distance, -height * distance, 0)) * Mat4::RotateY(rotation) * Mat4::Translate(-position.x, -position.y, -position.z);
 	}
 
 
-	mat4 mat4::translate(const vec3& translation)
+	Mat4 Mat4::Translate(const Vec3& translation)
 	{
-		mat4 result(1.0f);
+		Mat4 result(1.0f);
 
 		result.elements[_3_0] = translation.x;
 		result.elements[_3_1] = translation.y;
@@ -107,9 +107,9 @@ namespace Greet {
 		return result;
 	}
 
-	mat4 mat4::translate(const float& x, const float& y, const float& z)
+	Mat4 Mat4::Translate(const float& x, const float& y, const float& z)
 	{
-		mat4 result(1.0f);
+		Mat4 result(1.0f);
 
 		result.elements[_3_0] = x;
 		result.elements[_3_1] = y;
@@ -117,9 +117,9 @@ namespace Greet {
 		return result;
 	}
 
-	mat4 mat4::scale(const vec3& scaling)
+	Mat4 Mat4::Scale(const Vec3& scaling)
 	{
-		mat4 result(1.0f);
+		Mat4 result(1.0f);
 
 		result.elements[_0_0] = scaling.x;
 		result.elements[_1_1] = scaling.y;
@@ -128,9 +128,9 @@ namespace Greet {
 		return result;
 	}
 
-	mat4 mat4::scale(const float& x, const float& y, const float& z)
+	Mat4 Mat4::Scale(const float& x, const float& y, const float& z)
 	{
-		mat4 result(1.0f);
+		Mat4 result(1.0f);
 
 		result.elements[_0_0] = x;
 		result.elements[_1_1] = y;
@@ -139,23 +139,23 @@ namespace Greet {
 		return result;
 	}
 
-	mat4 mat4::rotateX(float deg)
+	Mat4 Mat4::RotateX(float deg)
 	{
-		return rotateRX(Math::toRadians(deg));
+		return RotateRX(Math::ToRadians(deg));
 	}
 
-	mat4 mat4::rotateY(float deg)
+	Mat4 Mat4::RotateY(float deg)
 	{
-		return rotateRY(Math::toRadians(deg));
+		return RotateRY(Math::ToRadians(deg));
 	}
 
-	mat4 mat4::rotateZ(float deg)
+	Mat4 Mat4::RotateZ(float deg)
 	{
-		return rotateRZ(Math::toRadians(deg));
+		return RotateRZ(Math::ToRadians(deg));
 	}
-	mat4 mat4::rotateRX(float rad)
+	Mat4 Mat4::RotateRX(float rad)
 	{
-		mat4 result(1.0f);
+		Mat4 result(1.0f);
 		float c = cos(rad);
 		float s = sin(rad);
 		result.elements[_1_1] = c;
@@ -165,9 +165,9 @@ namespace Greet {
 		return result;
 	}
 
-	mat4 mat4::rotateRY(float rad)
+	Mat4 Mat4::RotateRY(float rad)
 	{
-		mat4 result(1.0f);
+		Mat4 result(1.0f);
 		float c = cos(rad);
 		float s = sin(rad);
 		result.elements[_0_0] = c;
@@ -176,9 +176,9 @@ namespace Greet {
 		result.elements[_2_2] = c;
 		return result;
 	}
-	mat4 mat4::rotateRZ(float rad)
+	Mat4 Mat4::RotateRZ(float rad)
 	{
-		mat4 result(1.0f);
+		Mat4 result(1.0f);
 		float c = cos(rad);
 		float s = sin(rad);
 		result.elements[_0_0] = c;
@@ -188,14 +188,14 @@ namespace Greet {
 		return result;
 	}
 
-	mat4 mat4::rotate(float deg, const vec3& axis)
+	Mat4 Mat4::Rotate(float deg, const Vec3& axis)
 	{
-		return rotateR(Math::toRadians(deg), axis);
+		return RotateR(Math::ToRadians(deg), axis);
 	}
 
-	mat4 mat4::rotateR(float rad, const vec3& axis)
+	Mat4 Mat4::RotateR(float rad, const Vec3& axis)
 	{
-		mat4 result(1.0f);
+		Mat4 result(1.0f);
 
 		float c = cos(rad);
 		float s = sin(rad);
@@ -220,7 +220,7 @@ namespace Greet {
 		return result;
 	}
 
-	mat4 mat4::inverse(const mat4& inv)
+	Mat4 Mat4::Inverse(const Mat4& inv)
 	{
 		float temp[FLOATS], det;
 		int i;
@@ -344,17 +344,17 @@ namespace Greet {
 
 		det = 1.0 / det;
 
-		mat4 result(temp);
+		Mat4 result(temp);
 
 		return result;
 	}
 
-	mat4 mat4::cpy()
+	Mat4 Mat4::Cpy()
 	{
-		return mat4(elements);
+		return Mat4(elements);
 	}
 
-	mat4& mat4::multiply(const mat4 &other)
+	Mat4& Mat4::Multiply(const Mat4 &other)
 	{
 		float data[FLOATS];
 		for (int row = 0; row < SIZE; row++)
@@ -374,22 +374,22 @@ namespace Greet {
 		return *this;
 	}
 
-	vec2 mat4::multiply(const vec2 &other) const
+	Vec2 Mat4::Multiply(const Vec2 &other) const
 	{
 		float x = columns[0].x * other.x + columns[1].x * other.y + columns[2].x + columns[3].x;
 		float y = columns[0].y * other.x + columns[1].y * other.y + columns[2].y + columns[3].y;
-		return vec2(x, y);
+		return Vec2(x, y);
 	}
 
-	vec3 mat4::multiply(const vec3 &other) const
+	Vec3 Mat4::Multiply(const Vec3 &other) const
 	{
 		float x = columns[0].x * other.x + columns[1].x * other.y + columns[2].x * other.z + columns[3].x;
 		float y = columns[0].y * other.x + columns[1].y * other.y + columns[2].y * other.z + columns[3].y;
 		float z = columns[0].z * other.x + columns[1].z * other.y + columns[2].z * other.z + columns[3].z;
-		return vec3(x, y, z);
+		return Vec3(x, y, z);
 	}
 
-	vec4 mat4::multiply(const vec4 &other) const
+	vec4 Mat4::Multiply(const vec4 &other) const
 	{
 		float x = columns[0].x * other.x + columns[1].x * other.y + columns[2].x * other.z + columns[3].x * other.w;
 		float y = columns[0].y * other.x + columns[1].y * other.y + columns[2].y * other.z + columns[3].y * other.w;
@@ -398,32 +398,32 @@ namespace Greet {
 		return vec4(x, y, z, w);
 	}
 
-	mat4 operator*(mat4 first, const mat4 &second)
+	Mat4 operator*(Mat4 first, const Mat4 &second)
 	{
-		return first.multiply(second);
+		return first.Multiply(second);
 	}
 
-	mat4& mat4::operator*=(const mat4 &other) {
-		return multiply(other);
+	Mat4& Mat4::operator*=(const Mat4 &other) {
+		return Multiply(other);
 	}
 
-	vec2 operator*(const mat4 &first, const vec2 &second)
+	Vec2 operator*(const Mat4 &first, const Vec2 &second)
 	{
-		return first.multiply(second);
+		return first.Multiply(second);
 	}
 
-	vec3 operator*(const mat4 &first, const vec3 &second)
+	Vec3 operator*(const Mat4 &first, const Vec3 &second)
 	{
-		return first.multiply(second);
+		return first.Multiply(second);
 	}
 
-	vec4 operator*(const mat4 &first, const vec4 &second)
+	vec4 operator*(const Mat4 &first, const vec4 &second)
 	{
-		return first.multiply(second);
+		return first.Multiply(second);
 	}
 
-	mat4 operator~(const mat4& first)
+	Mat4 operator~(const Mat4& first)
 	{
-		return mat4::inverse(first);
+		return Mat4::Inverse(first);
 	}
 }

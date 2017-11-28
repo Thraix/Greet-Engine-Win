@@ -8,9 +8,9 @@ namespace Greet {
 	class Camera {
 
 	public:
-		virtual const vec3& getRotationVector() const = 0;
-		virtual const mat4& getViewMatrix() const = 0;
-		virtual void update(float timeElapsed) {};
+		virtual const Vec3& GetRotationVector() const = 0;
+		virtual const Mat4& GetViewMatrix() const = 0;
+		virtual void Update(float timeElapsed) {};
 	};
 
 

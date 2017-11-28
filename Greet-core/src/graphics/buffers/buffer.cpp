@@ -16,12 +16,12 @@ namespace Greet {
 		glDeleteBuffers(1, &m_bufferID);
 	}
 
-	void Buffer::enable() const
+	void Buffer::Enable() const
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_bufferID);
 	}
 
-	void Buffer::disable() const
+	void Buffer::Disable() const
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}

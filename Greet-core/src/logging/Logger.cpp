@@ -16,18 +16,18 @@ namespace Greet {
 		m_streams.clear();
 	}
 
-	void Logger::addLogStream(LogStream* stream)
+	void Logger::AddLogStream(LogStream* stream)
 	{
 		// Check if there already is a stream with the given stream name.
-		if (getLogStream(stream->getName()))
+		if (GetLogStream(stream->GetName()))
 		{
-			Log::error("Stream with name ", stream->getName(), " already exists.");
+			Log::Error("Stream with name ", stream->GetName(), " already exists.");
 		}
 		else
 			m_streams.push_back(stream);
 	}
 
-	LogStream* Logger::getLogStream(const std::string& name)
+	LogStream* Logger::GetLogStream(const std::string& name)
 	{
 		for (std::vector<LogStream*>::iterator it = m_streams.begin(); it != m_streams.end(); it++)
 		{
@@ -40,7 +40,7 @@ namespace Greet {
 		return NULL;
 	}
 
-	LogStream* Logger::removeLogStream(const std::string& name)
+	LogStream* Logger::RemoveLogStream(const std::string& name)
 	{
 		for (std::vector<LogStream*>::iterator it = m_streams.begin(); it != m_streams.end(); it++)
 		{
@@ -50,12 +50,12 @@ namespace Greet {
 				return *it;
 			}
 		}
-		Log::warning("No stream removed with name: ", name, ". Could not find.");
+		Log::Warning("No stream removed with name: ", name, ". Could not find.");
 	}
 
-	LogStream* Logger::removeLogStream(LogStream* stream)
+	LogStream* Logger::RemoveLogStream(LogStream* stream)
 	{
-		return removeLogStream(stream->getName());
+		return RemoveLogStream(stream->GetName());
 	}
 
 }

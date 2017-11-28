@@ -23,31 +23,31 @@ namespace Greet {
 		bool m_clockwise = false;
 
 	public:
-		Mesh(const vec3* vertices, uint vertexCount, const uint* indices, uint indexCount);
+		Mesh(const Vec3* vertices, uint vertexCount, const uint* indices, uint indexCount);
 		Mesh(MeshData* data);
-		void init(const vec3* vertices, uint vertexCount, const uint* indices, uint indexCount);
+		void init(const Vec3* vertices, uint vertexCount, const uint* indices, uint indexCount);
 		virtual ~Mesh();
-		inline uint getVAO()  const { return m_vaoId; };
+		inline uint GetVAO()  const { return m_vaoId; };
 
-		void render() const;
+		void Render() const;
 
-		void bind() const;
-		void unbind() const;
+		void Bind() const;
+		void Unbind() const;
 
-		inline void setClockwiseRender(bool clockwise) { m_clockwise = clockwise; }
-		inline bool isClockwiseRender() const { return m_clockwise; }
+		inline void SetClockwiseRender(bool clockwise) { m_clockwise = clockwise; }
+		inline bool IsClockwiseRender() const { return m_clockwise; }
 
-		inline void setEnableCulling(bool culling) { m_culling = culling; }
-		inline bool isEnableCulling() const { return m_culling; }
-		void addAttribute(uint location, const vec3* data);
-		void addAttribute(uint location, const vec2* data);
+		inline void SetEnableCulling(bool culling) { m_culling = culling; }
+		inline bool IsEnableCulling() const { return m_culling; }
+		void AddAttribute(uint location, const Vec3* data);
+		void AddAttribute(uint location, const Vec2* data);
 		//void addAttribute(uint location, uint attributeSize, const float* data);
-		void addAttribute(uint location, uint attributeSize, const uint* data);
-		void addAttribute(AttributeData* data);
-		void setDefaultAttribute4f(uint location, const vec4& data);
-		void setDefaultAttribute3f(uint location, const vec3& data);
+		void AddAttribute(uint location, uint attributeSize, const uint* data);
+		void AddAttribute(AttributeData* data);
+		void SetDefaultAttribute4f(uint location, const vec4& data);
+		void SetDefaultAttribute3f(uint location, const Vec3& data);
 	private:
-		void enableAttributes() const;
-		void disableAttributes() const;
+		void EnableAttributes() const;
+		void DisableAttributes() const;
 	};
 }

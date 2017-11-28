@@ -2,27 +2,27 @@
 
 namespace Greet { namespace ImageFactory 
 {
-	BYTE* getBadFormatImage(uint* width, uint* height, uint* bpp)
+	BYTE* GetBadFormatImage(uint* width, uint* height, uint* bpp)
 	{
-		return getErrorImage(width,height,bpp,0xff00ff,0xaa00aa);
+		return GetErrorImage(width,height,bpp,0xff00ff,0xaa00aa);
 	}
 	
-	BYTE* getBadBPPImage(uint* width, uint* height, uint* bpp)
+	BYTE* GetBadBPPImage(uint* width, uint* height, uint* bpp)
 	{
-		return getErrorImage(width,height,bpp,0xffff00,0xaaaa00);
+		return GetErrorImage(width,height,bpp,0xffff00,0xaaaa00);
 	}
 	
-	BYTE* getCantReadImage(uint* width, uint* height, uint* bpp)
+	BYTE* GetCantReadImage(uint* width, uint* height, uint* bpp)
 	{
-		return getErrorImage(width,height,bpp,0x00ffff,0x00aaaa);
+		return GetErrorImage(width,height,bpp,0x00ffff,0x00aaaa);
 	}
 
-	BYTE* getCropErrorImage(uint* width, uint* height, uint* bpp)
+	BYTE* GetCropErrorImage(uint* width, uint* height, uint* bpp)
 	{
-		return getErrorImage(width,height,bpp,0xff0000,0xaa0000);
+		return GetErrorImage(width,height,bpp,0xff0000,0xaa0000);
 	}
 	
-	BYTE* getErrorImage(uint* width, uint* height, uint* bpp, uint lightColor, uint darkColor)
+	BYTE* GetErrorImage(uint* width, uint* height, uint* bpp, uint lightColor, uint darkColor)
 	{
 		*width = 16;
 		*height = 16;

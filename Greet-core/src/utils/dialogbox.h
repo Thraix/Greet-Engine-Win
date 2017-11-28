@@ -26,18 +26,18 @@ namespace Greet { namespace DialogBox {
 	const Style DEFAULT_STYLE = Style::Info;
 	const Buttons DEFAULT_BUTTONS = Buttons::OK;
 
-	Selection show(const char *message, const char *title, Style style, Buttons buttons);
+	Selection Show(const char *message, const char *title, Style style, Buttons buttons);
 
-	inline Selection show(const char *message, const char *title, Style style) {
-		return show(message, title, style, DEFAULT_BUTTONS);
+	inline Selection Show(const char *message, const char *title, Style style) {
+		return Show(message, title, style, DEFAULT_BUTTONS);
 	}
 
-	inline Selection show(const char *message, const char *title, Buttons buttons) {
-		return show(message, title, DEFAULT_STYLE, buttons);
+	inline Selection Show(const char *message, const char *title, Buttons buttons) {
+		return Show(message, title, DEFAULT_STYLE, buttons);
 	}
 
-	inline Selection show(const char *message, const char *title) {
-		return show(message, title, DEFAULT_STYLE, DEFAULT_BUTTONS);
+	inline Selection Show(const char *message, const char *title) {
+		return Show(message, title, DEFAULT_STYLE, DEFAULT_BUTTONS);
 	}
 
 }}

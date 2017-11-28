@@ -17,7 +17,7 @@ namespace Greet{
 	{
 
 	protected:
-		mat4 m_projectionMatrix;
+		Mat4 m_projectionMatrix;
 		Camera* m_camera;
 		float m_renderDistance;
 		float m_near;
@@ -27,7 +27,7 @@ namespace Greet{
 
 	public:
 		Renderer3D(float width, float height, Camera* camera, float fov, float near, float far, Skybox* skybox)
-			: m_projectionMatrix(mat4::projectionMatrix(width/height, fov, near, far)), m_camera(camera), m_skybox(skybox), m_renderDistance(far), m_near(near), m_far(far)
+			: m_projectionMatrix(Mat4::ProjectionMatrix(width/height, fov, near, far)), m_camera(camera), m_skybox(skybox), m_renderDistance(far), m_near(near), m_far(far)
 		{
 			
 		}
@@ -36,20 +36,20 @@ namespace Greet{
 			delete m_skybox;
 		}
 
-		virtual void render(const EntityModel& model) const;
-		virtual void render(const Mesh& model) const;
-		virtual void render(const MaterialModel& model) const;
+		virtual void Render(const EntityModel& model) const;
+		virtual void Render(const Mesh& model) const;
+		virtual void Render(const MaterialModel& model) const;
 
-		virtual void update(float timeElapsed);
+		virtual void Update(float timeElapsed);
 
-		virtual void submit(const EntityModel* model) {};
+		virtual void Submit(const EntityModel* model) {};
 
-		virtual void begin() {
-			renderSkybox();
+		virtual void Begin() {
+			RenderSkybox();
 		};
-		virtual void render() const {};
-		virtual void end() {};
+		virtual void Render() const {};
+		virtual void End() {};
 	private:
-		void renderSkybox() const;
+		void RenderSkybox() const;
 	};
 }

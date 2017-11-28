@@ -30,31 +30,31 @@ namespace Greet {
 		float m_calibrateRight;
 
 		//AXES
-		vec2 m_leftStick;
-		vec2 m_rightStick;
+		Vec2 m_leftStick;
+		Vec2 m_rightStick;
 
 		bool buttonCur[GLFW_JOYSTICK_BUTTONS];
 		bool buttonPas[GLFW_JOYSTICK_BUTTONS];
 
 	private:
 		Joystick(uint jsNum, float m_calibrateLeft, float m_calibrateRight);
-		void update();
-		bool checkConnect();
-		void clearInput();
+		void Update();
+		bool CheckConnect();
+		void ClearInput();
 	public:
 
-		inline vec2 getLeftStick() const { return m_leftStick; }
-		inline vec2 getRightStick() const { return m_rightStick; }
+		inline Vec2 GetLeftStick() const { return m_leftStick; }
+		inline Vec2 GetRightStick() const { return m_rightStick; }
 
-		void remapButton(uint button, uint rebind);
-		bool buttonExists(uint buttoncode) const;
-		bool isButtonPressed(uint buttoncode) const;
-		bool isButtonReleased(uint buttoncode) const;
-		bool isButtonDown(uint buttoncode) const;
-		bool isRealButtonPressed(uint buttoncode) const;
-		bool isRealButtonReleased(uint buttoncode) const;
-		bool isRealButtonDown(uint buttoncode) const;
-		bool isConnected() const { return m_connected; }
+		void RemapButton(uint button, uint rebind);
+		bool ButtonExists(uint buttoncode) const;
+		bool IsButtonPressed(uint buttoncode) const;
+		bool IsButtonReleased(uint buttoncode) const;
+		bool IsButtonDown(uint buttoncode) const;
+		bool IsRealButtonPressed(uint buttoncode) const;
+		bool IsRealButtonReleased(uint buttoncode) const;
+		bool IsRealButtonDown(uint buttoncode) const;
+		bool IsConnected() const { return m_connected; }
 
 	};
 }

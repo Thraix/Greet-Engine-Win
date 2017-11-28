@@ -1,10 +1,10 @@
-#include "EntityModel.h"
+#include "BatchRenderer.h"
 
 namespace Greet {
 
 	BatchRenderer::BatchRenderer()
 	{
-		init();
+		Init();
 	}
 
 	BatchRenderer::~BatchRenderer()
@@ -19,7 +19,7 @@ namespace Greet {
 		}
 	}
 
-	void BatchRenderer::init()
+	void BatchRenderer::Init()
 	{
 		glGenVertexArrays(1, &m_vao);
 		glGenBuffers(1, &m_vbo);
@@ -49,7 +49,7 @@ namespace Greet {
 		glBindVertexArray(0);
 	}
 
-	void BatchRenderer::begin()
+	void BatchRenderer::Begin()
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
 		m_buffer = (VertexData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
@@ -57,39 +57,39 @@ namespace Greet {
 		m_lastIndex = 0;
 	}
 
-	void BatchRenderer::submit(const RenderablePoly* renderable)
+	void BatchRenderer::Submit(const RenderablePoly* renderable)
 	{
-		const uint color = renderable->getColor();
-		const vec2* vertices = renderable->getVertices();
-		const uint vertexCount = renderable->getVertexCount();
-		draw(renderable->getPosition(),vertices, vertexCount, color);
+		const uint color = renderable->GetColor();
+		const Vec2* vertices = renderable->GetVertices();
+		const uint vertexCount = renderable->GetVertexCount();
+		Draw(renderable->GetPosition(),vertices, vertexCount, color);
 	}
 
-	void BatchRenderer::submit(const Renderable2D* renderable)
+	void BatchRenderer::Submit(const Renderable2D* renderable)
 	{
 
-		const uint color = renderable->getColor();
+		const uint color = renderable->GetColor();
 
-		const vec2 texPos = renderable->getTexPos();
-		const vec2 texSize = renderable->getTexSize();
+		const Vec2 texPos = renderable->GetTexPos();
+		const Vec2 texSize = renderable->GetTexSize();
 
-		const vec2 maskTexPos = renderable->getMaskTexPos();
-		const vec2 maskTexSize = renderable->getMaskTexSize();
+		const Vec2 maskTexPos = renderable->GetMaskTexPos();
+		const Vec2 maskTexSize = renderable->GetMaskTexSize();
 
-		const GLuint texID = renderable->getTexID();
-		const GLuint maskTexID = renderable->getMaskTexID();
-		uint ts = getTextureSlot(texID);
-		uint mts = getTextureSlot(maskTexID);
-		draw(renderable->getPosition(),renderable->getSize(), texPos, texSize, ts, color, mts,maskTexPos,maskTexSize);
+		const GLuint texID = renderable->GetTexID();
+		const GLuint maskTexID = renderable->GetMaskTexID();
+		uint ts = GetTextureSlot(texID);
+		uint mts = GetTextureSlot(maskTexID);
+		Draw(renderable->GetPosition(),renderable->GetSize(), texPos, texSize, ts, color, mts,maskTexPos,maskTexSize);
 	}
 
-	void BatchRenderer::submitString(const std::string& text, const vec2& position, Font* font, const uint& color)
+	void BatchRenderer::SubmitString(const std::string& text, const Vec2& position, Font* font, const uint& color)
 	{
 		using namespace ftgl;
-		uint ts = getTextureSlot(font->getAtlasID());
-		texture_font_t* ftfont = font->getFTFont();
+		uint ts = GetTextureSlot(font->GetAtlasID());
+		texture_font_t* ftfont = font->GetFTFont();
 		float x = position.x;
-		const vec2& scale = vec2(1,1);//font->getScale();
+		const Vec2& scale = Vec2(1,1);//font->getScale();
 		float baseline = ftfont->size - ftfont->ascender;
 		for(uint i = 0;i<text.length();i++)
 		{
@@ -112,109 +112,109 @@ namespace Greet {
 				float v0 = 1-glyph->t0;
 				float u1 = glyph->s1;
 				float v1 = 1-glyph->t1;
-				appendVertexBuffer(vec2(x0,y0),vec2(u0,v0),ts,color, 0, vec2(0, 0));
-				appendVertexBuffer(vec2(x0,y1),vec2(u0,v1),ts,color, 0, vec2(0, 0));
-				appendVertexBuffer(vec2(x1,y1),vec2(u1,v1),ts,color, 0, vec2(0, 0));
-				appendVertexBuffer(vec2(x1,y0),vec2(u1,v0),ts,color, 0, vec2(0, 0));
+				AppendVertexBuffer(Vec2(x0,y0),Vec2(u0,v0),ts,color, 0, Vec2(0, 0));
+				AppendVertexBuffer(Vec2(x0,y1),Vec2(u0,v1),ts,color, 0, Vec2(0, 0));
+				AppendVertexBuffer(Vec2(x1,y1),Vec2(u1,v1),ts,color, 0, Vec2(0, 0));
+				AppendVertexBuffer(Vec2(x1,y0),Vec2(u1,v0),ts,color, 0, Vec2(0, 0));
 				x += glyph->advance_x / scale.x;
-				addIndicesPoly(4);
+				AddIndicesPoly(4);
 				m_iboSize += 6;
 			}
 		}
 	}
 
-	void BatchRenderer::submit(const Transform& transform, uint texID, vec2 texPos, vec2 texSize, uint color, uint maskTexId, const vec2& maskTexPos, const vec2& maskTexSize)
+	void BatchRenderer::Submit(const Transform& transform, uint texID, Vec2 texPos, Vec2 texSize, uint color, uint maskTexId, const Vec2& maskTexPos, const Vec2& maskTexSize)
 	{
-		draw(transform, texPos, texSize, getTextureSlot(texID), color, getTextureSlot(maskTexId),maskTexPos,maskTexSize);
+		Draw(transform, texPos, texSize, GetTextureSlot(texID), color, GetTextureSlot(maskTexId),maskTexPos,maskTexSize);
 	}
 
-	void BatchRenderer::submit(const vec2& position,const vec2& size, uint texID, vec2 texPos, vec2 texSize, uint color,uint maskTexId, const vec2& maskTexPos, const vec2& maskTexSize)
+	void BatchRenderer::Submit(const Vec2& position,const Vec2& size, uint texID, Vec2 texPos, Vec2 texSize, uint color,uint maskTexId, const Vec2& maskTexPos, const Vec2& maskTexSize)
 	{
-		uint ts = getTextureSlot(texID);
-		uint mts = getTextureSlot(maskTexId);
-		appendVertexBuffer(vec2(position.x, position.y), vec2(texPos.x, texPos.y), ts, color, mts, vec2(maskTexPos.x, maskTexPos.y));
-		appendVertexBuffer(vec2(position.x, position.y + size.y), vec2(texPos.x, texPos.y + texSize.y), ts, color, mts, vec2(maskTexPos.x, maskTexPos.y + maskTexSize.y));
-		appendVertexBuffer(vec2(position.x + size.x, position.y + size.y), vec2(texPos.x + texSize.x, texPos.y + texSize.y), ts, color, mts, vec2(maskTexPos.x + maskTexSize.x, maskTexPos.y + maskTexSize.y));
-		appendVertexBuffer(vec2(position.x + size.x, position.y), vec2(texPos.x + texSize.x, texPos.y), ts, color, mts, vec2(maskTexPos.x + maskTexSize.x, maskTexPos.y));
-		addIndicesPoly(4);
+		uint ts = GetTextureSlot(texID);
+		uint mts = GetTextureSlot(maskTexId);
+		AppendVertexBuffer(Vec2(position.x, position.y), Vec2(texPos.x, texPos.y), ts, color, mts, Vec2(maskTexPos.x, maskTexPos.y));
+		AppendVertexBuffer(Vec2(position.x, position.y + size.y), Vec2(texPos.x, texPos.y + texSize.y), ts, color, mts, Vec2(maskTexPos.x, maskTexPos.y + maskTexSize.y));
+		AppendVertexBuffer(Vec2(position.x + size.x, position.y + size.y), Vec2(texPos.x + texSize.x, texPos.y + texSize.y), ts, color, mts, Vec2(maskTexPos.x + maskTexSize.x, maskTexPos.y + maskTexSize.y));
+		AppendVertexBuffer(Vec2(position.x + size.x, position.y), Vec2(texPos.x + texSize.x, texPos.y), ts, color, mts, Vec2(maskTexPos.x + maskTexSize.x, maskTexPos.y));
+		AddIndicesPoly(4);
 		m_iboSize += 6;
 	}
 
-	void BatchRenderer::draw(const vec2& position,const vec2& size, const vec2& texPos, const vec2& texSize, const uint textureSlot, const uint color, const uint& maskTexSlot, const vec2& maskTexPos, const vec2& maskTexSize)
+	void BatchRenderer::Draw(const Vec2& position,const Vec2& size, const Vec2& texPos, const Vec2& texSize, const uint textureSlot, const uint color, const uint& maskTexSlot, const Vec2& maskTexPos, const Vec2& maskTexSize)
 	{
-		appendVertexBuffer(vec2(position.x, position.y),vec2(texPos.x, texPos.y),textureSlot,color, maskTexSlot, vec2(maskTexPos.x, maskTexPos.y));
-		appendVertexBuffer(vec2(position.x, position.y+size.y),vec2(texPos.x, texPos.y + texSize.y),textureSlot,color, maskTexSlot, vec2(maskTexPos.x, maskTexPos.y+maskTexSize.y));
-		appendVertexBuffer(vec2(position.x+size.x, position.y+size.y),vec2(texPos.x + texSize.x, texPos.y + texSize.y),textureSlot,color, maskTexSlot, vec2(maskTexPos.x + maskTexSize.x, maskTexPos.y + maskTexSize.y));
-		appendVertexBuffer(vec2(position.x+size.x, position.y),vec2(texPos.x + texSize.x, texPos.y),textureSlot,color, maskTexSlot, vec2(maskTexPos.x + maskTexSize.x, maskTexPos.y));
-		addIndicesPoly(4);
+		AppendVertexBuffer(Vec2(position.x, position.y),Vec2(texPos.x, texPos.y),textureSlot,color, maskTexSlot, Vec2(maskTexPos.x, maskTexPos.y));
+		AppendVertexBuffer(Vec2(position.x, position.y+size.y),Vec2(texPos.x, texPos.y + texSize.y),textureSlot,color, maskTexSlot, Vec2(maskTexPos.x, maskTexPos.y+maskTexSize.y));
+		AppendVertexBuffer(Vec2(position.x+size.x, position.y+size.y),Vec2(texPos.x + texSize.x, texPos.y + texSize.y),textureSlot,color, maskTexSlot, Vec2(maskTexPos.x + maskTexSize.x, maskTexPos.y + maskTexSize.y));
+		AppendVertexBuffer(Vec2(position.x+size.x, position.y),Vec2(texPos.x + texSize.x, texPos.y),textureSlot,color, maskTexSlot, Vec2(maskTexPos.x + maskTexSize.x, maskTexPos.y));
+		AddIndicesPoly(4);
 		m_iboSize += 6;
 	}
 
-	void BatchRenderer::draw(const Transform& transform, const vec2& texPos, const vec2& texSize, const uint textureSlot, const uint& color, const uint& maskTexSlot, const vec2& maskTexPos, const vec2& maskTexSize)
+	void BatchRenderer::Draw(const Transform& transform, const Vec2& texPos, const Vec2& texSize, const uint textureSlot, const uint& color, const uint& maskTexSlot, const Vec2& maskTexPos, const Vec2& maskTexSize)
 	{
-		pushMatrix(transform.getMatrix());
+		PushMatrix(transform.GetMatrix());
 			
-		appendVertexBuffer(vec2(0, 0),vec2(texPos.x, texPos.y),textureSlot,color, maskTexSlot,vec2(maskTexPos.x, maskTexPos.y));
-		appendVertexBuffer(vec2(0, 1),vec2(texPos.x, texPos.y + texSize.y),textureSlot,color, maskTexSlot, vec2(maskTexPos.x, maskTexPos.y+maskTexSize.y));
-		appendVertexBuffer(vec2(1, 1),vec2(texPos.x + texSize.x, texPos.y + texSize.y),textureSlot,color, maskTexSlot, vec2(maskTexPos.x + maskTexSize.x, maskTexPos.y + maskTexSize.y));
-		appendVertexBuffer(vec2(1, 0),vec2(texPos.x + texSize.x, texPos.y),textureSlot,color, maskTexSlot, vec2(maskTexPos.x + maskTexSize.x, maskTexPos.y));
+		AppendVertexBuffer(Vec2(0, 0),Vec2(texPos.x, texPos.y),textureSlot,color, maskTexSlot,Vec2(maskTexPos.x, maskTexPos.y));
+		AppendVertexBuffer(Vec2(0, 1),Vec2(texPos.x, texPos.y + texSize.y),textureSlot,color, maskTexSlot, Vec2(maskTexPos.x, maskTexPos.y+maskTexSize.y));
+		AppendVertexBuffer(Vec2(1, 1),Vec2(texPos.x + texSize.x, texPos.y + texSize.y),textureSlot,color, maskTexSlot, Vec2(maskTexPos.x + maskTexSize.x, maskTexPos.y + maskTexSize.y));
+		AppendVertexBuffer(Vec2(1, 0),Vec2(texPos.x + texSize.x, texPos.y),textureSlot,color, maskTexSlot, Vec2(maskTexPos.x + maskTexSize.x, maskTexPos.y));
 			
-		popMatrix();
-		addIndicesPoly(4);
+		PopMatrix();
+		AddIndicesPoly(4);
 		m_iboSize += 6;
 	}
 
-	void BatchRenderer::draw(const vec2& position, const vec2* vertices, const uint amount, const uint color)
+	void BatchRenderer::Draw(const Vec2& position, const Vec2* vertices, const uint amount, const uint color)
 	{
 		for (uint i = 0; i < amount; i++)
 		{
-			appendVertexBuffer(position+vertices[i],vec2(0,0),0,color, 0, vec2(0, 0));
+			AppendVertexBuffer(position+vertices[i],Vec2(0,0),0,color, 0, Vec2(0, 0));
 		}
-		addIndicesPoly(amount);
+		AddIndicesPoly(amount);
 		m_iboSize += (amount-2)*3;
 	}
 
-	void BatchRenderer::drawRect(const vec2& position, const vec2& size, const uint& color)
+	void BatchRenderer::DrawRect(const Vec2& position, const Vec2& size, const uint& color)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		appendVertexBuffer(position, vec2(0, 0), 0, color, 0, vec2(0, 0));
-		appendVertexBuffer(vec2(position.x,position.y+size.y), vec2(0, 1), 0, color,0,vec2(0,1));
-		appendVertexBuffer(vec2(position.x+size.x, position.y + size.y), vec2(1, 1), 0, color, 0, vec2(1, 1));
-		appendVertexBuffer(vec2(position.x + size.x, position.y), vec2(1, 0), 0, color, 0, vec2(1, 0));
+		AppendVertexBuffer(position, Vec2(0, 0), 0, color, 0, Vec2(0, 0));
+		AppendVertexBuffer(Vec2(position.x,position.y+size.y), Vec2(0, 1), 0, color,0,Vec2(0,1));
+		AppendVertexBuffer(Vec2(position.x+size.x, position.y + size.y), Vec2(1, 1), 0, color, 0, Vec2(1, 1));
+		AppendVertexBuffer(Vec2(position.x + size.x, position.y), Vec2(1, 0), 0, color, 0, Vec2(1, 0));
 
-		addIndicesPoly(4);
+		AddIndicesPoly(4);
 		m_iboSize += 6;
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 
-	void BatchRenderer::fillRect(const vec2& position, const vec2& size, const uint& color)
+	void BatchRenderer::FillRect(const Vec2& position, const Vec2& size, const uint& color)
 	{
-		appendVertexBuffer(position, vec2(0, 0), 0, color, 0, vec2(0, 0));
-		appendVertexBuffer(vec2(position.x, position.y + size.y), vec2(0, 1), 0, color, 0, vec2(0, 1));
-		appendVertexBuffer(vec2(position.x + size.x, position.y + size.y), vec2(1, 1), 0, color, 0, vec2(1, 1));
-		appendVertexBuffer(vec2(position.x + size.x, position.y), vec2(1, 0), 0, color, 0, vec2(1, 0));
+		AppendVertexBuffer(position, Vec2(0, 0), 0, color, 0, Vec2(0, 0));
+		AppendVertexBuffer(Vec2(position.x, position.y + size.y), Vec2(0, 1), 0, color, 0, Vec2(0, 1));
+		AppendVertexBuffer(Vec2(position.x + size.x, position.y + size.y), Vec2(1, 1), 0, color, 0, Vec2(1, 1));
+		AppendVertexBuffer(Vec2(position.x + size.x, position.y), Vec2(1, 0), 0, color, 0, Vec2(1, 0));
 
-		addIndicesPoly(4);
+		AddIndicesPoly(4);
 		m_iboSize += 6;
 	}
 
-	void BatchRenderer::fillRect(const vec2& position, const vec2& size, const uint& color, const Sprite* mask)
+	void BatchRenderer::FillRect(const Vec2& position, const Vec2& size, const uint& color, const Sprite* mask)
 	{
-		const vec2& m_maskTexPos = mask->getTexPos();
-		const vec2& m_maskTexSize = mask->getTexSize();
+		const Vec2& m_maskTexPos = mask->GetTexPos();
+		const Vec2& m_maskTexSize = mask->GetTexSize();
 
-		const uint& mtid = getTextureSlot(mask->getTextureID());
+		const uint& mtid = GetTextureSlot(mask->GetTextureID());
 
-		appendVertexBuffer(position, vec2(0, 0), 0, color, mtid, m_maskTexPos);
-		appendVertexBuffer(vec2(position.x, position.y + size.y), vec2(0, 1), 0, color, mtid, vec2(m_maskTexPos.x, m_maskTexPos.y+m_maskTexSize.y));
-		appendVertexBuffer(vec2(position.x + size.x, position.y + size.y), vec2(1, 1), 0, color, mtid, m_maskTexPos+m_maskTexSize);
-		appendVertexBuffer(vec2(position.x + size.x, position.y), vec2(1, 0), 0, color, mtid, vec2(m_maskTexPos.x + m_maskTexSize.x, m_maskTexPos.y));
+		AppendVertexBuffer(position, Vec2(0, 0), 0, color, mtid, m_maskTexPos);
+		AppendVertexBuffer(Vec2(position.x, position.y + size.y), Vec2(0, 1), 0, color, mtid, Vec2(m_maskTexPos.x, m_maskTexPos.y+m_maskTexSize.y));
+		AppendVertexBuffer(Vec2(position.x + size.x, position.y + size.y), Vec2(1, 1), 0, color, mtid, m_maskTexPos+m_maskTexSize);
+		AppendVertexBuffer(Vec2(position.x + size.x, position.y), Vec2(1, 0), 0, color, mtid, Vec2(m_maskTexPos.x + m_maskTexSize.x, m_maskTexPos.y));
 
-		addIndicesPoly(4);
+		AddIndicesPoly(4);
 		m_iboSize += 6;
 	}
 		
-	void BatchRenderer::appendVertexBuffer(const vec2& position, const vec2& texCoord, const uint& texID, const uint& color, const uint& maskTexId, const vec2& maskTexCoord)
+	void BatchRenderer::AppendVertexBuffer(const Vec2& position, const Vec2& texCoord, const uint& texID, const uint& color, const uint& maskTexId, const Vec2& maskTexCoord)
 	{
 		m_buffer->vertex = *m_transformationBack*position;
 		m_buffer->texCoord = texCoord;
@@ -225,7 +225,7 @@ namespace Greet {
 		m_buffer++;
 	}
 
-	uint BatchRenderer::getTextureSlot(const GLuint texID)
+	uint BatchRenderer::GetTextureSlot(const GLuint texID)
 	{
 		if (texID == 0)
 			return 0.0f;
@@ -245,9 +245,9 @@ namespace Greet {
 		{
 			if (size >= RENDERER_MAX_TEXTURES)
 			{
-				end();
-				flush();
-				begin();
+				End();
+				Flush();
+				Begin();
 			}
 			m_texSlots.push_back(texID);
 			ts = (uint)(size + 1);
@@ -255,13 +255,13 @@ namespace Greet {
 		return ts;
 	}
 
-	void BatchRenderer::end()
+	void BatchRenderer::End()
 	{
 		glUnmapBuffer(GL_ARRAY_BUFFER);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
-	void BatchRenderer::flush()
+	void BatchRenderer::Flush()
 	{
 		glDisable(GL_DEPTH_TEST);
 		for (uint i = 0; i < m_texSlots.size(); i++)
@@ -270,11 +270,11 @@ namespace Greet {
 			glBindTexture(GL_TEXTURE_2D, m_texSlots[i]);
 		}
 
-		enableBuffers();
+		EnableBuffers();
 
 		glDrawElements(GL_TRIANGLES, m_iboSize, GL_UNSIGNED_INT, NULL);
 
-		disableBuffers();
+		DisableBuffers();
 
 		m_iboSize = 0;
 		m_texSlots.clear();
@@ -282,20 +282,20 @@ namespace Greet {
 		glEnable(GL_DEPTH_TEST);
 	}
 
-	void BatchRenderer::enableBuffers()
+	void BatchRenderer::EnableBuffers()
 	{
 		glBindVertexArray(m_vao);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_iboSize*sizeof(uint), m_indices, GL_DYNAMIC_DRAW);
 	}
 
-	void BatchRenderer::disableBuffers()
+	void BatchRenderer::DisableBuffers()
 	{
 		glBindVertexArray(0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
-	void BatchRenderer::addIndicesPoly(uint vertices)
+	void BatchRenderer::AddIndicesPoly(uint vertices)
 	{
 		vertices -= 2;
 		for (uint i = 0; i < vertices; i++)

@@ -16,7 +16,7 @@ namespace Greet {
 		delete m_listener;
 	}
 
-	void Driver::preupdate(float timeElapsed) 
+	void Driver::Preupdate(float timeElapsed) 
 	{ 
 		m_elapsedSinceStart += timeElapsed;
 		m_elapsed = timeElapsed;
@@ -27,18 +27,18 @@ namespace Greet {
 		}
 	}
 
-	bool Driver::postupdate()
+	bool Driver::Postupdate()
 	{
 		if (m_elapsedSinceStart >= m_time)
 		{
-			onFinished();
+			OnFinished();
 			return true;
 		}
 		return false;
 	}
 
-	void Driver::onFinished() 
+	void Driver::OnFinished() 
 	{
-		m_listener->onFinished();
+		m_listener->OnFinished();
 	}
 }

@@ -4,14 +4,14 @@
 namespace Greet {
 
 	LogStream::LogStream()
-		: m_stream(std::cout), m_logLevel(LogLevel::information), m_name(""), m_levelCheck(*gteCheck)
+		: m_stream(std::cout), m_logLevel(LogLevel::information), m_name(""), m_levelCheck(*GTECheck)
 	{
 
 	}
 
 
 	LogStream::LogStream(std::ostream& stream, LogLevel logLevel, const std::string& name)
-	 : m_stream(stream), m_logLevel(logLevel), m_name(name), m_levelCheck(*gteCheck)
+	 : m_stream(stream), m_logLevel(logLevel), m_name(name), m_levelCheck(*GTECheck)
 	{
 
 	}
@@ -27,7 +27,7 @@ namespace Greet {
 	
 	}
 
-	void LogStream::setLogLevel(LogLevel level)
+	void LogStream::SetLogLevel(LogLevel level)
 	{
 		m_logLevel = level;
 	}
@@ -54,32 +54,32 @@ namespace Greet {
 		return *this;
 	}
 
-	bool LogStream::eqCheck(const LogLevel& myLevel, const LogLevel& outputLevel)
+	bool LogStream::EQCheck(const LogLevel& myLevel, const LogLevel& outputLevel)
 	{
 		return myLevel == outputLevel;
 	}
 
-	bool LogStream::neqCheck(const LogLevel& myLevel, const LogLevel& outputLevel)
+	bool LogStream::NEQCheck(const LogLevel& myLevel, const LogLevel& outputLevel)
 	{
 		return myLevel != outputLevel;
 	}
 
-	bool LogStream::gteCheck(const LogLevel& myLevel, const LogLevel& outputLevel)
+	bool LogStream::GTECheck(const LogLevel& myLevel, const LogLevel& outputLevel)
 	{
 		return myLevel >= outputLevel;
 	}
 
-	bool LogStream::gtCheck(const LogLevel& myLevel, const LogLevel& outputLevel)
+	bool LogStream::GTCheck(const LogLevel& myLevel, const LogLevel& outputLevel)
 	{
 		return myLevel > outputLevel;
 	}
 
-	bool LogStream::lteCheck(const LogLevel& myLevel, const LogLevel& outputLevel)
+	bool LogStream::LTECheck(const LogLevel& myLevel, const LogLevel& outputLevel)
 	{
 		return myLevel <= outputLevel;
 	}
 
-	bool LogStream::ltCheck(const LogLevel& outputLevel, const LogLevel& myLevel)
+	bool LogStream::LTCheck(const LogLevel& outputLevel, const LogLevel& myLevel)
 	{
 		return myLevel < outputLevel;
 	}

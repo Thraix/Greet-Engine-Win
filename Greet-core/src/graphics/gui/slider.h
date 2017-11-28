@@ -40,28 +40,28 @@ namespace Greet {
 		// If empty display the value instead
 		std::vector<std::string> m_labels;
 	private:
-		void snapSlider();
+		void SnapSlider();
 	public:
-		Slider(const vec2& position, const vec2& size, float start, float end, float stepSize, float sliderWidth = 7);
-		Slider(const vec2& position, const vec2& size, const std::vector<std::string>& labels, float sliderWidth = 7);
+		Slider(const Vec2& position, const Vec2& size, float start, float end, float stepSize, float sliderWidth = 7);
+		Slider(const Vec2& position, const Vec2& size, const std::vector<std::string>& labels, float sliderWidth = 7);
 		virtual ~Slider();
 
-		void render(Renderer2D* renderer) const override;
-		bool onMoved(const MouseMovedEvent& event, vec2 relativeMousePos) override;
-		GUI* onPressed(const MousePressedEvent& event, vec2 relativeMousePos) override;
-		GUI* onReleased(const MouseReleasedEvent& event, vec2 relativeMousePos) override;
+		void Render(Renderer2D* renderer) const override;
+		bool OnMoved(const MouseMovedEvent& event, Vec2 relativeMousePos) override;
+		GUI* OnPressed(const MousePressedEvent& event, Vec2 relativeMousePos) override;
+		GUI* OnReleased(const MouseReleasedEvent& event, Vec2 relativeMousePos) override;
 
-		void setSnapping(bool snapping);
-		bool isInside(const vec2& position) const override;
-		void setRenderPercentage(bool percentage);
-		void setStepSize(float stepSize) { if(m_labels.empty()) m_stepSize = stepSize; }
-		void setSliderController(SliderController* controller);
-		void setValue(float value);
-		inline float getValue() const;
-		inline float getPosFromValue() const;
-		inline float getPosFromValue(float value) const;
-		inline float getStepSize() const { return m_stepSize; }
-		inline float getSliderPos() const { return m_sliderController->m_position.x; }
+		void SetSnapping(bool snapping);
+		bool IsInside(const Vec2& position) const override;
+		void SetRenderPercentage(bool percentage);
+		void SetStepSize(float stepSize) { if(m_labels.empty()) m_stepSize = stepSize; }
+		void SetSliderController(SliderController* controller);
+		void SetValue(float value);
+		inline float GetValue() const;
+		inline float GetPosFromValue() const;
+		inline float GetPosFromValue(float value) const;
+		inline float GetStepSize() const { return m_stepSize; }
+		inline float GetSliderPos() const { return m_sliderController->m_position.x; }
 
 	};
 }

@@ -20,14 +20,15 @@ namespace Greet{
 		BYTE* m_bits;
 	public:
 		Atlas(std::string atlasName, uint atlasSize, uint textureSize);
-		~Atlas();
-		bool addTexture(std::string name, std::string filePath);
-		void removeTexture(std::string textureName);
-		void addTexture(BYTE* bits, uint bpp, std::string name);
-		Sprite* getSprite(std::string name);
-		Sprite* getSpriteFromSheet(std::string sheetName, vec2 texPos, vec2 texSize);
+		virtual ~Atlas();
+
+		bool AddTexture(std::string name, std::string filePath);
+		void RemoveTexture(std::string textureName);
+		void AddTexture(BYTE* bits, uint bpp, std::string name);
+		Sprite* GetSprite(std::string name);
+		Sprite* GetSpriteFromSheet(std::string sheetName, Vec2 texPos, Vec2 texSize);
 	private:
-		void fillTexture(uint x, uint y, BYTE* bits, uint bpp);
-		void updateTexture();
+		void FillTexture(uint x, uint y, BYTE* bits, uint bpp);
+		void UpdateTexture();
 	};
 }

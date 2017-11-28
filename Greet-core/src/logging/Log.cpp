@@ -5,7 +5,7 @@ namespace Greet {
 
 	Log::Log()
 	{
-		m_logger.addLogStream(new LogStream(std::cout, LogLevel::information, "console"));
+		m_logger.AddLogStream(new LogStream(std::cout, LogLevel::information, "console"));
 	}
 
 	Log::~Log()
@@ -13,19 +13,19 @@ namespace Greet {
 		
 	}
 
-	void Log::addLogStream(LogStream* stream)
+	void Log::AddLogStream(LogStream* stream)
 	{
-		m_log.m_logger.addLogStream(stream);
+		m_log.m_logger.AddLogStream(stream);
 	}
 
-	LogStream* Log::removeLogStream(const std::string& name)
+	LogStream* Log::RemoveLogStream(const std::string& name)
 	{
-		return m_log.m_logger.removeLogStream(name);
+		return m_log.m_logger.RemoveLogStream(name);
 	}
 
-	LogStream* Log::removeLogStream(LogStream* stream)
+	LogStream* Log::RemoveLogStream(LogStream* stream)
 	{
-		return m_log.m_logger.removeLogStream(stream);
+		return m_log.m_logger.RemoveLogStream(stream);
 	}
 
 }

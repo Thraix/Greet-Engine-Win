@@ -15,35 +15,35 @@ namespace Greet {
 		GLuint m_shaderID;
 
 	private:
-		GLuint load(const std::string& geomSrc, const std::string& vertSrc, const std::string& fragSrc, bool hasGeometry);
-		GLuint load(const std::string& vertSrc, const std::string& fragSrc);
-		GLuint attachShader(const GLuint program, const std::string& shaderSrc, const GLuint shaderType);
-		GLuint getUniformLocation(const GLchar *name) const;
+		GLuint Load(const std::string& geomSrc, const std::string& vertSrc, const std::string& fragSrc, bool hasGeometry);
+		GLuint Load(const std::string& vertSrc, const std::string& fragSrc);
+		GLuint AttachShader(const GLuint program, const std::string& shaderSrc, const GLuint shaderType);
+		GLuint GetUniformLocation(const GLchar *name) const;
 
 		Shader(const std::string& geomSrc, const std::string& vertSrc, const std::string& fragSrc);
 		Shader(const std::string& vertSrc, const std::string& fragSrc);
 	public:
 
 		virtual ~Shader();
-		void enable() const;
-		static void disable();
-		void bindAttributeOutput(uint attachmentId, const std::string& name);
+		void Enable() const;
+		static void Disable();
+		void BindAttributeOutput(uint attachmentId, const std::string& name);
 
-		void setUniformBoolean(const GLchar *name, bool value) const;
-		void setUniform1f(const GLchar *name, float value) const;
-		void setUniform1fv(const GLchar *name, int count, float* value) const;
-		void setUniform1i(const GLchar *name, int value) const;
-		void setUniform1iv(const GLchar *name, int count, int* value) const;
-		void setUniform2f(const GLchar *name, const vec2 &value) const;
-		void setUniform3f(const GLchar *name, const vec3 &value) const;
-		void setUniform4f(const GLchar *name, const vec4 &value) const;
-		void setUniformMat3(const GLchar *name, const mat3 &value) const;
-		void setUniformMat4(const GLchar *name, const mat4 &value) const;
+		void SetUniformBoolean(const GLchar *name, bool value) const;
+		void SetUniform1f(const GLchar *name, float value) const;
+		void SetUniform1fv(const GLchar *name, int count, float* value) const;
+		void SetUniform1i(const GLchar *name, int value) const;
+		void SetUniform1iv(const GLchar *name, int count, int* value) const;
+		void SetUniform2f(const GLchar *name, const Vec2 &value) const;
+		void SetUniform3f(const GLchar *name, const Vec3 &value) const;
+		void SetUniform4f(const GLchar *name, const vec4 &value) const;
+		void SetUniformMat3(const GLchar *name, const Mat3 &value) const;
+		void SetUniformMat4(const GLchar *name, const Mat4 &value) const;
 	public:
-		static Shader* fromFile(const std::string& vertPath, const std::string& fragPath);
-		static Shader* fromFile(const std::string& geomPath, const std::string& vertPath, const std::string& fragPath);
-		static Shader* fromSource(const std::string& vertSrc, const std::string& fragSrc);
-		static Shader* fromSource(const std::string& geomSrc, const std::string& vertSrc, const std::string& fragSrc);
+		static Shader* FromFile(const std::string& vertPath, const std::string& fragPath);
+		static Shader* FromFile(const std::string& geomPath, const std::string& vertPath, const std::string& fragPath);
+		static Shader* FromSource(const std::string& vertSrc, const std::string& fragSrc);
+		static Shader* FromSource(const std::string& geomSrc, const std::string& vertSrc, const std::string& fragSrc);
 	};
 
 }

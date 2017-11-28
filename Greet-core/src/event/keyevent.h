@@ -13,7 +13,7 @@ namespace Greet {
 			KeyButtonEvent(uint button, EventType type)
 				: Event(type), m_button(button) {}
 		public:
-			inline const uint getButton() const { return m_button; }
+			inline const uint GetButton() const { return m_button; }
 		};
 
 	class KeyPressedEvent : public KeyButtonEvent
@@ -37,7 +37,7 @@ namespace Greet {
 
 	public:
 		KeyTypedEvent(uint charCode) : Event(KEY_TYPED), m_charCode(charCode) {}
-		uint getCharCode() const { return m_charCode; }
+		uint GetCharCode() const { return m_charCode; }
 	};
 
 }

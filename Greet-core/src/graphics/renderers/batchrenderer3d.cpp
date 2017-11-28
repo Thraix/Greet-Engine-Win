@@ -1,48 +1,48 @@
-#include "EntityModel3D.h"
+#include "BatchRenderer3D.h"
 
 namespace Greet {
 
-	void BatchRenderer3D::submit(const EntityModel* model)
+	void BatchRenderer3D::Submit(const EntityModel* model)
 	{
 		for (BatchRenderer3DMap* map : m_map)
 		{
-			if (map->m_material == model->getMaterialModel())
+			if (map->m_material == model->GetMaterialModel())
 			{
-				map->addEntity(model);
+				map->AddEntity(model);
 				return;
 			}
 		}
-		BatchRenderer3DMap* map = new BatchRenderer3DMap(model->getMaterialModel());
-		map->addEntity(model);
+		BatchRenderer3DMap* map = new BatchRenderer3DMap(model->GetMaterialModel());
+		map->AddEntity(model);
 		m_map.push_back(map);
 	}
 
-	void BatchRenderer3D::render() const
+	void BatchRenderer3D::Render() const
 	{
 		glDepthRange(m_near, m_far);
-		const mat4& viewMatrix = m_camera->getViewMatrix();
+		const Mat4& viewMatrix = m_camera->GetViewMatrix();
 		for (BatchRenderer3DMap* map : m_map)
 		{
-			map->m_material.getMaterial().bind();
-			map->m_material.getMaterial().getShader().setUniformMat4("projectionMatrix", m_projectionMatrix);
-			map->m_material.getMaterial().getShader().setUniformMat4("viewMatrix", viewMatrix);
-			const Mesh& mesh = map->m_material.getMesh();
-			mesh.bind();
+			map->m_material.GetMaterial().Bind();
+			map->m_material.GetMaterial().GetShader().SetUniformMat4("projectionMatrix", m_projectionMatrix);
+			map->m_material.GetMaterial().GetShader().SetUniformMat4("viewMatrix", viewMatrix);
+			const Mesh& mesh = map->m_material.GetMesh();
+			mesh.Bind();
 			for (const EntityModel* model : map->m_models)
 			{
-				map->m_material.getMaterial().getShader().setUniformMat4("transformationMatrix", model->getTransformationMatrix());
-				mesh.render();
+				map->m_material.GetMaterial().GetShader().SetUniformMat4("transformationMatrix", model->GetTransformationMatrix());
+				mesh.Render();
 			}
-			mesh.unbind();
-			map->m_material.getMaterial().unbind();
+			mesh.Unbind();
+			map->m_material.GetMaterial().Unbind();
 		}
 
 	}
 
-	vec3 BatchRenderer3D::getScreenCoordination(const vec3& coordinate, uint screenWidth, uint screenHeight)
+	Vec3 BatchRenderer3D::GetScreenCoordination(const Vec3& coordinate, uint screenWidth, uint screenHeight)
 	{
-		vec3 point = getProjectionMatrix() * getCamera().getViewMatrix() * coordinate;
-		vec3 p = vec3(point.x, point.y, point.z) / (fabs(point.z) * 2.0f) + 0.5f;
+		Vec3 point = GetProjectionMatrix() * GetCamera().GetViewMatrix() * coordinate;
+		Vec3 p = Vec3(point.x, point.y, point.z) / (fabs(point.z) * 2.0f) + 0.5f;
 		p.x *= screenWidth;
 		p.y = screenHeight - p.y * screenHeight;
 		return p;

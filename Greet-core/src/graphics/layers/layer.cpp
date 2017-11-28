@@ -3,7 +3,7 @@
 namespace greet {
 
 	template<class T>
-	Layer<T>::Layer(Renderer2D* renderer, Shader* shader, mat3 projectionMatrix)
+	Layer<T>::Layer(Renderer2D* renderer, Shader* shader, Mat3 projectionMatrix)
 		: m_renderer(renderer), m_shader(shader), m_projectionMatrix(projectionMatrix)
 	{
 		GLint texIDs[32];
@@ -60,7 +60,7 @@ namespace greet {
 	}
 
 	template<class T>
-	void Layer<T>::setProjectionMatrix(mat3 projectionMatrix)
+	void Layer<T>::setProjectionMatrix(Mat3 projectionMatrix)
 	{
 		 m_projectionMatrix = projectionMatrix; 
 		 m_shader->enable();

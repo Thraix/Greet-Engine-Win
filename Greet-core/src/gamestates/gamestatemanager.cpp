@@ -4,27 +4,27 @@ namespace Greet{
 
 	GameState* GameStateManager::m_gamestate;
 
-	void GameStateManager::set(GameState* gamestate)
+	void GameStateManager::Set(GameState* gamestate)
 	{
 		if (m_gamestate!=nullptr)
 			gamestate->parent = m_gamestate;
 		m_gamestate = gamestate;
-		m_gamestate->init();
+		m_gamestate->Init();
 	}
 
-	void GameStateManager::render()
+	void GameStateManager::Render()
 	{
-		m_gamestate->renderBefore();
-		m_gamestate->render();
-		m_gamestate->renderAfter();
+		m_gamestate->RenderBefore();
+		m_gamestate->Render();
+		m_gamestate->RenderAfter();
 	}
 
-	void GameStateManager::update(float timeElapsed)
+	void GameStateManager::Update(float timeElapsed)
 	{
-		m_gamestate->update(timeElapsed);
+		m_gamestate->Update(timeElapsed);
 	}
 
-	void GameStateManager::goBack()
+	void GameStateManager::GoBack()
 	{
 		if (m_gamestate->parent != nullptr)
 		{
@@ -34,7 +34,7 @@ namespace Greet{
 		}
 	}
 
-	void GameStateManager::destroy()
+	void GameStateManager::Destroy()
 	{
 		delete m_gamestate;
 	}

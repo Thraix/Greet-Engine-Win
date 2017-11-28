@@ -25,8 +25,8 @@ namespace Greet {
 			m_occupied.push_back(false);
 		}
 
-		genTexture(m_bits,4);
-		updateTexture();
+		GenTexture(m_bits,4);
+		UpdateTexture();
 	}
 
 	Atlas::~Atlas()
@@ -34,7 +34,7 @@ namespace Greet {
 		delete m_bits;
 	}
 
-	void Atlas::updateTexture()
+	void Atlas::UpdateTexture()
 	{
 		glBindTexture(GL_TEXTURE_2D, m_texId);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -44,12 +44,12 @@ namespace Greet {
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	bool Atlas::addTexture(std::string name, std::string filePath)
+	bool Atlas::AddTexture(std::string name, std::string filePath)
 	{
 		uint textures = m_width / m_textureSize;
 		if (m_textureNames.size() >= textures*textures)
 		{
-			Log::error("There is no more room in the Atlas. Increase size or create a new one. ", m_name.c_str());
+			Log::Error("There is no more room in the Atlas. Increase size or create a new one. ", m_name.c_str());
 			return false;
 		}
 		uint width;
@@ -58,17 +58,17 @@ namespace Greet {
 		BYTE* bits = ImageUtils::loadImage(filePath.c_str(), &width, &height,&bpp);
 		if (width != m_textureSize || height != m_textureSize)
 		{
-			Log::error("The given textures size is not valid: ",name.c_str()," (",width,",",height,")");
+			Log::Error("The given textures size is not valid: ",name.c_str()," (",width,",",height,")");
 			return false;
 		}
-		addTexture(bits,bpp,name);
+		AddTexture(bits,bpp,name);
 
 		delete[] bits;
 
 		return true;
 	}
 
-	void Atlas::addTexture(BYTE* bits, uint bpp, std::string name)
+	void Atlas::AddTexture(BYTE* bits, uint bpp, std::string name)
 	{
 		uint x = m_texturesSide;
 		uint y = m_texturesSide;
@@ -86,14 +86,14 @@ namespace Greet {
 		}
 		if (x == m_texturesSide || y == m_texturesSide)
 		{
-			Log::error("There is no more room in the Atlas. Increase size or create a new one. ", m_name.c_str());
+			Log::Error("There is no more room in the Atlas. Increase size or create a new one. ", m_name.c_str());
 			return;
 		}
 
-		fillTexture(x,y,bits,bpp);
+		FillTexture(x,y,bits,bpp);
 	}
 
-	void Atlas::fillTexture(uint x, uint y, BYTE* bits, uint bpp)
+	void Atlas::FillTexture(uint x, uint y, BYTE* bits, uint bpp)
 	{
 
 		uint pos = (x + ((m_texturesSide - y) - 1) * m_width) * m_textureSize;
@@ -110,16 +110,16 @@ namespace Greet {
 			}
 		}
 
-		updateTexture();
+		UpdateTexture();
 
 	}
 
-	Sprite* Atlas::getSprite(std::string name)
+	Sprite* Atlas::GetSprite(std::string name)
 	{
-		return getSpriteFromSheet(name, vec2(0, 0), vec2(1, 1));
+		return GetSpriteFromSheet(name, Vec2(0, 0), Vec2(1, 1));
 	}
 
-	Sprite* Atlas::getSpriteFromSheet(std::string sheetName, vec2 texPos, vec2 texSize)
+	Sprite* Atlas::GetSpriteFromSheet(std::string sheetName, Vec2 texPos, Vec2 texSize)
 	{
 		uint size = m_textureNames.size();
 		for (uint i = 0; i < size; i++)
@@ -130,18 +130,18 @@ namespace Greet {
 				uint x = j % (m_width / m_textureSize);
 				uint y = (j - x) / (m_width / m_textureSize);
 				float size = (float)m_textureSize / (float)m_width;
-				vec2 spriteSize = vec2(size,size);
-				vec2 spritePos = spriteSize*vec2(x, y);
+				Vec2 spriteSize = Vec2(size,size);
+				Vec2 spritePos = spriteSize*Vec2(x, y);
 				spritePos += texPos * spriteSize;
 				spriteSize *= texSize;
 				return new Sprite(this, spritePos, spriteSize);
 			}
 		}
-		Log::error("No texture found in Atlas: ", m_name.c_str(), "(", sheetName.c_str(), ")");
+		Log::Error("No texture found in Atlas: ", m_name.c_str(), "(", sheetName.c_str(), ")");
 		return new Sprite(this);
 	}
 
-	void Atlas::removeTexture(std::string textureName)
+	void Atlas::RemoveTexture(std::string textureName)
 	{
 		uint size = m_textureNames.size();
 		for (uint i = 0; i < size; i++)
@@ -161,7 +161,7 @@ namespace Greet {
 				}
 				uint x = j%m_texturesSide;
 				uint y = (j - x) / m_texturesSide;
-				fillTexture(x,y,bits,32);
+				FillTexture(x,y,bits,32);
 				delete[] bits;
 
 				m_textureNames.erase(m_textureNames.begin() + i);

@@ -3,7 +3,7 @@
 
 namespace Greet {
 
-	MeshData::MeshData(vec3* vertices, uint vertexCount, uint* indices, uint indexCount)
+	MeshData::MeshData(Vec3* vertices, uint vertexCount, uint* indices, uint indexCount)
 		: m_vertices(vertices), m_indices(indices), m_vertexCount(vertexCount), m_indexCount(indexCount)
 	{
 		
@@ -19,12 +19,12 @@ namespace Greet {
 		delete m_indices;
 	}
 
-	void MeshData::addAttribute(AttributeData* data)
+	void MeshData::AddAttribute(AttributeData* data)
 	{
 		m_data.push_back(data);
 	}
 
-	AttributeData* MeshData::getAttribute(AttributeDefaults defaults) const
+	AttributeData* MeshData::GetAttribute(AttributeDefaults defaults) const
 	{
 		for (auto it = m_data.begin(); it != m_data.end(); it++)
 		{

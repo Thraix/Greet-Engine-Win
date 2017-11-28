@@ -14,20 +14,20 @@ namespace Greet {
 
 	private:
 		GUI* m_focusedGUI;
-		GUI* getGUI(uint i) { return (GUI*)m_renderables[i]; };
+		GUI* GetGUI(uint i) { return (GUI*)m_renderables[i]; };
 	public:
 		GUILayer(Renderer2D* renderer, Shader* shader);
 		virtual ~GUILayer();
-		void add(Renderable* renderable) override;
-		void add(GUI* renderable);
-		bool onPressed(const KeyPressedEvent& e) override;
-		bool onReleased(const KeyReleasedEvent& e) override;
-		bool onTyped(const KeyTypedEvent& e) override;
-		bool onPressed(const MousePressedEvent& e) override;
-		bool onReleased(const MouseReleasedEvent& e) override;
-		bool onMoved(const MouseMovedEvent& e) override;
-		bool onScroll(const MouseScrollEvent& e) override;
-		void windowResize(int width, int height) override;
+		void Add(Renderable* renderable) override;
+		void Add(GUI* renderable);
+		bool OnPressed(const KeyPressedEvent& e) override;
+		bool OnReleased(const KeyReleasedEvent& e) override;
+		bool OnTyped(const KeyTypedEvent& e) override;
+		bool OnPressed(const MousePressedEvent& e) override;
+		bool OnReleased(const MouseReleasedEvent& e) override;
+		bool OnMoved(const MouseMovedEvent& e) override;
+		bool OnScroll(const MouseScrollEvent& e) override;
+		void WindowResize(int width, int height) override;
 	};
 
 }

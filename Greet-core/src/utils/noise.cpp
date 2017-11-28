@@ -6,7 +6,7 @@
 
 namespace Greet {
 	
-	float* Noise::genNoise(uint width, uint height, uint octave, uint frequencyX, uint frequencyY, float persistance)
+	float* Noise::GenNoise(uint width, uint height, uint octave, uint frequencyX, uint frequencyY, float persistance)
 	{
 		uint noiseWidth = (frequencyX << (octave-1)) + 3;
 		uint noiseHeight = (frequencyY << (octave-1)) + 3;
@@ -16,14 +16,14 @@ namespace Greet {
 		{
 			for (uint x = 0;x < noiseWidth;x++)
 			{
-				noise[x + y*noiseWidth] = prng(x,y);
+				noise[x + y*noiseWidth] = PRNG(x,y);
 			}
 		}
 		for (uint y = 1;y < noiseHeight-1;y++)
 		{
 			for (uint x = 1;x < noiseWidth-1;x++)
 			{
-				smoothNoise[x-1 + (y-1)*(noiseWidth-2)] = smooth(x, y, noise, noiseWidth, noiseHeight);
+				smoothNoise[x-1 + (y-1)*(noiseWidth-2)] = Smooth(x, y, noise, noiseWidth, noiseHeight);
 			}
 		}
 
@@ -53,7 +53,7 @@ namespace Greet {
 					float d2 = y * frequencyY*(i + 1) / (float)height;
 					uint noiseX = (uint)floor(d1);
 					uint noiseY = (uint)floor(d2);
-					value += interpolate(smoothNoise[noiseX + noiseY*(noiseWidth-2)],smoothNoise[noiseX+1+noiseY*(noiseWidth-2)],smoothNoise[noiseX+(noiseY+1)*(noiseWidth-2)],smoothNoise[noiseX + 1 + (noiseY + 1) * (noiseWidth - 2)],d1-noiseX,d2-noiseY)*persistances[i];
+					value += Interpolate(smoothNoise[noiseX + noiseY*(noiseWidth-2)],smoothNoise[noiseX+1+noiseY*(noiseWidth-2)],smoothNoise[noiseX+(noiseY+1)*(noiseWidth-2)],smoothNoise[noiseX + 1 + (noiseY + 1) * (noiseWidth - 2)],d1-noiseX,d2-noiseY)*persistances[i];
 				}
 				result[x + y * width] = value;
 			}
@@ -65,7 +65,7 @@ namespace Greet {
 		return result;
 	}
 
-	float Noise::smooth(uint noiseX, uint noiseY, const float* noise, uint noiseWidth, uint noiseHeight)
+	float Noise::Smooth(uint noiseX, uint noiseY, const float* noise, uint noiseWidth, uint noiseHeight)
 	{
 		float center = noise[noiseX + noiseY*noiseWidth]*0.5f;
 		float edges = (noise[noiseX - 1 + noiseY * noiseWidth] + noise[noiseX + 1 + noiseY * noiseWidth] + noise[noiseX + (noiseY - 1) * noiseWidth] + noise[noiseX + (noiseY + 1) * noiseWidth])*0.08333f;
@@ -73,19 +73,19 @@ namespace Greet {
 		return center + edges + corners;
 	}
 
-	float Noise::prng(int x, int y)
+	float Noise::PRNG(int x, int y)
 	{
 		int n = x + y * 141263;
 		n = (n << 11) ^ n;
 		return (float)( ( ( n * (n * n * 20947 + 794327) + 1376312589) & 0x7fffffff) / 1073741824.0*0.5);
 	}
 	
-	float Noise::interpolate(float v1, float v2, float v3, float v4, float d1, float d2)
+	float Noise::Interpolate(float v1, float v2, float v3, float v4, float d1, float d2)
 	{
-		return interpolate(interpolate(v1, v2, d1), interpolate(v3, v4, d1), d2);
+		return Interpolate(Interpolate(v1, v2, d1), Interpolate(v3, v4, d1), d2);
 	}
 
-	float Noise::interpolate(float v1, float v2, float d)
+	float Noise::Interpolate(float v1, float v2, float d)
 	{
 		float c = 0.5f+cos(d * M_PI) * 0.5f;
 		float v = (v1 - v2)*c + v2;

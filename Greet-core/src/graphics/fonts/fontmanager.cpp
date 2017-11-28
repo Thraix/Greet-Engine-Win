@@ -4,39 +4,39 @@ namespace Greet{
 
 	std::vector<FontContainer*> FontManager::m_fonts;
 
-	void FontManager::add(FontContainer* font)
+	void FontManager::Add(FontContainer* font)
 	{
 		for (int i = 0;i < m_fonts.size();i++)
 		{
-			if (font->getName() == m_fonts[i]->getName())
+			if (font->GetName() == m_fonts[i]->GetName())
 			{
-				ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_ADD);
-				Log::error("Given font name already exists: ", font->getName().c_str());
+				ErrorHandle::SetErrorCode(GREET_ERROR_MANAGER_ADD);
+				Log::Error("Given font name already exists: ", font->GetName().c_str());
 				return;
 			}
 		}
 		m_fonts.push_back(font);
 	}
 
-	Font* FontManager::get(const std::string& fontname, uint size)
+	Font* FontManager::Get(const std::string& fontname, uint size)
 	{
 		for (uint i = 0; i < m_fonts.size(); i++)
 		{
-			if (fontname.compare(m_fonts[i]->getName())==0)
+			if (fontname.compare(m_fonts[i]->GetName())==0)
 			{
-				return m_fonts[i]->getSize(size);
+				return m_fonts[i]->GetSize(size);
 			}
 		}
-		ErrorHandle::setErrorCode(GREET_ERROR_MANAGER_GET);
-		Log::error("Could not find the given font: ", fontname.c_str());
+		ErrorHandle::SetErrorCode(GREET_ERROR_MANAGER_GET);
+		Log::Error("Could not find the given font: ", fontname.c_str());
 		if (m_fonts.size() > 0)
-			return m_fonts[0]->getSize(size);
+			return m_fonts[0]->GetSize(size);
 		return NULL; // Return Default that always can be read.
 	}
 	
 	// TODO: REMOVE FONTS
 
-	void FontManager::destroy()
+	void FontManager::Destroy()
 	{
 		for (uint i = 0; i < m_fonts.size(); i++)
 		{

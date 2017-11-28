@@ -4,6 +4,6 @@ namespace Greet {
 	class WindowFocusListener
 	{
 	public:
-		virtual void windowFocus(bool focus) = 0;
+		virtual void WindowFocus(bool focus) = 0;
 	};
 }
