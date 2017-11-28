@@ -1,4 +1,4 @@
-#include "audiochannelmanager.h"
+#include "AudioChannelManager.h"
 
 namespace Greet{
 

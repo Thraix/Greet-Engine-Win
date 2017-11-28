@@ -1,8 +1,8 @@
 #pragma once
 
-#include <internal/Greet_types.h>
-#include <math/maths.h>
-#include <logging\logger.h>
+#include <internal/GreetTypes.h>
+#include <math/Maths.h>
+#include <logging\Logger.h>
 
 #define COLOR_UTILS_MODIFIER 0.1f
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <math/maths.h>
+#include <math/Maths.h>
 
 namespace Greet {
 	class OnClickListener

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <internal/Greetgl.h>
+#include <internal/GreetGL.h>
 
 namespace Greet {
 	class Buffer

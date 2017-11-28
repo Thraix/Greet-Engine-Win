@@ -1,7 +1,7 @@
 #pragma once
 
 #include "windowfocus.h"
-#include "windowresize.h"
+#include "WindowResize.h"
 
 namespace Greet {
 	class WindowListener : public WindowFocusListener, public WindowResizeListener

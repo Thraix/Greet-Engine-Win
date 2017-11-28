@@ -1,5 +1,5 @@
-#include "fontcontainer.h"
-#include "font.h"
+#include "FontContainer.h"
+#include "Font.h"
 
 namespace Greet{
 

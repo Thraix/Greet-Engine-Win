@@ -1,14 +1,14 @@
 #pragma once
 
 #include <vector>
-#include <internal/Greetgl.h>
-#include <math/maths.h>
-#include <graphics/fonts/font.h>
-#include <logging/log.h>
-#include <graphics/renderers/renderer.h>
-#include <graphics\models\entitymodel.h>
-#include <graphics\models\camera.h>
-#include <graphics/skybox.h>
+#include <internal/GreetGL.h>
+#include <math/Maths.h>
+#include <graphics/fonts/Font.h>
+#include <logging/Log.h>
+#include <graphics/renderers/Renderer.h>
+#include <graphics/models\EntityModel.h>
+#include <graphics/models\Camera.h>
+#include <graphics/Skybox.h>
 
 
 namespace Greet{

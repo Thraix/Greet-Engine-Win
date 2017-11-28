@@ -1,10 +1,10 @@
 #pragma once
 
 #include <vector>
-#include <graphics/models/mesh.h>
+#include <graphics/models/Mesh.h>
 #include <string>
-#include <utils/fileutils.h>
-#include <utils/stringutils.h>
+#include <utils/FileUtils.h>
+#include <utils/StringUtils.h>
 
 #define GOBJ_VECTOR3_SIZE sizeof(float) * 3 // 13
 #define GOBJ_VECTOR2_SIZE sizeof(float) * 2 // 9

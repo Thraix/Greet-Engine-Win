@@ -577,8 +577,8 @@ long ogg_sync_pageseek(ogg_sync_state *oy,ogg_page *og){
     memset(page+22,0,4);
     
     /* set up a temp page struct and recompute the checksum */
-    log.header=page;
-    log.header_len=oy->headerbytes;
+    Log.header=page;
+    Log.header_len=oy->headerbytes;
     log.body=page+oy->headerbytes;
     log.body_len=oy->bodybytes;
     ogg_page_checksum_set(&log);

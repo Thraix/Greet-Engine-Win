@@ -1,15 +1,15 @@
 #pragma once
 
 #include <cstddef>
-#include <math/maths.h>
-#include <graphics/buffers/buffer.h>
-#include <graphics/buffers/indexbuffer.h>
-#include <graphics/buffers/vertexarray.h>
-#include <graphics/shaders/shader.h>
-#include <graphics/textures/texture.h>
-#include "renderable.h"
-#include <internal/Greet_types.h>
-#include "sprite.h"
+#include <math/Maths.h>
+#include <graphics/buffers/Buffer.h>
+#include <graphics/buffers/IndexBuffer.h>
+#include <graphics/buffers/VertexArray.h>
+#include <graphics/shaders/Shader.h>
+#include <graphics/textures/Texture.h>
+#include "Renderable.h"
+#include <internal/GreetTypes.h>
+#include "Sprite.h"
 
 namespace Greet{
 

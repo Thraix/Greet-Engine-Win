@@ -29,10 +29,10 @@
 
 
 
-#include <math/maths.h>
-#include <graphics/renderable.h>
-#include <internal/Greet_types.h>
-#include <graphics/textures/texturemanager.h>
+#include <math/Maths.h>
+#include <graphics/Renderable.h>
+#include <internal/GreetTypes.h>
+#include <graphics/textures/TextureManager.h>
 
 namespace Greet{
 	struct BorderData

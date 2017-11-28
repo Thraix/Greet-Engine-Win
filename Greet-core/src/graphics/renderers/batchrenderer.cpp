@@ -1,4 +1,4 @@
-#include "batchrenderer.h"
+#include "EntityModel.h"
 
 namespace Greet {
 

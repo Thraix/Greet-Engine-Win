@@ -1,12 +1,12 @@
 #pragma once
 
-#include <internal/Greetgl.h>
-#include <internal/Greet_types.h>
-#include <graphics/textures/texture.h>
+#include <internal/GreetGL.h>
+#include <internal/GreetTypes.h>
+#include <graphics/textures/Texture.h>
 #include <string>
-#include <math/maths.h>
-#include <logging/log.h>
-#include <graphics/fonts/fontcontainer.h>
+#include <math/Maths.h>
+#include <logging/Log.h>
+#include <graphics/fonts/FontContainer.h>
 
 namespace Greet{
 

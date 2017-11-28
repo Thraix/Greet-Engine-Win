@@ -1,4 +1,4 @@
-#include "event.h"
+#include "Event.h"
 
 namespace Greet {
 	Event::Event(EventType type)

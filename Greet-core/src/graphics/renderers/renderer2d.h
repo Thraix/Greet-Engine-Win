@@ -1,11 +1,11 @@
 #pragma once
 
 #include <vector>
-#include <math/maths.h>
-#include <graphics/fonts/font.h>
-#include <logging/log.h>
-#include <graphics/renderers/renderer.h>
-#include <graphics/sprite.h>
+#include <math/Maths.h>
+#include <graphics/fonts/Font.h>
+#include <logging/Log.h>
+#include <graphics/renderers/Renderer.h>
+#include <graphics/Sprite.h>
 
 namespace Greet{
 

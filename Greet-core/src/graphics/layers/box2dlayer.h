@@ -1,11 +1,11 @@
 #pragma once
 
 #include <Box2D/Box2D.h>
-#include <graphics/layers/layer.h>
-#include <entity/entity.h>
-#include <graphics/renderable2d.h>
-#include <logging/log.h>
-#include <graphics/renderers/batchrenderer.h>
+#include <graphics/layers/Layer.h>
+#include <entity/Entity.h>
+#include <graphics/Renderable2D.h>
+#include <logging/Log.h>
+#include <graphics/models/EntityModel.h>
 
 namespace Greet {
 	class Box2DLayer : public Layer

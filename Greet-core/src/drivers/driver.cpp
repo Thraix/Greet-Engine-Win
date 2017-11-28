@@ -1,8 +1,8 @@
 #pragma once
 
-#include "driver.h"
+#include "Driver.h"
 
-#include <logging/log.h>
+#include <logging/Log.h>
 
 namespace Greet {
 	Driver::Driver(float time, DriverListener* listener) 

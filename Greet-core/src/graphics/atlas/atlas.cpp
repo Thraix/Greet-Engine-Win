@@ -1,4 +1,4 @@
-#include "atlas.h"
+#include "Atlas.h"
 
 namespace Greet {
 

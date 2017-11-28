@@ -1,4 +1,4 @@
-#include "batchindexbuffer.h"
+#include "BatchIndexBuffer.h"
 
 namespace Greet {
 	BatchIndexBuffer::BatchIndexBuffer(GLushort *data, GLsizei amount)

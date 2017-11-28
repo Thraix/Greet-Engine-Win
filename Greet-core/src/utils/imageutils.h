@@ -1,12 +1,12 @@
 #pragma once
 
-#include <logging/log.h>
-#include <internal/Greetgl.h>
+#include <logging/Log.h>
+#include <internal/GreetGL.h>
 #include <iostream>
-#include <internal/Greet_types.h>
-#include <graphics/textures/imagefactory.h>
+#include <internal/GreetTypes.h>
+#include <graphics/textures/ImageFactory.h>
 #include <fstream>
-#include <utils/errorhandler.h>
+#include <utils/ErrorHandler.h>
 
 namespace Greet { namespace ImageUtils {
 	

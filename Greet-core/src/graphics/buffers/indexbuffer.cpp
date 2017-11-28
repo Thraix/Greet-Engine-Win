@@ -1,4 +1,4 @@
-#include "indexbuffer.h"
+#include "IndexBuffer.h"
 
 namespace Greet {
 	IndexBuffer::IndexBuffer(GLushort* data, GLsizei count)

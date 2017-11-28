@@ -1,8 +1,8 @@
 #pragma once
 
-#include <internal/Greet_types.h>
-#include <math/maths.h>
-#include <graphics/textures/texture2d.h>
+#include <internal/GreetTypes.h>
+#include <math/Maths.h>
+#include <graphics/textures/Texture2D.h>
 
 namespace Greet{
 	class Sprite

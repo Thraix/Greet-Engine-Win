@@ -1,12 +1,12 @@
 #pragma once
-#include <internal/Greetgl.h>
-#include <graphics/renderers/renderer2d.h>
-#include <internal/Greet_types.h>
+#include <internal/GreetGL.h>
+#include <graphics/renderers/Renderer2D.h>
+#include <internal/GreetTypes.h>
 
-#include <graphics/renderable2d.h>
-#include <graphics/renderablepoly.h>
-#include <graphics/buffers/batchindexbuffer.h>
-#include <logging/log.h>
+#include <graphics/Renderable2D.h>
+#include <graphics/RenderablePoly.h>
+#include <graphics/buffers/BatchIndexBuffer.h>
+#include <logging/Log.h>
 
 #define RENDERER_MAX_TEXTURES	32
 #define RENDERER_MAX_SPRITES	360000

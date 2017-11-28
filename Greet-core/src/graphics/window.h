@@ -1,21 +1,21 @@
 #pragma once
 
-#include <logging/log.h>
-#include <graphics/fonts/fontmanager.h>
-#include <graphics/textures/texturemanager.h>
-#include <graphics/textures/texture2d.h>
-#include <audio/soundmanager.h>
-#include <audio/audiochannelmanager.h>
-#include <graphics/textures/imagefactory.h>
-#include <input/joystick.h>
+#include <logging/Log.h>
+#include <graphics/fonts/FontManager.h>
+#include <graphics/textures/TextureManager.h>
+#include <graphics/textures/Texture2D.h>
+#include <audio/SoundManager.h>
+#include <audio/AudioChannelManager.h>
+#include <graphics/textures/ImageFactory.h>
+#include <input/Joystick.h>
 #include <vector>
 #include <iostream>
-#include <internal/Greetgl.h>
-#include <internal/Greet_types.h>
-#include <utils/uuid.h>
-#include <listeners\joystickstate.h>
-#include <listeners\windowlistener.h>
-#include <event\eventdispatcher.h>
+#include <internal/GreetGL.h>
+#include <internal/GreetTypes.h>
+#include <utils/UUID.h>
+#include <listeners\JoystickState.h>
+#include <listeners\WindowListener.h>
+#include <event\EventDispatcher.h>
 #include <algorithm>
 
 #define MAX_KEYS			1024

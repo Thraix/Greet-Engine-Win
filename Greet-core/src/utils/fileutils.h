@@ -10,7 +10,7 @@
 #endif
 
 #include <string>
-#include <logging/log.h>
+#include <logging/Log.h>
 namespace Greet { namespace FileUtils {
 
 	inline void print_working_directory()

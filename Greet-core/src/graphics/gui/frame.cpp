@@ -1,5 +1,5 @@
 #include "frame.h"
-#include <graphics/window.h>
+#include <graphics/Window.h>
 namespace Greet {
 
 	Frame::Frame(const vec2& position, const vec2& size, const std::string& title)

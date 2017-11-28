@@ -1,4 +1,4 @@
-#include "imagefactory.h"
+#include "ImageFactory.h"
 
 namespace Greet { namespace ImageFactory 
 {

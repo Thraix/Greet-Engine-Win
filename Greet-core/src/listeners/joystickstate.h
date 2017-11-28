@@ -1,6 +1,6 @@
 #pragma once
 
-#include <internal/Greet_types.h>
+#include <internal/GreetTypes.h>
 
 namespace Greet {
 

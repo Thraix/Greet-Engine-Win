@@ -1,10 +1,10 @@
 #pragma once
 
-#include <logging/log.h>
-#include <internal/Greetgl.h>
-#include <utils/imageutils.h>
+#include <logging/Log.h>
+#include <internal/GreetGL.h>
+#include <utils/ImageUtils.h>
 #include <FreeImage.h>
-#include <graphics/textures/texture.h>
+#include <graphics/textures/Texture.h>
 
 namespace Greet {
 	class Texture2D : public Texture

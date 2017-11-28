@@ -1,11 +1,11 @@
 #pragma once
 
-#include <math/maths.h>
+#include <math/Maths.h>
 #include <Box2D/Box2D.h>
 #include <Box2D/Dynamics/b2Body.h>
 #include <Box2D/Dynamics/b2World.h>
-#include <graphics/renderablepoly.h>
-#include <math/math_func.h>
+#include <graphics/RenderablePoly.h>
+#include <math/MathFunc.h>
 
 namespace Greet {
 

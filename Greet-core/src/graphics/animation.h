@@ -1,8 +1,8 @@
 #pragma once
 
-#include <graphics/textures/texture.h>
-#include <math/maths.h>
-#include <graphics/sprite.h>
+#include <graphics/textures/Texture.h>
+#include <math/Maths.h>
+#include <graphics/Sprite.h>
 
 namespace Greet {
 	class Animation : public Sprite

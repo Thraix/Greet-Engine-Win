@@ -1,8 +1,8 @@
-#include "camera.h"
-#include <math/maths.h>
-#include <event/mouselistener.h>
-#include <internal/Greetgl.h>
-#include <event/eventdispatcher.h>
+#include "Camera.h"
+#include <math/Maths.h>
+#include <event/MouseListener.h>
+#include <internal/GreetGL.h>
+#include <event/EventDispatcher.h>
 
 namespace Greet {
 

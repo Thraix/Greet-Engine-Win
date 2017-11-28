@@ -1,4 +1,4 @@
-#include "buffer.h"
+#include "Buffer.h"
 
 namespace Greet {
 	Buffer::Buffer(GLfloat* data, GLsizei count, GLuint componentCount)

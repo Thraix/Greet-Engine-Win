@@ -1,14 +1,14 @@
 #pragma once
 
-#include <graphics/layers/group.h>
-#include <math/maths.h>
+#include <graphics/layers/Group.h>
+#include <math/Maths.h>
 #include "ltrb.h"
-#include <event/keyevent.h>
-#include <event/mouseevent.h>
-#include <utils/colorutils.h>
-#include <listeners/onclicklistener.h>
+#include <event/KeyEvent.h>
+#include <event/MouseEvent.h>
+#include <utils/ColorUtils.h>
+#include <listeners/OnClickListener.h>
 #include <algorithm>
-#include <graphics/textures/texturemanager.h>
+#include <graphics/textures/TextureManager.h>
 
 #define MOUSE_INSIDE(mouse,xPos,yPos,width,height) (mouse).x >= (xPos) && (mouse).x < (xPos) + (width) && (mouse).y >= (yPos) && (mouse).y < (yPos) + (height)
 #define MOUSE_INSIDE_GUI(mouse,width,height) (mouse).x >= 0 && (mouse).x < (width) && (mouse).y >= 0 && (mouse).y < (height)

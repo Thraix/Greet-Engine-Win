@@ -1,9 +1,9 @@
 #pragma once
 
 #include <string.h>
-#include "gui.h"
+#include "GUI.h"
 #include "label.h"
-#include <utils/colorutils.h>
+#include <utils/ColorUtils.h>
 
 
 

@@ -1,11 +1,11 @@
 #pragma once
 
-#include <graphics/textures/cubemap.h>
-#include <graphics/models/camera.h>
-#include <graphics/shaders/shader.h>
-#include <graphics\models\mesh.h>
-#include <graphics/models/meshfactory.h>
-#include <graphics\shaders\shaderfactory.h>
+#include <graphics/textures/CubeMap.h>
+#include <graphics/models/Camera.h>
+#include <graphics/shaders/Shader.h>
+#include <graphics/models\Mesh.h>
+#include <graphics/models/MeshFactory.h>
+#include <graphics/shaders\ShaderFactory.h>
 
 namespace Greet {
 	

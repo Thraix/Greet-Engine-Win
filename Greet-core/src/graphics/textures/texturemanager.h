@@ -1,11 +1,11 @@
 #pragma once
 
-#include <logging/log.h>
+#include <logging/Log.h>
 #include <vector>
-#include "texture.h"
-#include <graphics/textures/texture2d.h>
-#include <graphics/textures/cubemap.h>
-#include <utils/errorhandler.h>
+#include "Texture.h"
+#include <graphics/textures/Texture2D.h>
+#include <graphics/textures/CubeMap.h>
+#include <utils/ErrorHandler.h>
 
 namespace Greet {
 	class TextureManager

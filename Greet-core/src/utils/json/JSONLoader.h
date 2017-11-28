@@ -2,8 +2,8 @@
 
 #include <utils/json/JSONObject.h>
 #include <utils/json/JSONArray.h>
-#include <utils/fileutils.h>
-#include <utils/stringutils.h>
+#include <utils/FileUtils.h>
+#include <utils/StringUtils.h>
 
 
 namespace Greet {

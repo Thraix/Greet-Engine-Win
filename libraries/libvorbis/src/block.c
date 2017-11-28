@@ -25,7 +25,7 @@
 #include "vorbis/codec.h"
 #include "codec_internal.h"
 
-#include "window.h"
+#include "Window.h"
 #include "mdct.h"
 #include "lpc.h"
 #include "registry.h"

@@ -1,4 +1,4 @@
-#include "joystick.h"
+#include "Joystick.h"
 
 namespace Greet {
 	Joystick::Joystick(uint jsNum, float calibrateLeft, float calibrateRight)

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <event/keyevent.h>
+#include <event/KeyEvent.h>
 
-#include <logging/log.h>
+#include <logging/Log.h>
 
 namespace Greet {
 

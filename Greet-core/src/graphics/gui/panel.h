@@ -1,7 +1,7 @@
 #pragma once
 
 #include "border.h"
-#include "gui.h"
+#include "GUI.h"
 
 namespace Greet {
 	

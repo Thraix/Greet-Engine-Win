@@ -58,7 +58,7 @@ namespace ftgl {
 #endif
 
 /**
- * @file   texture-atlas.h
+ * @file   texture-Atlas.h
  * @author Nicolas Rougier (Nicolas.Rougier@inria.fr)
  *
  * @defgroup texture-atlas Texture atlas
@@ -75,7 +75,7 @@ namespace ftgl {
  *
  * Example Usage:
  * @code
- * #include "texture-atlas.h"
+ * #include "texture-Atlas.h"
  *
  * ...
  *

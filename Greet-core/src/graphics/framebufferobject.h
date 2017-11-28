@@ -1,9 +1,9 @@
 #pragma once
 
-#include <internal/Greet_types.h>
-#include <internal/Greetgl.h>
-#include <graphics/textures/texture2d.h>
-#include <graphics/window.h>
+#include <internal/GreetTypes.h>
+#include <internal/GreetGL.h>
+#include <graphics/textures/Texture2D.h>
+#include <graphics/Window.h>
 #include <map>
 
 namespace Greet {

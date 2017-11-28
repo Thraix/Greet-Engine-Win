@@ -1,10 +1,10 @@
 #pragma once
 
-#include <graphics/gui/gui.h>
-#include <graphics/fonts/fontmanager.h>
-#include <drivers\rectdriver.h>
-#include <drivers/driveradapter.h>
-#include <drivers/driverdispatcher.h>
+#include <graphics/gui/GUI.h>
+#include <graphics/fonts/FontManager.h>
+#include <drivers\RectDriver.h>
+#include <graphics/layers/GUILayer.h>
+#include <drivers/DriverDispatcher.h>
 
 #define BUTTON_RESIZE_TIME 0.08f
 #define BUTTON_RESIZE_SIZE 3.0f

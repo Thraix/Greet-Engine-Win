@@ -1,9 +1,9 @@
 #pragma once
 
-#include <graphics/shaders/shader.h>
-#include <graphics/renderable.h>
-#include <graphics/renderers/renderer2d.h>
-#include <logging/log.h>
+#include <graphics/shaders/Shader.h>
+#include <graphics/Renderable.h>
+#include <graphics/renderers/Renderer2D.h>
+#include <logging/Log.h>
 
 namespace Greet {
 

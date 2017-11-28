@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <utils/stringutils.h>
+#include <utils/StringUtils.h>
 
 namespace Greet{
 

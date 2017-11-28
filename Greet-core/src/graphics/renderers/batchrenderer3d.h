@@ -2,13 +2,13 @@
 
 #include <map>
 #include <vector>
-#include <graphics/models/entitymodel.h>
-#include <graphics/models/camera.h>
-#include <utils/objutils.h>
-#include <graphics/textures/texturemanager.h>
-#include <graphics/skybox.h>
-#include <graphics/models/meshfactory.h>
-#include <graphics/renderers/renderer3d.h>
+#include <graphics/models/EntityModel.h>
+#include <graphics/models/Camera.h>
+#include <utils/ObjUtils.h>
+#include <graphics/textures/TextureManager.h>
+#include <graphics/Skybox.h>
+#include <graphics/models/MeshFactory.h>
+#include <graphics/renderers/Renderer3D.h>
 
 namespace Greet {
 

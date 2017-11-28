@@ -2,11 +2,11 @@
 
 #include <utils/json/JSON.h>
 #include <utils/json/JSONArray.h>
-#include <internal\Greet_types.h>
-#include <logging/log.h>
+#include <internal\GreetTypes.h>
+#include <logging/Log.h>
 #include <map>
 #include <vector>
-#include <utils/stringutils.h>
+#include <utils/StringUtils.h>
 
 namespace Greet {
 

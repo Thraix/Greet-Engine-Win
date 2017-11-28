@@ -42,7 +42,7 @@
 #include <assert.h>
 #include <math.h>
 #include <wchar.h>
-#include "texture-font.h"
+#include "texture-Font.h"
 #include "platform.h"
 
 #define HRES  64

@@ -1,4 +1,4 @@
-#include "mat3.h"
+#include "Mat3.h"
 namespace Greet{
 	mat3::mat3()
 	{

@@ -1,10 +1,10 @@
 #pragma once
 
 #include <vector>
-#include <audio/audiochannel.h>
-#include <logging/log.h>
-#include <internal/Greet_types.h>
-#include <utils/errorhandler.h>
+#include <audio/AudioChannel.h>
+#include <logging/Log.h>
+#include <internal/GreetTypes.h>
+#include <utils/ErrorHandler.h>
 
 namespace Greet {
 	class AudioChannelManager

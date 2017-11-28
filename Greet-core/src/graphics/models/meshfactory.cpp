@@ -1,5 +1,5 @@
-#include "meshfactory.h"
-#include <logging/log.h>
+#include "MeshFactory.h"
+#include <logging/Log.h>
 namespace Greet { namespace MeshFactory {
 	
 	// Calculate a normal of 3 points in space

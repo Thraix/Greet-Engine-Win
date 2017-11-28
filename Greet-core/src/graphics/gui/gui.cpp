@@ -1,4 +1,4 @@
-#include "gui.h"
+#include "GUI.h"
 
 namespace Greet {
 	

@@ -1,4 +1,4 @@
-#include "fontmanager.h"
+#include "FontManager.h"
 
 namespace Greet{
 

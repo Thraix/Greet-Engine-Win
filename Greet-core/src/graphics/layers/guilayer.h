@@ -1,11 +1,11 @@
 #pragma once
 
-#include <graphics/layers/layer.h>
-#include <event/mouselistener.h>
-#include <event/keylistener.h>
-#include <graphics/window.h>
-#include <utils/utils.h>
-#include <graphics/gui/gui.h>
+#include <graphics/layers/Layer.h>
+#include <event/MouseListener.h>
+#include <event/KeyListener.h>
+#include <graphics/Window.h>
+#include <utils/Utils.h>
+#include <graphics/gui/GUI.h>
 
 namespace Greet {
 

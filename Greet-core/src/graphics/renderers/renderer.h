@@ -1,9 +1,9 @@
 #pragma once
 
 #include <vector>
-#include <internal/Greetgl.h>
-#include <math/maths.h>
-#include <logging/log.h>
+#include <internal/GreetGL.h>
+#include <math/Maths.h>
+#include <logging/Log.h>
 
 namespace Greet{
 

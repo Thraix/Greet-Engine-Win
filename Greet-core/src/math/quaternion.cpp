@@ -1,6 +1,6 @@
-#include "quaternion.h"
+#include "Quaternion.h"
 
-#include "math_func.h"
+#include "MathFunc.h"
 
 
 namespace Greet {

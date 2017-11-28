@@ -1,4 +1,4 @@
-#include "slidercontroller.h"
+#include "SliderController.h"
 
 namespace Greet
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <graphics/layers/layer.h>
+#include <graphics/layers/Layer.h>
 
 namespace Greet {
 	class GameState : public Layer

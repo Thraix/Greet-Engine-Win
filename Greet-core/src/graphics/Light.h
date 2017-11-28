@@ -1,7 +1,7 @@
 #pragma once
 
-#include <math/maths.h>
-#include <graphics/shaders/shader.h>
+#include <math/Maths.h>
+#include <graphics/shaders/Shader.h>
 #include <string.h>
 
 namespace Greet {

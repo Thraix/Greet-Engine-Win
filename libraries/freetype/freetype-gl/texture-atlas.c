@@ -37,7 +37,7 @@
 #include <assert.h>
 #include <limits.h>
 #include "opengl.h"
-#include "texture-atlas.h"
+#include "texture-Atlas.h"
 
 
 // ------------------------------------------------------ texture_atlas_new ---

@@ -1,6 +1,6 @@
-#include "shader.h"
+#include "Shader.h"
 
-#include "shaderfactory.h"
+#include "ShaderFactory.h"
 namespace Greet {
 
 	Shader::Shader(const std::string& geomSrc, const std::string& vertSrc, const std::string& fragSrc)

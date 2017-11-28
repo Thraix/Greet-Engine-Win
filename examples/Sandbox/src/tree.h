@@ -1,8 +1,8 @@
 #pragma once
 
 #if 0
-#include <graphics/renderers/batchrenderer3d.h>
-#include <graphics/models/meshfactory.h>
+#include <graphics/renderers/EntityModel3D.h>
+#include <graphics/models/MeshFactory.h>
 
 class Tree
 {

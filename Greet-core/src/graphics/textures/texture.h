@@ -1,11 +1,11 @@
 #pragma once
 
-#include <logging/log.h>
-#include <internal/Greetgl.h>
-#include <internal/Greet_types.h>
-#include <utils/imageutils.h>
+#include <logging/Log.h>
+#include <internal/GreetGL.h>
+#include <internal/GreetTypes.h>
+#include <utils/ImageUtils.h>
 #include <FreeImage.h>
-#include <internal/Greet_types.h>
+#include <internal/GreetTypes.h>
 
 namespace Greet {
 	class Texture

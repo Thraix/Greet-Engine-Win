@@ -1,11 +1,11 @@
 #pragma once
 
-#include <graphics/renderable.h>
+#include <graphics/Renderable.h>
 #include <string>
-#include <math/maths.h>
-#include <graphics/fonts/font.h>
-#include <internal/Greet_types.h>
-#include <graphics/fonts/fontmanager.h>
+#include <math/Maths.h>
+#include <graphics/fonts/Font.h>
+#include <internal/GreetTypes.h>
+#include <graphics/fonts/FontManager.h>
 
 namespace Greet {
 

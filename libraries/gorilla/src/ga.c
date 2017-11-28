@@ -8,7 +8,7 @@
 #endif /* ENABLE_OPENAL */
 
 #ifdef ENABLE_DIRECTSOUND
-#include "gorilla/devices/ga_directsound.h"
+#include "gorilla/devices/ga_directSound.h"
 #endif /* ENABLE_DIRECTSOUND */
 
 #ifdef ENABLE_XAUDIO2

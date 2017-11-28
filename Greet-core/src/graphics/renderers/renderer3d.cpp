@@ -1,4 +1,4 @@
-#include "renderer3d.h"
+#include "Renderer3D.h"
 
 namespace Greet{
 	void Renderer3D::render(const Mesh& mesh) const

@@ -1,4 +1,4 @@
-#include "vertexarray.h"
+#include "VertexArray.h"
 
 namespace Greet {
 

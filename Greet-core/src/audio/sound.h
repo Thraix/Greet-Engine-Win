@@ -1,9 +1,9 @@
 #pragma once
 
 #include <string>
-#include <logging/log.h>
-#include "audiochannelmanager.h"
-#include "audiochannel.h"
+#include <logging/Log.h>
+#include "AudioChannelManager.h"
+#include "AudioChannel.h"
 
 #include <ga.h>
 #include <gau.h>

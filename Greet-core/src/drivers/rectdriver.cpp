@@ -1,5 +1,5 @@
-#include "rectdriver.h"
-#include "logging\logger.h"
+#include "RectDriver.h"
+#include "logging\Logger.h"
 
 namespace Greet {
 

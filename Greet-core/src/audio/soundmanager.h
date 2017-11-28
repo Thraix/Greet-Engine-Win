@@ -1,9 +1,9 @@
 #pragma once
 
 #include <vector>
-#include <audio/sound.h>
-#include <internal/Greet_types.h>
-#include <utils/errorhandler.h>
+#include <audio/Sound.h>
+#include <internal/GreetTypes.h>
+#include <utils/ErrorHandler.h>
 
 #include <ga.h>
 #include <gau.h>

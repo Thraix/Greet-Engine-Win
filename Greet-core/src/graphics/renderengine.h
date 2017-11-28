@@ -1,9 +1,9 @@
 #pragma once
 
 #include <map>
-#include <graphics/layers/layer.h>
-#include <graphics/layers/layer3d.h>
-#include <graphics/layers/guilayer.h>
+#include <graphics/layers/Layer.h>
+#include <graphics/layers/Layer3D.h>
+#include <graphics/layers/GUILayer.h>
 
 namespace Greet {
 	class RenderEngine

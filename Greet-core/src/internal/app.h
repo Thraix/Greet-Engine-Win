@@ -1,9 +1,9 @@
 #pragma once
 
-#include <graphics/window.h>
-#include <utils/timer.h>
+#include <graphics/Window.h>
+#include <utils/Timer.h>
 #include <logging\Log.h>
-#include <graphics/renderengine.h>
+#include <graphics/RenderEngine.h>
 
 namespace Greet {
 

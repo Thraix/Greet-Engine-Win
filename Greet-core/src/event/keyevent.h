@@ -1,7 +1,7 @@
 #pragma once
 
-#include <math/maths.h>
-#include <event/event.h>
+#include <math/Maths.h>
+#include <event/Event.h>
 
 namespace Greet {
 

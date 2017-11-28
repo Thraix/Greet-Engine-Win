@@ -1,4 +1,4 @@
-#include "font.h"
+#include "Font.h"
 #include <direct.h>
 
 namespace Greet{

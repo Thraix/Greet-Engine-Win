@@ -1,8 +1,8 @@
 #pragma once
 
-#include "event.h"
-#include <internal\Greet_types.h>
-#include <math\maths.h>
+#include "Event.h"
+#include <internal\GreetTypes.h>
+#include <math\Maths.h>
 
 namespace Greet {
 

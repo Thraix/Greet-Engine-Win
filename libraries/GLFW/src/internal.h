@@ -375,7 +375,7 @@ struct _GLFWlibrary
     _GLFW_PLATFORM_LIBRARY_CONTEXT_STATE;
     // This is defined in the platform's time.h
     _GLFW_PLATFORM_LIBRARY_TIME_STATE;
-    // This is defined in the platform's joystick.h
+    // This is defined in the platform's Joystick.h
     _GLFW_PLATFORM_LIBRARY_JOYSTICK_STATE;
     // This is defined in the platform's tls.h
     _GLFW_PLATFORM_LIBRARY_TLS_STATE;

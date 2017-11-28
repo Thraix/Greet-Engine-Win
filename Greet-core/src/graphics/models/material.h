@@ -1,7 +1,7 @@
 #pragma once
 
-#include <graphics/shaders/shader.h>
-#include <graphics/textures/texture.h>
+#include <graphics/shaders/Shader.h>
+#include <graphics/textures/Texture.h>
 
 namespace Greet {
 

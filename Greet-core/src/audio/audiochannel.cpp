@@ -1,6 +1,6 @@
-#include "audiochannel.h"
+#include "AudioChannel.h"
 
-#include "soundmanager.h"
+#include "SoundManager.h"
 
 namespace Greet{
 

@@ -1,9 +1,9 @@
 #pragma once
 
 #include <ctime>
-#include <internal/Greet_types.h>
-#include <internal\Greetgl.h>
-#include <utils\stringutils.h>
+#include <internal/GreetTypes.h>
+#include <internal\GreetGL.h>
+#include <utils\StringUtils.h>
 
 #define BIT(x) 1 << x
 

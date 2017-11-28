@@ -1,4 +1,4 @@
-#include "tpcamera.h"
+#include "tpCamera.h"
 
 namespace Greet {
 

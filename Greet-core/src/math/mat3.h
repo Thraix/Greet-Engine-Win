@@ -1,8 +1,8 @@
 #pragma once
 
-#include "vec2.h"
-#include "vec3.h"
-#include "math_func.h"
+#include "Vec2.h"
+#include "Vec3.h"
+#include "MathFunc.h"
 #include <string.h>
 
 namespace Greet{

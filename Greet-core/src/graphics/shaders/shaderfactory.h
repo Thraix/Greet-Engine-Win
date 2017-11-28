@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "shader.h"
+#include "Shader.h"
 
 namespace Greet { namespace ShaderFactory {
 

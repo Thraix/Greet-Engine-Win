@@ -1,4 +1,4 @@
-#include "entitymodel.h"
+#include "EntityModel.h"
 
 namespace Greet {
 	EntityModel::EntityModel(const MaterialModel& model, float x, float y, float z, float sx, float sy, float sz, float rx, float ry, float rz)

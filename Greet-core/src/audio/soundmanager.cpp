@@ -1,4 +1,4 @@
-#include "soundmanager.h"
+#include "SoundManager.h"
 
 #define GAU_THREAD_POLICY_MULTI 2
 

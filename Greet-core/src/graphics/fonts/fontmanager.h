@@ -1,10 +1,10 @@
 #pragma once
 
 #include <vector>
-#include <logging/log.h>
-#include <internal/Greet_types.h>
-#include <utils/errorhandler.h>
-#include <graphics\fonts\font.h>
+#include <logging/Log.h>
+#include <internal/GreetTypes.h>
+#include <utils/ErrorHandler.h>
+#include <graphics/fonts\Font.h>
 
 namespace Greet {
 	class FontManager

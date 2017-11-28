@@ -1,4 +1,4 @@
-#include "graphics\models\MaterialModel.h"
+#include "graphics/models\MaterialModel.h"
 
 namespace Greet {
 

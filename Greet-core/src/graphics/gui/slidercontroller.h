@@ -1,9 +1,9 @@
 #pragma once
 
-#include <graphics/gui/gui.h>
-#include <drivers/rectdriver.h>
-#include <drivers/driverdispatcher.h>
-#include <drivers/driveradapter.h>
+#include <graphics/gui/GUI.h>
+#include <drivers/RectDriver.h>
+#include <drivers/DriverDispatcher.h>
+#include <graphics/layers/GUILayer.h>
 
 namespace Greet {
 

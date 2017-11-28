@@ -3,12 +3,12 @@
 #define _USE_MATH_DEFINES
 
 #include <math.h>
-#include <math/vec4.h>
-#include <math/vec2.h>
+#include <math/Vec4.h>
+#include <math/Vec2.h>
 #include <Box2D/Dynamics/b2Body.h>
 #include <Box2D/Dynamics/b2Fixture.h>
 #include <Box2D/Collision/Shapes/b2PolygonShape.h>
-#include <internal/Greet_types.h>
+#include <internal/GreetTypes.h>
 #include <iostream>
 
 

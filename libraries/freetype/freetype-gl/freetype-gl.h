@@ -38,8 +38,8 @@
 #include "opengl.h"
 #include "vec234.h"
 #include "vector.h"
-#include "texture-atlas.h"
-#include "texture-font.h"
+#include "texture-Atlas.h"
+#include "texture-Font.h"
 
 #ifdef __cplusplus
 #define NOT_USING_FT_GL_NAMESPACE

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <graphics/gui/gui.h>
-#include <graphics/fonts/fontmanager.h>
+#include <graphics/gui/GUI.h>
+#include <graphics/fonts/FontManager.h>
 
 namespace Greet {
 

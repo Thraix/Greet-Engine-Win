@@ -1,9 +1,9 @@
 #pragma once
 
-#include <graphics/shaders/shader.h>
-#include <graphics/renderable.h>
-#include <graphics/renderers/renderer3d.h>
-#include <logging/log.h>
+#include <graphics/shaders/Shader.h>
+#include <graphics/Renderable.h>
+#include <graphics/renderers/Renderer3D.h>
+#include <logging/Log.h>
 
 namespace Greet {
 	class Layer3D

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <graphics/renderers/renderer2d.h>
+#include <graphics/renderers/Renderer2D.h>
 
 namespace Greet {
 	class Renderable

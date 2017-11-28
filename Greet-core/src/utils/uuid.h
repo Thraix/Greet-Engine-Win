@@ -1,6 +1,6 @@
 #pragma once
 
-#include <graphics/window.h>
+#include <graphics/Window.h>
 #include <vector>
 #include <random>
 #include <ctime>

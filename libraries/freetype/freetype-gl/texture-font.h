@@ -41,14 +41,14 @@ extern "C" {
 #endif
 
 #include "vector.h"
-#include "texture-atlas.h"
+#include "texture-Atlas.h"
 
 #ifdef __cplusplus
 namespace ftgl {
 #endif
 
 /**
- * @file   texture-font.h
+ * @file   texture-Font.h
  * @author Nicolas Rougier (Nicolas.Rougier@inria.fr)
  *
  * @defgroup texture-font Texture font
@@ -57,7 +57,7 @@ namespace ftgl {
  *
  * Example Usage:
  * @code
- * #include "texture-font.h"
+ * #include "texture-Font.h"
  *
  * int main( int arrgc, char *argv[] )
  * {

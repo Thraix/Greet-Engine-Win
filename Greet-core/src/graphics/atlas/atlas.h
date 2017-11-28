@@ -1,7 +1,7 @@
 #pragma once
 
-#include <graphics/textures/texture.h>
-#include <graphics/sprite.h>
+#include <graphics/textures/Texture.h>
+#include <graphics/Sprite.h>
 #include <list>
 #include <vector>
 

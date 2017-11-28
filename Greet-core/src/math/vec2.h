@@ -7,7 +7,7 @@
 #include <iostream>
 #include <Box2D/Common/b2Math.h>
 #include <math.h>
-#include <logging/log.h>
+#include <logging/Log.h>
 
 namespace Greet{
 	

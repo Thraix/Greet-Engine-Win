@@ -1,10 +1,10 @@
 #pragma once
 
 #include <vector>
-#include <graphics/atlas/atlas.h>
-#include <logging/log.h>
-#include <internal/Greet_types.h>
-#include <utils/errorhandler.h>
+#include <graphics/atlas/Atlas.h>
+#include <logging/Log.h>
+#include <internal/GreetTypes.h>
+#include <utils/ErrorHandler.h>
 
 namespace Greet {
 	class AtlasManager

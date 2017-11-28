@@ -1,13 +1,13 @@
 #pragma once
 
-#include <math/math_func.h>
-#include <graphics/gui/gui.h>
-#include <graphics/gui/slidercontroller.h>
-#include <utils/colorutils.h>
-#include <graphics/fonts/fontmanager.h>
-#include <drivers/rectdriver.h>
-#include <drivers/driverdispatcher.h>
-#include <drivers/driveradapter.h>
+#include <math/MathFunc.h>
+#include <graphics/gui/GUI.h>
+#include <graphics/gui/SliderController.h>
+#include <utils/ColorUtils.h>
+#include <graphics/fonts/FontManager.h>
+#include <drivers/RectDriver.h>
+#include <drivers/DriverDispatcher.h>
+#include <graphics/layers/GUILayer.h>
 
 namespace Greet {
 

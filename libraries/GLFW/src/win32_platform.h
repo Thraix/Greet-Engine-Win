@@ -141,7 +141,7 @@ typedef HRESULT (WINAPI * DWMISCOMPOSITIONENABLED_T)(BOOL*);
  #error "No supported context creation API selected"
 #endif
 
-#include "winmm_joystick.h"
+#include "winmm_Joystick.h"
 
 #define _GLFW_PLATFORM_WINDOW_STATE         _GLFWwindowWin32  win32
 #define _GLFW_PLATFORM_LIBRARY_WINDOW_STATE _GLFWlibraryWin32 win32

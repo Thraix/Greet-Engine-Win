@@ -1,7 +1,7 @@
 #pragma once
 
 #include <graphics/models/Material.h>
-#include <graphics/models/mesh.h>
+#include <graphics/models/Mesh.h>
 
 namespace Greet {
 

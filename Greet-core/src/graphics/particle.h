@@ -1,7 +1,7 @@
 #pragma once
 
-#include <math/vec2.h>
-#include "renderable2d.h"
+#include <math/Vec2.h>
+#include "Renderable2D.h"
 
 namespace Greet{
 	class Particle : public Renderable2D {

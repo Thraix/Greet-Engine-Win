@@ -1,8 +1,8 @@
 #pragma once
 
-#include <math\maths.h>
-//#include <graphics/models/entitymodel.h>
-//#include <graphics/renderers/renderer3d.h>
+#include <math\Maths.h>
+//#include <graphics/models/EntityModel.h>
+//#include <graphics/renderers/Renderer3D.h>
 
 namespace Greet {
 	class Camera {
