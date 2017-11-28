@@ -2,7 +2,7 @@
 
 #include <utils/json/JSON.h>
 #include <utils/json/JSONArray.h>
-#include <internal\GreetTypes.h>
+#include <internal/GreetTypes.h>
 #include <logging/Log.h>
 #include <map>
 #include <vector>

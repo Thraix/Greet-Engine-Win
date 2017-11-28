@@ -1,7 +1,7 @@
 #pragma once
 
 #include <graphics/models/MeshData.h>
-#include <math\Maths.h>
+#include <math/Maths.h>
 
 namespace Greet { namespace MeshFactory {
 	vec3 calculateNormal(vec3 p1, vec3 p2, vec3 p3);

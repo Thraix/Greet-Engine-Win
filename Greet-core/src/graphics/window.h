@@ -13,9 +13,9 @@
 #include <internal/GreetGL.h>
 #include <internal/GreetTypes.h>
 #include <utils/UUID.h>
-#include <listeners\JoystickState.h>
-#include <listeners\WindowListener.h>
-#include <event\EventDispatcher.h>
+#include <listeners/JoystickState.h>
+#include <listeners/WindowListener.h>
+#include <event/EventDispatcher.h>
 #include <algorithm>
 
 #define MAX_KEYS			1024

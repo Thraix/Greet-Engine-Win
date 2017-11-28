@@ -4,7 +4,6 @@
 #include <audio/AudioChannel.h>
 #include <logging/Log.h>
 #include <internal/GreetTypes.h>
-#include <internal/GreetGL.h>
 #include <utils/Utils.h>
 #include <utils/ErrorHandler.h>
 #include <audio/AudioChannelManager.h>
@@ -17,8 +16,8 @@
 #include <drivers/DriverListener.h>
 #include <drivers/DriverAdapter.h>
 #include <drivers/DriverDispatcher.h>
-#include <drivers/LinearDriver.h>
 #include <drivers/RectDriver.h>
+#include <drivers/lineardriver.h>
 #include <math/Vec4.h>
 #include <math/Vec2.h>
 #include <math/MathFunc.h>
@@ -37,6 +36,7 @@
 #include <event/KeyListener.h>
 #include <logging/Logger.h>
 #include <event/EventDispatcher.h>
+#include <internal/GreetGL.h>
 #include <utils/FileUtils.h>
 #include <graphics/shaders/Shader.h>
 #include <graphics/textures/ImageFactory.h>
@@ -71,7 +71,6 @@
 #include <graphics/models/Mesh.h>
 #include <graphics/models/MaterialModel.h>
 #include <graphics/models/EntityModel.h>
-#include <graphics/models/Camera.h>
 #include <graphics/models/MeshFactory.h>
 #include <graphics/shaders/ShaderFactory.h>
 #include <graphics/Skybox.h>
@@ -100,12 +99,14 @@
 #include <graphics/gui/SliderController.h>
 #include <graphics/gui/Slider.h>
 #include <graphics/gui/TextBox.h>
-#include <graphics/layers/box2dlayer.h>
+#include <graphics/layers/Box2DLayer.h>
 #include <graphics/models/FPCamera.h>
 #include <graphics/models/TPCamera.h>
+#include <graphics/models/camera.h>
 #include <graphics/renderers/BatchRenderer.h>
 #include <utils/ObjUtils.h>
 #include <graphics/renderers/BatchRenderer3D.h>
+#include <greet.h>
 #include <internal/App.h>
 #include <listeners/WindowFocus.h>
 #include <listeners/WindowResize.h>

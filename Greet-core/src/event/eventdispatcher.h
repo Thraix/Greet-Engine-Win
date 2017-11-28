@@ -7,7 +7,7 @@
 #include <event/MouseListener.h>
 #include <event/KeyListener.h>
 #include <utils/Utils.h>
-#include <logging\Logger.h>
+#include <logging/Logger.h>
 
 #define DISPATCHER_GUI BIT(24)
 

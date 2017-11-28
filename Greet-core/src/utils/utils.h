@@ -2,8 +2,7 @@
 
 #include <ctime>
 #include <internal/GreetTypes.h>
-#include <internal\GreetGL.h>
-#include <utils\StringUtils.h>
+#include <internal/GreetGL.h>
 
 #define BIT(x) 1 << x
 

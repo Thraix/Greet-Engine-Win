@@ -2,7 +2,7 @@
 
 #include <internal/GreetGL.h>
 #include <math/Maths.h>
-#include <logging\Logger.h>
+#include <logging/Logger.h>
 #include <map>
 #include <vector>
 #include <graphics/textures/Texture.h>

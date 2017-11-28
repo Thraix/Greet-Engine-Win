@@ -1,7 +1,7 @@
 #pragma once
 
-#include <logging\Logger.h>
-#include <math\Maths.h>
+#include <logging/Logger.h>
+#include <math/Maths.h>
 #include <internal/GreetGL.h>
 #include <internal/GreetTypes.h>
 #include <vector>

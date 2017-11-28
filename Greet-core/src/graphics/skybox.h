@@ -3,9 +3,9 @@
 #include <graphics/textures/CubeMap.h>
 #include <graphics/models/Camera.h>
 #include <graphics/shaders/Shader.h>
-#include <graphics/models\Mesh.h>
+#include <graphics/models/Mesh.h>
 #include <graphics/models/MeshFactory.h>
-#include <graphics/shaders\ShaderFactory.h>
+#include <graphics/shaders/ShaderFactory.h>
 
 namespace Greet {
 	

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <internal\GreetTypes.h>
+#include <internal/GreetTypes.h>
 #include <string>
 #include <vector>
 

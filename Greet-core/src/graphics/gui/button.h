@@ -2,7 +2,7 @@
 
 #include <graphics/gui/GUI.h>
 #include <graphics/fonts/FontManager.h>
-#include <drivers\RectDriver.h>
+#include <drivers/RectDriver.h>
 #include <graphics/layers/GUILayer.h>
 #include <drivers/DriverDispatcher.h>
 

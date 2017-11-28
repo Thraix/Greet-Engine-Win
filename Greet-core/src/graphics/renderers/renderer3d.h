@@ -6,8 +6,8 @@
 #include <graphics/fonts/Font.h>
 #include <logging/Log.h>
 #include <graphics/renderers/Renderer.h>
-#include <graphics/models\EntityModel.h>
-#include <graphics/models\Camera.h>
+#include <graphics/models/EntityModel.h>
+#include <graphics/models/Camera.h>
 #include <graphics/Skybox.h>
 
 

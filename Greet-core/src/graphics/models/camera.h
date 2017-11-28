@@ -1,6 +1,6 @@
 #pragma once
 
-#include <math\Maths.h>
+#include <math/Maths.h>
 //#include <graphics/models/EntityModel.h>
 //#include <graphics/renderers/Renderer3D.h>
 

@@ -4,7 +4,7 @@
 #include <logging/Log.h>
 #include <internal/GreetTypes.h>
 #include <utils/ErrorHandler.h>
-#include <graphics/fonts\Font.h>
+#include <graphics/fonts/Font.h>
 
 namespace Greet {
 	class FontManager

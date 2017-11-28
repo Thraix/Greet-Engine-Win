@@ -1,6 +1,6 @@
 #pragma once
 
-#include <drivers\Driver1.h>
+#include <drivers/Driver1.h>
 
 namespace Greet {
 

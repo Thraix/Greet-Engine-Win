@@ -173,6 +173,7 @@
     <ClCompile Include="src\graphics\layers\Layer.cpp" />
   </ItemGroup>
   <ItemGroup>
+	<ClInclude Include="src\utils\Utils.h" />
     <ClInclude Include="src\graphics\Font.h" />
     <ClInclude Include="src\managers\ChannelManager.h" />
     <ClInclude Include="src\managers\FontManager.h" />
