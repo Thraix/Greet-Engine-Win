@@ -46,7 +46,6 @@ namespace Greet {
 		AudioChannelManager::Destroy();
 		SoundManager::Destroy();
 		TextureManager::Destroy();
-		UUID::CleanUp();
 		glfwTerminate();
 	}
 
@@ -82,7 +81,6 @@ namespace Greet {
 		FontManager::Add(new FontContainer("Roboto-thin.ttf","roboto"));
 		uint width,height,bpp;
 		TextureManager::Add(new Texture2D("frame.png","frame"));
-		UUID::Init();
 
 		Log::Info("OpenGL Version: ", glGetString(GL_VERSION));
 		Log::Info("GLFW Version: ", glfwGetVersionString());

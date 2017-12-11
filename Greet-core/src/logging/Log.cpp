@@ -2,7 +2,6 @@
 namespace Greet {
 
 	Log Log::m_log;
-
 	Log::Log()
 	{
 		m_logger.AddLogStream(new LogStream(std::cout, LogLevel::information, "console"));
@@ -10,7 +9,6 @@ namespace Greet {
 
 	Log::~Log()
 	{
-		
 	}
 
 	void Log::AddLogStream(LogStream* stream)

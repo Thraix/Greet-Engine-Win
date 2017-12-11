@@ -121,6 +121,7 @@
     <ClInclude Include="src\graphics\Animation.h" />
     <ClInclude Include="src\graphics\atlas\Atlas.h" />
     <ClInclude Include="src\graphics\atlas\AtlasManager.h" />
+    <ClInclude Include="src\graphics\AttributePointer.h" />
     <ClInclude Include="src\graphics\buffers\BatchIndexBuffer.h" />
     <ClInclude Include="src\graphics\buffers\Buffer.h" />
     <ClInclude Include="src\graphics\buffers\IndexBuffer.h" />
@@ -131,12 +132,14 @@
     <ClInclude Include="src\graphics\FrameBufferObject.h" />
     <ClInclude Include="src\graphics\gui\Border.h" />
     <ClInclude Include="src\graphics\gui\Button.h" />
+    <ClInclude Include="src\graphics\gui\DefaultProgressBarIndicator.h" />
     <ClInclude Include="src\graphics\gui\Frame.h" />
     <ClInclude Include="src\graphics\gui\GUI.h" />
     <ClInclude Include="src\graphics\gui\Label.h" />
     <ClInclude Include="src\graphics\gui\LTRB.h" />
     <ClInclude Include="src\graphics\gui\Panel.h" />
     <ClInclude Include="src\graphics\gui\ProgressBar.h" />
+    <ClInclude Include="src\graphics\gui\ProgressBarIndicator.h" />
     <ClInclude Include="src\graphics\gui\Slider.h" />
     <ClInclude Include="src\graphics\gui\SliderController.h" />
     <ClInclude Include="src\graphics\gui\TextBox.h" />

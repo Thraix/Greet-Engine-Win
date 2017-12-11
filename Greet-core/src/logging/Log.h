@@ -1,5 +1,6 @@
 #pragma once
 
+#include <fstream>
 #include "Logger.h"
 #include "LogLevel.h"
 

@@ -119,6 +119,9 @@
     <ClInclude Include="src\greet.h" />
     <ClInclude Include="src\graphics\Particlepool.h" />
     <ClInclude Include="src\math\Quaternion.h" />
+    <ClInclude Include="src\graphics\gui\ProgressBarIndicator.h" />
+    <ClInclude Include="src\graphics\gui\DefaultProgressBarIndicator.h" />
+    <ClInclude Include="src\graphics\AttributePointer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\audio\AudioChannel.cpp" />

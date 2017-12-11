@@ -1,27 +1,40 @@
 #include "UUID.h"
 namespace Greet {
 
-	UUID* UUID::s_instance;
+	UUID UUID::s_instance;
 
 	UUID::UUID()
 	{
 		srand(time(0));
-		m_current = rand();
+		m_current = GetRandomNumber();
 	}
 
 	uint UUID::GetUUID()
 	{
-		return m_current++;
+		uint uuid = m_current;
+
+		m_current = GenNewUUID();
+		return uuid;
 	}
 
-
-	void UUID::Init()
+	uint UUID::GetRandomNumber()
 	{
-		s_instance = new UUID();
+		return (rand() + 1) * (rand() + 1);
 	}
 
-	void UUID::CleanUp()
+	uint UUID::GenNewUUID()
 	{
-		delete s_instance;
+		uint i = 1000;
+		uint number;
+		while (i--)
+		{
+			number = GetRandomNumber();
+			if (number != 0 && m_usedUUID.count(number) > 0)
+			{
+				m_usedUUID.insert(number);
+				return number;
+			}
+		}
+		return 0;
 	}
 }

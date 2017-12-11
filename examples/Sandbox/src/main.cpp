@@ -61,6 +61,7 @@ public:
 
 	void Init() override
 	{
+		Log::Info("Random UUID: ", UUID::GetInstance().GetUUID());
 		EventDispatcher::AddKeyListener(DISPATCHER_GUI+1, *this);
 		EventDispatcher::AddMouseListener(DISPATCHER_GUI + 1, *this);
 		CreateWindow("Best Game Ever", 960, 540);
@@ -79,7 +80,7 @@ public:
 		fbo = new FrameBufferObject(960,540);
 		//camera = new TPCamera(vec3(-3.5, -7.8, 5.5), 18, 0.66, 38.5, 15, 80, 0, 0.8f); // Profile shot
 		camera = new TPCamera(Vec3(0, 0, 0), 15, 0, 0, 15, 80, 0, 0.8f);
-		Skybox* skybox = new Skybox((CubeMap*)TextureManager::Get("skybox"));
+		Skybox* skybox = new Skybox(TextureManager::Get3D("skybox"));
 		renderer3d = new BatchRenderer3D(Window::GetWidth(), Window::GetHeight(), camera,90,0.001f,1000.0f, skybox);
 
 
@@ -97,7 +98,7 @@ public:
 		uint gridWidth = 999;
 		uint gridLength = 999;
 		float* noise = Noise::GenNoise(gridWidth+1, gridWidth + 1,5,64, 64,0.5f);
-		noise[0] = 10;
+		//noise[0] = 10;
 		MeshData* gridMesh = MeshFactory::LowPolyGrid(0, 0, 0, gridWidth+1, gridLength+1, gridWidth, gridLength, noise,1);
 		RecalcGrid(gridMesh, gridWidth, gridLength);
 		
@@ -463,7 +464,8 @@ public:
 #include <fstream>
 int main()
 {
-	/*uint pos = 0;
+	/*
+	uint pos = 0;
 	uint lastPos = pos;
 	JSONObject obj = JSONLoader::loadJSON("test.txt");
 	Log::info("object1",obj.hasKey("object1") ? "true" : "false");
