@@ -22,7 +22,6 @@ private:
 	EntityModel* grid;
 	EntityModel* cube;
 	EntityModel* tetrahedron;
-	Shader* m_geomShaderTest;
 	std::vector<EntityModel> models;
 	FrameBufferObject* fbo;
 
@@ -83,15 +82,13 @@ public:
 		Skybox* skybox = new Skybox(TextureManager::Get3D("skybox"));
 		renderer3d = new BatchRenderer3D(Window::GetWidth(), Window::GetHeight(), camera,90,0.001f,1000.0f, skybox);
 
-
-		Shader* modelShader = Shader::FromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
-		Shader* terrainShader = Shader::FromFile("res/shaders/terrain.vert", "res/shaders/terrain.frag");
-		Shader* stallShader = Shader::FromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
+		Shader* modelShader = Shader::FromFile("res/shaders/3dshader.shader");
+		Shader* terrainShader = Shader::FromFile("res/shaders/terrain.shader");
+		Shader* stallShader = Shader::FromFile("res/shaders/3dshader.shader");
 		blurShader = Shader::FromFile("res/shaders/default2dshader.vert","res/shaders/guassianblur.frag");
-		m_geomShaderTest = Shader::FromFile("res/shaders/2dshader.geom","res/shaders/2dshader.vert", "res/shaders/2dshader.frag");
 
 		modelMaterial = new Material(modelShader, NULL);
-		stallMaterial = new Material(stallShader,TextureManager::Get("stall"));
+		stallMaterial = new Material(stallShader, TextureManager::Get("stall"));
 		terrainMaterial = new Material(terrainShader, NULL);
 		terrainMaterial->SetReflectivity(0.5f);
 		terrainMaterial->SetShineDamper(5.0f);
@@ -461,6 +458,7 @@ public:
 		uilayer->SetProjectionMatrix(Mat3::Orthographic(0,Window::GetWidth(),0,Window::GetHeight()));
 	}
 };
+
 #include <fstream>
 int main()
 {

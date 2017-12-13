@@ -5,7 +5,7 @@ namespace Greet { namespace DialogBox {
 #ifdef WIN32
 
 	#include <windows.h>
-	UINT getIcon(Style style) {
+	UINT GetIcon(Style style) {
 		switch (style) {
 		case Style::Info:
 			return MB_ICONINFORMATION;
@@ -20,7 +20,7 @@ namespace Greet { namespace DialogBox {
 		}
 	}
 
-	UINT getButtons(Buttons buttons) {
+	UINT GetButtons(Buttons buttons) {
 		switch (buttons) {
 		case Buttons::OK:
 			return MB_OK;
@@ -33,7 +33,7 @@ namespace Greet { namespace DialogBox {
 		}
 	}
 
-	Selection getSelection(int response) {
+	Selection GetSelection(int response) {
 		switch (response) {
 		case IDOK:
 			return Selection::OK;
@@ -48,17 +48,17 @@ namespace Greet { namespace DialogBox {
 		}
 	}
 
-	Selection show(const char *message, const char *title, Style style, Buttons buttons) {
+	Selection Show(const char *message, const char *title, Style style, Buttons buttons) {
 		UINT flags = MB_TASKMODAL;
 
-		flags |= getIcon(style);
-		flags |= getButtons(buttons);
+		flags |= GetIcon(style);
+		flags |= GetButtons(buttons);
 
-		return getSelection(MessageBox(NULL, message, title, flags));
+		return GetSelection(MessageBox(NULL, message, title, flags));
 	}
 #else
 	#include <gtk/gtk.h>
-	GtkMessageType getMessageType(Style style) {
+	GtkMessageType GetMessageType(Style style) {
 		switch (style) {
 		case Style::Info:
 			return GTK_MESSAGE_INFO;
@@ -73,7 +73,7 @@ namespace Greet { namespace DialogBox {
 		}
 	}
 
-	GtkButtonsType getButtonsType(Buttons buttons) {
+	GtkButtonsType GetButtonsType(Buttons buttons) {
 		switch (buttons) {
 		case Buttons::OK:
 			return GTK_BUTTONS_OK;
@@ -86,7 +86,7 @@ namespace Greet { namespace DialogBox {
 		}
 	}
 
-	Selection getSelection(gint response) {
+	Selection GetSelection(gint response) {
 		switch (response) {
 		case GTK_RESPONSE_OK:
 			return Selection::OK;
@@ -101,19 +101,19 @@ namespace Greet { namespace DialogBox {
 		}
 	}
 
-		Selection show(const char *message, const char *title, Style style, Buttons buttons) {
+		Selection Show(const char *message, const char *title, Style style, Buttons buttons) {
 		if (!gtk_init_check(0, NULL)) {
 			return Selection::None;
 		}
 
 		GtkWidget *dialog = gtk_message_dialog_new(NULL,
 			GTK_DIALOG_MODAL,
-			getMessageType(style),
-			getButtonsType(buttons),
+			GetMessageType(style),
+			GetButtonsType(buttons),
 			"%s",
 			message);
 		gtk_window_set_title(GTK_WINDOW(dialog), title);
-		Selection selection = getSelection(gtk_dialog_run(GTK_DIALOG(dialog)));
+		Selection selection = GetSelection(gtk_dialog_run(GTK_DIALOG(dialog)));
 
 		gtk_widget_destroy(GTK_WIDGET(dialog));
 		while (g_main_context_iteration(NULL, false));

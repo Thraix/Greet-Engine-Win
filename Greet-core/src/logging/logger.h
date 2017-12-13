@@ -1,10 +1,12 @@
 #pragma once
+
 #include <iostream>
 
 #include "LogLevel.h"
 #include "LogStream.h"
 
 #include <vector>
+
 namespace Greet {
 	class Logger
 	{

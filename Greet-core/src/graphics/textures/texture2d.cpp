@@ -46,13 +46,13 @@ namespace Greet {
 	void Texture2D::GenTexture(BYTE* bits, uint bpp)
 	{
 		if (m_texId != 0)
-			glDeleteTextures(1,&m_texId);
-		glGenTextures(1, &m_texId);
+			GLCall(glDeleteTextures(1,&m_texId));
+		GLCall(glGenTextures(1, &m_texId));
 
-		glBindTexture(GL_TEXTURE_2D, m_texId);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexImage2D(GL_TEXTURE_2D, 0, bpp == 32 ? GL_RGBA : GL_RGB, m_width, m_height, 0, bpp == 32 ? GL_BGRA : GL_BGR, GL_UNSIGNED_BYTE, bits);
-		glBindTexture(GL_TEXTURE_2D, 0);
+		GLCall(glBindTexture(GL_TEXTURE_2D, m_texId));
+		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
+		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
+		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, bpp == 32 ? GL_RGBA : GL_RGB, m_width, m_height, 0, bpp == 32 ? GL_BGRA : GL_BGR, GL_UNSIGNED_BYTE, bits));
+		GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 	}
 }

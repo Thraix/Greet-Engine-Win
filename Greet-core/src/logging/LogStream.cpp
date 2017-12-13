@@ -1,6 +1,8 @@
 #include "LogStream.h"
+
 #include <iostream>
 #include "Log.h"
+
 namespace Greet {
 
 	LogStream::LogStream()

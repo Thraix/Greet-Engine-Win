@@ -69,12 +69,12 @@ namespace Greet {
 		glfwSetCharCallback(window, key_char_callback);
 
 		glfwSwapInterval(0);
-		glEnable(GL_TEXTURE_2D);
-		glEnable(GL_BLEND);
-		glEnable(GL_DEPTH_TEST);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		GLCall(glEnable(GL_TEXTURE_2D));
+		GLCall(glEnable(GL_BLEND));
+		GLCall(glEnable(GL_DEPTH_TEST));
+		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 		ASSERT(glewInit() == GLEW_OK,"Glew failed to init.");
-		glProvokingVertex(GL_FIRST_VERTEX_CONVENTION);
+		GLCall(glProvokingVertex(GL_FIRST_VERTEX_CONVENTION));
 
 		// SET DEFAULT VALUES
 		FontManager::Add(new FontContainer("Roboto-Black.ttf","roboto-bold"));
@@ -143,7 +143,7 @@ namespace Greet {
 	void Window::SetBackgroundColor(vec4 color)
 	{
 		bgColor = color;
-		glClearColor(color.x, color.y, color.z, color.w);
+		GLCall(glClearColor(color.x, color.y, color.z, color.w));
 	}
 
 	void Window::AddResizeCallback(WindowResizeListener* listener)

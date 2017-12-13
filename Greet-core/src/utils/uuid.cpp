@@ -4,22 +4,19 @@ namespace Greet {
 	UUID UUID::s_instance;
 
 	UUID::UUID()
+		: m_randomEngine(time(NULL)), m_distribution()
 	{
-		srand(time(0));
-		m_current = GetRandomNumber();
 	}
 
 	uint UUID::GetUUID()
 	{
-		uint uuid = m_current;
-
-		m_current = GenNewUUID();
-		return uuid;
+		return GenNewUUID();
 	}
 
+	// generates a random 32 bit number
 	uint UUID::GetRandomNumber()
 	{
-		return (rand() + 1) * (rand() + 1);
+		return m_distribution(m_randomEngine);
 	}
 
 	uint UUID::GenNewUUID()
@@ -29,12 +26,15 @@ namespace Greet {
 		while (i--)
 		{
 			number = GetRandomNumber();
-			if (number != 0 && m_usedUUID.count(number) > 0)
+			if (number != 0 && m_usedUUID.count(number) == 0)
 			{
 				m_usedUUID.insert(number);
 				return number;
 			}
+			else
+				Log::Info("Hit");
 		}
+		Log::Warning("Could not generate random UUID. Try again.");
 		return 0;
 	}
 }

@@ -121,6 +121,13 @@ namespace Greet { namespace Utils {
 
 	inline uint Hex10ToDec16(const char c)
 	{
+		if (c >= '0' && c <= '9')
+			return (uint)(c - '0');
+		else if (c >= 'a' && c <= 'f')
+			return (uint)(c - 'a');
+		Log::Warning("Utils::Hex10ToDec16 couldn't recognize the hex character \'", c, "\'");
+		return 0;
+
 		switch (c)
 		{
 		case '0':case '1':case '2':case '3':case '4':case '5':case '6':case '7':case '8':case '9':

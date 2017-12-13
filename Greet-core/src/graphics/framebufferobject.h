@@ -23,9 +23,9 @@ namespace Greet {
 		void Bind();
 		void Unbind();
 		void AttachColorTexture(uint attachementId);
+		void AttachDepthTexture();
 		Texture2D* GetColorTexture(uint attachmentId) const;
 		inline Texture2D* GetDepthTexture() const { return m_depthTexture; }
 	private:
-		void AttachDepthTexture();
 	};
 }

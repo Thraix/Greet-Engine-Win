@@ -4,14 +4,14 @@ namespace Greet {
 
 	VertexArray::VertexArray()
 	{
-		glGenVertexArrays(1, &m_arrayID);
+		GLCall(glGenVertexArrays(1, &m_arrayID));
 	}
 
 	VertexArray::~VertexArray()
 	{
 		for (uint i = 0; i < m_buffers.size(); i++)
 			delete m_buffers[i];
-		glDeleteVertexArrays(1, &m_arrayID);
+		GLCall(glDeleteVertexArrays(1, &m_arrayID));
 	}
 
 	void VertexArray::AddBuffer(Buffer* buffer, GLuint index)
@@ -19,8 +19,8 @@ namespace Greet {
 		Enable();
 		buffer->Enable();
 
-		glEnableVertexAttribArray(index);
-		glVertexAttribPointer(index, buffer->GetComponentCount(), GL_FLOAT,GL_FALSE, 0, 0);
+		GLCall(glEnableVertexAttribArray(index));
+		GLCall(glVertexAttribPointer(index, buffer->GetComponentCount(), GL_FLOAT,GL_FALSE, 0, 0));
 
 		buffer->Disable();
 		Disable();
@@ -30,12 +30,12 @@ namespace Greet {
 
 	void VertexArray::Enable() const
 	{
-		glBindVertexArray(m_arrayID);
+		GLCall(glBindVertexArray(m_arrayID));
 	}
 
 	void VertexArray::Disable() const
 	{
-		glBindVertexArray(0);
+		GLCall(glBindVertexArray(0));
 	}
 
 }

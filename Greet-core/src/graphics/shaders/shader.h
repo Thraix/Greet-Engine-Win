@@ -7,6 +7,8 @@
 #include <iostream>
 #include <vector>
 #include <utils/ErrorHandler.h>
+#include <sstream>
+#include <fstream>
 
 namespace Greet {
 	class Shader
@@ -40,6 +42,7 @@ namespace Greet {
 		void SetUniformMat3(const GLchar *name, const Mat3 &value) const;
 		void SetUniformMat4(const GLchar *name, const Mat4 &value) const;
 	public:
+		static Shader* FromFile(const std::string& shaderPath);
 		static Shader* FromFile(const std::string& vertPath, const std::string& fragPath);
 		static Shader* FromFile(const std::string& geomPath, const std::string& vertPath, const std::string& fragPath);
 		static Shader* FromSource(const std::string& vertSrc, const std::string& fragSrc);

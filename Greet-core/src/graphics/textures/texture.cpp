@@ -16,17 +16,17 @@ namespace Greet {
 
 	Texture::~Texture()
 	{
-		glDeleteTextures(1,&m_texId);
+		GLCall(glDeleteTextures(1,&m_texId));
 	}
 
 	void Texture::Enable() const
 	{
-		glBindTexture(m_textureType, m_texId);
+		GLCall(glBindTexture(m_textureType, m_texId));
 	}
 
 	void Texture::Disable() const
 	{
-		glBindTexture(m_textureType, 0);
+		GLCall(glBindTexture(m_textureType, 0));
 	}
 
 }

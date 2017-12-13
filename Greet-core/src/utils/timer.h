@@ -1,5 +1,7 @@
 #pragma once
+
 #include <chrono>
+
 namespace Greet {
 	class Timer
 	{
@@ -23,3 +25,5 @@ namespace Greet {
 		}
 	};
 }
+
+#define TIMETEST(x) Timer timer; x; Log::Info("Time Elapsed: ", timer.Elapsed());

@@ -22,69 +22,69 @@ namespace Greet {
 		m_indexCount = indexCount;
 
 		// VAO
-		glGenVertexArrays(1, &m_vaoId);
-		glBindVertexArray(m_vaoId);
+		GLCall(glGenVertexArrays(1, &m_vaoId));
+		GLCall(glBindVertexArray(m_vaoId));
 
 		// IBO
-		glGenBuffers(1, &m_iboId);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(uint), indices, GL_STATIC_DRAW);
+		GLCall(glGenBuffers(1, &m_iboId));
+		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId));
+		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(uint), indices, GL_STATIC_DRAW));
 
 		// Attributes 
 		AddAttribute(MESH_VERTICES_LOCATION, vertices); // vertices
 		
 		// Set default color to white
-		glVertexAttrib4f(MESH_COLORS_LOCATION,1.0f,1.0f,1.0f,1.0f);
+		GLCall(glVertexAttrib4f(MESH_COLORS_LOCATION,1.0f,1.0f,1.0f,1.0f));
 
 		// Unbind
-		glBindVertexArray(0);
+		GLCall(glBindVertexArray(0));
 	}
 	Mesh::~Mesh()
 	{
 		for (auto it = m_vbos.begin();it != m_vbos.end(); it++)
 		{
-			glDeleteBuffers(1,&it->second);
+			GLCall(glDeleteBuffers(1,&it->second));
 		}
 		m_vbos.clear();
-		glDeleteBuffers(1,&m_iboId);
-		glDeleteVertexArrays(1,&m_vaoId);
+		GLCall(glDeleteBuffers(1,&m_iboId));
+		GLCall(glDeleteVertexArrays(1,&m_vaoId));
 	}
 
 	void Mesh::Render() const
 	{
-		glDrawElements(GL_TRIANGLES, m_indexCount * sizeof(uint), GL_UNSIGNED_INT,0);
+		GLCall(glDrawElements(GL_TRIANGLES, m_indexCount * sizeof(uint), GL_UNSIGNED_INT,0));
 	}
 
 	void Mesh::Bind() const
 	{
 		if (m_culling)
 		{	
-			glEnable(GL_CULL_FACE);
-			glFrontFace(m_clockwise ? GL_CW : GL_CCW);
+			GLCall(glEnable(GL_CULL_FACE));
+			GLCall(glFrontFace(m_clockwise ? GL_CW : GL_CCW));
 		}
 		else
 		{
-			glDisable(GL_CULL_FACE);
+			GLCall(glDisable(GL_CULL_FACE));
 		}
 
-		glBindVertexArray(m_vaoId);
+		GLCall(glBindVertexArray(m_vaoId));
 		EnableAttributes();
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId);
+		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId));
 	}
 
 	void Mesh::Unbind() const
 	{
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 		DisableAttributes();
-		glBindVertexArray(0);
-		glDisable(GL_CULL_FACE);
+		GLCall(glBindVertexArray(0));
+		GLCall(glDisable(GL_CULL_FACE));
 	}
 
 	void Mesh::EnableAttributes() const
 	{
 		for (auto it = m_vbos.begin();it != m_vbos.end(); it++)
 		{
-			glEnableVertexAttribArray(it->first);
+			GLCall(glEnableVertexAttribArray(it->first));
 		}	
 	}
 
@@ -92,7 +92,7 @@ namespace Greet {
 	{
 		for (auto it = m_vbos.begin();it != m_vbos.end(); it++)
 		{
-			glDisableVertexAttribArray(it->first);
+			GLCall(glDisableVertexAttribArray(it->first));
 		}
 	}
 
@@ -105,17 +105,17 @@ namespace Greet {
 			Log::Error("Shader location already used in mesh: ", location);
 			return;
 		}
-		glBindVertexArray(m_vaoId);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId);
+		GLCall(glBindVertexArray(m_vaoId));
+		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId));
 		uint vbo;
-		glGenBuffers(1, &vbo);
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		GLCall(glGenBuffers(1, &vbo));
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, vbo));
 		m_vbos.emplace(location, vbo); // Needed to delete vbo when deleting mesh
-		glBufferData(GL_ARRAY_BUFFER, m_vertexCount * sizeof(float) * 3, data, GL_STATIC_DRAW);
-		glVertexAttribPointer(location, 3, GL_FLOAT, false, 0, 0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		glBindVertexArray(0);
+		GLCall(glBufferData(GL_ARRAY_BUFFER, m_vertexCount * sizeof(float) * 3, data, GL_STATIC_DRAW));
+		GLCall(glVertexAttribPointer(location, 3, GL_FLOAT, false, 0, 0));
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+		GLCall(glBindVertexArray(0));
 	}
 
 	void Mesh::AddAttribute(uint location, const Vec2* data)
@@ -126,17 +126,17 @@ namespace Greet {
 			Log::Error("Shader location already used in mesh: ", location);
 			return;
 		}
-		glBindVertexArray(m_vaoId);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId);
+		GLCall(glBindVertexArray(m_vaoId));
+		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId));
 		uint vbo;
-		glGenBuffers(1, &vbo);
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		GLCall(glGenBuffers(1, &vbo));
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, vbo));
 		m_vbos.emplace(location, vbo); // Needed to delete vbo when deleting mesh
-		glBufferData(GL_ARRAY_BUFFER, m_vertexCount * sizeof(float) * 2, data, GL_STATIC_DRAW);
-		glVertexAttribPointer(location, 2, GL_FLOAT, false, 0, 0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		glBindVertexArray(0);
+		GLCall(glBufferData(GL_ARRAY_BUFFER, m_vertexCount * sizeof(float) * 2, data, GL_STATIC_DRAW));
+		GLCall(glVertexAttribPointer(location, 2, GL_FLOAT, false, 0, 0));
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+		GLCall(glBindVertexArray(0));
 	}
 
 	void Mesh::AddAttribute(uint location, uint attributeSize, const uint* data)
@@ -147,16 +147,16 @@ namespace Greet {
 			Log::Error("Shader location already used in mesh: ",location);
 			return;
 		}
-		glBindVertexArray(m_vaoId);
+		GLCall(glBindVertexArray(m_vaoId));
 		uint vbo;
-		glGenBuffers(1, &vbo);
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		GLCall(glGenBuffers(1, &vbo));
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, vbo));
 		m_vbos.emplace(location, vbo); // Needed to delete vbo when deleting mesh
-		glBufferData(GL_ARRAY_BUFFER, m_vertexCount * sizeof(byte) * attributeSize, data, GL_STATIC_DRAW);
-		glVertexAttribPointer(location, attributeSize, GL_UNSIGNED_BYTE, GL_TRUE, 0, 0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		glBindVertexArray(0);
+		GLCall(glBufferData(GL_ARRAY_BUFFER, m_vertexCount * sizeof(byte) * attributeSize, data, GL_STATIC_DRAW));
+		GLCall(glVertexAttribPointer(location, attributeSize, GL_UNSIGNED_BYTE, GL_TRUE, 0, 0));
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+		GLCall(glBindVertexArray(0));
 
 	}
 
@@ -168,29 +168,29 @@ namespace Greet {
 			Log::Error("Shader location already used in mesh: ",data->location);
 			return;
 		}
-		glBindVertexArray(m_vaoId);
+		GLCall(glBindVertexArray(m_vaoId));
 		uint vbo;
-		glGenBuffers(1, &vbo);
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		GLCall(glGenBuffers(1, &vbo));
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, vbo));
 		m_vbos.emplace(data->location,vbo); // Needed to delete vbo when deleting mesh
-		glBufferData(GL_ARRAY_BUFFER, m_vertexCount * data->memoryValueSize, data->data, GL_STATIC_DRAW);
-		glVertexAttribPointer(data->location, data->vertexValueSize, data->glType, data->normalized, 0, 0);
-		glBindBuffer(GL_ARRAY_BUFFER,0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
-		glBindVertexArray(0);
+		GLCall(glBufferData(GL_ARRAY_BUFFER, m_vertexCount * data->memoryValueSize, data->data, GL_STATIC_DRAW));
+		GLCall(glVertexAttribPointer(data->location, data->vertexValueSize, data->glType, data->normalized, 0, 0));
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER,0));
+		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0));
+		GLCall(glBindVertexArray(0));
 	}
 
 	void Mesh::SetDefaultAttribute4f(uint location, const vec4& data)
 	{
-		glBindVertexArray(m_vaoId);
-		glVertexAttrib4f(location,data.x,data.y,data.z,data.w);
-		glBindVertexArray(0);	
+		GLCall(glBindVertexArray(m_vaoId));
+		GLCall(glVertexAttrib4f(location,data.x,data.y,data.z,data.w));
+		GLCall(glBindVertexArray(0));
 	}
 
 	void Mesh::SetDefaultAttribute3f(uint location, const Vec3& data)
 	{
-		glBindVertexArray(m_vaoId);
-		glVertexAttrib3f(location,data.x,data.y,data.z);
-		glBindVertexArray(0);
+		GLCall(glBindVertexArray(m_vaoId));
+		GLCall(glVertexAttrib3f(location,data.x,data.y,data.z));
+		GLCall(glBindVertexArray(0));
 	}
 }

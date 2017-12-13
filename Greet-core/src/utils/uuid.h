@@ -12,7 +12,8 @@ namespace Greet {
 	{
 		friend class Window;
 	private:
-		uint m_current;
+		std::default_random_engine m_randomEngine;
+		std::uniform_int_distribution<uint> m_distribution;
 		std::set<uint> m_usedUUID;
 
 	public:

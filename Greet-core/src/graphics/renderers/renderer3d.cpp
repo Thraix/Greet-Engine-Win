@@ -3,12 +3,12 @@
 namespace Greet{
 	void Renderer3D::Render(const Mesh& mesh) const
 	{
-		glEnable(GL_CULL_FACE);
-		glFrontFace(mesh.IsClockwiseRender() ? GL_CW : GL_CCW);
+		GLCall(glEnable(GL_CULL_FACE));
+		GLCall(glFrontFace(mesh.IsClockwiseRender() ? GL_CW : GL_CCW));
 		mesh.Bind();
 		mesh.Render();
 		mesh.Unbind();
-		glDisable(GL_CULL_FACE);
+		GLCall(glDisable(GL_CULL_FACE));
 	}
 
 	void Renderer3D::Render(const MaterialModel& model) const

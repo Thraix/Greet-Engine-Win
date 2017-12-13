@@ -44,8 +44,8 @@ namespace Greet {
 	
 	void Box2DLayer::Render() const
 	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		GLCall(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
 		Layer::Render();
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		GLCall(glPolygonMode(GL_FRONT_AND_BACK, GL_FILL));
 	}
 }

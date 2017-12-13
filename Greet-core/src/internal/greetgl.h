@@ -1,9 +1,11 @@
-#ifndef _GreetGL_H_
-#define _GreetGL_H_
+#ifndef _GREETGL_H_
+#define _GREETGL_H_
+
 #ifndef GLEW_STATIC
 #define GLEW_STATIC
 #endif // !GLEW_STATIC
 
+#include <logging/Log.h>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -35,4 +37,25 @@
 #define GLFW_JOYSTICK_BUTTONS		0x0E
 #define GLFW_JOYSTICK_AXES			0x05
 
-#endif // _GreetGL_H_
+static void GLClearError()
+{
+	GLenum err;
+	while ((err = glGetError()) != GL_NO_ERROR);
+}
+
+static void GLLogError(const char* glCall, const char* file, int line)
+{
+	GLenum err;
+	while ((err = glGetError()) != GL_NO_ERROR)
+		Greet::Log::Error("OpenGL error(",err,")", " at ", file,":",line," using ", glCall);
+}
+
+
+
+#if defined _DEBUG
+	#define GLCall(x) GLClearError(); x; GLLogError(#x,__FILE__,__LINE__)
+#else
+	#define GLCall(x) x
+#endif
+
+#endif // _GREETGL_H_

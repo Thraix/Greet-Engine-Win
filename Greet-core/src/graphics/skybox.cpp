@@ -22,16 +22,14 @@ namespace Greet {
 		m_shader->Enable();
 		m_shader->SetUniformMat4("projectionMatrix", projectionMatrix);
 		m_shader->SetUniformMat4("viewMatrix", Mat4::ViewMatrix(Vec3(0, 0, 0), camera.GetRotationVector()));
-		glActiveTexture(GL_TEXTURE0);
+		GLCall(glActiveTexture(GL_TEXTURE0));
 		m_map->Enable();
-		glDisable(GL_DEPTH_BUFFER);
-		glDepthMask(GL_FALSE);
-		glFrontFace(GL_CCW);
+		GLCall(glDisable(GL_DEPTH_TEST));
+		GLCall(glFrontFace(GL_CCW));
 		m_mesh->Bind();
 		m_mesh->Render();
 		m_mesh->Unbind();
-		glEnable(GL_DEPTH_BUFFER);
-		glDepthMask(GL_TRUE);
+		GLCall(glEnable(GL_DEPTH_TEST));
 		m_map->Disable();
 		m_shader->Disable();
 	}

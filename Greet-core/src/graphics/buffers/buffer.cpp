@@ -5,24 +5,24 @@ namespace Greet {
 	{
 		m_componentCount = componentCount;
 
-		glGenBuffers(1,&m_bufferID);
-		glBindBuffer(GL_ARRAY_BUFFER, m_bufferID);
-		glBufferData(GL_ARRAY_BUFFER, count * sizeof(float),data,GL_STATIC_DRAW);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		GLCall(glGenBuffers(1,&m_bufferID));
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_bufferID));
+		GLCall(glBufferData(GL_ARRAY_BUFFER, count * sizeof(float),data,GL_STATIC_DRAW));
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
 	}
 
 	Buffer::~Buffer()
 	{
-		glDeleteBuffers(1, &m_bufferID);
+		GLCall(glDeleteBuffers(1, &m_bufferID));
 	}
 
 	void Buffer::Enable() const
 	{
-		glBindBuffer(GL_ARRAY_BUFFER, m_bufferID);
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_bufferID));
 	}
 
 	void Buffer::Disable() const
 	{
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
 	}
 }
