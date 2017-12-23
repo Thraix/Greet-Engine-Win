@@ -4,7 +4,7 @@
 #include <vector>
 #include <graphics/models/EntityModel.h>
 #include <graphics/models/Camera.h>
-#include <utils/ObjUtils.h>
+#include <utils/OBJUtils.h>
 #include <graphics/textures/TextureManager.h>
 #include <graphics/Skybox.h>
 #include <graphics/models/MeshFactory.h>

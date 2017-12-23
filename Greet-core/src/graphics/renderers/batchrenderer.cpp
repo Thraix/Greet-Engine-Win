@@ -9,14 +9,10 @@ namespace Greet {
 
 	BatchRenderer::~BatchRenderer()
 	{
-		delete m_indices;
+		delete[] m_indices;
 		GLCall(glDeleteBuffers(1, &m_ibo));
 		GLCall(glDeleteBuffers(1, &m_vbo));
 		GLCall(glDeleteVertexArrays(1, &m_vao));
-		for (uint i = 0; i < m_texSlots.size(); i++)
-		{
-			delete &m_texSlots[i];
-		}
 	}
 
 	void BatchRenderer::Init()
@@ -41,6 +37,7 @@ namespace Greet {
 		GLCall(glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid*)offsetof(VertexData, VertexData::color)));
 		GLCall(glVertexAttribPointer(SHADER_MASK_TEXCOORD_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)offsetof(VertexData, VertexData::maskTexCoord)));
 		GLCall(glVertexAttribPointer(SHADER_MASK_TEXID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)offsetof(VertexData, VertexData::maskTexID)));
+
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
 
 		//Generate all the indices at runtime

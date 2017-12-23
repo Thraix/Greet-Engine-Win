@@ -30,7 +30,7 @@ void addFile(const std::string& filename, std::set<std::string>::iterator& it)
 			std::replace(inc.begin(), inc.end(), '\\', '/');
 			if (files.count(inc) > 0)
 			{
-				auto found = files.find(inc);
+				std::set<std::string>::iterator found = files.find(inc);
 				filesChecked.insert(inc);
 				files.erase(found);
 				if (found == it)

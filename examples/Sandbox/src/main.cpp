@@ -41,6 +41,10 @@ private:
 	Renderable2D* driverTest;
 	Renderable2D* fboScene;
 
+	Shader* batchShader;
+	BatchRenderer2D<RenderableSquareVertex>* batchRenderer2D;
+	RenderableSquare* renderable;
+
 public:
 	
 	Core::~Core()
@@ -69,11 +73,11 @@ public:
 		TextureManager::Add(new Texture2D("res/textures/cursor.png", "cursor"));
 		TextureManager::Add(new Texture2D("res/textures/mask.png", "mask"));
 		TextureManager::Add(new Texture2D("res/textures/mask2.png", "mask2"));
-		TextureManager::Add(new CubeMap("res/textures/skybox.png", "skybox"));
 		TextureManager::Add(new Texture2D("res/textures/lens_flare1.png", "lensflare1"));
 		TextureManager::Add(new Texture2D("res/textures/lens_flare2.png", "lensflare2"));
 		TextureManager::Add(new Texture2D("res/textures/lens_flare3.png", "lensflare3"));
 		TextureManager::Add(new Texture2D("res/textures/lens_flare4.png", "lensflare4"));
+		TextureManager::Add(new CubeMap("res/textures/skybox.png", "skybox"));
 		FontManager::Add(new FontContainer("Anonymous Pro.ttf", "anonymous"));
 
 		fbo = new FrameBufferObject(960,540);
@@ -446,7 +450,7 @@ public:
 	bool screenshot = false;
 	void Render() override
 	{
-		
+
 	}
 	
 	void WindowResize(int width, int height) override

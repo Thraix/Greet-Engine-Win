@@ -29,6 +29,7 @@ namespace Greet{
 			m_transformationBack = &m_transformationStack.top();
 
 		}
+
 		void PopMatrix()
 		{
 			if (m_transformationStack.size() > 1)

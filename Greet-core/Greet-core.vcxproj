@@ -60,6 +60,7 @@
     <ClCompile Include="src\graphics\models\TPCamera.cpp" />
     <ClCompile Include="src\graphics\Particle.cpp" />
     <ClCompile Include="src\graphics\ParticlePool.cpp" />
+    <ClCompile Include="src\graphics\renderables\RenderableSquare.cpp" />
     <ClCompile Include="src\graphics\RenderEngine.cpp" />
     <ClCompile Include="src\graphics\renderers\BatchRenderer.cpp" />
     <ClCompile Include="src\graphics\renderers\BatchRenderer3D.cpp" />
@@ -162,8 +163,11 @@
     <ClInclude Include="src\graphics\Renderable.h" />
     <ClInclude Include="src\graphics\Renderable2D.h" />
     <ClInclude Include="src\graphics\RenderablePoly.h" />
+    <ClInclude Include="src\graphics\renderables\RenderableGUI.h" />
+    <ClInclude Include="src\graphics\renderables\RenderableSquare.h" />
     <ClInclude Include="src\graphics\RenderEngine.h" />
     <ClInclude Include="src\graphics\renderers\BatchRenderer.h" />
+    <ClInclude Include="src\graphics\renderers\BatchRenderer2D.h" />
     <ClInclude Include="src\graphics\renderers\BatchRenderer3D.h" />
     <ClInclude Include="src\graphics\renderers\Renderer.h" />
     <ClInclude Include="src\graphics\renderers\Renderer2D.h" />

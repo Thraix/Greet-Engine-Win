@@ -7,6 +7,7 @@
 #include <graphics/textures/Texture.h>
 
 namespace Greet {
+
 	class Texture2D : public Texture
 	{
 		friend class FrameBufferObject;

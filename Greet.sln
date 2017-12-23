@@ -30,6 +30,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "utils", "utils", "{541FB2C1
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GreetHGenerator", "GreetHGenerator\GreetHGenerator.vcxproj", "{2284E036-8D5B-4FCE-AA94-C4EFB9E110C4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BatchRenderer2D", "examples\BatchRenderer2D\BatchRenderer2D.vcxproj", "{DE711D1B-7EE5-4650-8E59-4F3822CE05B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -108,6 +110,14 @@ Global
 		{2284E036-8D5B-4FCE-AA94-C4EFB9E110C4}.Release|x64.ActiveCfg = Release|x64
 		{2284E036-8D5B-4FCE-AA94-C4EFB9E110C4}.Release|x64.Build.0 = Release|x64
 		{2284E036-8D5B-4FCE-AA94-C4EFB9E110C4}.Release|x64.Deploy.0 = Release|x64
+		{DE711D1B-7EE5-4650-8E59-4F3822CE05B8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DE711D1B-7EE5-4650-8E59-4F3822CE05B8}.Debug|Win32.Build.0 = Debug|Win32
+		{DE711D1B-7EE5-4650-8E59-4F3822CE05B8}.Debug|x64.ActiveCfg = Debug|x64
+		{DE711D1B-7EE5-4650-8E59-4F3822CE05B8}.Debug|x64.Build.0 = Debug|x64
+		{DE711D1B-7EE5-4650-8E59-4F3822CE05B8}.Release|Win32.ActiveCfg = Release|Win32
+		{DE711D1B-7EE5-4650-8E59-4F3822CE05B8}.Release|Win32.Build.0 = Release|Win32
+		{DE711D1B-7EE5-4650-8E59-4F3822CE05B8}.Release|x64.ActiveCfg = Release|x64
+		{DE711D1B-7EE5-4650-8E59-4F3822CE05B8}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -121,6 +131,7 @@ Global
 		{08FF162B-3108-4E9D-9FBF-66891F73B74C} = {B3EF237C-4ABD-49BE-A262-F29908327B32}
 		{A1F7F965-3BDD-40A9-B968-8AA3B69FCA2B} = {971F913B-4EF1-4174-829D-2FF73209C766}
 		{2284E036-8D5B-4FCE-AA94-C4EFB9E110C4} = {541FB2C1-0533-4352-822E-5F0CFFA64FB9}
+		{DE711D1B-7EE5-4650-8E59-4F3822CE05B8} = {971F913B-4EF1-4174-829D-2FF73209C766}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FC93E7E9-9F95-4A56-99D7-22D6F8A2F0A5}

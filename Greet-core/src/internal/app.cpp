@@ -56,16 +56,16 @@ namespace Greet {
 			{
 				DriverDispatcher::Update(updateTick);
 				Update(elapsed - updateTimer);
-				Window::Update();
 				RenderEngine::Update(elapsed - updateTimer);
+				Window::Update();
 				updates++;
 				updateTimer = elapsed;
 			}
 			if (elapsed - renderTimer >= frameCap)
 			{
 				Window::Clear();
-				Render();
 				RenderEngine::Render();
+				Render();
 				Window::Render();
 				frames++;
 				renderTimer = elapsed;
