@@ -24,9 +24,11 @@ namespace Greet
 		std::string m_text;
 		// Cursor position
 		uint m_cursorPosition;
+		// true if characters should be hidden
+		bool m_password;
 	public:
 
-		TextBox(const Vec2& position, const Vec2& size);
+		TextBox(const Vec2& position, const Vec2& size, bool password = false);
 
 		bool Update(float timeElapsed) override;
 		void Render(Renderer2D* renderer) const override;
