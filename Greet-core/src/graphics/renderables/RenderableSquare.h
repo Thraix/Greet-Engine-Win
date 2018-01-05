@@ -12,18 +12,6 @@ namespace Greet {
 		Vec2 texCoord;
 		float texId;
 		uint color;
-
-		static void SetAttribPointers()
-		{
-			GLCall(glEnableVertexAttribArray(0));
-			GLCall(glEnableVertexAttribArray(1));
-			GLCall(glEnableVertexAttribArray(2));
-			GLCall(glEnableVertexAttribArray(3));
-			GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(RenderableSquareVertex), (const GLvoid*)offsetof(RenderableSquareVertex, RenderableSquareVertex::position)));
-			GLCall(glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(RenderableSquareVertex), (const GLvoid*)offsetof(RenderableSquareVertex, RenderableSquareVertex::texCoord)));
-			GLCall(glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(RenderableSquareVertex), (const GLvoid*)offsetof(RenderableSquareVertex, RenderableSquareVertex::texId)));
-			GLCall(glVertexAttribPointer(3, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(RenderableSquareVertex), (const GLvoid*)offsetof(RenderableSquareVertex, RenderableSquareVertex::color)));
-		}
 	};
 
 	class RenderableSquare
@@ -49,7 +37,24 @@ namespace Greet {
 			: m_pos(pos), m_size(size), m_color(color), m_texture(texture), m_texPos(texPos), m_texSize(texSize)
 		{}
 
-		void SetVertices(BatchRenderer2D<RenderableSquareVertex>* renderer, RenderableSquareVertex** bufferPointer) const;
+		static void SetAttribPointers()
+		{
+			GLCall(glEnableVertexAttribArray(0));
+			GLCall(glEnableVertexAttribArray(1));
+			GLCall(glEnableVertexAttribArray(2));
+			GLCall(glEnableVertexAttribArray(3));
+			GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(RenderableSquareVertex), (const GLvoid*)offsetof(RenderableSquareVertex, RenderableSquareVertex::position)));
+			GLCall(glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(RenderableSquareVertex), (const GLvoid*)offsetof(RenderableSquareVertex, RenderableSquareVertex::texCoord)));
+			GLCall(glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(RenderableSquareVertex), (const GLvoid*)offsetof(RenderableSquareVertex, RenderableSquareVertex::texId)));
+			GLCall(glVertexAttribPointer(3, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(RenderableSquareVertex), (const GLvoid*)offsetof(RenderableSquareVertex, RenderableSquareVertex::color)));
+		}
+
+		static uint GetVertexSize()
+		{
+			return sizeof(RenderableSquareVertex);
+		}
+
+		void Draw(BatchRenderer2D<RenderableSquare>* renderer, void** pointer) const;
 		inline void SetVertex(RenderableSquareVertex** bufferPointer, const Vec2& pos, const Vec2& texCoord, uint color, float texId) const;
 		uint GetVertexCount() const;
 	};

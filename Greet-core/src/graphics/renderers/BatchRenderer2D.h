@@ -20,8 +20,8 @@ namespace Greet {
 		uint m_vbo;
 		uint m_ibo;
 		uint* m_indices;
-		T* m_bufferBegin;
-		T* m_buffer;
+		void* m_bufferBegin;
+		void* m_buffer;
 		uint m_iboSize;
 		uint m_lastIndex;
 		uint* m_texSlots;
@@ -36,7 +36,7 @@ namespace Greet {
 			GLCall(glBindVertexArray(m_vao));
 			GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_vbo));
 
-			m_vertexSize = sizeof(T);
+			m_vertexSize = T::GetVertexSize();
 			// vertexSize * triangles * nrCornersInTriangle
 			m_bufferSize = m_vertexSize * triangles * 3;
 			m_iboSize = triangles * indicesPerTriangle;
@@ -67,7 +67,7 @@ namespace Greet {
 		void Begin()
 		{
 			GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_vbo));
-			GLCall(m_buffer = (T*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+			GLCall(m_buffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 			m_bufferBegin = m_buffer;
 			m_indexAmount = 0;
 			m_lastIndex = 0;
@@ -116,14 +116,14 @@ namespace Greet {
 		{
 			if (NeedFlush(renderable->GetVertexCount()))
 				Flush();
-			renderable->SetVertices(this, &m_buffer);
+			renderable->Draw(this, &m_buffer);
 		}
 
 		bool NeedFlush(uint vertices)
 		{
 			if (m_iboSize < m_indexAmount + (vertices - 2) * 3)
 				return true;
-			if (m_bufferSize < (m_buffer - m_bufferBegin) + vertices)
+			if (m_bufferSize < ((char*)m_buffer - (char*)m_bufferBegin) / m_vertexSize + vertices)
 				return true;
 			return false;
 		}

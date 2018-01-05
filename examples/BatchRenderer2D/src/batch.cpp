@@ -8,7 +8,7 @@ class Core : public App
 {
 private:
 	Shader* batchShader;
-	BatchRenderer2D<RenderableSquareVertex>* batchRenderer2D;
+	BatchRenderer2D<RenderableSquare>* batchRenderer2D;
 	RenderableSquare* renderable;
 
 public:
@@ -26,7 +26,7 @@ public:
 		TextureManager::Add(new Texture2D("res/textures/test.png","test"));
 
 		batchShader = Shader::FromFile("res/shaders/test2dshader.shader");
-		batchRenderer2D = new BatchRenderer2D<RenderableSquareVertex>();
+		batchRenderer2D = new BatchRenderer2D<RenderableSquare>();
 		renderable = new RenderableSquare(Vec2(-0.5, 0.5), Vec2(1, -1), TextureManager::Get2D("test"), Vec2(0,0), Vec2(0.5f,0.5f));
 	}
 
