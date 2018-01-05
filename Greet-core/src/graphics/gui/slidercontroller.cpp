@@ -9,10 +9,11 @@ namespace Greet
 		SetBackgroundColor(ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 9)));
 	}
 
-	void SliderController::Submit(Renderer2D* renderer) const
+	void SliderController::Submit(BatchRenderer2D* renderer) const
 	{
 		if (m_renderBackground)
-			renderer->FillRect(Vec2(-Math::Half(m_size.x),-Math::Half(m_size.y)), m_size, m_backgroundColor, m_mask);
+			renderer->FillRect(Vec2(-Math::Half(m_size.x), -Math::Half(m_size.y)), m_size, m_backgroundColor);
+			//renderer->FillRect(Vec2(-Math::Half(m_size.x),-Math::Half(m_size.y)), m_size, m_backgroundColor, m_mask);
 		Render(renderer);
 	}
 

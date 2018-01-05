@@ -21,7 +21,7 @@ namespace Greet {
 
 	public:
 		Button(const Vec2& position, const Vec2 size, const std::string& text);
-		void Render(Renderer2D* renderer) const override;
+		void Render(BatchRenderer2D* renderer) const override;
 
 		void OnMouseEnter();
 		void OnMouseExit();

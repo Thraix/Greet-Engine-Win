@@ -18,7 +18,7 @@ namespace Greet {
 		virtual void Update(float timeElapsed) = 0;
 
 	public:
-		GameState(Renderer2D* renderer, Shader* shader, Mat3 projectionMatrix);
+		GameState(BatchRenderer2D* renderer, Shader* shader, Mat3 projectionMatrix);
 		virtual ~GameState(){ }
 	};
 }

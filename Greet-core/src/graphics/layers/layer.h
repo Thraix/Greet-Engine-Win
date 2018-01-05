@@ -1,8 +1,8 @@
 #pragma once
 
 #include <graphics/shaders/Shader.h>
-#include <graphics/Renderable.h>
-#include <graphics/renderers/Renderer2D.h>
+#include <graphics/renderables/Renderable.h>
+#include <graphics/renderers/BatchRenderer2D.h>
 #include <logging/Log.h>
 
 namespace Greet {
@@ -10,13 +10,13 @@ namespace Greet {
 	class Layer
 	{
 	protected:
-		Renderer2D* m_renderer;
+		BatchRenderer2D* m_renderer;
 		std::vector<Renderable*> m_renderables;
 		Shader* m_shader;
 
 		Mat3 m_projectionMatrix;
 	public:
-		Layer(Renderer2D* renderer, Shader* shader, Mat3 projectionMatrix)
+		Layer(BatchRenderer2D* renderer, Shader* shader, Mat3 projectionMatrix)
 			: m_renderer(renderer), m_shader(shader), m_projectionMatrix(projectionMatrix)
 		{
 			GLint texIDs[32];
@@ -57,7 +57,7 @@ namespace Greet {
 				m_renderables[i]->End(m_renderer);
 			}
 			m_renderer->End();
-			m_renderer->Flush();
+			m_renderer->Draw();
 			m_shader->Disable();
 		}
 

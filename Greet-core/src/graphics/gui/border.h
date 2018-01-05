@@ -30,7 +30,7 @@
 
 
 #include <math/Maths.h>
-#include <graphics/Renderable.h>
+#include <graphics/renderables/Renderable.h>
 #include <internal/GreetTypes.h>
 #include <graphics/textures/TextureManager.h>
 
@@ -72,14 +72,14 @@ namespace Greet{
 		Border(const Vec2& position,const Vec2& size, BorderData* data);
 		virtual ~Border();
 
-		void Submit(Renderer2D* renderer) const override;
-		bool Update(float timeElapsed) override;
-		void SetPosition(const Vec2& position) override;
-		inline const Vec2& GetPosition() const override {return m_position; }
+		void Submit(BatchRenderer2D* renderer) const override;
+		bool Update(float timeElapsed);
+		void SetPosition(const Vec2& position);
+		inline const Vec2& GetPosition() const {return m_position; }
 		void SetSize(const Vec2& size);
-		inline const Vec2& GetSize() const override {return m_size;}
-		void SetColor(uint color) override { m_color = color; }
-		uint GetColor() const override { return m_color; }
+		inline const Vec2& GetSize() const {return m_size;}
+		void SetColor(uint color) { m_color = color; }
+		uint GetColor() const { return m_color; }
 	};
 
 }

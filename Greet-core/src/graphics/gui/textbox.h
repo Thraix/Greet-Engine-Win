@@ -31,7 +31,7 @@ namespace Greet
 		TextBox(const Vec2& position, const Vec2& size, bool password = false);
 
 		bool Update(float timeElapsed) override;
-		void Render(Renderer2D* renderer) const override;
+		void Render(BatchRenderer2D* renderer) const override;
 
 		void AddCharacter(char c);
 		void AddCharacter(char c, uint index);

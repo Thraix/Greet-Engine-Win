@@ -21,13 +21,14 @@ namespace Greet {
 		m_backgroundColor = ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 15));
 	}
 
-	void ProgressBar::Render(Renderer2D* renderer) const
+	void ProgressBar::Render(BatchRenderer2D* renderer) const
 	{
 		GUI::Render(renderer);
 		m_indicator->Render(renderer,m_size,GetProgressPercentage(), m_vertical);
 		float yPos = m_size.y / 2.0f + m_progressFont->GetSize()*0.25f;
 		std::string value = StringUtils::to_string((uint)(GetProgressPercentage() * 100)) + "%";
-		renderer->SubmitString(value, Vec2((m_size.x - m_progressFont->GetWidthOfText(value)) / 2.0f, yPos), m_progressFont, m_labelColor);
+		Log::Error("Should draw String: ", __PRETTY_FUNCTION__);
+		//renderer->SubmitString(value, Vec2((m_size.x - m_progressFont->GetWidthOfText(value)) / 2.0f, yPos), m_progressFont, m_labelColor);
 	}
 
 	void ProgressBar::SetProgress(float progress)

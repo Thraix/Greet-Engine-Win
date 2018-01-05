@@ -15,9 +15,10 @@ namespace Greet {
 		
 	}
 	
-	void Label::Submit(Renderer2D* renderer) const
+	void Label::Submit(BatchRenderer2D* renderer) const
 	{
-		renderer->SubmitString(text,position,m_font,color);
+		Log::Error("Shoud draw string: Label::Submit");
+		//renderer->SubmitString(text,position,m_font,color);
 	}
 	
 	bool Label::Update(float timeElapsed)

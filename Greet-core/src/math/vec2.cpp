@@ -153,7 +153,8 @@ namespace Greet{
 
 	Vec2 operator+(const Vec2& first, const Vec2 &second)
 	{
-		return Vec2(first.x,first.y).Add(second);
+		return Vec2(first.x + second.x, first.y + second.y);
+		//return Vec2(first.x,first.y).Add(second);
 	}
 
 	Vec2 operator-(const Vec2& first, const Vec2 &second)

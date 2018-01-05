@@ -48,13 +48,13 @@ namespace Greet {
 		return update;
 	}
 
-	void Group::Begin(Renderer2D* renderer) const
+	void Group::Begin(BatchRenderer2D* renderer) const
 	{
 		if (render)
 			renderer->PushMatrix(m_transformationMatrix);
 	}
 	
-	void Group::Submit(Renderer2D* renderer) const
+	void Group::Submit(BatchRenderer2D* renderer) const
 	{
 		if (render)
 			for (uint i = 0; i < m_renderables.size(); i++)
@@ -65,10 +65,15 @@ namespace Greet {
 			}
 	}
 
-	void Group::End(Renderer2D* renderer) const
+	void Group::End(BatchRenderer2D* renderer) const
 	{
 		if (render)
 			renderer->PopMatrix();
+	}
+
+	void Group::Draw(BatchRenderer2D* renderer) const
+	{
+
 	}
 
 }

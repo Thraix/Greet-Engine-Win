@@ -79,8 +79,6 @@ namespace Greet {
 		// SET DEFAULT VALUES
 		FontManager::Add(new FontContainer("Roboto-Black.ttf","roboto-bold"));
 		FontManager::Add(new FontContainer("Roboto-thin.ttf","roboto"));
-		uint width,height,bpp;
-		TextureManager::Add(new Texture2D("frame.png","frame"));
 
 		Log::Info("OpenGL Version: ", glGetString(GL_VERSION));
 		Log::Info("GLFW Version: ", glfwGetVersionString());

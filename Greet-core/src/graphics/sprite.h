@@ -34,7 +34,8 @@ namespace Greet{
 
 		virtual bool Update(float timeElapsed) { return false; }
 
-		inline uint GetTextureID() const { return m_texture==NULL ? 0 : m_texture->GetTexId(); }
+		inline Texture2D* GetTexture() const { return m_texture; }
+		inline uint GetTextureID() const { return m_texture==nullptr ? 0 : m_texture->GetTexId(); }
 
 		inline Sprite* FromSpriteSheet(Vec2 texPos, Vec2 texSize) const { return new Sprite(m_texture,m_texPos + texPos*m_texSize, m_texSize*texSize); }
 		virtual inline const Vec2& GetTexPos() const { return m_texPos; }

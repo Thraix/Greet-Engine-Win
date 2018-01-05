@@ -31,6 +31,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GreetHGenerator", "GreetHGenerator\GreetHGenerator.vcxproj", "{2284E036-8D5B-4FCE-AA94-C4EFB9E110C4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BatchRenderer2D", "examples\BatchRenderer2D\BatchRenderer2D.vcxproj", "{DE711D1B-7EE5-4650-8E59-4F3822CE05B8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1852E022-CDED-44BA-BD38-27FC5AD916E6} = {1852E022-CDED-44BA-BD38-27FC5AD916E6}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

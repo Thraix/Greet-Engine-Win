@@ -22,7 +22,7 @@ namespace Greet {
 		ProgressBar(const Vec2& position, const Vec2& size, float* progress, float min, float max, ProgressBarIndicator* indicator = new DefaultProgressBarIndicator(ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 9))), bool vertical = false);
 		ProgressBar(const Vec2& position, const Vec2& size, float progress, float min, float max, ProgressBarIndicator* indicator = new DefaultProgressBarIndicator(ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 9))), bool vertical = false);
 
-		void Render(Renderer2D* renderer) const override;
+		void Render(BatchRenderer2D* renderer) const override;
 
 		void SetProgress(float* progress);
 		void SetProgress(float progress);

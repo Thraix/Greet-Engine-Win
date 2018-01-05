@@ -10,10 +10,11 @@ namespace Greet {
 		m_buttonBigger = false;
 	}
 
-	void Button::Render(Renderer2D* renderer) const
+	void Button::Render(BatchRenderer2D* renderer) const
 	{
 		GUI::Render(renderer);
-		renderer->SubmitString(m_text, m_size/2.0f + Vec2(-m_font->GetWidthOfText(m_text)/2, m_font->GetSize()*0.25f),m_font, ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 5)));
+		Log::Error("Should draw String: ", __PRETTY_FUNCTION__);
+		//renderer->SubmitString(m_text, m_size/2.0f + Vec2(-m_font->GetWidthOfText(m_text)/2, m_font->GetSize()*0.25f),m_font, ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 5)));
 	}
 
 	void Button::OnMouseEnter()

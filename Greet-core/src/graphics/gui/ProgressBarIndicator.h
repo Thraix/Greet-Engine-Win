@@ -7,6 +7,6 @@ namespace Greet
 	class ProgressBarIndicator
 	{
 	public:
-		virtual void Render(Renderer2D* renderer, const Vec2& size, float percentage, bool vertical) const = 0;
+		virtual void Render(BatchRenderer2D* renderer, const Vec2& size, float percentage, bool vertical) const = 0;
 	};
 }

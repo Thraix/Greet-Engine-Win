@@ -16,7 +16,7 @@ namespace Greet {
 		GUI* m_focusedGUI;
 		GUI* GetGUI(uint i) { return (GUI*)m_renderables[i]; };
 	public:
-		GUILayer(Renderer2D* renderer, Shader* shader);
+		GUILayer(BatchRenderer2D* renderer, Shader* shader);
 		virtual ~GUILayer();
 		void Add(Renderable* renderable) override;
 		void Add(GUI* renderable);

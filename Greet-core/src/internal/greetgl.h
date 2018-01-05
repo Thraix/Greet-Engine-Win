@@ -7,12 +7,13 @@
 
 #include <logging/Log.h>
 
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include <freetype-gl.h>
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <FreeImage.h>
 
 #define GLFW_JOYSTICKS				0x04

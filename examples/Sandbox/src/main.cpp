@@ -42,8 +42,6 @@ private:
 	Renderable2D* fboScene;
 
 	Shader* batchShader;
-	BatchRenderer2D<RenderableSquareVertex>* batchRenderer2D;
-	RenderableSquare* renderable;
 
 public:
 	
@@ -144,13 +142,13 @@ public:
 		modelShader->Disable();
 	
 		delete l;
-
-		uilayer = new Layer(new BatchRenderer(), ShaderFactory::DefaultShader(), Mat3::Orthographic(0.0f, (float)Window::GetWidth(), 0.0f, (float)Window::GetHeight()));
+		std::vector<AttributePointer> pointers = Renderable2DVertex::GetAttributePointers();
+		uilayer = new Layer(new BatchRenderer2D(pointers), ShaderFactory::DefaultShader(), Mat3::Orthographic(0.0f, (float)Window::GetWidth(), 0.0f, (float)Window::GetHeight()));
 		uint colorPink = ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(300 /360.0f, 3));
 		fps = new Label("144 fps", Vec2(50, 300), "roboto", 72, ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 9)));
-		cursor = new Renderable2D(Vec2(0,0),Vec2(32,32),0xffffffff, new Sprite(TextureManager::Get2D("cursor")), new Sprite(TextureManager::Get2D("mask")));
+		cursor = new Renderable2D(Vec2(0,0),Vec2(32,32), TextureManager::Get2D("cursor"));
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(driverTest->m_position.x, -20, 0.5f, true, new drivers::DriverAdapter()));
-		guilayer = new GUILayer(new BatchRenderer(),ShaderFactory::DefaultShader());
+		guilayer = new GUILayer(new BatchRenderer2D(pointers),ShaderFactory::DefaultShader());
 		std::vector<std::string> labels{ "Babymode", "Softcore",  "Easy", "Medium", "Hard", "Hardcore", "Expert" };
 		slider = new Slider(Vec2(0, 0), Vec2(200, 30), 0, 255, 1);
 		slider2 = new Slider(Vec2(0, 40), Vec2(200, 30), labels);
@@ -166,9 +164,9 @@ public:
 		button = new Button(Vec2(10,300),Vec2(100,40),"Test");
 		frame = new Frame(Vec2(10, 10), Vec2(500, 500),"GUI Frame");
 
-		scene3d = new Layer(new BatchRenderer(),blurShader, Mat3::Orthographic(0.0f, (float)Window::GetWidth(), 0.0f, (float)Window::GetHeight()));
-		fboScene = new Renderable2D(Vec2(0,0),Vec2(960,540),0xffffffff,new Sprite(fbo->GetColorTexture(GL_COLOR_ATTACHMENT0)),NULL);
-		scene3d->Add(fboScene);
+		//scene3d = new Layer(new BatchRenderer2D(pointers),blurShader, Mat3::Orthographic(0.0f, (float)Window::GetWidth(), 0.0f, (float)Window::GetHeight()));
+		//fboScene = new Renderable2D(Vec2(0,0),Vec2(960,540),0xffffffff,new Sprite(fbo->GetColorTexture(GL_COLOR_ATTACHMENT0)));
+		//scene3d->Add(fboScene);
 
 		uilayer->Add(fps);
 		frame->Add(slider);
@@ -197,7 +195,7 @@ public:
 		uint pos = 0;
 //		Log::info(JSONLoader::isNumber("0.1234s",pos));
 		RenderEngine::AddLayer2d(uilayer, "uilayer");
-		RenderEngine::AddLayer2d(guilayer, "guilayer");
+		//RenderEngine::AddLayer2d(guilayer, "guilayer");
 		RenderEngine::AddLayer3d(new Layer3D(renderer3d), "3dWorld");
 	}
 
@@ -352,7 +350,7 @@ public:
 		hue += elapsedTime / 3.0f;
 		while (hue >= 1)
 			hue--;
-		cursor->m_color = ColorUtils::Vec3ToColorHex(ColorUtils::HSVtoRGB(hue, 1, 1));
+		cursor->color = ColorUtils::Vec3ToColorHex(ColorUtils::HSVtoRGB(hue, 1, 1));
 		//cursor->setPosition(vec2(p.x, p.y));
 	}
 
@@ -438,7 +436,7 @@ public:
 
 	bool OnMoved(const MouseMovedEvent& e) override
 	{
-		cursor->SetPosition(Vec2(e.GetX(), e.GetY()));
+		cursor->pos = Vec2(e.GetX(), e.GetY());
 		return false;
 	}
 

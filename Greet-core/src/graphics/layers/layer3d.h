@@ -1,7 +1,6 @@
 #pragma once
 
 #include <graphics/shaders/Shader.h>
-#include <graphics/Renderable.h>
 #include <graphics/renderers/Renderer3D.h>
 #include <logging/Log.h>
 

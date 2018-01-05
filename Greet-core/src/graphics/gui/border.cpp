@@ -20,7 +20,7 @@ namespace Greet {
 		delete data;
 	}
 
-	void Border::Submit(Renderer2D* renderer) const
+	void Border::Submit(BatchRenderer2D* renderer) const
 	{
 
 		Vec2 borderSize(data->borderSize,data->borderSize);

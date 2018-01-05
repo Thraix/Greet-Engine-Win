@@ -10,11 +10,13 @@ namespace Greet {
 		
 	}
 
-	void Frame::Render(Renderer2D* renderer) const 
+	void Frame::Render(BatchRenderer2D* renderer) const 
 	{
 		GUI::Render(renderer);
-		renderer->FillRect(Vec2(0, 0), Vec2(m_size.x, m_margin.top-10),m_titleBackgroundColor,GUI::m_mask);
-		renderer->SubmitString(m_title, Vec2(m_margin.left, 22),m_titleFont,m_titleColor);
+		renderer->FillRect(Vec2(0, 0), Vec2(m_size.x, m_margin.top - 10), m_titleBackgroundColor);
+		//renderer->FillRect(Vec2(0, 0), Vec2(m_size.x, m_margin.top-10),m_titleBackgroundColor,GUI::m_mask);
+		Log::Error("Shoud draw string", __PRETTY_FUNCTION__);
+		//renderer->SubmitString(m_title, Vec2(m_margin.left, 22),m_titleFont,m_titleColor);
 	}
 
 	bool Frame::OnMoved(const MouseMovedEvent& event, Vec2 relativeMousePos)

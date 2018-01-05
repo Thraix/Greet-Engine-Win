@@ -14,7 +14,6 @@
     <ClInclude Include="src\drivers\DriverListener.h" />
     <ClInclude Include="src\drivers\LinearDriver.h" />
     <ClInclude Include="src\drivers\RectDriver.h" />
-    <ClInclude Include="src\entity\Entity.h" />
     <ClInclude Include="src\event\Event.h" />
     <ClInclude Include="src\event\EventDispatcher.h" />
     <ClInclude Include="src\event\KeyEvent.h" />
@@ -43,7 +42,6 @@
     <ClInclude Include="src\graphics\gui\Slider.h" />
     <ClInclude Include="src\graphics\gui\SliderController.h" />
     <ClInclude Include="src\graphics\gui\TextBox.h" />
-    <ClInclude Include="src\graphics\layers\Box2DLayer.h" />
     <ClInclude Include="src\graphics\layers\Group.h" />
     <ClInclude Include="src\graphics\layers\GUILayer.h" />
     <ClInclude Include="src\graphics\layers\Layer3D.h" />
@@ -56,10 +54,7 @@
     <ClInclude Include="src\graphics\models\MeshData.h" />
     <ClInclude Include="src\graphics\models\MeshFactory.h" />
     <ClInclude Include="src\graphics\models\TPCamera.h" />
-    <ClInclude Include="src\graphics\renderers\BatchRenderer.h" />
     <ClInclude Include="src\graphics\renderers\BatchRenderer3D.h" />
-    <ClInclude Include="src\graphics\renderers\Renderer.h" />
-    <ClInclude Include="src\graphics\renderers\Renderer2D.h" />
     <ClInclude Include="src\graphics\renderers\Renderer3D.h" />
     <ClInclude Include="src\graphics\shaders\Shader.h" />
     <ClInclude Include="src\graphics\shaders\ShaderFactory.h" />
@@ -72,9 +67,6 @@
     <ClInclude Include="src\graphics\FrameBufferObject.h" />
     <ClInclude Include="src\graphics\Light.h" />
     <ClInclude Include="src\graphics\Particle.h" />
-    <ClInclude Include="src\graphics\Renderable.h" />
-    <ClInclude Include="src\graphics\Renderable2D.h" />
-    <ClInclude Include="src\graphics\RenderablePoly.h" />
     <ClInclude Include="src\graphics\RenderEngine.h" />
     <ClInclude Include="src\graphics\Skybox.h" />
     <ClInclude Include="src\graphics\Sprite.h" />
@@ -123,8 +115,8 @@
     <ClInclude Include="src\graphics\gui\DefaultProgressBarIndicator.h" />
     <ClInclude Include="src\graphics\AttributePointer.h" />
     <ClInclude Include="src\graphics\renderers\BatchRenderer2D.h" />
-    <ClInclude Include="src\graphics\renderables\RenderableSquare.h" />
-    <ClInclude Include="src\graphics\renderables\RenderableGUI.h" />
+    <ClInclude Include="src\graphics\renderables\Renderable.h" />
+    <ClInclude Include="src\graphics\renderables\Renderable2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\audio\AudioChannel.cpp" />
@@ -135,7 +127,6 @@
     <ClCompile Include="src\drivers\DriverDispatcher.cpp" />
     <ClCompile Include="src\drivers\LinearDriver.cpp" />
     <ClCompile Include="src\drivers\RectDriver.cpp" />
-    <ClCompile Include="src\entity\Entity.cpp" />
     <ClCompile Include="src\event\Event.cpp" />
     <ClCompile Include="src\event\EventDispatcher.cpp" />
     <ClCompile Include="src\event\KeyListener.cpp" />
@@ -161,7 +152,6 @@
     <ClCompile Include="src\graphics\gui\Slider.cpp" />
     <ClCompile Include="src\graphics\gui\SliderController.cpp" />
     <ClCompile Include="src\graphics\gui\TextBox.cpp" />
-    <ClCompile Include="src\graphics\layers\Box2DLayer.cpp" />
     <ClCompile Include="src\graphics\layers\Group.cpp" />
     <ClCompile Include="src\graphics\layers\GUILayer.cpp" />
     <ClCompile Include="src\graphics\layers\Layer3D.cpp" />
@@ -172,7 +162,6 @@
     <ClCompile Include="src\graphics\models\MeshData.cpp" />
     <ClCompile Include="src\graphics\models\MeshFactory.cpp" />
     <ClCompile Include="src\graphics\models\TPCamera.cpp" />
-    <ClCompile Include="src\graphics\renderers\BatchRenderer.cpp" />
     <ClCompile Include="src\graphics\renderers\BatchRenderer3D.cpp" />
     <ClCompile Include="src\graphics\renderers\Renderer3D.cpp" />
     <ClCompile Include="src\graphics\shaders\Shader.cpp" />
@@ -210,7 +199,9 @@
     <ClCompile Include="src\utils\UUID.cpp" />
     <ClCompile Include="src\math\Quaternion.cpp" />
     <ClCompile Include="src\utils\ErrorHandle.cpp" />
-    <ClCompile Include="src\graphics\renderables\RenderableSquare.cpp" />
+    <ClCompile Include="src\graphics\renderables\Renderable.cpp" />
+    <ClCompile Include="src\graphics\renderables\Renderable2D.cpp" />
+    <ClCompile Include="src\graphics\renderers\BatchRenderer2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\graphics\shaders\basiclightshader.frag" />

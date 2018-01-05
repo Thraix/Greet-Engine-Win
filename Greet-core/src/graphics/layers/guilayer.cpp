@@ -4,7 +4,7 @@
 
 namespace Greet {
 
-	GUILayer::GUILayer(Renderer2D* renderer, Shader* shader)
+	GUILayer::GUILayer(BatchRenderer2D* renderer, Shader* shader)
 		: Layer(renderer,shader, Mat3::Orthographic(0,Window::GetWidth(),0,Window::GetHeight()))
 	{
 		Window::AddResizeCallback(this);

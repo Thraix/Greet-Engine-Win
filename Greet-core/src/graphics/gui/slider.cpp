@@ -69,7 +69,7 @@ namespace Greet {
 		return NULL;
 	}
 
-	void Slider::Render(Renderer2D* renderer) const
+	void Slider::Render(BatchRenderer2D* renderer) const
 	{
 		GUI::Render(renderer);
 
@@ -88,7 +88,8 @@ namespace Greet {
 			value = m_labels[GetValue()];
 		}
 		float yPos = m_size.y / 2.0f + m_sliderFont->GetSize()*0.25f;
-		renderer->SubmitString(value, Vec2((m_size.x - m_sliderFont->GetWidthOfText(value)) / 2.0f, yPos), m_sliderFont, sliderColor);
+		Log::Error("Should draw String: ", __PRETTY_FUNCTION__);
+		//renderer->SubmitString(value, Vec2((m_size.x - m_sliderFont->GetWidthOfText(value)) / 2.0f, yPos), m_sliderFont, sliderColor);
 	}
 
 	void Slider::SnapSlider()

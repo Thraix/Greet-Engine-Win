@@ -10,6 +10,8 @@
 #include <algorithm>
 #include <graphics/textures/TextureManager.h>
 #include <drivers/DriverAdapter.h>
+#include <graphics/Sprite.h>
+#include <graphics/renderables/Renderable2D.h>
 
 #define MOUSE_INSIDE(mouse,xPos,yPos,width,height) (mouse).x >= (xPos) && (mouse).x < (xPos) + (width) && (mouse).y >= (yPos) && (mouse).y < (yPos) + (height)
 #define MOUSE_INSIDE_GUI(mouse,width,height) (mouse).x >= 0 && (mouse).x < (width) && (mouse).y >= 0 && (mouse).y < (height)
@@ -52,8 +54,8 @@ namespace Greet{
 			void SetBackgroundColor(uint bgColor) { m_backgroundColor = bgColor;}
 			bool Update(float timeElapsed) override;
 
-			virtual void Submit(Renderer2D* renderer) const override;
-			virtual void Render(Renderer2D* renderer) const;
+			virtual void Submit(BatchRenderer2D* renderer) const override;
+			virtual void Render(BatchRenderer2D* renderer) const;
 
 			virtual void OnFocused(bool focused) {};
 			virtual void OnMouseEnter() { };
@@ -74,8 +76,8 @@ namespace Greet{
 			virtual bool IsInside(const Vec2& position) const;
 			Vec2 TranslateMouse(const Vec2& mousePos, GUI* target) const;
 			const Vec2& GetRealPosition() const;
-			inline const Vec2& GetPosition() const override { return m_position;}
-			inline const Vec2& GetSize() const override { return m_size;}
+			inline const Vec2& GetPosition() const { return m_position;}
+			inline const Vec2& GetSize() const { return m_size;}
 			inline uint GetBackgroundColor() const {return m_backgroundColor;}
 			inline bool IsRenderBackground() const { return m_renderBackground;}
 	};

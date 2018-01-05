@@ -3,26 +3,28 @@
 namespace Greet {
 
 	Particle::Particle()
+		: Renderable2D(Vec2(0, 0), Vec2(1, 1),0xffffffff)
 	{
+
 	}
 
 	Particle::~Particle()
 	{
-		delete m_sprite;
+
 	}
 
 	void Particle::Define(Vec2 pos, Vec2 size, Vec2 vel, Vec2 acc, uint color, float minspeed, float maxspeed, float frameTime, Sprite* sprite)
 	{
-		m_startPos = pos;
-		m_pos = pos;
-		m_size = size;
-		m_color = color;
-		m_velocity = vel;
-		m_acceleration = acc;
-		m_minspeed = fabsf(minspeed);
-		m_maxspeed = fabsf(maxspeed);
-		m_frameTime = frameTime;
-		m_sprite = sprite;
+		this->m_startPos = pos;
+		this->m_pos = pos;
+		this->m_size = size;
+		this->color = color;
+		this->m_velocity = vel;
+		this->m_acceleration = acc;
+		this->m_minspeed = fabsf(minspeed);
+		this->m_maxspeed = fabsf(maxspeed);
+		this->m_frameTime = frameTime;
+		this->sprite = sprite;
 	}
 
 	bool Particle::Update(float elapsedTime)

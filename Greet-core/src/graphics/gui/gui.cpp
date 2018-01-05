@@ -112,14 +112,18 @@ namespace Greet {
 		return Group::Update(timeElapsed);
 	}
 
-	void GUI::Submit(Renderer2D* renderer) const
+	void GUI::Submit(BatchRenderer2D* renderer) const
 	{
-		if(m_renderBackground)
-			renderer->FillRect(Vec2(0,0), m_size, m_backgroundColor, m_mask);
+		if (m_renderBackground)
+		{
+			Renderable2D renderable(Vec2(0,0),m_size,m_backgroundColor);
+			renderable.Submit(renderer);
+			//renderer->FillRect(Vec2(0, 0), m_size, m_backgroundColor, m_mask);
+		}
 		Render(renderer);
 	}
 
-	void GUI::Render(Renderer2D* renderer) const
+	void GUI::Render(BatchRenderer2D* renderer) const
 	{
 		Group::Submit(renderer);
 	}

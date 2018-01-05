@@ -12,13 +12,15 @@ namespace Greet
 		m_backgroundColor = ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 15));
 	}
 
-	void TextBox::Render(Renderer2D* renderer) const
+	void TextBox::Render(BatchRenderer2D* renderer) const
 	{
 		GUI::Render(renderer);
 		if(m_password)
-			renderer->SubmitString(std::string(m_text.size(),'*'), Vec2(m_margin.left, m_font->GetSize()), m_font, m_textColor);
+			Log::Error("Should draw String: ", __PRETTY_FUNCTION__);
+			//renderer->SubmitString(std::string(m_text.size(),'*'), Vec2(m_margin.left, m_font->GetSize()), m_font, m_textColor);
 		else
-			renderer->SubmitString(m_text, Vec2(m_margin.left, m_font->GetSize()), m_font, m_textColor);
+			Log::Error("Should draw String: ", __PRETTY_FUNCTION__);
+			//renderer->SubmitString(m_text, Vec2(m_margin.left, m_font->GetSize()), m_font, m_textColor);
 		const Vec2& pos = GetRealPosition();
 		if (IsFocused())
 		{

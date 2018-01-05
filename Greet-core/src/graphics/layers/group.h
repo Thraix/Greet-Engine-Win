@@ -1,6 +1,7 @@
 #pragma once
 
-#include <graphics/Renderable2D.h>
+#include <graphics/renderables/Renderable2D.h>
+
 #define __PRETTY_FUNCTION__ __func__
 namespace Greet {
 	class Group : public Renderable
@@ -16,20 +17,15 @@ namespace Greet {
 		virtual ~Group();
 		virtual void Add(Renderable* renderable);
 		virtual void Remove(Renderable* renderable);
-		virtual bool Update(float timeElapsed);
-		virtual void Begin(Renderer2D* renderer) const override;
-		virtual void Submit(Renderer2D* renderer) const override;
-		virtual void End(Renderer2D* renderer) const override;
+		virtual bool Update(float timeElapsed) override;
+		virtual void Begin(BatchRenderer2D* renderer) const override;
+		virtual void Submit(BatchRenderer2D* renderer) const override;
+		virtual void End(BatchRenderer2D* renderer) const override;
+		virtual void Draw(BatchRenderer2D* renderer) const override;
+		virtual int GetVertexSize() const override { return sizeof(Renderable2DVertex); };
 
 		void SetEnable(bool enable) { Group::enable = enable;}
 		void SetTransformationMatrix(Mat3 transformationMatrix) {m_transformationMatrix = transformationMatrix;}
-
-		void SetColor(uint color) override { Log::Warning("THIS DOES NOTHING",__PRETTY_FUNCTION__); }
-		inline uint GetColor() const override { Log::Warning("THIS DOES NOTHING",__PRETTY_FUNCTION__);return 0xffffffff;}
-		void SetPosition(const Vec2& position) override { Log::Warning("THIS DOES NOTHING",__PRETTY_FUNCTION__); }
-		inline const Vec2& GetPosition() const override { Log::Warning("THIS DOES NOTHING",__PRETTY_FUNCTION__);return Vec2(0,0);}
-		void SetSize(const Vec2& size) override { Log::Warning("THIS DOES NOTHING",__PRETTY_FUNCTION__); }
-		inline const Vec2& GetSize() const override { Log::Warning("THIS DOES NOTHING",__PRETTY_FUNCTION__);return Vec2(1,1);}
 	};
 
 }

@@ -46,7 +46,7 @@ namespace Greet {
 		Slider(const Vec2& position, const Vec2& size, const std::vector<std::string>& labels, float sliderWidth = 7);
 		virtual ~Slider();
 
-		void Render(Renderer2D* renderer) const override;
+		void Render(BatchRenderer2D* renderer) const override;
 		bool OnMoved(const MouseMovedEvent& event, Vec2 relativeMousePos) override;
 		GUI* OnPressed(const MousePressedEvent& event, Vec2 relativeMousePos) override;
 		GUI* OnReleased(const MouseReleasedEvent& event, Vec2 relativeMousePos) override;
@@ -62,6 +62,5 @@ namespace Greet {
 		inline float GetPosFromValue(float value) const;
 		inline float GetStepSize() const { return m_stepSize; }
 		inline float GetSliderPos() const { return m_sliderController->m_position.x; }
-
 	};
 }

@@ -1,7 +1,8 @@
 #pragma once
 
 #include <math/Vec2.h>
-#include "Renderable2D.h"
+#include <graphics/renderables/Renderable2D.h>
+#include <graphics/Sprite.h>
 
 namespace Greet{
 	class Particle : public Renderable2D {
