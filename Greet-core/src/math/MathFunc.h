@@ -98,7 +98,7 @@ namespace Greet{ namespace Math {
 		return 0;
 	}
 
-	inline vec4 GetRectangle(b2Body* body)
+	inline Vec4 GetRectangle(b2Body* body)
 	{
 		const b2Fixture* f = body->GetFixtureList();
 		uint i = 0;
@@ -121,12 +121,12 @@ namespace Greet{ namespace Math {
 					{
 						Vec2 pos = body->GetPosition() + pos1;
 						Vec2 size = (pos1 - pos2).Abs();
-						return vec4(pos.x, pos.y, size.x, size.y);
+						return Vec4(pos.x, pos.y, size.x, size.y);
 					}
 				}
 			}
 		}
-		return vec4(0, 0, 0, 0);
+		return Vec4(0, 0, 0, 0);
 	}
 
 	inline b2Vec2* GetPoly(uint vertices, float size, bool min = true, float rotation = 0)

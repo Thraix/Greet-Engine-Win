@@ -17,7 +17,7 @@ namespace Greet {
 	bool Entity::Update(float timeElapsed)
 	{
 		m_position = m_body->GetPosition();
-		vec4 rectangle = Math::GetRectangle(m_body);
+		Vec4 rectangle = Math::GetRectangle(m_body);
 		if (rectangle.z != 0 && rectangle.w != 0)
 		{
 			//m_transform = Transform().translate(m_body->GetPosition()).rotateR(m_body->GetAngle()).translate(-rectangle.z / 2.0f, -rectangle.w / 2.0f).scale(rectangle.z, rectangle.w);

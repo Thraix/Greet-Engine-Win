@@ -38,7 +38,7 @@ namespace Greet {
 		void SetUniform1iv(const GLchar *name, int count, int* value) const;
 		void SetUniform2f(const GLchar *name, const Vec2 &value) const;
 		void SetUniform3f(const GLchar *name, const Vec3 &value) const;
-		void SetUniform4f(const GLchar *name, const vec4 &value) const;
+		void SetUniform4f(const GLchar *name, const Vec4 &value) const;
 		void SetUniformMat3(const GLchar *name, const Mat3 &value) const;
 		void SetUniformMat4(const GLchar *name, const Mat4 &value) const;
 	public:

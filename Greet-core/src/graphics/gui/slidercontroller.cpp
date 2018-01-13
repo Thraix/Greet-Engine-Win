@@ -9,11 +9,12 @@ namespace Greet
 		SetBackgroundColor(ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 9)));
 	}
 
-	void SliderController::Submit(Renderer2D* renderer) const
+	void SliderController::Begin(GUIRenderer* renderer) const
 	{
+		renderer->PushMatrix(m_transformationMatrix);
+		renderer->PushViewport(Vec2(-Math::Half(m_size.x), -Math::Half(m_size.y)), m_size, true);
 		if (m_renderBackground)
-			renderer->FillRect(Vec2(-Math::Half(m_size.x),-Math::Half(m_size.y)), m_size, m_backgroundColor, m_mask);
-		Render(renderer);
+			renderer->SubmitRect(Vec2(-Math::Half(m_size.x),-Math::Half(m_size.y)), m_size, m_backgroundColor);
 	}
 
 	bool SliderController::OnMoved(const MouseMovedEvent& event, Vec2 relativeMousePos)

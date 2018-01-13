@@ -47,7 +47,7 @@ namespace Greet {
 		static std::string title;
 		static uint width, height;
 		static GLFWwindow *window;
-		static vec4 bgColor;
+		static Vec4 bgColor;
 
 		static std::vector<Joystick> joysticks;
 	
@@ -84,7 +84,7 @@ namespace Greet {
 		static void Update();
 		static void Tick();
 
-		static void SetBackgroundColor(vec4 color);
+		static void SetBackgroundColor(Vec4 color);
 		static void AddResizeCallback(WindowResizeListener* listenter);
 		static void RemoveResizeCallback(WindowResizeListener* listener);
 		static void AddWindowFocusCallback(WindowFocusListener* listener);
@@ -92,7 +92,7 @@ namespace Greet {
 		static void AddJoystickCallback(JoystickStateListener* listener);
 		static void RemoveJoystickCallback(JoystickStateListener* listener);
 
-		inline static vec4 GetBackgroundColor() { return bgColor; }
+		inline static Vec4 GetBackgroundColor() { return bgColor; }
 		inline static int GetWidth() { return width; };
 		inline static int GetHeight() { return height; };
 		inline static void SetTitle(const std::string& title) { glfwSetWindowTitle(window,title.c_str()); }

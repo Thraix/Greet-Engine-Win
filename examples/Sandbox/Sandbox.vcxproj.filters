@@ -39,6 +39,7 @@
     <None Include="res\shaders\terrain.shader" />
     <None Include="res\shaders\skybox.shader" />
     <None Include="res\shaders\3dshader.shader" />
+    <None Include="res\shaders\gui.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\keyboardcontrol.h">

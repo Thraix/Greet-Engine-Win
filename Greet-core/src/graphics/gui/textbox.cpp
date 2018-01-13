@@ -12,9 +12,8 @@ namespace Greet
 		m_backgroundColor = ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 15));
 	}
 
-	void TextBox::Render(Renderer2D* renderer) const
+	void TextBox::Submit(GUIRenderer* renderer) const
 	{
-		GUI::Render(renderer);
 		renderer->SubmitString(m_text, Vec2(m_margin.left, m_font->GetSize()), m_font, m_textColor);
 		const Vec2& pos = GetRealPosition();
 		if (IsFocused())
@@ -22,7 +21,7 @@ namespace Greet
 			if (m_timer < m_blinkSpeed)
 			{
 				float width = m_font->GetWidthOfText(m_text,0,m_cursorPosition);
-				renderer->DrawRect(Vec2(m_margin.left+width-1, m_margin.top), Vec2(1, m_size.y - (m_margin.top+ m_margin.bottom)), m_cursorColor);
+				renderer->SubmitRect(Vec2(m_margin.left+width-1, m_margin.top), Vec2(1, m_size.y - (m_margin.top+ m_margin.bottom)), m_cursorColor);
 			}
 		}
 	}

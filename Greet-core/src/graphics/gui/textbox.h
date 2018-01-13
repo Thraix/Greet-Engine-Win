@@ -29,7 +29,7 @@ namespace Greet
 		TextBox(const Vec2& position, const Vec2& size);
 
 		bool Update(float timeElapsed) override;
-		void Render(Renderer2D* renderer) const override;
+		void Submit(GUIRenderer* renderer) const override;
 
 		void AddCharacter(char c);
 		void AddCharacter(char c, uint index);

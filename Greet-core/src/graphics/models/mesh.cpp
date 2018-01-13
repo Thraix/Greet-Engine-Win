@@ -180,7 +180,7 @@ namespace Greet {
 		GLCall(glBindVertexArray(0));
 	}
 
-	void Mesh::SetDefaultAttribute4f(uint location, const vec4& data)
+	void Mesh::SetDefaultAttribute4f(uint location, const Vec4& data)
 	{
 		GLCall(glBindVertexArray(m_vaoId));
 		GLCall(glVertexAttrib4f(location,data.x,data.y,data.z,data.w));

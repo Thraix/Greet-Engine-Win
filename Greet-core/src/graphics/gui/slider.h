@@ -46,7 +46,8 @@ namespace Greet {
 		Slider(const Vec2& position, const Vec2& size, const std::vector<std::string>& labels, float sliderWidth = 7);
 		virtual ~Slider();
 
-		void Render(Renderer2D* renderer) const override;
+		void Submit(GUIRenderer* renderer) const override;
+		void End(GUIRenderer* renderer) const override;
 		bool OnMoved(const MouseMovedEvent& event, Vec2 relativeMousePos) override;
 		GUI* OnPressed(const MousePressedEvent& event, Vec2 relativeMousePos) override;
 		GUI* OnReleased(const MouseReleasedEvent& event, Vec2 relativeMousePos) override;

@@ -69,17 +69,22 @@ namespace Greet {
 		return NULL;
 	}
 
-	void Slider::Render(Renderer2D* renderer) const
+	void Slider::Submit(GUIRenderer* renderer) const
 	{
-		GUI::Render(renderer);
+		
+	}
 
+	void Slider::End(GUIRenderer* renderer) const
+	{
+		GUI::End(renderer);
+		renderer->PushMatrix(m_transformationMatrix);
 		uint sliderColor = ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 3));
 		// Start and end values
 		std::string value;
 		if (m_labels.size() == 0)
 		{
-			if(m_percentage)
-				value = StringUtils::to_string((int)(GetValue() / (m_endValue - m_startValue) * 100))+"%";
+			if (m_percentage)
+				value = StringUtils::to_string((int)(GetValue() / (m_endValue - m_startValue) * 100)) + "%";
 			else
 				value = StringUtils::to_string(GetValue());
 		}
@@ -89,6 +94,7 @@ namespace Greet {
 		}
 		float yPos = m_size.y / 2.0f + m_sliderFont->GetSize()*0.25f;
 		renderer->SubmitString(value, Vec2((m_size.x - m_sliderFont->GetWidthOfText(value)) / 2.0f, yPos), m_sliderFont, sliderColor);
+		renderer->PopMatrix();
 	}
 
 	void Slider::SnapSlider()

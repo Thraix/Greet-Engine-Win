@@ -15,15 +15,15 @@ namespace Greet
 		
 		}
 
-		void Render(Renderer2D* renderer, const Vec2& size, float percentage, bool vertical) const override
+		void Submit(GUIRenderer* renderer, const Vec2& size, float percentage, bool vertical) const override
 		{
 			if (vertical)
 			{
-				renderer->FillRect(Vec2(0, 0), Vec2(size.x, size.y*percentage), m_color, GUI::m_mask);
+				renderer->SubmitRect(Vec2(0, 0), Vec2(size.x, size.y*percentage), m_color);
 			}
 			else
 			{
-				renderer->FillRect(Vec2(0, 0), Vec2(size.x*percentage, size.y), m_color, GUI::m_mask);
+				renderer->SubmitRect(Vec2(0, 0), Vec2(size.x*percentage, size.y), m_color);
 			}
 		}
 	};

@@ -13,7 +13,7 @@ namespace Greet {
 			float elements[4 * 4];
 			struct
 			{
-				vec4 columns[4];
+				Vec4 columns[4];
 			};
 		};
 
@@ -21,7 +21,7 @@ namespace Greet {
 		Mat4(float diagonal);
 		Mat4(float* elem);
 
-		vec4 GetColumn(int index)
+		Vec4 GetColumn(int index)
 		{
 			return columns[index];
 		}
@@ -65,14 +65,14 @@ namespace Greet {
 		Mat4& Multiply(const Mat4 &other);
 		Vec2 Multiply(const Vec2 &other) const;
 		Vec3 Multiply(const Vec3 &other) const;
-		vec4 Multiply(const vec4 &other) const;
+		Vec4 Multiply(const Vec4 &other) const;
 
 		friend Mat4 operator*(Mat4 first, const Mat4 &second);
 		Mat4& operator*=(const Mat4 &other);
 
 		friend Vec2 operator*(const Mat4& first, const Vec2 &second);
 		friend Vec3 operator*(const Mat4& first, const Vec3 &second);
-		friend vec4 operator*(const Mat4& first, const vec4 &second);
+		friend Vec4 operator*(const Mat4& first, const Vec4 &second);
 		friend Mat4 operator~(const Mat4& first);
 
 	};

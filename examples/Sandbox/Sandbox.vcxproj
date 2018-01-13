@@ -99,6 +99,7 @@
   <ItemGroup>
     <None Include="res\shaders\2dshader.geom" />
     <None Include="res\shaders\3dshader.shader" />
+    <None Include="res\shaders\gui.shader" />
     <None Include="res\shaders\skybox.shader" />
     <None Include="res\shaders\terrain.shader" />
     <None Include="res\shaders\terrain.geom" />

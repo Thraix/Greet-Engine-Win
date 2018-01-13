@@ -126,7 +126,7 @@ namespace Greet {
 		GLCall(glUniform3f(GetUniformLocation(name), value.x, value.y, value.z));
 	}
 
-	void Shader::SetUniform4f(const GLchar *name, const vec4 &value) const
+	void Shader::SetUniform4f(const GLchar *name, const Vec4 &value) const
 	{
 		GLCall(glUniform4f(GetUniformLocation(name), value.x, value.y, value.z, value.w));
 	}

@@ -44,7 +44,7 @@ namespace Greet {
 		//void addAttribute(uint location, uint attributeSize, const float* data);
 		void AddAttribute(uint location, uint attributeSize, const uint* data);
 		void AddAttribute(AttributeData* data);
-		void SetDefaultAttribute4f(uint location, const vec4& data);
+		void SetDefaultAttribute4f(uint location, const Vec4& data);
 		void SetDefaultAttribute3f(uint location, const Vec3& data);
 	private:
 		void EnableAttributes() const;

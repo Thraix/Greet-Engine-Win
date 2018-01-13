@@ -21,7 +21,7 @@ namespace Greet {
 
 	public:
 		Frame(const Vec2& position, const Vec2& size, const std::string& title);
-		virtual void Render(Renderer2D* renderer) const override;
+		virtual void Submit(GUIRenderer* renderer) const override;
 		bool OnMoved(const MouseMovedEvent& event, Vec2 relativeMousePos) override;
 		GUI* OnPressed(const MousePressedEvent& event, Vec2 relativeMousePos) override;
 		GUI* OnReleased(const MouseReleasedEvent& event, Vec2 relativeMousePos) override;

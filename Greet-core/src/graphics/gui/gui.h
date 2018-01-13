@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <graphics/textures/TextureManager.h>
 #include <drivers/DriverAdapter.h>
+#include <graphics/renderers/GUIRenderer.h>
 
 #define MOUSE_INSIDE(mouse,xPos,yPos,width,height) (mouse).x >= (xPos) && (mouse).x < (xPos) + (width) && (mouse).y >= (yPos) && (mouse).y < (yPos) + (height)
 #define MOUSE_INSIDE_GUI(mouse,width,height) (mouse).x >= 0 && (mouse).x < (width) && (mouse).y >= 0 && (mouse).y < (height)
@@ -17,13 +18,14 @@
 #define GUI_DEFAULT_BACKGROUND 0xff444444
 
 namespace Greet{
-	class GUI : public Group
+	class GUI
 	{
 		friend class GUILayer;
 		protected:
 
+			Mat3 m_transformationMatrix;
+			std::vector<GUI*> m_children;
 			GUI* m_parent;
-
 			// Mouse is inside GUI
 			bool m_mouseInside = false;
 			// Can be focused
@@ -45,16 +47,16 @@ namespace Greet{
 		public:
 			GUI(const Vec2& position, const Vec2& size);
 			GUI(const Vec2& position, const Vec2& size, const LTRB& margin);
-			void Add(Renderable* renderable) override;
-			void Add(GUI* renderable);
 			virtual ~GUI();
+
+			void Add(GUI* renderable);
+			void Remove(GUI* renderable);
 			bool IsFocused() const { return m_focused; }
 			void SetBackgroundColor(uint bgColor) { m_backgroundColor = bgColor;}
-			bool Update(float timeElapsed) override;
-
-			virtual void Submit(Renderer2D* renderer) const override;
-			virtual void Render(Renderer2D* renderer) const;
-
+			virtual bool Update(float timeElapsed);
+			virtual void Begin(GUIRenderer* renderer) const;
+			virtual void Submit(GUIRenderer* renderer) const = 0;
+			virtual void End(GUIRenderer* renderer) const;
 			virtual void OnFocused(bool focused) {};
 			virtual void OnMouseEnter() { };
 			virtual void OnMouseExit() { };
@@ -74,8 +76,8 @@ namespace Greet{
 			virtual bool IsInside(const Vec2& position) const;
 			Vec2 TranslateMouse(const Vec2& mousePos, GUI* target) const;
 			const Vec2& GetRealPosition() const;
-			inline const Vec2& GetPosition() const override { return m_position;}
-			inline const Vec2& GetSize() const override { return m_size;}
+			inline const Vec2& GetPosition() const { return m_position;}
+			inline const Vec2& GetSize() const { return m_size;}
 			inline uint GetBackgroundColor() const {return m_backgroundColor;}
 			inline bool IsRenderBackground() const { return m_renderBackground;}
 	};

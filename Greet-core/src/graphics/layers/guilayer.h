@@ -9,17 +9,27 @@
 
 namespace Greet {
 
-	class GUILayer : public Layer, public KeyListener, public MouseListener, public WindowResizeListener
+	class GUILayer : public KeyListener, public MouseListener, public WindowResizeListener
 	{
 
 	private:
+		GUIRenderer* m_renderer;
+		std::vector<GUI*> m_guis;
+		Shader* m_shader;
+		Mat3 m_projectionMatrix;
+
 		GUI* m_focusedGUI;
-		GUI* GetGUI(uint i) { return (GUI*)m_renderables[i]; };
 	public:
-		GUILayer(Renderer2D* renderer, Shader* shader);
+		GUILayer(GUIRenderer* renderer, Shader* shader);
 		virtual ~GUILayer();
-		void Add(Renderable* renderable) override;
+
 		void Add(GUI* renderable);
+		bool Update(float timeElapsed);
+		void Render() const;
+
+		void SetProjectionMatrix(Mat3 projectionMatrix);
+
+		// I/O
 		bool OnPressed(const KeyPressedEvent& e) override;
 		bool OnReleased(const KeyReleasedEvent& e) override;
 		bool OnTyped(const KeyTypedEvent& e) override;

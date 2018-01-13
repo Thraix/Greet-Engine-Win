@@ -4,12 +4,23 @@
 
 namespace Greet {
 
-	GUILayer::GUILayer(Renderer2D* renderer, Shader* shader)
-		: Layer(renderer,shader, Mat3::Orthographic(0,Window::GetWidth(),0,Window::GetHeight()))
+	GUILayer::GUILayer(GUIRenderer* renderer, Shader* shader)
+		: m_renderer(renderer), m_shader(shader), m_projectionMatrix(Mat3::Orthographic(0, Window::GetWidth(), 0, Window::GetHeight()))
 	{
 		Window::AddResizeCallback(this);
 		EventDispatcher::AddKeyListener(DISPATCHER_GUI, *this);
 		EventDispatcher::AddMouseListener(DISPATCHER_GUI, *this);
+
+		// Initialize shader.
+		GLint texIDs[32];
+		for (int i = 0; i < 32; i++)
+		{
+			texIDs[i] = i;
+		}
+		m_shader->Enable();
+		m_shader->SetUniformMat3("pr_matrix", m_projectionMatrix);
+		m_shader->SetUniform1iv("textures", 32, texIDs);
+		m_shader->Disable();
 	}
 
 	GUILayer::~GUILayer()
@@ -20,14 +31,41 @@ namespace Greet {
 		EventDispatcher::RemoveMouseListener(*this);
 	}
 
-	void GUILayer::Add(Renderable* renderable)
-	{
-		Log::Error("GUILayer doesn't accept Renderables only GUIs.");
-	}
-
 	void GUILayer::Add(GUI* renderable)
 	{
-		Layer::Add(renderable);
+		m_guis.push_back(renderable);
+	}
+
+	bool GUILayer::Update(float timeElapsed)
+	{
+		bool update = false;
+		for (uint i = 0; i < m_guis.size(); i++)
+			update |= m_guis[i]->Update(timeElapsed);
+		return update;
+	}
+
+	void GUILayer::Render() const
+	{
+		m_shader->Enable();
+		m_renderer->Begin();
+		uint size = m_guis.size();
+		for (uint i = 0; i < size; i++)
+		{
+			m_guis[i]->Begin(m_renderer);
+			m_guis[i]->Submit(m_renderer);
+			m_guis[i]->End(m_renderer);
+		}
+		m_renderer->End();
+		m_renderer->Draw();
+		m_shader->Disable();
+	}
+
+	void GUILayer::SetProjectionMatrix(Mat3 projectionMatrix)
+	{
+		m_projectionMatrix = projectionMatrix;
+		m_shader->Enable();
+		m_shader->SetUniformMat3("pr_matrix", m_projectionMatrix);
+		m_shader->Disable();
 	}
 
 	bool GUILayer::OnPressed(const KeyPressedEvent& e)
@@ -57,12 +95,11 @@ namespace Greet {
 		{
 		//	return true;
 		}
-		for (uint i = 0;i < m_renderables.size();i++)
+		for (uint i = 0;i < m_guis.size();i++)
 		{
-			GUI* gui = GetGUI(i);
 			//if (m_focusedGUI == gui)
 			//	continue;
-			GUI* focusedGUI = gui->OnPressed(e, e.GetPosition() - gui->m_position);
+			GUI* focusedGUI = m_guis[i]->OnPressed(e, e.GetPosition() - m_guis[i]->m_position);
 			if (focusedGUI != NULL)
 			{
 				if (m_focusedGUI != focusedGUI)
@@ -83,10 +120,9 @@ namespace Greet {
 
 	bool GUILayer::OnReleased(const MouseReleasedEvent& e)
 	{
-		for (uint i = 0;i < m_renderables.size();i++)
+		for (uint i = 0;i < m_guis.size();i++)
 		{
-			GUI* gui = GetGUI(i);
-			gui->OnReleased(e, e.GetPosition() - gui->m_position);
+			m_guis[i]->OnReleased(e, e.GetPosition() - m_guis[i]->m_position);
 		}
 		return false;
 	}
@@ -94,10 +130,9 @@ namespace Greet {
 	bool GUILayer::OnMoved(const MouseMovedEvent& e)
 	{
 		bool moved = false;
-		for (uint i = 0;i < m_renderables.size();i++)
+		for (uint i = 0;i < m_guis.size();i++)
 		{
-			GUI* gui = GetGUI(i);
-			moved |= gui->OnMoved(e, e.GetPosition() - gui->m_position);
+			moved |= m_guis[i]->OnMoved(e, e.GetPosition() - m_guis[i]->m_position);
 		}
 		return moved;
 	}

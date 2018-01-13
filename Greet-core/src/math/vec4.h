@@ -9,34 +9,34 @@
 
 namespace Greet{
 	
-	struct vec4
+	struct Vec4
 	{
 		float x, y, z, w;
-		vec4();
-		vec4(float x, float y, float z, float w);
+		Vec4();
+		Vec4(float x, float y, float z, float w);
 
 		float Length();
 		
-		vec4& Add(const vec4& other);
-		vec4& Subtract(const vec4& other);
-		vec4& Multiply(const vec4& other);
-		vec4& Divide(const vec4& other);
-		bool Compare(const vec4& other);
+		Vec4& Add(const Vec4& other);
+		Vec4& Subtract(const Vec4& other);
+		Vec4& Multiply(const Vec4& other);
+		Vec4& Divide(const Vec4& other);
+		bool Compare(const Vec4& other);
 
-		friend vec4& operator+(vec4& first, const vec4 &second);
-		friend vec4& operator-(vec4& first, const vec4 &second);
-		friend vec4& operator*(vec4& first, const vec4 &second);
-		friend vec4& operator/(vec4& first, const vec4 &second);
+		friend Vec4& operator+(Vec4& first, const Vec4 &second);
+		friend Vec4& operator-(Vec4& first, const Vec4 &second);
+		friend Vec4& operator*(Vec4& first, const Vec4 &second);
+		friend Vec4& operator/(Vec4& first, const Vec4 &second);
 
-		vec4& operator+=(const vec4 &other);
-		vec4& operator-=(const vec4 &other);
-		vec4& operator*=(const vec4 &other);
-		vec4& operator/=(const vec4 &other);
+		Vec4& operator+=(const Vec4 &other);
+		Vec4& operator-=(const Vec4 &other);
+		Vec4& operator*=(const Vec4 &other);
+		Vec4& operator/=(const Vec4 &other);
 
-		bool operator!=(const vec4 &second);
-		bool operator==(const vec4 &second);
+		bool operator!=(const Vec4 &second);
+		bool operator==(const Vec4 &second);
 
-		friend std::ostream& operator<<(std::ostream& stream, const vec4& vec);
+		friend std::ostream& operator<<(std::ostream& stream, const Vec4& vec);
 		
 	};
 }

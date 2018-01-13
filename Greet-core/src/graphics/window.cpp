@@ -10,7 +10,7 @@ namespace Greet {
 	uint Window::height;
 	std::string Window::title;
 	GLFWwindow *Window::window;
-	vec4 Window::bgColor;
+	Vec4 Window::bgColor;
 	bool Window::mouseButtonDown[MAX_MOUSEBUTTONS];
 	bool Window::isMouseButtonDown;
 	uint Window::joystickCheck;
@@ -22,7 +22,7 @@ namespace Greet {
 
 	void Window::CreateWindow(std::string title, uint width, uint height)
 	{
-		bgColor = vec4(0.0f, 0.0f, 0.0f, 0.0f);
+		bgColor = Vec4(0.0f, 0.0f, 0.0f, 0.0f);
 		focus = true;
 		Window::title = title;
 		Window::width = width;
@@ -140,7 +140,7 @@ namespace Greet {
 		glfwPollEvents();
 	}
 
-	void Window::SetBackgroundColor(vec4 color)
+	void Window::SetBackgroundColor(Vec4 color)
 	{
 		bgColor = color;
 		GLCall(glClearColor(color.x, color.y, color.z, color.w));

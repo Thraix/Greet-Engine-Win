@@ -5,7 +5,7 @@ namespace Greet {
 	Sprite* GUI::m_mask;
 
 	GUI::GUI(const Vec2& position, const Vec2& size)
-	:Group(Vec2(0, 0)), m_position(position), m_size(size), m_margin(LTRB()), m_backgroundColor(GUI_DEFAULT_BACKGROUND)
+	: m_position(position), m_size(size), m_margin(LTRB()), m_backgroundColor(GUI_DEFAULT_BACKGROUND)
 	{
 		m_transformationMatrix = Mat3::Translate(m_position);
 		if (m_mask == NULL)
@@ -13,7 +13,7 @@ namespace Greet {
 	}
 	
 	GUI::GUI(const Vec2& position, const Vec2& size, const LTRB& margin)
-		: Group(Vec2(0,0)), m_position(position), m_size(size), m_margin(margin), m_backgroundColor(GUI_DEFAULT_BACKGROUND)
+		: m_position(position), m_size(size), m_margin(margin), m_backgroundColor(GUI_DEFAULT_BACKGROUND)
 	{
 		m_transformationMatrix = Mat3::Translate(m_position);
 		if (m_mask == NULL)
@@ -24,15 +24,27 @@ namespace Greet {
 	{
 	}
 
-	void GUI::Add(Renderable* renderable)
-	{
-		ASSERT(false, "GUI doesn't accept Renderables only GUIs.");
-	}
-
 	void GUI::Add(GUI* renderable)
 	{
-		Group::Add(renderable);
+		if (renderable->m_parent != nullptr)
+		{
+			Log::Warning("Tried adding GUI that already has a parent.");
+		}
+		m_children.push_back(renderable);
 		renderable->m_parent = this;
+	}
+
+	void GUI::Remove(GUI* renderable)
+	{
+		for (auto it = m_children.begin();it != m_children.end();it++)
+		{
+			if (*it == renderable)
+			{
+				(*it)->m_parent = nullptr;
+				m_children.erase(it);
+				return;
+			}
+		}
 	}
 
 	bool GUI::OnPressed(const KeyPressedEvent& e)
@@ -56,9 +68,9 @@ namespace Greet {
 		if (!m_enabled || !m_mouseInside)
 			return NULL; // No GUI that can be focused
 
-		for (uint i = 0;i < m_renderables.size();i++)
+		for (uint i = 0;i < m_children.size();i++)
 		{
-			GUI* gui = ((GUI*)m_renderables[i]);
+			GUI* gui = m_children[i];
 			// Check if mouse is within child-GUIs
 			if (gui->OnPressed(event, TranslateMouse(relativeMousePos, gui)))
 				return gui;
@@ -70,9 +82,9 @@ namespace Greet {
 	{ 
 		if (!m_enabled)
 			return NULL;
-		for (uint i = 0;i < m_renderables.size();i++)
+		for (uint i = 0;i < m_children.size();i++)
 		{
-			GUI* gui = ((GUI*)m_renderables[i]);
+			GUI* gui = m_children[i];
 			// Check if mouse is within child-GUIs
 			gui->OnReleased(event, TranslateMouse(relativeMousePos, gui));
 		}
@@ -94,9 +106,9 @@ namespace Greet {
 			m_mouseInside = false;
 		}
 
-		for (uint i = 0;i < m_renderables.size();i++)
+		for (uint i = 0;i < m_children.size();i++)
 		{
-			GUI* gui = ((GUI*)m_renderables[i]);
+			GUI* gui = m_children[i];
 			gui->OnMoved(event, TranslateMouse(relativeMousePos, gui));
 		}
 		return m_mouseInside;
@@ -105,23 +117,37 @@ namespace Greet {
 
 	bool GUI::Update(float timeElapsed) 
 	{
-		if(m_parent == NULL)
+		if(m_parent == nullptr)
 			m_transformationMatrix = Mat3::Translate(m_position);
 		else
 			m_transformationMatrix = Mat3::Translate(m_position + Vec2(m_parent->m_margin.left, m_parent->m_margin.top));
-		return Group::Update(timeElapsed);
+		
+
+		// Update children
+		bool update = false;
+		for (uint i = 0; i < m_children.size(); i++)
+			update |= m_children[i]->Update(timeElapsed);
+		return update;
 	}
 
-	void GUI::Submit(Renderer2D* renderer) const
+	void GUI::Begin(GUIRenderer* renderer) const
 	{
-		if(m_renderBackground)
-			renderer->FillRect(Vec2(0,0), m_size, m_backgroundColor, m_mask);
-		Render(renderer);
+		renderer->PushMatrix(m_transformationMatrix);
+		renderer->PushViewport(Vec2(0,0), m_size);
+		if (m_renderBackground)
+			renderer->SubmitRect(Vec2(0, 0), m_size, m_backgroundColor);
 	}
 
-	void GUI::Render(Renderer2D* renderer) const
+	void GUI::End(GUIRenderer* renderer) const
 	{
-		Group::Submit(renderer);
+		for (uint i = 0; i < m_children.size(); i++)
+		{
+			m_children[i]->Begin(renderer);
+			m_children[i]->Submit(renderer);
+			m_children[i]->End(renderer);
+		}
+		renderer->PopViewport();
+		renderer->PopMatrix();
 	}
 
 	const Vec2& GUI::GetRealPosition() const

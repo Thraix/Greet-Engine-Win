@@ -1,5 +1,6 @@
 #include <Greet.h>
 
+#include <graphics/renderers/GUIRenderer.h>
 #include "keyboardcontrol.h"
 #include "tree.h"
 #include <random>
@@ -24,6 +25,7 @@ private:
 	EntityModel* tetrahedron;
 	std::vector<EntityModel> models;
 	FrameBufferObject* fbo;
+	GUIRenderer* guirenderer;
 
 
 	float progressFloat;
@@ -146,7 +148,7 @@ public:
 		fps = new Label("144 fps", Vec2(50, 300), "roboto", 72, ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 9)));
 		cursor = new Renderable2D(Vec2(0,0),Vec2(32,32),0xffffffff, new Sprite(TextureManager::Get2D("cursor")), new Sprite(TextureManager::Get2D("mask")));
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(driverTest->m_position.x, -20, 0.5f, true, new drivers::DriverAdapter()));
-		guilayer = new GUILayer(new BatchRenderer(),ShaderFactory::DefaultShader());
+		guilayer = new GUILayer(new GUIRenderer(),Shader::FromFile("res/shaders/gui.shader"));
 		std::vector<std::string> labels{ "Babymode", "Softcore",  "Easy", "Medium", "Hard", "Hardcore", "Expert" };
 		slider = new Slider(Vec2(0, 0), Vec2(200, 30), 0, 255, 1);
 		slider2 = new Slider(Vec2(0, 40), Vec2(200, 30), labels);
@@ -193,8 +195,10 @@ public:
 		uint pos = 0;
 //		Log::info(JSONLoader::isNumber("0.1234s",pos));
 		RenderEngine::AddLayer2d(uilayer, "uilayer");
-		RenderEngine::AddLayer2d(guilayer, "guilayer");
-		RenderEngine::AddLayer3d(new Layer3D(renderer3d), "3dWorld");
+		//RenderEngine::AddLayer2d(guilayer, "guilayer");
+		//RenderEngine::AddLayer3d(new Layer3D(renderer3d), "3dWorld");
+		guirenderer = new GUIRenderer();
+		//guirenderer->PushMatrix(Mat3::Orthographic(0, Window::GetWidth(), 0, Window::GetHeight()));
 	}
 
 	void RecalcPositions(Vec3* vertex)
@@ -293,6 +297,7 @@ public:
 
 	void Update(float elapsedTime) override
 	{
+		guilayer->Update(elapsedTime);
 		progressFloat++;
 		if (progressFloat > 1000)
 			progressFloat = 0;
@@ -446,7 +451,9 @@ public:
 	bool screenshot = false;
 	void Render() override
 	{
-		
+		//guirenderer->SubmitString("test", Vec2(100, 100), FontManager::Get("roboto",24), 0xff00ff);
+		//guirenderer->SubmitRect(Vec2(0, 0), Vec2(1, 1), 0xffffff00);
+		guilayer->Render();
 	}
 	
 	void WindowResize(int width, int height) override

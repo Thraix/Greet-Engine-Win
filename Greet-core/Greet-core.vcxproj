@@ -63,6 +63,7 @@
     <ClCompile Include="src\graphics\RenderEngine.cpp" />
     <ClCompile Include="src\graphics\renderers\BatchRenderer.cpp" />
     <ClCompile Include="src\graphics\renderers\BatchRenderer3D.cpp" />
+    <ClCompile Include="src\graphics\renderers\GUIRenderer.cpp" />
     <ClCompile Include="src\graphics\renderers\Renderer3D.cpp" />
     <ClCompile Include="src\graphics\shaders\Shader.cpp" />
     <ClCompile Include="src\graphics\shaders\ShaderFactory.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="src\graphics\layers\Box2DLayer.h" />
     <ClInclude Include="src\graphics\layers\Group.h" />
     <ClInclude Include="src\graphics\layers\GUILayer.h" />
+    <ClInclude Include="src\graphics\layers\layer.h" />
     <ClInclude Include="src\graphics\layers\Layer3D.h" />
     <ClInclude Include="src\graphics\Light.h" />
     <ClInclude Include="src\graphics\models\Camera.h" />
@@ -165,6 +167,7 @@
     <ClInclude Include="src\graphics\RenderEngine.h" />
     <ClInclude Include="src\graphics\renderers\BatchRenderer.h" />
     <ClInclude Include="src\graphics\renderers\BatchRenderer3D.h" />
+    <ClInclude Include="src\graphics\renderers\GUIRenderer.h" />
     <ClInclude Include="src\graphics\renderers\Renderer.h" />
     <ClInclude Include="src\graphics\renderers\Renderer2D.h" />
     <ClInclude Include="src\graphics\renderers\Renderer3D.h" />
