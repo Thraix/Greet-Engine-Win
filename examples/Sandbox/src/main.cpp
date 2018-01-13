@@ -156,10 +156,11 @@ public:
 		Slider* slider3 = new Slider(Vec2(0, 80), Vec2(200, 30), 0, 255, 1);
 		slider3->SetRenderPercentage(true);
 		slider3->SetSliderController(new SliderController(Vec2(0, 15), Vec2(30, 30)));
-		TextBox* textBox = new TextBox(Vec2(0, 120), Vec2(200, 30));
+		TextBox* textBox = new TextBox(Vec2(0, 120), Vec2(200, 30), false);
+		TextBox* textBoxPass = new TextBox(Vec2(0, 160), Vec2(200, 30), true);
 		textBox->SetText("Text Box");
 		progressFloat = 0;
-		ProgressBar* progressBar = new ProgressBar(Vec2(0, 160), Vec2(200, 30),&progressFloat,0,1000);
+		ProgressBar* progressBar = new ProgressBar(Vec2(0, 200), Vec2(200, 30),&progressFloat,0,1000);
 		
 		button = new Button(Vec2(10,300),Vec2(100,40),"Test");
 		frame = new Frame(Vec2(10, 10), Vec2(500, 500),"GUI Frame");
@@ -174,6 +175,7 @@ public:
 		frame->Add(slider3);
 		frame->Add(button);
 		frame->Add(textBox);
+		frame->Add(textBoxPass);
 		frame->Add(progressBar);
 		guilayer->Add(frame);
 		uilayer->Add(cursor);

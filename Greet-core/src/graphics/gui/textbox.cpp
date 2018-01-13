@@ -4,8 +4,8 @@
 namespace Greet
 {
 
-	TextBox::TextBox(const Vec2& position, const Vec2& size)
-		:GUI(position,size, LTRB(3,2,3,2)), m_font(FontManager::Get("anonymous", size.y-6)), m_cursorColor(ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 9))),
+	TextBox::TextBox(const Vec2& position, const Vec2& size, bool password)
+		:GUI(position,size, LTRB(3,2,3,2)), m_font(FontManager::Get("anonymous", size.y-6)), m_password(password), m_cursorColor(ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 9))),
 		m_textColor(ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 3))),	m_blinkSpeed(0.5f)
 	{
 		m_renderBackground = true;
@@ -14,7 +14,11 @@ namespace Greet
 
 	void TextBox::Submit(GUIRenderer* renderer) const
 	{
-		renderer->SubmitString(m_text, Vec2(m_margin.left, m_font->GetSize()), m_font, m_textColor);
+		if (m_password)
+			renderer->SubmitString(std::string(m_text.size(), '*'), Vec2(m_margin.left, m_font->GetSize()), m_font, m_textColor);
+		else
+			renderer->SubmitString(m_text, Vec2(m_margin.left, m_font->GetSize()), m_font, m_textColor);
+
 		const Vec2& pos = GetRealPosition();
 		if (IsFocused())
 		{
