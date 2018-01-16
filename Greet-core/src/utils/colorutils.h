@@ -88,6 +88,31 @@ namespace Greet { namespace ColorUtils {
 		return 0xff000000 | ((int)(color.x * 255) << 16) | ((int)(color.y * 255) << 8) | (int)(color.z * 255);
 	}
 
+	inline byte GetAlpha(uint color)
+	{
+		return color >> 24 & 0xff;
+	}
+
+	inline byte GetRed(uint color)
+	{
+		return color >> 16 & 0xff;
+	}
+
+	inline byte GetGreen(uint color)
+	{
+		return color >> 8 & 0xff;
+	}
+
+	inline byte GetBlue(uint color)
+	{
+		return color & 0xff;
+	}
+
+	inline Vec4 HexToVec4(uint color)
+	{
+		return Vec4(GetRed(color), GetGreen(color), GetBlue(color), GetAlpha(color)) / 255.0f;
+	}
+
 	inline uint Vec4ToColorHex(Vec4 color)
 	{
 		return ((int)(color.w * 255) << 24) | ((int)(color.x * 255) << 16) | ((int)(color.y * 255) << 8) | (int)(color.z * 255);

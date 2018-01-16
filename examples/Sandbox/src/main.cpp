@@ -201,6 +201,7 @@ public:
 		//RenderEngine::AddLayer3d(new Layer3D(renderer3d), "3dWorld");
 		guirenderer = new GUIRenderer();
 		//guirenderer->PushMatrix(Mat3::Orthographic(0, Window::GetWidth(), 0, Window::GetHeight()));
+		Log::Info(ColorUtils::HexToVec4(0xffaa0077));
 	}
 
 	void RecalcPositions(Vec3* vertex)
