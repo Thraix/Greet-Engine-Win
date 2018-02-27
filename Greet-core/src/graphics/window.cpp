@@ -67,6 +67,7 @@ namespace Greet {
 		glfwSetWindowFocusCallback(window,window_focus_callback);
 		glfwSetScrollCallback(window, mouse_scroll_callback);
 		glfwSetCharCallback(window, key_char_callback);
+		glfwSetJoystickCallback(joystick_callback);
 
 		glfwSwapInterval(0);
 		GLCall(glEnable(GL_TEXTURE_2D));
@@ -84,7 +85,6 @@ namespace Greet {
 
 		Log::Info("OpenGL Version: ", glGetString(GL_VERSION));
 		Log::Info("GLFW Version: ", glfwGetVersionString());
-		CheckJoysticks();
 		return true;
 	}
 
@@ -100,18 +100,7 @@ namespace Greet {
 
 	void Window::Tick()
 	{
-		CheckJoysticks();
 
-	}
-
-	void Window::CheckJoysticks()
-	{
-		if (joysticks[joystickCheck].CheckConnect())
-		{
-			for (uint j = 0;j < joystickState.size();j++)
-				joystickState[joystickCheck]->JoystickState(joystickCheck, JOYSTICK_STATE_CONNECTED);
-			joystickCheck++;
-		}
 	}
 
 	void Window::Update()
@@ -208,7 +197,6 @@ namespace Greet {
 			for (uint i = 0;i < MAX_MOUSEBUTTONS;i++)
 				if (mouseButtonDown[i])
 					isMouseButtonDown = true;
-
 	}
 
 	void Window::mouse_position_callback(GLFWwindow* window, double xpos, double ypos)
@@ -239,5 +227,11 @@ namespace Greet {
 				joysticks[i].ClearInput();
 			}
 		}
+	}
+
+	void Window::joystick_callback(int joy, int event)
+	{
+		for (uint i = 0;i < joystickState.size();i++)
+			joystickState[i]->JoystickState(joy, event == GLFW_CONNECTED);
 	}
 }

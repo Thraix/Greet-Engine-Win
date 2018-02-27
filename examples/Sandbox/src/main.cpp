@@ -467,6 +467,14 @@ public:
 		//camera::Camera::getInstance()->setViewport(0, 0, width, height* 9 / 16);
 		uilayer->SetProjectionMatrix(Mat3::Orthographic(0,Window::GetWidth(),0,Window::GetHeight()));
 	}
+
+	void JoystickState(uint joy, bool connected) override
+	{
+		if (connected)
+			Log::Info("Controller ", joy, " connected!");
+		else
+			Log::Info("Controller ", joy, " disconnected!");
+	}
 };
 
 #include <fstream>

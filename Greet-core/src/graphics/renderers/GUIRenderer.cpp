@@ -29,8 +29,8 @@ namespace Greet
 		GLCall(glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(GUIVertex), (const GLvoid*)offsetof(GUIVertex, GUIVertex::texId)));
 		GLCall(glVertexAttribPointer(3, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(GUIVertex), (const GLvoid*)offsetof(GUIVertex, GUIVertex::color)));
 		GLCall(glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(GUIVertex), (const GLvoid*)offsetof(GUIVertex, GUIVertex::viewport)));
-		GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
 
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
 		//Generate all the indices at runtime
 		m_indices = new uint[m_iboSize];
 		GLCall(glGenBuffers(1, &m_ibo));

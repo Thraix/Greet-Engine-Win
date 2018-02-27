@@ -68,8 +68,7 @@ namespace Greet {
 		static void window_focus_callback(GLFWwindow* window, int state);
 		static void mouse_position_callback(GLFWwindow* window, double xpos, double ypos);
 		static void mouse_scroll_callback(GLFWwindow* window, double scrollX, double scrollY);
-
-		static void CheckJoysticks();
+		static void joystick_callback(int joy, int event);
 	public:
 		//Window(const char *title, int width, int height);
 		//~Window();

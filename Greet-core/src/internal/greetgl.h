@@ -34,8 +34,8 @@
 #define GLFW_JOYSTICK_PAD_DOWN		0x0C
 #define GLFW_JOYSTICK_PAD_LEFT		0x0D
 
-#define GLFW_JOYSTICK_BUTTONS		0x0E
-#define GLFW_JOYSTICK_AXES			0x05
+#define GLFW_JOYSTICK_BUTTONS		14
+#define GLFW_JOYSTICK_AXES			6
 
 static void GLClearError()
 {
