@@ -54,7 +54,9 @@ public:
 		colors[6] = 0xffffffff;
 		colors[7] = 0xffff00ff;
 		meshData->AddAttribute(new AttributeData(ATTRIBUTE_COLOR, colors));
-		MaterialModel* materialModel = new MaterialModel(new Mesh(meshData), *material);
+		Mesh* mesh = new Mesh(meshData);
+		mesh->SetEnableCulling(false);
+		MaterialModel* materialModel = new MaterialModel(mesh, *material);
 
 		cursor3d = new EntityModel(*materialModel, Vec3(0, 0, 0), Vec3(1.0f, 1.0f, 1.0f), Vec3(0, 0, 0));
 		orthographic = Mat3::Orthographic(0.0f, (float)Window::GetWidth(), 0.0f, (float)Window::GetHeight());

@@ -59,7 +59,7 @@ namespace Greet {
 	{
 		if (m_culling)
 		{	
-			GLCall(glDisable(GL_CULL_FACE));
+			GLCall(glEnable(GL_CULL_FACE));
 			GLCall(glFrontFace(m_clockwise ? GL_CW : GL_CCW));
 		}
 		else
