@@ -12,6 +12,12 @@ namespace Greet{
 		this->z = z;
 	}
 
+	Vec3::Vec3(const Vec4& vec4)
+		: x(vec4.x), y(vec4.y), z(vec4.z)
+	{
+		
+	}
+
 	float Vec3::Length() const
 	{
 		return sqrt(x*x + y*y + z*z);
@@ -233,6 +239,6 @@ namespace Greet{
 
 	std::ostream& operator<<(std::ostream& stream, const Vec3& vec)
 	{
-		return stream << vec.x << ", " << vec.y << ", " << vec.z;
+		return stream << "(" << vec.x << ", " << vec.y << ", " << vec.z << ")";
 	}
 }

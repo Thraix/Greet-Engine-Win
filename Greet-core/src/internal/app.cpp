@@ -55,9 +55,9 @@ namespace Greet {
 			if (elapsed - updateTimer >= updateTick)
 			{
 				DriverDispatcher::Update(updateTick);
-				Update(elapsed - updateTimer);
 				Window::Update();
 				RenderEngine::Update(elapsed - updateTimer);
+				Update(elapsed - updateTimer);
 				updates++;
 				updateTimer = elapsed;
 			}

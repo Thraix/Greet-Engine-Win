@@ -1,6 +1,6 @@
 #include "Vec2.h"
 
-namespace Greet{
+namespace Greet {
 
 	Vec2::Vec2()
 	{
@@ -12,6 +12,18 @@ namespace Greet{
 	{
 		this->x = x;
 		this->y = y;
+	}
+
+	Vec2::Vec2(const Vec3& vec3)
+		: x(vec3.x), y(vec3.y)
+	{
+
+	}
+
+	Vec2::Vec2(const Vec4& vec4)
+		: x(vec4.x), y(vec4.y)
+	{
+	
 	}
 
 	Vec2::Vec2(const b2Vec2& vec)
@@ -251,6 +263,6 @@ namespace Greet{
 
 	std::ostream& operator<<(std::ostream& stream, const Vec2& vec)
 	{
-		return stream << vec.x << ", " << vec.y;
+		return stream << "(" << vec.x << ", " << vec.y << ")";
 	}
 }

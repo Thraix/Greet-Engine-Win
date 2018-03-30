@@ -1,4 +1,17 @@
 #include "Mat3.h"
+
+#define _0_0 0 
+#define _0_1 1 
+#define _0_2 2 
+#define _1_0 3
+#define _1_1 4 
+#define _1_2 5  
+#define _2_0 6 
+#define _2_1 7 
+#define _2_2 8
+#define SIZE 3
+#define FLOATS SIZE*SIZE
+
 namespace Greet{
 	Mat3::Mat3()
 	{
@@ -151,33 +164,33 @@ namespace Greet{
 		return result;
 	}
 
-	Mat3& Mat3::Inverse()
+	Mat3 Mat3::Inverse(const Mat3& mat)
 	{
-		float temp[9],det;
+		float temp[FLOATS], det;
 
-		temp[0] = elements[4] * elements[8] - elements[7] * elements[5];
-		temp[1] = elements[7] * elements[2] - elements[1] * elements[8];
-		temp[2] = elements[1] * elements[5] - elements[4] * elements[2];
+		temp[0] = mat.elements[4] * mat.elements[8] - mat.elements[7] * mat.elements[5];
+		temp[1] = mat.elements[7] * mat.elements[2] - mat.elements[1] * mat.elements[8];
+		temp[2] = mat.elements[1] * mat.elements[5] - mat.elements[4] * mat.elements[2];
+		temp[3] = mat.elements[6] * mat.elements[5] - mat.elements[3] * mat.elements[8];
+		temp[4] = mat.elements[0] * mat.elements[8] - mat.elements[6] * mat.elements[2];
+		temp[5] = mat.elements[3] * mat.elements[2] - mat.elements[0] * mat.elements[5];
+		temp[6] = mat.elements[3] * mat.elements[7] - mat.elements[6] * mat.elements[4];
+		temp[7] = mat.elements[6] * mat.elements[1] - mat.elements[0] * mat.elements[7];
+		temp[8] = mat.elements[0] * mat.elements[4] - mat.elements[3] * mat.elements[1];
 
-		temp[3] = elements[6] * elements[5] - elements[3] * elements[8];
-		temp[4] = elements[0] * elements[8] - elements[6] * elements[2];
-		temp[5] = elements[3] * elements[2] - elements[0] * elements[5];
-
-		temp[6] = elements[3] * elements[7] - elements[6] * elements[4];
-		temp[7] = elements[6] * elements[1] - elements[0] * elements[7];
-		temp[8] = elements[0] * elements[4] - elements[3] * elements[1];
-
-		det = elements[0] * temp[0] + elements[1] * temp[4] + elements[2] * temp[7];
+		det = mat.elements[0] * temp[0] + mat.elements[1] * temp[4] + mat.elements[2] * temp[7];
 		
 		if (det == 0)
-			return *this;
+			return mat;
 
 		det = 1.0f / det;
 
+		Mat3 res = mat;
+
 		for (int i = 0; i < 9; i++)
-			elements[i] = temp[i] * det;
+			res.elements[i] = temp[i] * det;
 		
-		return *this;
+		return res;
 	}
 
 	Mat3 Mat3::Cpy()
@@ -237,5 +250,10 @@ namespace Greet{
 	Vec3 operator*(const Mat3 &first, const Vec3 &second)
 	{
 		return first.Multiply(second);
+	}
+
+	Mat3 operator~(const Mat3& first)
+	{
+		return Mat3::Inverse(first);
 	}
 }

@@ -21,6 +21,7 @@ namespace Greet {
 		inline const Mat4& GetTransformationMatrix() const { return m_transformationMatrix; }
 		void Update(float timeElapsed);
 		void UpdateTransformation();
+		void SetPosition(const Vec3& pos) { m_position = pos; m_hasChanged = true; }
 		void Move(float dx, float dy, float dz) { m_position.x += dx;m_position.y = dy; m_position.z = dz; m_hasChanged = true; }
 		void Scale(float x, float y, float z) { m_scale.x += x;m_scale.y += y; m_scale.z += z; m_hasChanged = true; }
 		void Rotate(float x, float y, float z) { m_rotation.x += x;m_rotation.y += y; m_rotation.z += z; m_hasChanged = true; }

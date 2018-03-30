@@ -172,6 +172,6 @@ namespace Greet{
 
 	std::ostream& operator<<(std::ostream& stream, const Vec4& vec)
 	{
-		return stream << vec.x << ", " << vec.y << ", " << vec.z << ", " << vec.w;
+		return stream << "(" << vec.x << ", " << vec.y << ", " << vec.z << ", " << vec.w << ")";
 	}
 }

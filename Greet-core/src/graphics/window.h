@@ -97,9 +97,9 @@ namespace Greet {
 		inline static void SetTitle(const std::string& title) { glfwSetWindowTitle(window,title.c_str()); }
 
 		//Mouse Positions
-		inline static Vec2 GetMousePos(Mat3 transform) { return transform.Inverse()*mousePos; }
-		inline static float GetMouseX(Mat3 transform) { return (transform.Inverse()*mousePos).x; }
-		inline static float GetMouseY(Mat3 transform) { return (transform.Inverse()*mousePos).y; }
+		inline static Vec2 GetMousePos() { return mousePos; }
+		inline static float GetMouseX() { return mousePos.x; }
+		inline static float GetMouseY() { return mousePos.y; }
 
 		inline static Vec2 GetMousePosPixel() { return mousePosPixel; }
 		inline static float GetMouseXPixel() { return mousePosPixel.x; }

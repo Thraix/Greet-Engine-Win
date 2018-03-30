@@ -7,6 +7,8 @@
 #include <iostream>
 #include <Box2D/Common/b2Math.h>
 #include <math.h>
+#include <math/Vec3.h>
+#include <math/Vec4.h>
 #include <logging/Log.h>
 
 namespace Greet{
@@ -17,6 +19,8 @@ namespace Greet{
 		float x, y;
 		Vec2();
 		Vec2(float x, float y);
+		Vec2(const Vec3& vec3);
+		Vec2(const Vec4& vec4);
 		Vec2(const b2Vec2& vec);
 
 		float Length();

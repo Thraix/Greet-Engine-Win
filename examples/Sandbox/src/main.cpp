@@ -82,7 +82,7 @@ public:
 		//camera = new TPCamera(vec3(-3.5, -7.8, 5.5), 18, 0.66, 38.5, 15, 80, 0, 0.8f); // Profile shot
 		camera = new TPCamera(Vec3(0, 0, 0), 15, 0, 0, 15, 80, 0, 0.8f);
 		Skybox* skybox = new Skybox(TextureManager::Get3D("skybox"));
-		renderer3d = new BatchRenderer3D(Window::GetWidth(), Window::GetHeight(), camera,90,0.001f,1000.0f, skybox);
+		renderer3d = new BatchRenderer3D(Window::GetWidth(), Window::GetHeight(), camera,90,0.1f,1000.0f, skybox);
 
 		Shader* modelShader = Shader::FromFile("res/shaders/3dshader.shader");
 		Shader* terrainShader = Shader::FromFile("res/shaders/terrain.shader");
@@ -198,7 +198,7 @@ public:
 //		Log::info(JSONLoader::isNumber("0.1234s",pos));
 		RenderEngine::AddLayer2d(uilayer, "uilayer");
 		//RenderEngine::AddLayer2d(guilayer, "guilayer");
-		//RenderEngine::AddLayer3d(new Layer3D(renderer3d), "3dWorld");
+		RenderEngine::AddLayer3d(new Layer3D(renderer3d), "3dWorld");
 		guirenderer = new GUIRenderer();
 		//guirenderer->PushMatrix(Mat3::Orthographic(0, Window::GetWidth(), 0, Window::GetHeight()));
 		Log::Info(ColorUtils::HexToVec4(0xffaa0077));
@@ -456,7 +456,7 @@ public:
 	{
 		//guirenderer->SubmitString("test", Vec2(100, 100), FontManager::Get("roboto",24), 0xff00ff);
 		//guirenderer->SubmitRect(Vec2(0, 0), Vec2(1, 1), 0xffffff00);
-		guilayer->Render();
+		//guilayer->Render();
 	}
 	
 	void WindowResize(int width, int height) override

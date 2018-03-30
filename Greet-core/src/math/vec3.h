@@ -5,6 +5,7 @@
 #endif
 
 #include <math.h>
+#include <math/Vec4.h>
 #include <iostream>
 
 namespace Greet{
@@ -14,6 +15,7 @@ namespace Greet{
 		float x, y, z;
 		Vec3() = default;
 		Vec3(float x, float y, float z);
+		Vec3(const Vec4& vec4);
 
 		float Length() const;
 		float Dot(const Vec3& vec) const;

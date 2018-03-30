@@ -92,7 +92,12 @@ namespace Greet {
 
 	Mat4 Mat4::TPCamera(Vec3 position, float distance, float height, float rotation)
 	{
-		return RotateRX(asin(height)) * Mat4::RotateY(90) * Mat4::Translate(Vec3(sqrt(1 - height*height) * distance, -height * distance, 0)) * Mat4::RotateY(rotation) * Mat4::Translate(-position.x, -position.y, -position.z);
+		return 
+			RotateRX(asin(height)) * 
+			Mat4::RotateY(90) * 
+			Mat4::Translate(Vec3(sqrt(1 - height*height) * distance, -height * distance, 0)) * 
+			Mat4::RotateY(rotation) * 
+			Mat4::Translate(-position.x, -position.y, -position.z);
 	}
 
 
@@ -344,7 +349,10 @@ namespace Greet {
 
 		det = 1.0 / det;
 
-		Mat4 result(temp);
+		Mat4 result = inv;
+
+		for (i = 0; i < 16; i++)
+			result.elements[i] = temp[i] * det;
 
 		return result;
 	}
@@ -374,19 +382,22 @@ namespace Greet {
 		return *this;
 	}
 
-	Vec2 Mat4::Multiply(const Vec2 &other) const
+	Vec4 Mat4::Multiply(const Vec2 &other) const
 	{
 		float x = columns[0].x * other.x + columns[1].x * other.y + columns[2].x + columns[3].x;
 		float y = columns[0].y * other.x + columns[1].y * other.y + columns[2].y + columns[3].y;
-		return Vec2(x, y);
+		float z = columns[0].z * other.x + columns[1].z * other.y + columns[2].z + columns[3].z;
+		float w = columns[0].w * other.x + columns[1].w * other.y + columns[2].w + columns[3].w;
+		return Vec4(x, y, z, w);
 	}
 
-	Vec3 Mat4::Multiply(const Vec3 &other) const
+	Vec4 Mat4::Multiply(const Vec3 &other) const
 	{
 		float x = columns[0].x * other.x + columns[1].x * other.y + columns[2].x * other.z + columns[3].x;
 		float y = columns[0].y * other.x + columns[1].y * other.y + columns[2].y * other.z + columns[3].y;
 		float z = columns[0].z * other.x + columns[1].z * other.y + columns[2].z * other.z + columns[3].z;
-		return Vec3(x, y, z);
+		float w = columns[0].w * other.x + columns[1].w * other.y + columns[2].w * other.z + columns[3].w;
+		return Vec4(x, y, z, w);
 	}
 
 	Vec4 Mat4::Multiply(const Vec4 &other) const
@@ -407,12 +418,12 @@ namespace Greet {
 		return Multiply(other);
 	}
 
-	Vec2 operator*(const Mat4 &first, const Vec2 &second)
+	Vec4 operator*(const Mat4 &first, const Vec2 &second)
 	{
 		return first.Multiply(second);
 	}
 
-	Vec3 operator*(const Mat4 &first, const Vec3 &second)
+	Vec4 operator*(const Mat4 &first, const Vec3 &second)
 	{
 		return first.Multiply(second);
 	}

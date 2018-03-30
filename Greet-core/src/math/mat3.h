@@ -41,7 +41,7 @@ namespace Greet{
 		static Mat3 RotateR(float rad);
 		static Mat3 Shear(const float& x, const float& y);
 
-		Mat3& Inverse();
+		static Mat3 Inverse(const Mat3& mat);
 		Mat3 Cpy();
 
 		Mat3& Multiply(const Mat3 &other);
@@ -53,6 +53,7 @@ namespace Greet{
 
 		friend Vec2 operator*(const Mat3& first, const Vec2 &second);
 		friend Vec3 operator*(const Mat3& first, const Vec3 &second);
+		friend Mat3 operator~(const Mat3& first);
 
 	};
 }
