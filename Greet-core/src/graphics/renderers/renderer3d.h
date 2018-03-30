@@ -46,9 +46,16 @@ namespace Greet{
 
 		virtual void Begin() {
 			RenderSkybox();
+			GLCall(glDepthRange(m_near, m_far));
 		};
 		virtual void Render() const {};
 		virtual void End() {};
+
+		inline const Mat4& GetProjectionMatrix() const { return m_projectionMatrix; }
+		inline const Camera& GetCamera() const { return *m_camera; }
+
+		Vec3 GetScreenCoordination(const Vec3& coordinate, uint screenWidth, uint screenHeight);
+		void GetWorldCoordination(const Vec2& mousePos, Vec3* near, Vec3* direction);
 	private:
 		void RenderSkybox() const;
 	};
