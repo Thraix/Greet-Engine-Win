@@ -13,6 +13,7 @@ out vec3 toLightVector;
 out vec3 toCameraVector;
 out float visibility;
 
+uniform vec4 mat_color;
 uniform mat4 transformationMatrix;
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
@@ -27,7 +28,7 @@ void main()
 	vec4 worldPosition = transformationMatrix * vec4(position, 1.0f);
 	vec4 positionRelativeToCamera = viewMatrix * worldPosition;
 	gl_Position = projectionMatrix * positionRelativeToCamera;
-	vert_color = vec4(color.b, color.g, color.r, color.a);
+	vert_color = mat_color;
 
 	vert_texCoord = texCoord;
 	surfaceNormal = (transformationMatrix * vec4(normal, 0.0)).xyz;

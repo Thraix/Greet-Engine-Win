@@ -88,11 +88,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Grid.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\3dshader.shader" />
     <None Include="res\shaders\skybox.shader" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Cube.h" />
+    <ClInclude Include="src\Grid.h" />
+    <ClInclude Include="src\GridRenderer3D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

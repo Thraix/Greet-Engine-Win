@@ -173,6 +173,8 @@
     <ClInclude Include="src\graphics\renderers\Renderer3D.h" />
     <ClInclude Include="src\graphics\shaders\Shader.h" />
     <ClInclude Include="src\graphics\shaders\ShaderFactory.h" />
+    <ClInclude Include="src\graphics\shaders\uniforms\Uniform.h" />
+    <ClInclude Include="src\graphics\shaders\Uniformable.h" />
     <ClInclude Include="src\graphics\Skybox.h" />
     <ClInclude Include="src\graphics\Sprite.h" />
     <ClInclude Include="src\graphics\textures\CubeMap.h" />

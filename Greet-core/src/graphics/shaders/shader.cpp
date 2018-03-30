@@ -101,7 +101,7 @@ namespace Greet {
 		GLCall(glUniform1f(GetUniformLocation(name), value));
 	}
 
-	void Shader::SetUniform1fv(const GLchar *name, int count, float* value) const
+	void Shader::SetUniform1fv(const GLchar *name, uint count, float* value) const
 	{
 		GLCall(glUniform1fv(GetUniformLocation(name), count, value));
 	}
@@ -111,9 +111,19 @@ namespace Greet {
 		GLCall(glUniform1i(GetUniformLocation(name), value));
 	}
 
-	void Shader::SetUniform1iv(const GLchar *name, int count, int* value) const
+	void Shader::SetUniform1iv(const GLchar *name, uint count, int* value) const
 	{
 		GLCall(glUniform1iv(GetUniformLocation(name), count, value));
+	}
+
+	void Shader::SetUniform1ui(const GLchar *name, uint value) const
+	{
+		GLCall(glUniform1ui(GetUniformLocation(name), value));
+	}
+
+	void Shader::SetUniform1uiv(const GLchar *name, uint count, uint* value) const
+	{
+		GLCall(glUniform1uiv(GetUniformLocation(name), count, value));
 	}
 
 	void Shader::SetUniform2f(const GLchar *name, const Vec2 &value) const

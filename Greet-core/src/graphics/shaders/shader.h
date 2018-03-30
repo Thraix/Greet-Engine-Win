@@ -33,9 +33,11 @@ namespace Greet {
 
 		void SetUniformBoolean(const GLchar *name, bool value) const;
 		void SetUniform1f(const GLchar *name, float value) const;
-		void SetUniform1fv(const GLchar *name, int count, float* value) const;
+		void SetUniform1fv(const GLchar *name, uint count, float* value) const;
 		void SetUniform1i(const GLchar *name, int value) const;
-		void SetUniform1iv(const GLchar *name, int count, int* value) const;
+		void SetUniform1iv(const GLchar *name, uint count, int* value) const;
+		void SetUniform1ui(const GLchar *name, uint value) const;
+		void SetUniform1uiv(const GLchar *name, uint count, uint* values) const;
 		void SetUniform2f(const GLchar *name, const Vec2 &value) const;
 		void SetUniform3f(const GLchar *name, const Vec3 &value) const;
 		void SetUniform4f(const GLchar *name, const Vec4 &value) const;

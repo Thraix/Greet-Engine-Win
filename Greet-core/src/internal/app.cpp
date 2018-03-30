@@ -61,6 +61,7 @@ namespace Greet {
 				updates++;
 				updateTimer = elapsed;
 			}
+
 			if (elapsed - renderTimer >= frameCap)
 			{
 				Window::Clear();

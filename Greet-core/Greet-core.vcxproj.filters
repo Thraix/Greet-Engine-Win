@@ -124,6 +124,8 @@
     <ClInclude Include="src\graphics\AttributePointer.h" />
     <ClInclude Include="src\graphics\renderers\GUIRenderer.h" />
     <ClInclude Include="src\graphics\layers\layer.h" />
+    <ClInclude Include="src\graphics\shaders\Uniformable.h" />
+    <ClInclude Include="src\graphics\shaders\uniforms\Uniform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\audio\AudioChannel.cpp" />

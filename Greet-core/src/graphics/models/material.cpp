@@ -18,8 +18,8 @@ namespace Greet {
 		m_shader->Enable();
 		m_shader->SetUniform1f("reflectivity", m_reflectivity);
 		m_shader->SetUniform1f("shineDamper", m_shineDamper);
+		m_shader->SetUniform4f("mat_color", ColorUtils::ColorHexToVec4(m_color));
 		//m_shader->setUniform3f("fogColor", Vec3(0.0,1.0,0.0));
-		m_shader->SetUniform1f("shineDamper", m_shineDamper);
 		if (m_texture != NULL)
 			m_texture->Enable();
 			
