@@ -5,18 +5,50 @@ namespace vmc
 	using namespace Greet;
 
 	Grid::Grid()
-		: renderer(Window::GetWidth(), Window::GetHeight(), new TPCamera(Vec3(0, 0, 0), 15, 0, 0, 1, 80, -0.8, 0.8f), 90, 0.1, 1000.0f, new Skybox(TextureManager::Get3D("skybox")))
+		: renderer(Window::GetWidth(), Window::GetHeight(), new TPCamera(Vec3(VMC_GRID_SIZE / 2+0.5f, VMC_GRID_SIZE / 2 + 0.5f, VMC_GRID_SIZE / 2 + 0.5f), 15, 0, 0, 1, 80, -0.8, 0.8f), 90, 0.1, 1000.0f, new Skybox(TextureManager::Get3D("skybox")))
 	{
-		EventDispatcher::AddKeyListener(0, *this);
+		EventDispatcher::AddKeyListener(DISPATCHER_GUI+2, *this);
+		EventDispatcher::AddMouseListener(DISPATCHER_GUI + 2, *this);
 		uint middle = VMC_GRID_SIZE / 2;
-		Add(0,0,0, 0xffffffff);
-		Add(0, 1, 0, 0xffff00ff);
-		Add(0, 1, 1, 0xff00ffff);
-		Add(1, 0, 0, 0xffffff00);
+		Add(VMC_GRID_SIZE / 2, VMC_GRID_SIZE / 2, VMC_GRID_SIZE / 2, 0xffffffff);
+		hasSelected = false;
+		hasAdjacent = false;
 	}
 
 	bool Grid::OnPressed(const KeyPressedEvent& e)
 	{
+		return false;
+	}
+
+	bool Grid::OnPressed(const MousePressedEvent& e)
+	{
+		if (e.GetButton() == GLFW_MOUSE_BUTTON_1)
+		{
+			if (hasAdjacent)
+			{
+				Add(adjacent);
+				return true;
+			}
+			renderAxis = true;
+		}
+		if (e.GetButton() == GLFW_MOUSE_BUTTON_2)
+		{
+			if (hasSelected)
+			{
+				Remove(selected);
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	bool Grid::OnReleased(const MouseReleasedEvent& e)
+	{
+		if (e.GetButton() == GLFW_MOUSE_BUTTON_1)
+		{
+			renderAxis = false;
+		}
 		return false;
 	}
 
@@ -104,7 +136,6 @@ namespace vmc
 		float tY = GetIntersectionT(direction.y < 0 ? floor(near.y - 0.0001f) : ceil(near.y + 0.0001f), near.y, invDirection.y);
 		float tZ = GetIntersectionT(direction.z < 0 ? floor(near.z - 0.0001f) : ceil(near.z + 0.0001f), near.z, invDirection.z);
 
-		uint i = 1;
 		while (true)
 		{
 			cubes.push_back(Cube(x, y, z, 0xff000000 | (rand() % 255) << 16 | (rand() % 255) << 8 | (rand() % 255)));
@@ -147,15 +178,37 @@ namespace vmc
 
 	void Grid::Update(float timeElapsed)
 	{
-		m_ray = GetCubeRay();
 		renderer.Update(timeElapsed);
+		m_ray = GetCubeRay();
+		auto lastIt = m_ray.begin();
+		hasSelected = false;
+		hasAdjacent = false;
+		for (auto it = m_ray.begin(); it != m_ray.end(); ++it)
+		{
+			if (m_grid.count(*it))
+			{
+				hasAdjacent = (*it != *lastIt);
+				hasSelected = true;
+
+				selected = *it;
+				adjacent = *lastIt;
+				break;
+			}
+			lastIt = it;
+		}
 	}
 
 	void Grid::Render()
 	{
 		renderer.Begin();
+
 		GLCall(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
 		renderer.DrawCube(Vec3(-0.5f, -0.5f, -0.5f), Vec3(VMC_GRID_SIZE+1, VMC_GRID_SIZE + 1, VMC_GRID_SIZE + 1), 0xff000000, false);
+		if (hasSelected)
+		{
+			float outline = 0.01f;
+			renderer.DrawCube(selected.GetPosition() - outline, Vec3(1.0f, 1.0f, 1.0f) + outline * 2, 0xff000000, true);
+		}
 		GLCall(glPolygonMode(GL_FRONT_AND_BACK, GL_FILL));
 
 		for (auto it = m_grid.begin(); it != m_grid.end(); ++it)
@@ -163,26 +216,14 @@ namespace vmc
 			renderer.Submit(*it);
 		}
 
-		uint i = 0;
-		for (auto it = m_ray.begin(); it != m_ray.end(); ++it)
+		if (renderAxis)
 		{
-			if (m_grid.count(*it))
-			{
-				const Cube& cube = *it;
-				GLCall(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
-				float outline = 0.01f;
-				renderer.DrawCube(cube.GetPosition()- outline, Vec3(1.0f,1.0f,1.0f)+ outline*2, 0xff000000, true);
-				GLCall(glPolygonMode(GL_FRONT_AND_BACK, GL_FILL));
-				break;
-			}
-			i++;
+			const TPCamera& cam = (const TPCamera&)renderer.GetCamera();
+			Vec3 pos = cam.GetPosition();
+			renderer.DrawLine(pos, pos + Vec3(10, 0, 0), Vec4(1, 0, 0, 1));
+			renderer.DrawLine(pos, pos + Vec3(0, 10, 0), Vec4(0, 1, 0, 1));
+			renderer.DrawLine(pos, pos + Vec3(0, 0, 10), Vec4(0, 0, 1, 1));
 		}
-
-		const TPCamera& cam = (const TPCamera&)renderer.GetCamera();
-		Vec3 pos = cam.GetPosition();
-		renderer.DrawLine(pos, pos + Vec3(10, 0, 0), Vec4(1, 0, 0, 1));
-		renderer.DrawLine(pos, pos + Vec3(0, 10, 0), Vec4(0, 1, 0, 1));
-		renderer.DrawLine(pos, pos + Vec3(0, 0, 10), Vec4(0, 0, 1,1));
 		renderer.End();
 	}
 

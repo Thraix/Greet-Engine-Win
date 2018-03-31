@@ -10,12 +10,18 @@
 #include "Cube.h"
 
 namespace vmc {
-	class Grid : public Greet::KeyListener
+	class Grid : public Greet::KeyListener, public Greet::MouseListener
 	{
 	private:
 		GridRenderer3D renderer;
 		std::set<Cube> m_grid;
 		std::vector<Cube> m_ray;
+		bool hasAdjacent;
+		bool hasSelected;
+		Cube selected;
+		Cube adjacent;
+
+		bool renderAxis;
 
 	private:
 		float GetIntersectionT(float plane, float near, float invDirection) const;
@@ -26,6 +32,8 @@ namespace vmc {
 		std::vector<Cube> GetCubeRay() const;
 
 		bool OnPressed(const Greet::KeyPressedEvent& e) override;
+		bool OnPressed(const Greet::MousePressedEvent& e) override;
+		bool OnReleased(const Greet::MouseReleasedEvent& e) override;
 
 		void Update(float timeElapsed);
 		// Render the grid
