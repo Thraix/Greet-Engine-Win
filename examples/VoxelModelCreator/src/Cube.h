@@ -42,14 +42,6 @@ namespace vmc
 			return Greet::Vec3(x, y, z);
 		}
 
-		void clone(const Cube& cube)
-		{
-			x = cube.x;
-			y = cube.y;
-			z = cube.z;
-			color = cube.color;
-		}
-
 		// Only Allowes 1000 x 1000 x 1000 grids.
 		static uint hash(uint x, uint y, uint z)
 		{

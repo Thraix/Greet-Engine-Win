@@ -28,9 +28,9 @@ namespace vmc
 		GridRenderer3D(uint w, uint h, Greet::Camera* cam, float fov, float near, float far, Greet::Skybox* skybox)
 			: Greet::Renderer3D(w,h,cam,fov,near,far, skybox)
 		{
-			meshdata = Greet::MeshFactory::Cube(0.5f,0.5f,0.5f,1,1,1);
+			meshdata = Greet::MeshFactory::Cube2(0.5f,0.5f,0.5f,1,1,1);
 			mesh = new Greet::Mesh(meshdata);
-			material = new Greet::Material(Greet::Shader::FromFile("res/shaders/3dshader.shader"), NULL);
+			material = new Greet::Material(Greet::Shader::FromFile("res/shaders/voxel.shader"), NULL);
 			//material->AddUniform<uint>(Uniform1ui("color"));
 			mmodel = new Greet::MaterialModel(mesh, *material);
 			emodel = new Greet::EntityModel(*mmodel, 0, 0, 0, 1, 1, 1, 0, 0, 0);
@@ -58,7 +58,7 @@ namespace vmc
 		void Begin()
 		{
 			Renderer3D::Begin();
-			glLineWidth(3.0f);
+			glLineWidth(1.0f);
 		}
 		
 		void DrawCube(const Greet::Vec3& pos, const Greet::Vec3& size, uint color, bool culling)

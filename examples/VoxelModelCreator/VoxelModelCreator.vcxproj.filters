@@ -21,11 +21,17 @@
     <ClCompile Include="src\Grid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\PlaceTool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\skybox.shader" />
-    <None Include="res\shaders\3dshader.shader" />
     <None Include="res\shaders\simple.shader" />
+    <None Include="res\shaders\voxel.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Grid.h">
@@ -35,6 +41,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GridRenderer3D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\Tool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\PlaceTool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\ToolBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -101,6 +101,91 @@ namespace Greet {
 		return meshdata;
 	}
 
+	// x, y, z
+	MeshData* MeshFactory::Cube2(float x, float y, float z, float width, float length, float height)
+	{
+		Vec3* vertices = new Vec3[24];
+		float halfWidth = width / 2.0f;
+		float halfLength = length / 2.0f;
+		float halfHeight = height / 2.0f;
+
+
+		vertices[0] = Vec3(x - halfWidth, y - halfHeight, z - halfLength);
+		vertices[1] = Vec3(x - halfWidth, y + halfHeight, z - halfLength);
+		vertices[2] = Vec3(x - halfWidth, y + halfHeight, z + halfLength);
+		vertices[3] = Vec3(x - halfWidth, y - halfHeight, z + halfLength);
+
+		vertices[4] = Vec3(x + halfWidth, y - halfHeight, z - halfLength);
+		vertices[5] = Vec3(x + halfWidth, y + halfHeight, z - halfLength);
+		vertices[6] = Vec3(x + halfWidth, y + halfHeight, z + halfLength);
+		vertices[7] = Vec3(x + halfWidth, y - halfHeight, z + halfLength);
+
+		vertices[8] = Vec3(x - halfWidth, y - halfHeight, z - halfLength);
+		vertices[9] = Vec3(x - halfWidth, y - halfHeight, z + halfLength);
+		vertices[10] = Vec3(x + halfWidth, y - halfHeight, z + halfLength);
+		vertices[11] = Vec3(x + halfWidth, y - halfHeight, z - halfLength);
+
+		vertices[12] = Vec3(x - halfWidth, y + halfHeight, z - halfLength);
+		vertices[13] = Vec3(x - halfWidth, y + halfHeight, z + halfLength);
+		vertices[14] = Vec3(x + halfWidth, y + halfHeight, z + halfLength);
+		vertices[15] = Vec3(x + halfWidth, y + halfHeight, z - halfLength);
+
+
+		vertices[16] = Vec3(x - halfWidth, y - halfHeight, z - halfLength);
+		vertices[17] = Vec3(x + halfWidth, y - halfHeight, z - halfLength);
+		vertices[18] = Vec3(x + halfWidth, y + halfHeight, z - halfLength);
+		vertices[19] = Vec3(x - halfWidth, y + halfHeight, z - halfLength);
+
+		vertices[20] = Vec3(x - halfWidth, y - halfHeight, z + halfLength);
+		vertices[21] = Vec3(x + halfWidth, y - halfHeight, z + halfLength);
+		vertices[22] = Vec3(x + halfWidth, y + halfHeight, z + halfLength);
+		vertices[23] = Vec3(x - halfWidth, y + halfHeight, z + halfLength);
+
+		float* normals = new float[24 * 3];
+		((Vec3*)normals)[0] = Vec3(-1.0f, 0.0f, 0.0f);
+		((Vec3*)normals)[1] = Vec3(-1.0f, 0.0f, 0.0f);
+		((Vec3*)normals)[2] = Vec3(-1.0f, 0.0f, 0.0f);
+		((Vec3*)normals)[3] = Vec3(-1.0f, 0.0f, 0.0f);
+
+		((Vec3*)normals)[4] = Vec3(1.0f, 0.0f, 0.0f);
+		((Vec3*)normals)[5] = Vec3(1.0f, 0.0f, 0.0f);
+		((Vec3*)normals)[6] = Vec3(1.0f, 0.0f, 0.0f);
+		((Vec3*)normals)[7] = Vec3(1.0f, 0.0f, 0.0f);
+
+		((Vec3*)normals)[8] = Vec3(0.0f, -1.0f, 0.0f);
+		((Vec3*)normals)[9] = Vec3(0.0f, -1.0f, 0.0f);
+		((Vec3*)normals)[10] = Vec3(0.0f, -1.0f, 0.0f);
+		((Vec3*)normals)[11] = Vec3(0.0f, -1.0f, 0.0f);
+
+		((Vec3*)normals)[12] = Vec3(0.0f, 1.0f, 0.0f);
+		((Vec3*)normals)[13] = Vec3(0.0f, 1.0f, 0.0f);
+		((Vec3*)normals)[14] = Vec3(0.0f, 1.0f, 0.0f);
+		((Vec3*)normals)[15] = Vec3(0.0f, 1.0f, 0.0f);
+
+		((Vec3*)normals)[16] = Vec3(0.0f, 0.0f, -1.0f);
+		((Vec3*)normals)[17] = Vec3(0.0f, 0.0f, -1.0f);
+		((Vec3*)normals)[18] = Vec3(0.0f, 0.0f, -1.0f);
+		((Vec3*)normals)[19] = Vec3(0.0f, 0.0f, -1.0f);
+
+		((Vec3*)normals)[20] = Vec3(0.0f, 0.0f, 1.0f);
+		((Vec3*)normals)[21] = Vec3(0.0f, 0.0f, 1.0f);
+		((Vec3*)normals)[22] = Vec3(0.0f, 0.0f, 1.0f);
+		((Vec3*)normals)[23] = Vec3(0.0f, 0.0f, 1.0f);
+
+
+		uint* indices = new uint[36]{
+			0, 2, 1, 0, 3, 2,
+			4, 5, 6, 4, 6, 7,
+			8, 10, 9, 8, 11, 10,
+			12, 13, 14, 12, 14, 15,
+			16, 18, 17, 16, 19, 18,
+			20, 21, 22, 20, 22, 23 };
+
+		MeshData* meshdata = new MeshData(vertices, 24, indices, 36);
+		meshdata->AddAttribute(new AttributeData(ATTRIBUTE_NORMAL, normals));
+		return meshdata;
+	}
+
 	MeshData* MeshFactory::Tetrahedron(float x, float y, float z, float size)
 	{
 		float tan30 = 0.5773502f;  //   tan(30/180*PI)

@@ -12,6 +12,8 @@ namespace Greet {
 			static Vec3* CalculateNormals(Vec3* vertices, uint vertexCount, uint* indices, uint indexCount);
 			static MeshData* Quad(float x, float y, float z, float width, float length);
 			static MeshData* Cube(float x, float y, float z, float width, float height, float length);
+			// This Cube generator works better for voxel rendering since the normals work better.
+			static MeshData* Cube2(float x, float y, float z, float width, float height, float length);
 			static MeshData* Tetrahedron(float x, float y, float z, float size);
 			static MeshData* Grid(float x, float y, float z, float width, float length, uint gridWidth, uint gridLength, float* heightMap, float height);
 			static uint IndexGrid(uint x, uint z, uint gridWidth, uint gridLength);

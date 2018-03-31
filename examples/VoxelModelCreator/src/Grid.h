@@ -8,6 +8,8 @@
 
 #include "GridRenderer3D.h"
 #include "Cube.h"
+#include "Ray.h"
+#include "tools/ToolBox.h"
 
 namespace vmc {
 	class Grid : public Greet::KeyListener, public Greet::MouseListener
@@ -16,6 +18,10 @@ namespace vmc {
 		GridRenderer3D renderer;
 		std::set<Cube> m_grid;
 		std::vector<Cube> m_ray;
+		uint m_color;
+
+		ToolBox toolBox;
+
 		bool hasAdjacent;
 		bool hasSelected;
 		Cube selected;
@@ -23,13 +29,8 @@ namespace vmc {
 
 		bool renderAxis;
 
-	private:
-		float GetIntersectionT(float plane, float near, float invDirection) const;
-		bool RayInside(float plane1, float plane2, float min1, float max1, float min2, float max2) const;
 	public:
 		Grid();
-
-		std::vector<Cube> GetCubeRay() const;
 
 		bool OnPressed(const Greet::KeyPressedEvent& e) override;
 		bool OnPressed(const Greet::MousePressedEvent& e) override;
@@ -42,6 +43,17 @@ namespace vmc {
 		void Remove(uint x, uint y, uint z);
 		void Remove(const Cube& cube);
 		void Add(uint x, uint y, uint z, uint color);
-		void Add(const Cube& cube);
+		void Add(Cube cube);
+
+
+		uint GetColor() const { return m_color; }
+		void SetColor(uint color) { m_color = color; }
+		GridRenderer3D* GetRenderer() { return &renderer; }
+
+		bool HasAdjacent() const { return hasAdjacent; }
+		bool HasSelected() const { return hasSelected; }
+		const Cube& GetAdjacentCube() const { return adjacent; }
+		const Cube& GetSelectedCube() const { return selected; }
+
 	};
 }
