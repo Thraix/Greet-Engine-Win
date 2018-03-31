@@ -20,9 +20,21 @@ namespace vmc
 			if (x < 0 || x >= 1000)
 				Greet::Log::Error("Cube x position out of bounds (0-999): ", x);
 			if(y < 0 || y >= 1000)
-				Greet::Log::Error("Cube x position out of bounds (0-999): ", x);
+				Greet::Log::Error("Cube y position out of bounds (0-999): ", y);
 			if(z < 0 || z >= 1000)
-				Greet::Log::Error("Cube x position out of bounds (0-999): ", x);
+				Greet::Log::Error("Cube z position out of bounds (0-999): ", z);
+		}
+
+		Cube(uint x, uint y, uint z)
+			: Cube(x, y, z, 0xffffffff)
+		{
+
+		}
+
+		Cube()
+			: Cube(0, 0, 0, 0xffffffff)
+		{
+
 		}
 
 		Greet::Vec3 GetPosition() const

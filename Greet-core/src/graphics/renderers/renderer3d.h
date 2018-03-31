@@ -54,8 +54,8 @@ namespace Greet{
 		inline const Mat4& GetProjectionMatrix() const { return m_projectionMatrix; }
 		inline const Camera& GetCamera() const { return *m_camera; }
 
-		Vec3 GetScreenCoordination(const Vec3& coordinate, uint screenWidth, uint screenHeight);
-		void GetWorldCoordination(const Vec2& mousePos, Vec3* near, Vec3* direction);
+		Vec3 GetScreenCoordination(const Vec3& coordinate, uint screenWidth, uint screenHeight) const;
+		void GetWorldCoordination(const Vec2& mousePos, Vec3* near, Vec3* direction) const;
 	private:
 		void RenderSkybox() const;
 	};

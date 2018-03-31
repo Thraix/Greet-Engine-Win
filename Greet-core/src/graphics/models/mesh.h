@@ -14,6 +14,7 @@ namespace Greet {
 	{
 	private:
 		// Location, vbo
+		uint m_drawMode;
 		std::map<uint,uint> m_vbos;
 		uint m_vaoId;
 		uint m_iboId;
@@ -34,6 +35,7 @@ namespace Greet {
 		void Bind() const;
 		void Unbind() const;
 
+		inline void SetDrawMode(uint drawMode) { m_drawMode = drawMode; }
 		inline void SetClockwiseRender(bool clockwise) { m_clockwise = clockwise; }
 		inline bool IsClockwiseRender() const { return m_clockwise; }
 

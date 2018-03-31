@@ -34,7 +34,7 @@ namespace Greet{
 		m_camera->Update(timeElapsed);
 	}
 
-	Vec3 Renderer3D::GetScreenCoordination(const Vec3& coordinate, uint screenWidth, uint screenHeight)
+	Vec3 Renderer3D::GetScreenCoordination(const Vec3& coordinate, uint screenWidth, uint screenHeight) const
 	{
 		Vec4 point = (GetProjectionMatrix() * GetCamera().GetViewMatrix()) * coordinate;
 		Vec3 p = Vec3(point.x, point.y, point.z) / (fabs(point.z) * 2.0f) + 0.5f;
@@ -43,7 +43,7 @@ namespace Greet{
 		return p;
 	}
 
-	void Renderer3D::GetWorldCoordination(const Vec2& mousePos, Vec3* near, Vec3* direction)
+	void Renderer3D::GetWorldCoordination(const Vec2& mousePos, Vec3* near, Vec3* direction) const
 	{
 		if (near == NULL)
 		{
@@ -60,6 +60,6 @@ namespace Greet{
 		Vec4 nearRes = ~view * ~proj * Vec3(mousePos.x, mousePos.y, -1.0);
 		*near = Vec3(nearRes) / nearRes.w;
 		Vec4 farRes = ~view * ~proj * Vec3(mousePos.x, mousePos.y, 1.0);
-		*direction = (Vec3(farRes) / farRes.w) - *near;
+		*direction = ((Vec3(farRes) / farRes.w) - *near).Normalize();
 	}
 }

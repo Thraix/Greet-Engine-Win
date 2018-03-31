@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\3dshader.shader" />
+    <None Include="res\shaders\simple.shader" />
     <None Include="res\shaders\skybox.shader" />
   </ItemGroup>
   <ItemGroup>

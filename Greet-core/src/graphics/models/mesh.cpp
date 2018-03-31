@@ -18,6 +18,7 @@ namespace Greet {
 
 	void Mesh::init(const Vec3* vertices, uint vertexCount, const uint* indices, uint indexCount)
 	{
+		m_drawMode = GL_TRIANGLES;
 		m_vertexCount = vertexCount;
 		m_indexCount = indexCount;
 
@@ -52,7 +53,7 @@ namespace Greet {
 
 	void Mesh::Render() const
 	{
-		GLCall(glDrawElements(GL_TRIANGLES, m_indexCount * sizeof(uint), GL_UNSIGNED_INT,0));
+		GLCall(glDrawElements(m_drawMode, m_indexCount * sizeof(uint), GL_UNSIGNED_INT,0));
 	}
 
 	void Mesh::Bind() const
