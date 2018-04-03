@@ -5,20 +5,20 @@ namespace Greet {
 	
 	ProgressBar::ProgressBar(const Vec2& position, const Vec2& size, float* progress, float min, float max, ProgressBarIndicator* indicator, bool vertical)
 		: GUI(position, size), m_progressref(*progress), m_progress(*progress), m_min(min), m_max(max), m_indicator(indicator), m_vertical(vertical),
-		m_progressColor(ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 9))),
-		m_labelColor(ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 3))), m_progressFont(FontManager::Get("anonymous",size.y-6))
+		m_progressColor(ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 9)),
+		m_labelColor(ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 3)), m_progressFont(FontManager::Get("anonymous",size.y-6))
 	{
 		m_renderBackground = true;
-		m_backgroundColor = ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 15));
+		m_backgroundColor = ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 15);
 	}
 
 	ProgressBar::ProgressBar(const Vec2& position, const Vec2& size, float progress, float min, float max, ProgressBarIndicator* indicator, bool vertical)
 		: GUI(position, size), m_progressref(m_progress), m_progress(progress), m_min(min), m_max(max), m_indicator(indicator), m_vertical(vertical),
-		m_progressColor(ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 9))), 
-		m_labelColor(ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 3))), m_progressFont(FontManager::Get("anonymous", size.y - 6))
+		m_progressColor(ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 9)), 
+		m_labelColor(ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 3)), m_progressFont(FontManager::Get("anonymous", size.y - 6))
 	{
 		m_renderBackground = true;
-		m_backgroundColor = ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 15));
+		m_backgroundColor = ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 15);
 	}
 
 	void ProgressBar::Submit(GUIRenderer* renderer) const

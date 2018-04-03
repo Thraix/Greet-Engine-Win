@@ -27,8 +27,9 @@ namespace Greet
 		GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertex), (const GLvoid*)offsetof(GUIVertex, GUIVertex::pos)));
 		GLCall(glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertex), (const GLvoid*)offsetof(GUIVertex, GUIVertex::texCoord)));
 		GLCall(glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(GUIVertex), (const GLvoid*)offsetof(GUIVertex, GUIVertex::texId)));
-		GLCall(glVertexAttribPointer(3, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(GUIVertex), (const GLvoid*)offsetof(GUIVertex, GUIVertex::color)));
+		GLCall(glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(GUIVertex), (const GLvoid*)offsetof(GUIVertex, GUIVertex::color)));
 		GLCall(glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(GUIVertex), (const GLvoid*)offsetof(GUIVertex, GUIVertex::viewport)));
+		GLCall(glVertexAttribPointer(5, 1, GL_FLOAT, GL_FALSE, sizeof(GUIVertex), (const GLvoid*)offsetof(GUIVertex, GUIVertex::isHSV)));
 
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
 		//Generate all the indices at runtime
@@ -61,7 +62,7 @@ namespace Greet
 
 		GLCall(glBindVertexArray(m_vao));
 		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo));
-		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * m_iboCount,m_indices,GL_DYNAMIC_DRAW));
+		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * m_iboCount, m_indices, GL_DYNAMIC_DRAW));
 
 		GLCall(glDrawElements(GL_TRIANGLES, m_iboSize, GL_UNSIGNED_INT, NULL));
 
@@ -97,7 +98,7 @@ namespace Greet
 			p2.x = p2.x > top.z ? top.z : p2.x;
 			p2.y = p2.y > top.w ? top.w : p2.y;
 		}
-		m_viewports.push(Vec4(p1.x,p1.y,p2.x,p2.y));
+		m_viewports.push(Vec4(p1.x, p1.y, p2.x, p2.y));
 	}
 
 	void GUIRenderer::PopViewport()
@@ -110,14 +111,18 @@ namespace Greet
 		m_viewports.pop();
 	}
 
-	void GUIRenderer::SubmitRect(const Vec2& pos, const Vec2& size, uint color)
+	void GUIRenderer::SubmitRect(const Vec2& pos, const Vec2& size, const Vec4& color, bool isHsv)
 	{
-		const Mat3& mat = GetMatrix();
-		AppendQuad(pos,size,Vec2(0,0), Vec2(1,1),0,color);
+		AppendQuad(pos, size, Vec2(0, 0), Vec2(1, 1), 0, color, isHsv);
+	}
+
+	void  GUIRenderer::SubmitRect(const Vec2& pos, const Vec2& size, const Vec4& color1, const Vec4& color2, const Vec4& color3, const Vec4& color4, bool isHsv)
+	{
+		AppendQuad(pos, size, Vec2(0, 0), Vec2(1, 1), 0, color1, color2, color3, color4, isHsv);
 	}
 
 
-	void GUIRenderer::SubmitString(const std::string& text, const Vec2& position, Font* font, const uint& color)
+	void GUIRenderer::SubmitString(const std::string& text, const Vec2& position, Font* font, const Vec4& color, bool isHsv)
 	{
 		using namespace ftgl;
 		float ts = GetTextureSlot(font->GetAtlasID());
@@ -135,7 +140,7 @@ namespace Greet
 		Vec2 size;
 		Vec2 uv0;
 		Vec2 uv1;
-		for (uint i = 0;i<text.length();i++)
+		for (uint i = 0;i < text.length();i++)
 		{
 			const char& c = text[i];
 			texture_glyph_t* glyph = texture_font_get_glyph(ftfont, c);
@@ -157,7 +162,7 @@ namespace Greet
 				uv1.x = glyph->s1;
 				uv1.y = 1 - glyph->t1;
 
-				AppendQuad(pos, size, uv0, uv1, ts, color);
+				AppendQuad(pos, size, uv0, uv1, ts, color, isHsv);
 
 				x += glyph->advance_x / scale.x;
 			}
@@ -171,7 +176,7 @@ namespace Greet
 		for (byte i = 0; i < m_textureCount; i++)
 		{
 			if (m_textures[i] == id)
-				return i+1;
+				return i + 1;
 		}
 
 		if (m_textureCount == 32)
@@ -189,12 +194,12 @@ namespace Greet
 		return false;
 	}
 
-	void GUIRenderer::AppendQuad(const Vec2& position, const Vec2& size, const Vec2& texCoord1, const Vec2& texCoord2, float texId, uint color)
+	void GUIRenderer::AppendQuad(const Vec2& position, const Vec2& size, const Vec2& texCoord1, const Vec2& texCoord2, float texId, const Vec4& color1, const Vec4& color2, const Vec4& color3, const Vec4& color4, bool isHsv)
 	{
 		if (NeedFlush(6, 4))
 			Flush();
 		Vec4 viewport = Vec4(position.x, position.y, position.x + size.x, position.y + size.y);
-		if(!m_viewports.empty())
+		if (!m_viewports.empty())
 			viewport = m_viewports.top();
 		else
 		{
@@ -205,11 +210,11 @@ namespace Greet
 			viewport.z = temp.x;
 			viewport.w = temp.y;
 		}
-		AppendVertexBuffer(position, texCoord1, texId, color, viewport);
-		AppendVertexBuffer(Vec2(position.x,position.y+size.y), Vec2(texCoord1.x, texCoord2.y), texId, color, viewport);
-		AppendVertexBuffer(position+size, texCoord2, texId, color, viewport);
-		AppendVertexBuffer(Vec2(position.x+size.x, position.y), Vec2(texCoord2.x,texCoord1.y), texId, color, viewport);
-		
+		AppendVertexBuffer(position, texCoord1, texId, color1, viewport, isHsv);
+		AppendVertexBuffer(Vec2(position.x, position.y + size.y), Vec2(texCoord1.x, texCoord2.y), texId, color3, viewport, isHsv);
+		AppendVertexBuffer(position + size, texCoord2, texId, color4, viewport, isHsv);
+		AppendVertexBuffer(Vec2(position.x + size.x, position.y), Vec2(texCoord2.x, texCoord1.y), texId, color2, viewport, isHsv);
+
 		m_indices[m_iboCount++] = m_lastIndex;
 		m_indices[m_iboCount++] = m_lastIndex + 1;
 		m_indices[m_iboCount++] = m_lastIndex + 2;
@@ -220,13 +225,19 @@ namespace Greet
 		m_lastIndex += 4;
 	}
 
-	void GUIRenderer::AppendVertexBuffer(const Vec2& position, const Vec2& texCoord, float texId, uint color, const Vec4& viewport)
+	void GUIRenderer::AppendQuad(const Vec2& position, const Vec2& size, const Vec2& texCoord1, const Vec2& texCoord2, float texId, const Vec4& color, bool isHsv)
+	{
+		AppendQuad(position, size, texCoord1, texCoord2, texId, color, color, color, color, isHsv);
+	}
+
+	void GUIRenderer::AppendVertexBuffer(const Vec2& position, const Vec2& texCoord, float texId, const Vec4& color, const Vec4& viewport, bool isHsv)
 	{
 		m_buffer->pos = GetMatrix() * position;
 		m_buffer->texCoord = texCoord;
 		m_buffer->texId = texId;
 		m_buffer->color = color;
 		m_buffer->viewport = viewport;
+		m_buffer->isHSV = isHsv ? 1.0 : 0.0;
 		m_buffer++;
 	}
 

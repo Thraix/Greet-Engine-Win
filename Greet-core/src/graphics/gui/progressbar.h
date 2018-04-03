@@ -13,14 +13,14 @@ namespace Greet {
 		float m_min;
 		float m_max;
 		float m_vertical;
-		uint m_progressColor;
-		uint m_labelColor;
+		Vec4 m_progressColor;
+		Vec4 m_labelColor;
 		Font* m_progressFont;
 		ProgressBarIndicator* m_indicator;
 
 	public:
-		ProgressBar(const Vec2& position, const Vec2& size, float* progress, float min, float max, ProgressBarIndicator* indicator = new DefaultProgressBarIndicator(ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 9))), bool vertical = false);
-		ProgressBar(const Vec2& position, const Vec2& size, float progress, float min, float max, ProgressBarIndicator* indicator = new DefaultProgressBarIndicator(ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 9))), bool vertical = false);
+		ProgressBar(const Vec2& position, const Vec2& size, float* progress, float min, float max, ProgressBarIndicator* indicator = new DefaultProgressBarIndicator(ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 9)), bool vertical = false);
+		ProgressBar(const Vec2& position, const Vec2& size, float progress, float min, float max, ProgressBarIndicator* indicator = new DefaultProgressBarIndicator(ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 9)), bool vertical = false);
 
 		void Submit(GUIRenderer* renderer) const override;
 
@@ -33,11 +33,11 @@ namespace Greet {
 		float GetMinValue() const { return m_min; }
 		float GetMaxValue() const { return m_max; }
 
-		uint GetLabelColor() const { return m_labelColor; }
-		uint GetProgressColor() const { return m_progressColor; }
+		const Vec4& GetLabelColor() const { return m_labelColor; }
+		const Vec4& GetProgressColor() const { return m_progressColor; }
 
-		void SetLabelColor(uint color) { m_labelColor = color; }
-		void SetProgressColor(uint color) { m_progressColor = color; }
+		void SetLabelColor(const Vec4& color) { m_labelColor = color; }
+		void SetProgressColor(const Vec4& color) { m_progressColor = color; }
 
 	};
 }

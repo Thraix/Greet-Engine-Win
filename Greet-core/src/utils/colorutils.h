@@ -10,7 +10,7 @@ namespace Greet { namespace ColorUtils {
 
 
 
-	inline Vec3 HSVtoRGB(float h, float s, float v)
+	inline Vec4 HSVtoRGB(float h, float s, float v, float a)
 	{
 		float c = v * s;
 		float h6f = h*6.0f;
@@ -25,28 +25,28 @@ namespace Greet { namespace ColorUtils {
 		switch (h6)
 		{
 		case 0:
-			return Vec3(v, t, p);
+			return Vec4(v, t, p, a);
 		case 1:
-			return Vec3(q, v, p);
+			return Vec4(q, v, p, a);
 		case 2:
-			return Vec3(p, v, t);
+			return Vec4(p, v, t, a);
 		case 3:
-			return Vec3(p, q, v);
+			return Vec4(p, q, v, a);
 		case 4:
-			return Vec3(t, p, v);
+			return Vec4(t, p, v, a);
 		case 5:
-			return Vec3(v, p, q);
+			return Vec4(v, p, q, a);
 		default:
-			return Vec3(c, c, c);
+			return Vec4(c, c, c, a);
 		}
 	}
 
-	inline Vec3 HSVtoRGB(Vec3 hsv)
+	inline Vec4 HSVtoRGB(const Vec4& hsv)
 	{
-		return HSVtoRGB(hsv.x,hsv.y,hsv.z);
+		return HSVtoRGB(hsv.x,hsv.y,hsv.z, hsv.w);
 	}
 
-	inline Vec3 RGBtoHSV(float r, float g, float b)
+	inline Vec4 RGBtoHSV(float r, float g, float b, float a)
 	{
 		float cmin = r < g ? (r < b ? r : b) : (g < b ? g : b);
 		float cmax = r > g ? (r > b ? r : b) : (g > b ? g : b);
@@ -57,30 +57,30 @@ namespace Greet { namespace ColorUtils {
 			s = delta / cmax;
 		if (delta == 0)
 		{
-			return Vec3(0, s, cmax);
+			return Vec4(0, s, cmax,a);
 		}
 		else if (cmax == r)
 		{
-			return Vec3((g - b) / delta, s, cmax);
+			return Vec4((g - b) / delta, s, cmax, a);
 		}
 		else if (cmax == g)
 		{
-			return Vec3((b - r) / delta + 2, s, cmax);
+			return Vec4((b - r) / delta + 2, s, cmax, a);
 		}
 		else // if (cmax == b)
 		{
-			return Vec3((r - g) / delta + 4, s, cmax);
+			return Vec4((r - g) / delta + 4, s, cmax, a);
 		}
 	}
 
-	inline Vec3 RGBtoHSV(uint colorHex)
+	inline Vec4 RGBtoHSV(uint colorHex)
 	{
-		return RGBtoHSV(((colorHex & 0xff0000) >> 16)/255.0f, ((colorHex & 0xff00) >> 8) / 255.0f, (colorHex & 0xff) / 255.0f);
+		return RGBtoHSV(((colorHex & 0xff0000) >> 16)/255.0f, ((colorHex & 0xff00) >> 8) / 255.0f, (colorHex & 0xff) / 255.0f, ((colorHex & 0xff0000) >> 24) / 255.0f);
 	}
 
-	inline Vec3 RGBtoHSV(Vec3 rgb)
+	inline Vec4 RGBtoHSV(Vec4 rgb)
 	{
-		return RGBtoHSV(rgb.x,rgb.y,rgb.z);
+		return RGBtoHSV(rgb.x,rgb.y,rgb.z,rgb.w);
 	}
 
 	inline uint Vec3ToColorHex(Vec3 color)
@@ -123,9 +123,15 @@ namespace Greet { namespace ColorUtils {
 		return ((int)(color.w * 255) << 24) | ((int)(color.x * 255) << 16) | ((int)(color.y * 255) << 8) | (int)(color.z * 255);
 	}
 
-	inline Vec3 GetMaterialColor(float hue, int level)
+	inline Vec4 GetMaterialColorAsHSV(float hue, int level)
+	{
+		float p = powf(1.0f - COLOR_UTILS_MODIFIER, level);
+		return Vec4(hue,p,p,1);
+	}
+
+	inline Vec4 GetMaterialColorAsRGB(float hue, int level)
 	{
 		float p = powf(1.0f-COLOR_UTILS_MODIFIER, level);
-		return HSVtoRGB(hue,p,p);
+		return HSVtoRGB(hue,p,p,1.0);
 	}
 }}

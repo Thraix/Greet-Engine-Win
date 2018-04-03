@@ -7,7 +7,7 @@ namespace Greet {
 			m_sliderFont(FontManager::Get("anonymous",24)), m_sliderController(new SliderController(size/2, Vec2(sliderWidth, size.y+6)))
 	{
 		m_renderBackground = true;
-		m_backgroundColor = ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 15));
+		m_backgroundColor = ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 15);
 		Add(m_sliderController);
 		m_sliderController->m_position.x = GetPosFromValue();
 	}
@@ -78,7 +78,7 @@ namespace Greet {
 	{
 		GUI::End(renderer);
 		renderer->PushMatrix(m_transformationMatrix);
-		uint sliderColor = ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 3));
+		Vec4 sliderColor = ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 3);
 		// Start and end values
 		std::string value;
 		if (m_labels.size() == 0)

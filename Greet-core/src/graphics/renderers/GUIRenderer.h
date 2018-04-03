@@ -19,8 +19,9 @@ namespace Greet
 			Vec2 pos;
 			Vec2 texCoord;
 			float texId;
-			uint color;
+			Vec4 color;
 			Vec4 viewport;
+			float isHSV;
 		};
 
 	private:
@@ -48,15 +49,17 @@ namespace Greet
 		void End();
 		void Flush();
 		void Draw();
-		void SubmitString(const std::string& text, const Vec2& position, Font* font, const uint& color);
-		void SubmitRect(const Vec2& pos, const Vec2& size, uint color);
+		void SubmitString(const std::string& text, const Vec2& position, Font* font, const Vec4& color, bool isHsv = true);
+		void SubmitRect(const Vec2& pos, const Vec2& size, const Vec4& color, bool isHsv = true);
+		void SubmitRect(const Vec2& pos, const Vec2& size, const Vec4& color1, const Vec4& color2, const Vec4& color3, const Vec4& color4, bool isHsv = true);
 
 		void PushViewport(const Vec2& pos, const Vec2& size, bool overwrite=false);
 		void PopViewport();
 	private:
 		float GetTextureSlot(uint Id);
 		bool NeedFlush(uint indices, uint vertices);
-		void AppendQuad(const Vec2& position, const Vec2& size, const Vec2& texCoord1, const Vec2& texCoord2, float texID, uint color);
-		void AppendVertexBuffer(const Vec2& position, const Vec2& texCoord, float texID, uint color, const Vec4& viewport);
+		void AppendQuad(const Vec2& position, const Vec2& size, const Vec2& texCoord1, const Vec2& texCoord2, float texID, const Vec4& color1, const Vec4& color2, const Vec4& color3, const Vec4& color4, bool isHsv);
+		void AppendQuad(const Vec2& position, const Vec2& size, const Vec2& texCoord1, const Vec2& texCoord2, float texID, const Vec4& color, bool isHsv);
+		void AppendVertexBuffer(const Vec2& position, const Vec2& texCoord, float texID, const Vec4& color, const Vec4& viewport, bool isHsv);
 	};
 }

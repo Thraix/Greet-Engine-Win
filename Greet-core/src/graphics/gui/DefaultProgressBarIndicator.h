@@ -7,9 +7,9 @@ namespace Greet
 	class DefaultProgressBarIndicator : public ProgressBarIndicator
 	{
 	private:
-		uint m_color;
+		Vec4 m_color;
 	public:
-		DefaultProgressBarIndicator(uint color)
+		DefaultProgressBarIndicator(const Vec4& color)
 			: m_color(color)
 		{
 		

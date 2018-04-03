@@ -14,8 +14,8 @@ namespace Greet {
 	private:
 		std::string m_title;
 		Font* m_titleFont;
-		uint m_titleColor;
-		uint m_titleBackgroundColor;
+		Vec4 m_titleColor;
+		Vec4 m_titleBackgroundColor;
 		bool m_holdFrame;
 		Vec2 m_holdPosition;
 

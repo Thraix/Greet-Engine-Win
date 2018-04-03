@@ -6,7 +6,7 @@ namespace Greet
 	SliderController::SliderController(const Vec2& position, const Vec2& size)
 		: GUI(position, size, LTRB(0, 0, 0, 0))
 	{
-		SetBackgroundColor(ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 9)));
+		SetBackgroundColor(ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 9));
 	}
 
 	void SliderController::Begin(GUIRenderer* renderer) const
