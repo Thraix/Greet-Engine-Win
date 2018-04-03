@@ -116,16 +116,17 @@
     <ClInclude Include="src\utils\Timer.h" />
     <ClInclude Include="src\utils\Utils.h" />
     <ClInclude Include="src\utils\UUID.h" />
-    <ClInclude Include="src\greet.h" />
+    <ClInclude Include="src\Greet.h" />
     <ClInclude Include="src\graphics\Particlepool.h" />
     <ClInclude Include="src\math\Quaternion.h" />
     <ClInclude Include="src\graphics\gui\ProgressBarIndicator.h" />
     <ClInclude Include="src\graphics\gui\DefaultProgressBarIndicator.h" />
     <ClInclude Include="src\graphics\AttributePointer.h" />
     <ClInclude Include="src\graphics\renderers\GUIRenderer.h" />
-    <ClInclude Include="src\graphics\layers\layer.h" />
+    <ClInclude Include="src\graphics\layers\Layer.h" />
     <ClInclude Include="src\graphics\shaders\Uniformable.h" />
     <ClInclude Include="src\graphics\shaders\uniforms\Uniform.h" />
+    <ClInclude Include="src\utils\ErrorHandle.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\audio\AudioChannel.cpp" />
