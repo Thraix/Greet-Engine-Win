@@ -6,7 +6,7 @@
 #include <internal/GreetTypes.h>
 #include <graphics/textures/ImageFactory.h>
 #include <fstream>
-#include <utils/ErrorHandler.h>
+#include <utils/ErrorHandle.h>
 #include <utils/StringUtils.h>
 
 namespace Greet { namespace ImageUtils {

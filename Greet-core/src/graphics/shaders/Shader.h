@@ -6,7 +6,7 @@
 #include <utils/FileUtils.h>
 #include <iostream>
 #include <vector>
-#include <utils/ErrorHandler.h>
+#include <utils/ErrorHandle.h>
 #include <sstream>
 #include <fstream>
 

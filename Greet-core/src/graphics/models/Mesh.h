@@ -7,7 +7,7 @@
 #include <vector>
 #include <graphics/textures/Texture.h>
 #include <graphics/models/MeshData.h>
-#include <utils/ErrorHandler.h>
+#include <utils/ErrorHandle.h>
 
 namespace Greet {
 	class Mesh

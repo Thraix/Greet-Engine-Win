@@ -7,7 +7,7 @@ namespace Greet {
 		m_titleColor(ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 3)),
 		m_titleBackgroundColor(ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 9))
 	{
-		Log::Info(m_titleBackgroundColor);
+
 	}
 
 	void Frame::Submit(GUIRenderer* renderer) const

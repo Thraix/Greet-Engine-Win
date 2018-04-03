@@ -3,7 +3,7 @@
 #include <vector>
 #include <logging/Log.h>
 #include <internal/GreetTypes.h>
-#include <utils/ErrorHandler.h>
+#include <utils/ErrorHandle.h>
 #include <graphics/fonts/Font.h>
 
 namespace Greet {

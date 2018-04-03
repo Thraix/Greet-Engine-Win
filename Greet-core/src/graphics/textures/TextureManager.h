@@ -5,7 +5,7 @@
 #include "Texture.h"
 #include <graphics/textures/Texture2D.h>
 #include <graphics/textures/CubeMap.h>
-#include <utils/ErrorHandler.h>
+#include <utils/ErrorHandle.h>
 
 namespace Greet {
 	class TextureManager

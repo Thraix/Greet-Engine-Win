@@ -2,7 +2,7 @@
 
 #include <graphics/renderers/Renderer.h>
 #include <graphics/fonts/Font.h>
-#include <internal/greetgl.h>
+#include <internal/GreetGL.h>
 #include <math/Vec4.h>
 #include <stack>
 
