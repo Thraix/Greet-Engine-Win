@@ -5,11 +5,11 @@ namespace Greet
 {
 
 	TextBox::TextBox(const Vec2& position, const Vec2& size, bool password)
-		:GUI(position,size, LTRB(3,2,3,2)), m_font(FontManager::Get("anonymous", size.y-6)), m_password(password), m_cursorColor(ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 9))),
-		m_textColor(ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 3))),	m_blinkSpeed(0.5f)
+		:GUI(position,size, LTRB(3,2,3,2)), m_font(FontManager::Get("anonymous", size.y-6)), m_password(password), m_cursorColor(ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 9)),
+		m_textColor(ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 3)),	m_blinkSpeed(0.5f)
 	{
 		m_renderBackground = true;
-		m_backgroundColor = ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 15));
+		m_backgroundColor = ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 15);
 	}
 
 	void TextBox::Submit(GUIRenderer* renderer) const

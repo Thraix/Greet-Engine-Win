@@ -6,15 +6,20 @@ namespace Greet
 	SliderController::SliderController(const Vec2& position, const Vec2& size)
 		: GUI(position, size, LTRB(0, 0, 0, 0))
 	{
-		SetBackgroundColor(ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 9)));
+		SetBackgroundColor(ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 9));
 	}
 
-	void SliderController::Begin(GUIRenderer* renderer) const
+	void SliderController::Begin(GUIRenderer* renderer) const 
 	{
 		renderer->PushMatrix(m_transformationMatrix);
 		renderer->PushViewport(Vec2(-Math::Half(m_size.x), -Math::Half(m_size.y)), m_size, true);
 		if (m_renderBackground)
-			renderer->SubmitRect(Vec2(-Math::Half(m_size.x),-Math::Half(m_size.y)), m_size, m_backgroundColor);
+			RenderBackground(renderer);
+	}
+
+	void SliderController::RenderBackground(GUIRenderer* renderer) const
+	{
+		renderer->SubmitRect(Vec2(-Math::Half(m_size.x),-Math::Half(m_size.y)), m_size, m_backgroundColor);
 	}
 
 	bool SliderController::OnMoved(const MouseMovedEvent& event, Vec2 relativeMousePos)

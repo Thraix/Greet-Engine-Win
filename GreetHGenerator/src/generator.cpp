@@ -32,9 +32,9 @@ void addFile(const std::string& filename, std::set<std::string>::iterator& it)
 			{
 				auto found = files.find(inc);
 				filesChecked.insert(inc);
-				files.erase(found);
-				if (found == it)
+				if (*found == *it)
 					it++;
+				files.erase(found);
 				addFile(inc, it);
 			}
 			else if(filesChecked.count(inc) == 0)

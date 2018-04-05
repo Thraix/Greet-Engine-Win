@@ -32,7 +32,7 @@ namespace Greet{ namespace Math {
 	inline float RoundClose(float numToRound, float multiple)
 	{
 		if (multiple == 0)
-			return 0;
+			return numToRound;
 		float down = ((int)(numToRound / multiple))*multiple;
 		float up = down < numToRound ? down + multiple : down;
 		return (numToRound - down) < (up - numToRound) ? down : up;
@@ -52,10 +52,10 @@ namespace Greet{ namespace Math {
 			*value = *value < max ? max : (*value > min ? min : *value);
 	}
 
-	// Returns half the value, removes one to value if it is odd.
+	// Returns half the value, add one to value if it is odd.
 	inline int Half(int value)
 	{
-		return (value - (value % 2)) / 2;
+		return (value + (value % 2)) / 2;
 	}
 
 

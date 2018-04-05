@@ -3,11 +3,11 @@
 namespace Greet {
 
 	Frame::Frame(const Vec2& position, const Vec2& size, const std::string& title)
-	: GUI(position,size, LTRB(10,40,10,10)), m_title(title),m_titleFont(FontManager::Get("anonymous", 20))
-		,m_titleColor(ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 3)))
-		,m_titleBackgroundColor(ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 9)))
+	: GUI(position,size, LTRB(10,40,10,10)), m_title(title),m_titleFont(FontManager::Get("anonymous", 20)),
+		m_titleColor(ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 3)),
+		m_titleBackgroundColor(ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 9))
 	{
-		
+		m_size += Vec2(m_margin.left+m_margin.right, m_margin.top+m_margin.bottom);
 	}
 
 	void Frame::Submit(GUIRenderer* renderer) const

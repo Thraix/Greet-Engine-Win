@@ -15,9 +15,9 @@ namespace Greet
 		// Blinking speed of the cursor
 		float m_blinkSpeed;
 		// Color of the cursor
-		uint m_cursorColor;
+		Vec4 m_cursorColor;
 		// Color of the text
-		uint m_textColor;
+		Vec4 m_textColor;
 		// Font of the text
 		Font* m_font;
 		// Text that is entered
@@ -37,12 +37,12 @@ namespace Greet
 		void AddCharacter(char c, uint index);
 
 		void SetText(const std::string& text) { m_text = text;m_cursorPosition = text.size()-1; }
-		void SetTextColor(uint color) { m_textColor = color; }
-		void SetCursorColor(uint color) { m_cursorColor = color; }
+		void SetTextColor(const Vec4& color) { m_textColor = color; }
+		void SetCursorColor(const Vec4& color) { m_cursorColor = color; }
 		void SetBlinkingSpeed(float time) { m_blinkSpeed = time; }
 		const std::string& GetText() const { return m_text; }
-		uint GetTextColor() const { return m_textColor; }
-		uint GetCursorColor() const { return m_cursorColor; }
+		const Vec4& GetTextColor() const { return m_textColor; }
+		const Vec4& GetCursorColor() const { return m_cursorColor; }
 		float GetBlinkingSpeed() const { return m_blinkSpeed; }
 
 		bool OnPressed(const KeyPressedEvent& e) override;

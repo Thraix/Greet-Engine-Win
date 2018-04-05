@@ -39,6 +39,7 @@
     <ClCompile Include="src\graphics\FrameBufferObject.cpp" />
     <ClCompile Include="src\graphics\gui\Border.cpp" />
     <ClCompile Include="src\graphics\gui\Button.cpp" />
+    <ClCompile Include="src\graphics\gui\ColorPicker.cpp" />
     <ClCompile Include="src\graphics\gui\Frame.cpp" />
     <ClCompile Include="src\graphics\gui\GUI.cpp" />
     <ClCompile Include="src\graphics\gui\Label.cpp" />
@@ -133,6 +134,7 @@
     <ClInclude Include="src\graphics\FrameBufferObject.h" />
     <ClInclude Include="src\graphics\gui\Border.h" />
     <ClInclude Include="src\graphics\gui\Button.h" />
+    <ClInclude Include="src\graphics\gui\ColorPicker.h" />
     <ClInclude Include="src\graphics\gui\DefaultProgressBarIndicator.h" />
     <ClInclude Include="src\graphics\gui\Frame.h" />
     <ClInclude Include="src\graphics\gui\GUI.h" />
@@ -147,7 +149,7 @@
     <ClInclude Include="src\graphics\layers\Box2DLayer.h" />
     <ClInclude Include="src\graphics\layers\Group.h" />
     <ClInclude Include="src\graphics\layers\GUILayer.h" />
-    <ClInclude Include="src\graphics\layers\layer.h" />
+    <ClInclude Include="src\graphics\layers\Layer.h" />
     <ClInclude Include="src\graphics\layers\Layer3D.h" />
     <ClInclude Include="src\graphics\Light.h" />
     <ClInclude Include="src\graphics\models\Camera.h" />
@@ -183,7 +185,7 @@
     <ClInclude Include="src\graphics\textures\Texture2D.h" />
     <ClInclude Include="src\graphics\textures\TextureManager.h" />
     <ClInclude Include="src\graphics\Window.h" />
-    <ClInclude Include="src\greet.h" />
+    <ClInclude Include="src\Greet.h" />
     <ClInclude Include="src\input\Joystick.h" />
     <ClInclude Include="src\internal\App.h" />
     <ClInclude Include="src\internal\GreetGL.h" />
@@ -208,7 +210,7 @@
     <ClInclude Include="src\math\Vec4.h" />
     <ClInclude Include="src\utils\ColorUtils.h" />
     <ClInclude Include="src\utils\DialogBox.h" />
-    <ClInclude Include="src\utils\ErrorHandler.h" />
+    <ClInclude Include="src\utils\ErrorHandle.h" />
     <ClInclude Include="src\utils\FileUtils.h" />
     <ClInclude Include="src\utils\ImageUtils.h" />
     <ClInclude Include="src\utils\json\JSON.h" />

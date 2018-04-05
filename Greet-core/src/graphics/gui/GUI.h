@@ -15,7 +15,7 @@
 #define MOUSE_INSIDE(mouse,xPos,yPos,width,height) (mouse).x >= (xPos) && (mouse).x < (xPos) + (width) && (mouse).y >= (yPos) && (mouse).y < (yPos) + (height)
 #define MOUSE_INSIDE_GUI(mouse,width,height) (mouse).x >= 0 && (mouse).x < (width) && (mouse).y >= 0 && (mouse).y < (height)
 
-#define GUI_DEFAULT_BACKGROUND 0xff444444
+#define GUI_DEFAULT_BACKGROUND Vec4(0.0f,0.0f, 0.25f,1.0f)
 
 namespace Greet{
 	class GUI
@@ -37,7 +37,7 @@ namespace Greet{
 			LTRB m_margin;
 			Vec2 m_position;
 			Vec2 m_size;
-			uint m_backgroundColor;
+			Vec4 m_backgroundColor;
 			bool m_renderBackground = true;
 			std::vector<OnClickListener*> m_onClickListeners;
 			static Sprite* m_mask;
@@ -52,8 +52,9 @@ namespace Greet{
 			void Add(GUI* renderable);
 			void Remove(GUI* renderable);
 			bool IsFocused() const { return m_focused; }
-			void SetBackgroundColor(uint bgColor) { m_backgroundColor = bgColor;}
+			void SetBackgroundColor(const Vec4& bgColor) { m_backgroundColor = bgColor;}
 			virtual bool Update(float timeElapsed);
+			virtual void RenderBackground(GUIRenderer* renderer) const;
 			virtual void Begin(GUIRenderer* renderer) const;
 			virtual void Submit(GUIRenderer* renderer) const = 0;
 			virtual void End(GUIRenderer* renderer) const;
@@ -70,6 +71,10 @@ namespace Greet{
 
 			virtual bool OnMoved(const MouseMovedEvent& event, Vec2 relativeMousePos);
 
+			// Pack the GUI to fit the children.
+			virtual void Pack();
+			virtual Vec2 GetMaxChildrenPos(bool packing) const;
+
 			void AddOnClickListener(OnClickListener* onClick) { m_onClickListeners.push_back(onClick); };
 			void RemoveOnClickListener(OnClickListener* onClick) { m_onClickListeners.erase(std::remove(m_onClickListeners.begin(), m_onClickListeners.end(),onClick), m_onClickListeners.end()); };
 
@@ -78,7 +83,7 @@ namespace Greet{
 			const Vec2& GetRealPosition() const;
 			inline const Vec2& GetPosition() const { return m_position;}
 			inline const Vec2& GetSize() const { return m_size;}
-			inline uint GetBackgroundColor() const {return m_backgroundColor;}
+			inline const Vec4& GetBackgroundColor() const {return m_backgroundColor;}
 			inline bool IsRenderBackground() const { return m_renderBackground;}
 	};
 }

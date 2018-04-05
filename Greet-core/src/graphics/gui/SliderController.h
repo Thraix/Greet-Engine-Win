@@ -18,6 +18,7 @@ namespace Greet {
 
 		virtual bool IsInside(const Vec2& position) const override;
 		virtual void Begin(GUIRenderer* renderer) const override;
+		virtual void RenderBackground(GUIRenderer* renderer) const override;
 		virtual void Submit(GUIRenderer* renderer) const override {}
 
 		bool OnMoved(const MouseMovedEvent& event, Vec2 relativeMousePos) override;

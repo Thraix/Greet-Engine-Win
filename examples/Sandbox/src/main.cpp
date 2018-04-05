@@ -76,7 +76,8 @@ public:
 		TextureManager::Add(new Texture2D("res/textures/lens_flare2.png", "lensflare2"));
 		TextureManager::Add(new Texture2D("res/textures/lens_flare3.png", "lensflare3"));
 		TextureManager::Add(new Texture2D("res/textures/lens_flare4.png", "lensflare4"));
-		FontManager::Add(new FontContainer("Anonymous Pro.ttf", "anonymous"));
+		FontManager::Add(new FontContainer("res/fonts/Anonymous Pro.ttf", "anonymous"));
+		FontManager::Add(new FontContainer("res/fonts/Roboto-Thin.ttf", "roboto"));
 
 		fbo = new FrameBufferObject(960,540);
 		//camera = new TPCamera(vec3(-3.5, -7.8, 5.5), 18, 0.66, 38.5, 15, 80, 0, 0.8f); // Profile shot
@@ -144,8 +145,8 @@ public:
 		delete l;
 
 		uilayer = new Layer(new BatchRenderer(), ShaderFactory::DefaultShader(), Mat3::Orthographic(0.0f, (float)Window::GetWidth(), 0.0f, (float)Window::GetHeight()));
-		uint colorPink = ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(300 /360.0f, 3));
-		fps = new Label("144 fps", Vec2(50, 300), "roboto", 72, ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColor(120 / 360.0f, 9)));
+		Vec4 colorPink = ColorUtils::GetMaterialColorAsHSV(300 /360.0f, 3);
+		fps = new Label("144 fps", Vec2(50, 300), "roboto", 72, ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColorAsRGB(120 / 360.0f, 9)));
 		cursor = new Renderable2D(Vec2(0,0),Vec2(32,32),0xffffffff, new Sprite(TextureManager::Get2D("cursor")), new Sprite(TextureManager::Get2D("mask")));
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(driverTest->m_position.x, -20, 0.5f, true, new drivers::DriverAdapter()));
 		guilayer = new GUILayer(new GUIRenderer(),Shader::FromFile("res/shaders/gui.shader"));
@@ -161,10 +162,10 @@ public:
 		textBox->SetText("Text Box");
 		progressFloat = 0;
 		ProgressBar* progressBar = new ProgressBar(Vec2(0, 200), Vec2(200, 30),&progressFloat,0,1000);
-		
-		button = new Button(Vec2(10,300),Vec2(100,40),"Test");
-		frame = new Frame(Vec2(10, 10), Vec2(500, 500),"GUI Frame");
-
+		button = new Button(Vec2(0,240),Vec2(200,30),"Button");
+		ColorPicker* picker = new ColorPicker(Vec2(210, 0), 200, 16, 20);
+		//Slider* sliderVertical = new Slider(Vec2(445, 0), Vec2(30, 200), 0, 255, 1,true);
+		frame = new Frame(Vec2(10, 10), Vec2(0, 0),"GUI Frame");
 		scene3d = new Layer(new BatchRenderer(),blurShader, Mat3::Orthographic(0.0f, (float)Window::GetWidth(), 0.0f, (float)Window::GetHeight()));
 		fboScene = new Renderable2D(Vec2(0,0),Vec2(960,540),0xffffffff,new Sprite(fbo->GetColorTexture(GL_COLOR_ATTACHMENT0)),NULL);
 		scene3d->Add(fboScene);
@@ -177,6 +178,9 @@ public:
 		frame->Add(textBox);
 		frame->Add(textBoxPass);
 		frame->Add(progressBar);
+		frame->Add(picker);
+		frame->Pack();
+		//frame->Add(sliderVertical);
 		guilayer->Add(frame);
 		uilayer->Add(cursor);
 
@@ -356,7 +360,7 @@ public:
 		hue += elapsedTime / 3.0f;
 		while (hue >= 1)
 			hue--;
-		cursor->m_color = ColorUtils::Vec3ToColorHex(ColorUtils::HSVtoRGB(hue, 1, 1));
+		cursor->m_color = ColorUtils::Vec3ToColorHex(ColorUtils::HSVtoRGB(hue, 1, 1,1.0));
 		//cursor->setPosition(vec2(p.x, p.y));
 	}
 
@@ -456,7 +460,7 @@ public:
 	{
 		//guirenderer->SubmitString("test", Vec2(100, 100), FontManager::Get("roboto",24), 0xff00ff);
 		//guirenderer->SubmitRect(Vec2(0, 0), Vec2(1, 1), 0xffffff00);
-		//guilayer->Render();
+		guilayer->Render();
 	}
 	
 	void WindowResize(int width, int height) override

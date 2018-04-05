@@ -130,12 +130,17 @@ namespace Greet {
 		return update;
 	}
 
+	void GUI::RenderBackground(GUIRenderer* renderer) const
+	{
+		renderer->SubmitRect(Vec2(0, 0), m_size, m_backgroundColor);
+	}
+
 	void GUI::Begin(GUIRenderer* renderer) const
 	{
 		renderer->PushMatrix(m_transformationMatrix);
 		renderer->PushViewport(Vec2(0,0), m_size);
 		if (m_renderBackground)
-			renderer->SubmitRect(Vec2(0, 0), m_size, m_backgroundColor);
+			RenderBackground(renderer);
 	}
 
 	void GUI::End(GUIRenderer* renderer) const
@@ -148,6 +153,25 @@ namespace Greet {
 		}
 		renderer->PopViewport();
 		renderer->PopMatrix();
+	}
+
+	void GUI::Pack()
+	{
+		m_size = GetMaxChildrenPos(true)+Vec2(m_margin.left+m_margin.right, m_margin.top+m_margin.bottom);
+	}
+
+	Vec2 GUI::GetMaxChildrenPos(bool packing) const
+	{
+		Vec2 pos = m_position + m_size;
+		if (packing)
+			pos = Vec2(0, 0);
+		for (uint i = 0; i < m_children.size();++i)
+		{
+			Vec2 childPos = m_children[i]->m_position + m_children[i]->m_size;
+			pos.x = pos.x < childPos.x ? childPos.x : pos.x;
+			pos.y = pos.y < childPos.y ? childPos.y : pos.y;
+		}
+		return pos;
 	}
 
 	const Vec2& GUI::GetRealPosition() const
