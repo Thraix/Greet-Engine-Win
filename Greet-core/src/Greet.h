@@ -4,6 +4,9 @@
 #include <audio/AudioChannel.h>
 #include <logging/Log.h>
 #include <internal/GreetTypes.h>
+#include <internal/GreetGL.h>
+#include <utils/Utils.h>
+#include <utils/ErrorHandle.h>
 #include <audio/AudioChannelManager.h>
 #include <audio/Sound.h>
 #include <audio/SoundManager.h>
@@ -32,8 +35,6 @@
 #include <event/MouseListener.h>
 #include <event/KeyEvent.h>
 #include <event/KeyListener.h>
-#include <internal/GreetGL.h>
-#include <utils/Utils.h>
 #include <logging/Logger.h>
 #include <event/EventDispatcher.h>
 #include <utils/FileUtils.h>
@@ -94,6 +95,7 @@
 #include <graphics/buffers/BatchIndexBuffer.h>
 #include <graphics/gui/Border.h>
 #include <graphics/gui/Button.h>
+#include <graphics/gui/ColorPicker.h>
 #include <graphics/gui/ProgressBarIndicator.h>
 #include <graphics/gui/DefaultProgressBarIndicator.h>
 #include <graphics/gui/Frame.h>
@@ -116,7 +118,6 @@
 #include <logging/LogLevel.h>
 #include <logging/LogStream.h>
 #include <utils/DialogBox.h>
-#include <utils/ErrorHandle.h>
 #include <utils/Noise.h>
 #include <utils/json/JSON.h>
 #include <utils/json/JSONArray.h>

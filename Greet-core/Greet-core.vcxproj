@@ -39,6 +39,7 @@
     <ClCompile Include="src\graphics\FrameBufferObject.cpp" />
     <ClCompile Include="src\graphics\gui\Border.cpp" />
     <ClCompile Include="src\graphics\gui\Button.cpp" />
+    <ClCompile Include="src\graphics\gui\ColorPicker.cpp" />
     <ClCompile Include="src\graphics\gui\Frame.cpp" />
     <ClCompile Include="src\graphics\gui\GUI.cpp" />
     <ClCompile Include="src\graphics\gui\Label.cpp" />
@@ -133,6 +134,7 @@
     <ClInclude Include="src\graphics\FrameBufferObject.h" />
     <ClInclude Include="src\graphics\gui\Border.h" />
     <ClInclude Include="src\graphics\gui\Button.h" />
+    <ClInclude Include="src\graphics\gui\ColorPicker.h" />
     <ClInclude Include="src\graphics\gui\DefaultProgressBarIndicator.h" />
     <ClInclude Include="src\graphics\gui\Frame.h" />
     <ClInclude Include="src\graphics\gui\GUI.h" />

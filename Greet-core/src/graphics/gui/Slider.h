@@ -15,6 +15,8 @@ namespace Greet {
 	{
 	private:
 
+		bool m_vertical;
+
 		// True if the slider should snap into position
 		bool m_snap;
 
@@ -42,8 +44,8 @@ namespace Greet {
 	private:
 		void SnapSlider();
 	public:
-		Slider(const Vec2& position, const Vec2& size, float start, float end, float stepSize, float sliderWidth = 7);
-		Slider(const Vec2& position, const Vec2& size, const std::vector<std::string>& labels, float sliderWidth = 7);
+		Slider(const Vec2& position, const Vec2& size, float start, float end, float stepSize, bool vertical = false, float sliderWidth = 7);
+		Slider(const Vec2& position, const Vec2& size, const std::vector<std::string>& labels, bool vertical = false, float sliderWidth = 7);
 		virtual ~Slider();
 
 		void Submit(GUIRenderer* renderer) const override;

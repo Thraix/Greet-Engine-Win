@@ -111,6 +111,17 @@ namespace Greet
 		m_viewports.pop();
 	}
 
+	void GUIRenderer::SubmitLine(const Vec2& pos, float length, float width, bool vertical, const Vec4& color, bool isHsv)
+	{
+
+		SubmitRect(pos, Vec2(vertical ? width : length, vertical ? length : width), color,isHsv);
+	}
+
+	void GUIRenderer::SubmitTriangle(const Vec2& pos1, const Vec2& pos2, const Vec2& pos3, const Vec4& color, bool isHsv)
+	{
+		AppendTriangle(pos1,pos2,pos3,color,isHsv);
+	}
+
 	void GUIRenderer::SubmitRect(const Vec2& pos, const Vec2& size, const Vec4& color, bool isHsv)
 	{
 		AppendQuad(pos, size, Vec2(0, 0), Vec2(1, 1), 0, color, isHsv);
@@ -194,22 +205,49 @@ namespace Greet
 		return false;
 	}
 
+	Vec4 GUIRenderer::GetViewport(const Vec2& pos1, const Vec2& pos2) const
+	{
+		if (!m_viewports.empty())
+			return m_viewports.top();
+		else
+		{
+			Log::Info("No viewport");
+			Vec4 viewport;;
+			Vec2 temp = GetMatrix() * Vec2(pos1.x, pos1.y);
+			viewport.x = temp.x;
+			viewport.y = temp.y;
+			temp = GetMatrix() * Vec2(pos2.x, pos2.y);
+			viewport.z = temp.x;
+			viewport.w = temp.y;
+			return viewport;
+		}
+	}
+
+	void GUIRenderer::AppendTriangle(const Vec2& pos1, const Vec2& pos2, const Vec2& pos3, const Vec4& color, bool isHsv)
+	{
+		if (NeedFlush(3, 3))
+			Flush();
+
+		Vec4 viewport = GetViewport(Vec2(std::min(std::min(pos1.x,pos2.x),pos3.x), std::min(std::min(pos1.y, pos2.y), pos3.y)), Vec2(std::max(std::max(pos1.x, pos2.x), pos3.x), std::max(std::max(pos1.y, pos2.y), pos3.y)));
+
+		AppendVertexBuffer(pos1, Vec2(0, 0), 0.0f, color, viewport, isHsv);
+		AppendVertexBuffer(pos2, Vec2(0, 0), 0.0f, color, viewport, isHsv);
+		AppendVertexBuffer(pos3, Vec2(0, 0), 0.0f, color, viewport, isHsv);
+
+		m_indices[m_iboCount++] = m_lastIndex;
+		m_indices[m_iboCount++] = m_lastIndex + 1;
+		m_indices[m_iboCount++] = m_lastIndex + 2;
+
+		m_lastIndex += 3;
+	}
+
 	void GUIRenderer::AppendQuad(const Vec2& position, const Vec2& size, const Vec2& texCoord1, const Vec2& texCoord2, float texId, const Vec4& color1, const Vec4& color2, const Vec4& color3, const Vec4& color4, bool isHsv)
 	{
 		if (NeedFlush(6, 4))
 			Flush();
-		Vec4 viewport = Vec4(position.x, position.y, position.x + size.x, position.y + size.y);
-		if (!m_viewports.empty())
-			viewport = m_viewports.top();
-		else
-		{
-			Vec2 temp = GetMatrix() * Vec2(viewport.x, viewport.y);
-			viewport.x = temp.x;
-			viewport.y = temp.y;
-			temp = GetMatrix() * Vec2(viewport.z, viewport.w);
-			viewport.z = temp.x;
-			viewport.w = temp.y;
-		}
+
+		Vec4 viewport = GetViewport(position, position + size);
+
 		AppendVertexBuffer(position, texCoord1, texId, color1, viewport, isHsv);
 		AppendVertexBuffer(Vec2(position.x, position.y + size.y), Vec2(texCoord1.x, texCoord2.y), texId, color3, viewport, isHsv);
 		AppendVertexBuffer(position + size, texCoord2, texId, color4, viewport, isHsv);

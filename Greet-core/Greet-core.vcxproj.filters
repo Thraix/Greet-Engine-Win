@@ -107,7 +107,6 @@
     <ClInclude Include="src\utils\json\JSONObject.h" />
     <ClInclude Include="src\utils\ColorUtils.h" />
     <ClInclude Include="src\utils\DialogBox.h" />
-    <ClInclude Include="src\utils\ErrorHandler.h" />
     <ClInclude Include="src\utils\FileUtils.h" />
     <ClInclude Include="src\utils\ImageUtils.h" />
     <ClInclude Include="src\utils\Noise.h" />
@@ -127,6 +126,7 @@
     <ClInclude Include="src\graphics\shaders\Uniformable.h" />
     <ClInclude Include="src\graphics\shaders\uniforms\Uniform.h" />
     <ClInclude Include="src\utils\ErrorHandle.h" />
+    <ClInclude Include="src\graphics\gui\ColorPicker.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\audio\AudioChannel.cpp" />
@@ -213,6 +213,7 @@
     <ClCompile Include="src\math\Quaternion.cpp" />
     <ClCompile Include="src\utils\ErrorHandle.cpp" />
     <ClCompile Include="src\graphics\renderers\GUIRenderer.cpp" />
+    <ClCompile Include="src\graphics\gui\ColorPicker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\graphics\shaders\basiclightshader.frag" />

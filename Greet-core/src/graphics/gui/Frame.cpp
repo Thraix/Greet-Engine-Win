@@ -7,7 +7,7 @@ namespace Greet {
 		m_titleColor(ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 3)),
 		m_titleBackgroundColor(ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 9))
 	{
-
+		m_size += Vec2(m_margin.left+m_margin.right, m_margin.top+m_margin.bottom);
 	}
 
 	void Frame::Submit(GUIRenderer* renderer) const

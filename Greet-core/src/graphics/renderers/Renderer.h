@@ -38,7 +38,7 @@ namespace Greet{
 			m_transformationBack = &m_transformationStack.top();
 		}
 
-		const Mat3& GetMatrix()
+		const Mat3& GetMatrix() const
 		{
 			return *m_transformationBack;
 		}

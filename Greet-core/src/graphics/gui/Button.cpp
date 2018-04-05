@@ -3,7 +3,7 @@
 namespace Greet {
 
 	Button::Button(const Vec2& position, const Vec2 size, const std::string& text)
-		: GUI(position,size), m_text(text), m_font(FontManager::Get("anonymous",size.y * 0.75))
+		: GUI(position,size), m_text(text), m_font(FontManager::Get("anonymous",ceil(size.y * 0.75)))
 	{
 		m_renderBackground = true;
 		m_backgroundColor = ColorUtils::GetMaterialColorAsHSV(120 / 360.0f, 9);

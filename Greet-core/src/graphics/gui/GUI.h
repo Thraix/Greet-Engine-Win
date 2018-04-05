@@ -54,6 +54,7 @@ namespace Greet{
 			bool IsFocused() const { return m_focused; }
 			void SetBackgroundColor(const Vec4& bgColor) { m_backgroundColor = bgColor;}
 			virtual bool Update(float timeElapsed);
+			virtual void RenderBackground(GUIRenderer* renderer) const;
 			virtual void Begin(GUIRenderer* renderer) const;
 			virtual void Submit(GUIRenderer* renderer) const = 0;
 			virtual void End(GUIRenderer* renderer) const;
@@ -69,6 +70,10 @@ namespace Greet{
 			virtual GUI* OnReleased(const MouseReleasedEvent& event, Vec2 relativeMousePos);
 
 			virtual bool OnMoved(const MouseMovedEvent& event, Vec2 relativeMousePos);
+
+			// Pack the GUI to fit the children.
+			virtual void Pack();
+			virtual Vec2 GetMaxChildrenPos(bool packing) const;
 
 			void AddOnClickListener(OnClickListener* onClick) { m_onClickListeners.push_back(onClick); };
 			void RemoveOnClickListener(OnClickListener* onClick) { m_onClickListeners.erase(std::remove(m_onClickListeners.begin(), m_onClickListeners.end(),onClick), m_onClickListeners.end()); };
