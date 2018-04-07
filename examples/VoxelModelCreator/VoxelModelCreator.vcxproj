@@ -94,6 +94,7 @@
     <ClCompile Include="src\tools\PlaceTool.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\shaders\gui.shader" />
     <None Include="res\shaders\simple.shader" />
     <None Include="res\shaders\skybox.shader" />
     <None Include="res\shaders\voxel.shader" />

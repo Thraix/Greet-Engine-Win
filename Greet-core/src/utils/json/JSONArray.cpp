@@ -26,7 +26,7 @@ namespace Greet {
 		m_objects.push_back(object);
 	}
 
-	JSONObject JSONArray::GetObject(size_t i) const
+	const JSONObject& JSONArray::GetObject(size_t i) const
 	{
 		size_t size = m_objects.size();
 		if (i >= size)
@@ -41,7 +41,7 @@ namespace Greet {
 		return m_objects[i];
 	}
 
-	JSONObject JSONArray::operator[](size_t i) const
+	const JSONObject& JSONArray::operator[](size_t i) const
 	{
 		return GetObject(i);
 	}

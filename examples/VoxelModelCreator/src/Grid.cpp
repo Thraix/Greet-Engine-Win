@@ -4,13 +4,14 @@ namespace vmc
 
 	using namespace Greet;
 
-	Grid::Grid()
+	Grid::Grid(ColorPicker* colorPicker)
 		: renderer(Window::GetWidth(), Window::GetHeight(), new TPCamera(Vec3(VMC_GRID_SIZE / 2+0.5f, VMC_GRID_SIZE / 2 + 0.5f, VMC_GRID_SIZE / 2 + 0.5f), 15, 0, 0, 1, 80, -0.8, 0.8f), 90, 0.1, 1000.0f, new Skybox(TextureManager::Get3D("skybox"))),
 		toolBox(this),
-		m_color(0xffffffff)
+		m_colorPicker(colorPicker)
+
 	{
-		EventDispatcher::AddKeyListener(DISPATCHER_GUI+2, *this);
-		EventDispatcher::AddMouseListener(DISPATCHER_GUI + 2, *this);
+		EventDispatcher::AddKeyListener(1, *this);
+		EventDispatcher::AddMouseListener(1, *this);
 		uint middle = VMC_GRID_SIZE / 2;
 		Add(VMC_GRID_SIZE / 2, VMC_GRID_SIZE / 2, VMC_GRID_SIZE / 2, 0xffffffff);
 		hasSelected = false;
@@ -116,17 +117,57 @@ namespace vmc
 
 	void Grid::Add(uint x, uint y, uint z, uint color)
 	{
-		Add(Cube(x, y, z, color));
+		Add(Cube(x, y, z, color),false);
 	}
 
-	void Grid::Add(Cube cube)
+	void Grid::Add(Cube cube, bool setColor)
 	{
 		if (m_grid.count(cube))
 		{
 			Greet::Log::Error("Cube already exists");
 			return;
 		}
-		cube.color = m_color;
+		if(setColor)
+			cube.color = ColorUtils::Vec4ToColorHex(ColorUtils::HSVtoRGB(m_colorPicker->GetColor()));
 		m_grid.emplace(cube);
+	}
+
+	void Grid::SaveModel(const std::string& filename)
+	{
+		JSONArray jsonArray;
+		for (auto it = m_grid.begin();it != m_grid.end();++it)
+		{
+			Vec3 position = it->GetPosition();
+			JSONObject cubeObj;
+			cubeObj.AddValue("x", std::to_string((uint)position.x));
+			cubeObj.AddValue("y", std::to_string((uint)position.y));
+			cubeObj.AddValue("z", std::to_string((uint)position.z));
+			cubeObj.AddValue("color", std::to_string(it->color));
+			jsonArray.AddObject(cubeObj);
+		}
+		std::fstream file(filename, std::fstream::out);
+		JSONObject obj;
+		obj.AddArray("cubes", jsonArray);
+		file << obj;
+		file.close();
+	}
+
+	void Grid::LoadModel(const std::string& filename)
+	{
+		m_grid.clear();
+		JSONObject obj = JSONLoader::LoadJSON(filename);
+		JSONArray cubes = obj.GetArray("cubes");
+		for (uint i = 0;i < cubes.Size(); ++i)
+		{
+			JSONObject cube = cubes[i];
+			Add(cube.GetValueAsUint("x"), cube.GetValueAsUint("y"), cube.GetValueAsUint("z"), cube.GetValueAsUint("color"));
+		}
+
+	}
+
+
+	void Grid::ExportModel(const std::string& filename)
+	{
+		// TODO: Turn the voxels into actual models.
 	}
 }

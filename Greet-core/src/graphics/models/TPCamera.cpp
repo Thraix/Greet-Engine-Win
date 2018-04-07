@@ -118,12 +118,12 @@ namespace Greet {
 		m_heightMax = max;
 		if (m_height < m_heightMin)
 		{
-			Log::Info("Height outside of clamp, reclamping.");
+			Log::Warning("Height outside of clamp, reclamping.");
 			m_height = m_heightMin;
 		}
 		else if (m_height > m_heightMax)
 		{
-			Log::Info("Height outside of clamp, reclamping.");
+			Log::Warning("Height outside of clamp, reclamping.");
 			m_height = m_heightMax;
 		}
 	}
@@ -153,11 +153,11 @@ namespace Greet {
 			//Vec3 worldCoord = inv * Vec3(e.getX(), e.getY(), 1.0f);
 			//Log::info(worldCoord.x," ", worldCoord.y);
 		}
-		if (e.GetButton() == GLFW_MOUSE_BUTTON_3)
+		else if (e.GetButton() == GLFW_MOUSE_BUTTON_3)
 		{
 			m_mouse3 = true;
 		}
-		if (e.GetButton() == GLFW_MOUSE_BUTTON_2)
+		else if (e.GetButton() == GLFW_MOUSE_BUTTON_2)
 		{
 			m_mouse2 = true;
 		}
@@ -170,11 +170,11 @@ namespace Greet {
 		{
 			m_mouse1 = false;
 		}
-		if (e.GetButton() == GLFW_MOUSE_BUTTON_2)
+		else if (e.GetButton() == GLFW_MOUSE_BUTTON_2)
 		{
 			m_mouse2 = false;
 		}
-		if (e.GetButton() == GLFW_MOUSE_BUTTON_3)
+		else if (e.GetButton() == GLFW_MOUSE_BUTTON_3)
 		{
 			m_mouse3 = false;
 		}

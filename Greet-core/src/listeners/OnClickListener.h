@@ -1,10 +1,11 @@
 #pragma once
 
 #include <math/Maths.h>
-
 namespace Greet {
-	class OnClickListener
+	class GUI;
+	struct OnClickListener
 	{
-		virtual void OnClick(Vec2 mousePosition) = 0;
+	public:
+		virtual void OnClick(GUI* gui) = 0;
 	};
 }

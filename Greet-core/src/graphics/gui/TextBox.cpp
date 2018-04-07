@@ -124,7 +124,6 @@ namespace Greet
 		int i = 1;
 		while (x > widths[i] && i <=m_text.size())
 		{
-			Log::Info(x, ": ", widths[i]);
 			i++;
 		}
 

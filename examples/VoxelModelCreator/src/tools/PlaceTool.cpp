@@ -15,7 +15,7 @@ namespace vmc {
 	bool PlaceTool::OnLeftClick() {
 		if (m_grid->HasAdjacent())
 		{
-			m_grid->Add(m_grid->GetAdjacentCube());
+			m_grid->Add(m_grid->GetAdjacentCube(),true);
 			return true;
 		}
 		return false;

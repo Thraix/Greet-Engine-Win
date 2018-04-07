@@ -51,26 +51,28 @@ namespace Greet
 
 	void GUIRenderer::Draw()
 	{
-		glCullFace(GL_FRONT_AND_BACK);
-		GLCall(glDisable(GL_DEPTH_TEST));
-
-		for (byte i = 0; i < m_textureCount; i++)
+		if (m_iboCount > 0)
 		{
-			glActiveTexture(GL_TEXTURE0 + i);
-			glBindTexture(GL_TEXTURE_2D, m_textures[i]);
+			GLCall(glDisable(GL_DEPTH_TEST));
+
+			for (byte i = 0; i < m_textureCount; i++)
+			{
+				GLCall(glActiveTexture(GL_TEXTURE0 + i));
+				GLCall(glBindTexture(GL_TEXTURE_2D, m_textures[i]));
+			}
+
+			GLCall(glBindVertexArray(m_vao));
+			GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo));
+			GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * m_iboCount, m_indices, GL_DYNAMIC_DRAW));
+
+			GLCall(glDrawElements(GL_TRIANGLES, m_iboSize, GL_UNSIGNED_INT, NULL));
+
+			GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo));
+			GLCall(glBindVertexArray(0));
+
+			GLCall(glActiveTexture(GL_TEXTURE0));
+			GLCall(glEnable(GL_DEPTH_TEST));
 		}
-
-		GLCall(glBindVertexArray(m_vao));
-		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo));
-		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * m_iboCount, m_indices, GL_DYNAMIC_DRAW));
-
-		GLCall(glDrawElements(GL_TRIANGLES, m_iboSize, GL_UNSIGNED_INT, NULL));
-
-		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo));
-		GLCall(glBindVertexArray(0));
-
-		GLCall(glActiveTexture(GL_TEXTURE0));
-		GLCall(glEnable(GL_DEPTH_TEST));
 	}
 
 	void GUIRenderer::End()

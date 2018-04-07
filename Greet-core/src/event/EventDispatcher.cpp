@@ -5,15 +5,9 @@ namespace Greet {
 	std::map<uint, std::vector<MouseListener*>, std::greater<uint>> EventDispatcher::m_mouseListeners;
 	std::map<uint, std::vector<KeyListener*>, std::greater<uint>> EventDispatcher::m_keyListeners;
 
-	typedef std::map<uint, std::vector<MouseListener*>, std::greater<int>>::iterator it_mouseMap;
-	typedef std::vector<MouseListener*>::iterator it_mouseListener;
-
-	typedef std::map<uint, std::vector<KeyListener*>, std::greater<int>>::iterator it_keyMap;
-	typedef std::vector<KeyListener*>::iterator it_keyListener;
-
 	void EventDispatcher::AddMouseListener(uint priority, MouseListener& listener)
 	{
-		for (it_mouseMap it = m_mouseListeners.begin();it != m_mouseListeners.end(); it++)
+		for (auto it = m_mouseListeners.begin();it != m_mouseListeners.end(); it++)
 		{
 			if (it->first == priority)
 			{
@@ -27,7 +21,7 @@ namespace Greet {
 
 	void EventDispatcher::AddKeyListener(uint priority, KeyListener& listener)
 	{
-		for (it_keyMap it = m_keyListeners.begin();it != m_keyListeners.end(); it++)
+		for (auto it = m_keyListeners.begin();it != m_keyListeners.end(); it++)
 		{
 			if (it->first == priority)
 			{
@@ -42,10 +36,10 @@ namespace Greet {
 
 	void EventDispatcher::RemoveMouseListener(MouseListener& listener)
 	{
-		for (it_mouseMap it = m_mouseListeners.begin();it != m_mouseListeners.end(); it++)
+		for (auto it = m_mouseListeners.begin();it != m_mouseListeners.end(); it++)
 		{
 			std::vector<MouseListener*> listeners = it->second;
-			for (it_mouseListener it2 = listeners.begin(); it2 != listeners.end(); it2++)
+			for (auto it2 = listeners.begin(); it2 != listeners.end(); it2++)
 			{
 				if ((*it2)->m_id == listener.m_id)
 				{
@@ -59,10 +53,10 @@ namespace Greet {
 
 	void EventDispatcher::RemoveKeyListener(KeyListener& listener)
 	{
-		for (it_keyMap it = m_keyListeners.begin();it != m_keyListeners.end(); it++)
+		for (auto it = m_keyListeners.begin();it != m_keyListeners.end(); it++)
 		{
 			std::vector<KeyListener*> listeners = it->second;
-			for (it_keyListener it2 = listeners.begin(); it2 != listeners.end(); it2++)
+			for (auto it2 = listeners.begin(); it2 != listeners.end(); it2++)
 			{
 				if ((*it2)->m_id == listener.m_id)
 				{
@@ -76,10 +70,10 @@ namespace Greet {
 
 	void EventDispatcher::OnMousePressed(const MousePressedEvent& e)
 	{
-		for (it_mouseMap it = m_mouseListeners.begin();it != m_mouseListeners.end(); it++)
+		for (auto it = m_mouseListeners.begin();it != m_mouseListeners.end(); it++)
 		{
 			std::vector<MouseListener*> listeners = it->second;
-			for (it_mouseListener it2 = listeners.begin(); it2 != listeners.end(); it2++)
+			for (auto it2 = listeners.begin(); it2 != listeners.end(); it2++)
 			{
 				if ((*it2)->OnPressed(e))
 					return;
@@ -90,10 +84,10 @@ namespace Greet {
 	void EventDispatcher::OnMouseReleased(const MouseReleasedEvent& e)
 	{
 		bool done = false;
-		for (it_mouseMap it = m_mouseListeners.begin();it != m_mouseListeners.end(); it++)
+		for (auto it = m_mouseListeners.begin();it != m_mouseListeners.end(); it++)
 		{
 			std::vector<MouseListener*> listeners = it->second;
-			for (it_mouseListener it2 = listeners.begin(); it2 != listeners.end(); it2++)
+			for (auto it2 = listeners.begin(); it2 != listeners.end(); it2++)
 			{
 				if ((*it2)->OnReleased(e))
 					return;
@@ -103,23 +97,23 @@ namespace Greet {
 
 	void EventDispatcher::OnMouseMoved(const MouseMovedEvent& e)
 	{
-		for (it_mouseMap it = m_mouseListeners.begin();it != m_mouseListeners.end(); it++)
+		for (auto it = m_mouseListeners.begin();it != m_mouseListeners.end(); it++)
 		{
 			std::vector<MouseListener*> listeners = it->second;
-			for (it_mouseListener it2 = listeners.begin(); it2 != listeners.end(); it2++)
+			for (auto it2 = listeners.begin(); it2 != listeners.end(); it2++)
 			{
 				if ((*it2)->OnMoved(e))
-				return;
+					return;
 			}
 		}
 	}
 
 	void EventDispatcher::OnMouseScrolled(const MouseScrollEvent& e)
 	{
-		for (it_mouseMap it = m_mouseListeners.begin();it != m_mouseListeners.end(); it++)
+		for (auto it = m_mouseListeners.begin();it != m_mouseListeners.end(); it++)
 		{
 			std::vector<MouseListener*> listeners = it->second;
-			for (it_mouseListener it2 = listeners.begin(); it2 != listeners.end(); it2++)
+			for (auto it2 = listeners.begin(); it2 != listeners.end(); it2++)
 			{
 				if ((*it2)->OnScroll(e))
 					return;
@@ -129,10 +123,10 @@ namespace Greet {
 
 	void EventDispatcher::OnKeyPressed(const KeyPressedEvent& e)
 	{
-		for (it_keyMap it = m_keyListeners.begin();it != m_keyListeners.end(); it++)
+		for (auto it = m_keyListeners.begin();it != m_keyListeners.end(); it++)
 		{
 			std::vector<KeyListener*> listeners = it->second;
-			for (it_keyListener it2 = listeners.begin(); it2 != listeners.end(); it2++)
+			for (auto it2 = listeners.begin(); it2 != listeners.end(); it2++)
 			{
 				if ((*it2)->OnPressed(e))
 				{
@@ -144,10 +138,10 @@ namespace Greet {
 
 	void EventDispatcher::OnKeyReleased(const KeyReleasedEvent& e)
 	{
-		for (it_keyMap it = m_keyListeners.begin();it != m_keyListeners.end(); it++)
+		for (auto it = m_keyListeners.begin();it != m_keyListeners.end(); it++)
 		{
 			std::vector<KeyListener*> listeners = it->second;
-			for (it_keyListener it2 = listeners.begin(); it2 != listeners.end(); it2++)
+			for (auto it2 = listeners.begin(); it2 != listeners.end(); it2++)
 			{
 				if ((*it2)->OnReleased(e))
 					return;
@@ -157,10 +151,10 @@ namespace Greet {
 
 	void EventDispatcher::OnKeyTyped(const KeyTypedEvent& e)
 	{
-		for (it_keyMap it = m_keyListeners.begin();it != m_keyListeners.end(); it++)
+		for (auto it = m_keyListeners.begin();it != m_keyListeners.end(); it++)
 		{
 			std::vector<KeyListener*> listeners = it->second;
-			for (it_keyListener it2 = listeners.begin(); it2 != listeners.end(); it2++)
+			for (auto it2 = listeners.begin(); it2 != listeners.end(); it2++)
 			{
 				if ((*it2)->OnTyped(e))
 					return;
