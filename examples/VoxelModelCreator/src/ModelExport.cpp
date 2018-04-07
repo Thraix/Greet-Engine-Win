@@ -17,7 +17,7 @@ namespace vmc
 		uint diffX = maxX - minX;
 		uint diffY = maxY - minY;
 		uint diffZ = maxZ - minZ;
-		std::map<uint, bool*> colorMaps;
+		std::unordered_map<uint, bool*> colorMaps;
 
 		std::deque<bool*> buffersX;
 		std::deque<bool*> buffersY;
@@ -65,7 +65,7 @@ namespace vmc
 	}
 
 	// See if we can make this general for both directions and x,y,z otherwise copy paste code.
-	void ModelExport::AddCubeXNegSideToMap(const Cube& cube, uint diffY, uint diffZ, std::map<uint, bool*>* colorMaps, std::deque<bool*>* buffers)
+	void ModelExport::AddCubeXNegSideToMap(const Cube& cube, uint diffY, uint diffZ, std::unordered_map<uint, bool*>* colorMaps, std::deque<bool*>* buffers)
 	{
 		// Check if we already have a map with a certain color
 		auto colorMap = colorMaps->find(cube.color);

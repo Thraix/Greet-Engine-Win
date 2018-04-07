@@ -3,6 +3,7 @@
 #include <math/Vec4.h>
 #include <utility>
 #include <set>
+#include <unordered_map>
 
 #include "Cube.h"
 namespace vmc
@@ -21,7 +22,7 @@ namespace vmc
 
 	private:
 
-		static void AddCubeXNegSideToMap(const Cube& cube, uint diffX, uint diffY, std::map<uint, bool*>* colorMaps, std::deque<bool*>* buffers);
+		static void AddCubeXNegSideToMap(const Cube& cube, uint diffX, uint diffY, std::unordered_map<uint, bool*>* colorMaps, std::deque<bool*>* buffers);
 
 		static bool* GenBuffer(uint width, uint height);
 		static void DeleteBuffer(bool* buffer);

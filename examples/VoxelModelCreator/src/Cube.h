@@ -107,6 +107,4 @@ namespace vmc
 			return c < i;
 		}
 	};
-
-	uint const Cube::MAX_POSITION = 1000;
 }
