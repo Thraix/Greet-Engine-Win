@@ -56,7 +56,7 @@ namespace Greet {
 			os << arr.GetObject(i);
 			if(i != size - 1)
 			{ 
-				os << ",\n" << JSON::get_indent();
+				os << ",\n";
 			}
 		}
 		JSON::pop_indent();
