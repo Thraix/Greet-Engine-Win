@@ -90,6 +90,7 @@
   <ItemGroup>
     <ClCompile Include="src\Grid.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\ModelExport.cpp" />
     <ClCompile Include="src\Ray.cpp" />
     <ClCompile Include="src\tools\PlaceTool.cpp" />
   </ItemGroup>
@@ -98,6 +99,7 @@
     <None Include="res\shaders\simple.shader" />
     <None Include="res\shaders\skybox.shader" />
     <None Include="res\shaders\voxel.shader" />
+    <None Include="src\ModelExport.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Cube.h" />

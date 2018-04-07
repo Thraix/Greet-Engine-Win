@@ -27,12 +27,16 @@
     <ClCompile Include="src\tools\PlaceTool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ModelExport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\skybox.shader" />
     <None Include="res\shaders\simple.shader" />
     <None Include="res\shaders\voxel.shader" />
     <None Include="res\shaders\gui.shader" />
+    <None Include="src\ModelExport.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Grid.h">

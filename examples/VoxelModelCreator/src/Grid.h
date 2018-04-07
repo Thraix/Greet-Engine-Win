@@ -18,7 +18,7 @@ namespace vmc {
 	private:
 		GridRenderer3D renderer;
 		Greet::ColorPicker* m_colorPicker;
-		std::set<Cube> m_grid;
+		std::set<Cube, CubeCompare> m_grid;
 		std::vector<Cube> m_ray;
 		uint m_color;
 
@@ -30,7 +30,8 @@ namespace vmc {
 		Cube adjacent;
 
 		bool renderAxis;
-
+	public:
+		static const uint GRID_SIZE;
 	public:
 		Grid(Greet::ColorPicker* colorPicker);
 
@@ -60,6 +61,8 @@ namespace vmc {
 		void SaveModel(const std::string& filename);
 		void LoadModel(const std::string& filename);
 		void ExportModel(const std::string& filename);
+
+
 
 	};
 }

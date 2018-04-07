@@ -31,7 +31,7 @@ namespace vmc
 			EventDispatcher::AddKeyListener(DISPATCHER_GUI + 1, *this);
 			EventDispatcher::AddMouseListener(DISPATCHER_GUI + 1, *this);
 			CreateWindow("Voxel Model Creator", 960, 540);
-			SetFrameCap(143);
+			SetFrameCap(144);
 
 			// Load Textures and Fonts.
 			TextureManager::Add(new Texture2D("res/textures/cursor.png", "cursor"));

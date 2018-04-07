@@ -4,16 +4,18 @@ namespace vmc
 
 	using namespace Greet;
 
+	const uint Grid::GRID_SIZE = 100;
+
 	Grid::Grid(ColorPicker* colorPicker)
-		: renderer(Window::GetWidth(), Window::GetHeight(), new TPCamera(Vec3(VMC_GRID_SIZE / 2+0.5f, VMC_GRID_SIZE / 2 + 0.5f, VMC_GRID_SIZE / 2 + 0.5f), 15, 0, 0, 1, 80, -0.8, 0.8f), 90, 0.1, 1000.0f, new Skybox(TextureManager::Get3D("skybox"))),
+		: renderer(Window::GetWidth(), Window::GetHeight(), new TPCamera(Vec3(GRID_SIZE / 2+0.5f, GRID_SIZE / 2 + 0.5f, GRID_SIZE / 2 + 0.5f), 15, 0, 0, 1, 80, -0.8, 0.8f), 90, 0.1, 1000.0f, new Skybox(TextureManager::Get3D("skybox"))),
 		toolBox(this),
 		m_colorPicker(colorPicker)
 
 	{
 		EventDispatcher::AddKeyListener(1, *this);
 		EventDispatcher::AddMouseListener(1, *this);
-		uint middle = VMC_GRID_SIZE / 2;
-		Add(VMC_GRID_SIZE / 2, VMC_GRID_SIZE / 2, VMC_GRID_SIZE / 2, 0xffffffff);
+		uint middle = GRID_SIZE / 2;
+		Add(GRID_SIZE / 2, GRID_SIZE / 2, GRID_SIZE / 2, 0xffffffff);
 		hasSelected = false;
 		hasAdjacent = false;
 	}
@@ -57,7 +59,7 @@ namespace vmc
 		Vec3 near, direction;
 		renderer.GetWorldCoordination(Window::GetMousePos(), &near, &direction);
 
-		m_ray = Ray::GetCubeRay(near,direction, VMC_GRID_SIZE);
+		m_ray = Ray::GetCubeRay(near,direction, GRID_SIZE);
 		auto lastIt = m_ray.begin();
 		hasSelected = false;
 		hasAdjacent = false;
@@ -81,7 +83,7 @@ namespace vmc
 		renderer.Begin();
 
 		GLCall(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
-		renderer.DrawCube(Vec3(-0.5f, -0.5f, -0.5f), Vec3(VMC_GRID_SIZE+1, VMC_GRID_SIZE + 1, VMC_GRID_SIZE + 1), 0xff000000, false);
+		renderer.DrawCube(Vec3(-0.5f, -0.5f, -0.5f), Vec3(GRID_SIZE +1, GRID_SIZE + 1, GRID_SIZE + 1), 0xff000000, false);
 		if (hasSelected)
 		{
 			float outline = 0.01f;
