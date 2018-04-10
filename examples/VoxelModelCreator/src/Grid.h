@@ -6,6 +6,7 @@
 
 #define VMC_GRID_SIZE 100
 
+#include "ModelExport.h"
 #include "GridRenderer3D.h"
 #include "Cube.h"
 #include "Ray.h"

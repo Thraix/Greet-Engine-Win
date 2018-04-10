@@ -9,24 +9,30 @@
 namespace vmc
 {
 
-	enum Layer
+	struct Square
 	{
-		XNeg, XPos, YNeg, YPos, ZNeg, ZPos
+		Vec3 p1;
+		Vec3 p2;
+		uint color;
 	};
 
 	class ModelExport {
 	private:
 
 	public:
-		static std::pair<Greet::Vec3, Greet::Vec3> GetAllSquares(const std::set<Cube, CubeCompare>& cubes);
+		static std::deque<Square> GetAllSquares(const std::set<Cube, CubeCompare>& cubes);
 
 	private:
 
-		static void AddCubeXNegSideToMap(const Cube& cube, uint diffX, uint diffY, std::unordered_map<uint, bool*>* colorMaps, std::deque<bool*>* buffers);
+		static void GenXMaps(uint minX, uint maxX, uint minY, uint maxY, uint minZ, uint maxZ, const std::set<Cube, CubeCompare>& cubes, std::deque<Square>* squares);
+		static void AddCubeSideToMap(uint p1, uint p2, uint color, uint min1, uint min2, uint diff1, uint diff2, std::unordered_map<uint, bool*>* colorMaps, std::deque<bool*>* buffers);
+		static void CalculateSquares(bool* map, uint diff1, uint diff2, std::deque<Square>* squares);
 
 		static bool* GenBuffer(uint width, uint height);
 		static void DeleteBuffer(bool* buffer);
 		static void CalculateBoundingBox(const std::set<Cube, CubeCompare>& m_grid, uint* minX, uint* maxX, uint* minY, uint* maxY, uint* minZ, uint* maxZ);
+		static void ResetMaps(std::unordered_map<uint, bool*>* colorMaps, std::deque<bool*>* buffers);
+		static void SaveImageLayers(const std::unordered_map<uint, bool*>& colorMaps, uint diff1, uint diff2, int p, int dir);
 	};
 
 }

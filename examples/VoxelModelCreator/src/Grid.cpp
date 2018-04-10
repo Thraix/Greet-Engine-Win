@@ -170,6 +170,6 @@ namespace vmc
 
 	void Grid::ExportModel(const std::string& filename)
 	{
-		// TODO: Turn the voxels into actual models.
+		ModelExport::GetAllSquares(m_grid);
 	}
 }

@@ -16,6 +16,7 @@ namespace vmc
 		GUILayer* guilayer;
 		Button* saveButton;
 		Button* loadButton;
+		Button* exportButton;
 		TextBox* fileNameBox;
 
 		Grid* grid;
@@ -50,12 +51,15 @@ namespace vmc
 			saveButton->AddOnClickListener(this);
 			loadButton = new Button(Vec2(0, 290), Vec2(200, 30), "Load file");
 			loadButton->AddOnClickListener(this);
+			exportButton = new Button(Vec2(0, 330), Vec2(200, 30), "Load file");
+			exportButton->AddOnClickListener(this);
 			Frame* frame = new Frame(Vec2(0, 0), Vec2(0, 0), "Menu");
-			fileNameBox->SetText("FILENAME");
+			fileNameBox->SetText("test.vox");
 			frame->Add(colorPicker);
 			frame->Add(fileNameBox);
 			frame->Add(saveButton);
 			frame->Add(loadButton);
+			frame->Add(exportButton);
 			frame->Pack();
 
 			guilayer->Add(frame);
@@ -136,6 +140,12 @@ namespace vmc
 			{
 				Log::Info("Loading...");
 				grid->LoadModel(fileNameBox->GetText());
+				Log::Info("Done!");
+			}
+			else if(gui == exportButton)
+			{
+				Log::Info("Exporting...");
+				grid->ExportModel(fileNameBox->GetText());
 				Log::Info("Done!");
 			}
 		}

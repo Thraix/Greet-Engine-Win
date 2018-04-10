@@ -6,25 +6,29 @@ namespace vmc
 {
 	using namespace Greet;
 
-	std::pair<Vec3, Vec3> ModelExport::GetAllSquares(const std::set<Cube, CubeCompare>& cubes)
+	std::deque<Square> ModelExport::GetAllSquares(const std::set<Cube, CubeCompare>& cubes)
 	{
-		std::pair<Vec4, Vec4> squares;
+		std::deque<Square> squares;
  		bool* grid = new bool[Grid::GRID_SIZE*Grid::GRID_SIZE];
 		uint minX, maxX, minY, maxY, minZ, maxZ;
 
 		CalculateBoundingBox(cubes, &minX,&maxX, &minY,&maxY,&minZ,&maxZ);
+		GenXMaps(minX,maxX, minY, maxY, minZ, maxZ, cubes, &squares);
 
-		uint diffX = maxX - minX;
+		return squares;
+	}
+
+	void ModelExport::GenXMaps(uint minX, uint maxX, uint minY, uint maxY, uint minZ, uint maxZ, const std::set<Cube, CubeCompare>& cubes, std::deque<Square>* squares)
+	{
+
+		std::unordered_map<uint, bool*> colorMapsPos;
+		std::unordered_map<uint, bool*> colorMapsNeg;
+		std::deque<bool*> buffers;
+
 		uint diffY = maxY - minY;
 		uint diffZ = maxZ - minZ;
-		std::unordered_map<uint, bool*> colorMaps;
-
-		std::deque<bool*> buffersX;
-		std::deque<bool*> buffersY;
-		std::deque<bool*> buffersZ;
-
 		// Current layer
-		for (uint x = minX; x <= maxX; ++x)
+		for (uint x = minX; x < maxX; ++x)
 		{
 			// Go through each cube in layer
 			for (uint y = minY; y < maxY; ++y)
@@ -33,69 +37,69 @@ namespace vmc
 				{
 					auto cube = cubes.find(Cube::Hash(x, y, z));
 
-					if (cube != cubes.end()) 
+					if (cube != cubes.end())
 					{
 						// Determain if the cube side will be visible
 						if (!Cube::ValidPos(x - 1) || cubes.count(Cube::Hash(x - 1, y, z)) == 0)
 						{
-							AddCubeXNegSideToMap(*cube, diffY, diffZ, &colorMaps, &buffersX);
+							AddCubeSideToMap(cube->y, cube->z, cube->color, minY, minZ, diffY, diffZ, &colorMapsNeg, &buffers);
+						}
+
+						// Determain if the cube side will be visible
+						if (!Cube::ValidPos(x + 1) || cubes.count(Cube::Hash(x + 1, y, z)) == 0)
+						{
+							AddCubeSideToMap(cube->y, cube->z, cube->color, minY, minZ, diffY, diffZ, &colorMapsPos, &buffers);
 						}
 					}
 				}
 			}
 
-			// Now we have 2d maps of all the color layers in colorMaps.
-			for (auto mapIt = colorMaps.begin(); mapIt != colorMaps.end(); ++mapIt)
-			{
-				// Save to file or smth to check if it works.
-			}
+			// Calculate the squares.
 
-			// Move all color maps to the deque.
-			auto mapIt = colorMaps.begin();
-			while (mapIt != colorMaps.end())
-			{
-				auto it = mapIt;
-				++mapIt;
-
-				buffersX.push_back(it->second);
-				colorMaps.erase(mapIt);
-			}
+			ResetMaps(&colorMapsPos, &buffers);
+			ResetMaps(&colorMapsNeg, &buffers);
 		}
-		return std::pair<Vec3, Vec3>();
 	}
 
-	// See if we can make this general for both directions and x,y,z otherwise copy paste code.
-	void ModelExport::AddCubeXNegSideToMap(const Cube& cube, uint diffY, uint diffZ, std::unordered_map<uint, bool*>* colorMaps, std::deque<bool*>* buffers)
+	void ModelExport::AddCubeSideToMap(uint p1, uint p2, uint color, uint min1, uint min2, uint diff1, uint diff2, std::unordered_map<uint, bool*>* colorMaps, std::deque<bool*>* buffers)
 	{
+		uint y = p1 - min1;
+		uint z = p2 - min2;
 		// Check if we already have a map with a certain color
-		auto colorMap = colorMaps->find(cube.color);
+		auto colorMap = colorMaps->find(color);
 		if (colorMap != colorMaps->end())
 		{
-			colorMap->second[cube.x + cube.y * diffY] = true;
+			colorMap->second[y + z * diff1] = true;
 		}
 		else // Otherwise add the buffer to the colorMap
 		{
 			// Check if we need to create a buffer.
 			if (buffers->size() == 0)
 			{
-				bool* buffer = GenBuffer(diffY, diffZ);
+				bool* buffer = GenBuffer(diff1, diff2);
 
 				// Clear memory in case of clutter
-				memset(buffer, 0, diffY * diffZ);
-				buffer[cube.x + cube.y * diffY] = true;
-				colorMaps->emplace(cube.color, buffer);
+				memset(buffer, 0, diff1 * diff2);
+				buffer[y + z * diff1] = true;
+				colorMaps->emplace(color, buffer);
 			}
 			else // Otherwise use an existing one.
 			{
 				// Get a stored buffer
 				bool* buffer = *buffers->begin();
-				buffer[cube.x + cube.y * diffY] = true;
-				colorMaps->emplace(cube.color, buffer);
+				memset(buffer, 0, diff1 * diff2);
+				buffer[y + z * diff1] = true;
+				colorMaps->emplace(color, buffer);
 
 				// remove from available buffers
 				buffers->pop_back();
 			}
 		}
+	}
+
+	void ModelExport::CalculateSquares(bool* map, uint diff1, uint diff2, std::deque<Square>* squares)
+	{
+		
 	}
 
 	// Generate a buffer with size width*height
@@ -142,6 +146,48 @@ namespace vmc
 				*minX = it->z;
 			else if (it->z > *maxZ) // variable cannot be min and max at the same time.
 				*maxZ = it->z;
+		}
+	}
+
+	void ModelExport::ResetMaps(std::unordered_map<uint, bool*>* colorMaps, std::deque<bool*>* buffers)
+	{
+		// Move all color maps to the deque.
+		auto mapIt = colorMaps->begin();
+		while (mapIt != colorMaps->end())
+		{
+			auto it = mapIt;
+			++mapIt;
+
+			buffers->push_back(it->second);
+			colorMaps->erase(it);
+		}
+	}
+
+	void ModelExport::SaveImageLayers(const std::unordered_map<uint, bool*>& colorMaps, uint diff1, uint diff2, int p, int dir)
+	{
+		// Now we have 2d maps of all the color layers in colorMaps.
+		for (auto mapIt = colorMaps.begin(); mapIt != colorMaps.end(); ++mapIt)
+		{
+			BYTE* bytes = new BYTE[3 * diff1 * diff2];
+			for (int i = 0;i < diff1*diff2;i++)
+			{
+				if (mapIt->second[i])
+				{
+					bytes[i * 3] = (mapIt->first >> 0) & 0xff;
+					bytes[i * 3 + 1] = (mapIt->first >> 16) & 0xff;
+					bytes[i * 3 + 2] = (mapIt->first >> 24) & 0xff;
+				}
+				else
+				{
+					bytes[i * 3] = 0;
+					bytes[i * 3 + 1] = 0;
+					bytes[i * 3 + 2] = 0;
+				}
+			}
+			std::string s = "modelImages/layer"+std::to_string(dir)+"_" + std::to_string(p) + "_color_" + std::to_string(mapIt->first) + ".png";
+			FIBITMAP* Image = FreeImage_ConvertFromRawBits(bytes, diff1, diff2, 3 * diff1, 24, 0xFF0000, 0x00FF00, 0x0000FF, false);
+			FreeImage_Save(FIF_PNG, Image, s.c_str(), 0);
+			delete[] bytes;
 		}
 	}
 }
