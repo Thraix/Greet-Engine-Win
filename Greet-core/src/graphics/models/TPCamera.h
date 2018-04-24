@@ -28,6 +28,10 @@ namespace Greet {
 		float m_distance;
 		float m_height;
 		float m_rotation;
+
+		Vec3 m_positionWanted;
+		float m_distanceWanted;
+		float m_heightWanted;
 		float m_rotationWanted;
 
 		// Calculated information
