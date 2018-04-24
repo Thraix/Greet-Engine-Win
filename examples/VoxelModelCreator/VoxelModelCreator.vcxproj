@@ -88,21 +88,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Cube.cpp" />
     <ClCompile Include="src\Grid.cpp" />
+    <ClCompile Include="src\GridRenderer3D.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\ModelExport.cpp" />
     <ClCompile Include="src\Ray.cpp" />
+    <ClCompile Include="src\tools\ColorTool.cpp" />
     <ClCompile Include="src\tools\PlaceTool.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\shaders\gui.shader" />
     <None Include="res\shaders\simple.shader" />
     <None Include="res\shaders\skybox.shader" />
     <None Include="res\shaders\voxel.shader" />
+    <None Include="src\ModelExport.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Cube.h" />
     <ClInclude Include="src\Grid.h" />
     <ClInclude Include="src\GridRenderer3D.h" />
     <ClInclude Include="src\Ray.h" />
+    <ClInclude Include="src\tools\ColorTool.h" />
     <ClInclude Include="src\tools\PlaceTool.h" />
     <ClInclude Include="src\tools\Tool.h" />
     <ClInclude Include="src\tools\ToolBox.h" />

@@ -4,18 +4,18 @@
 
 namespace vmc {
 	bool PlaceTool::OnRightClick() {
-		if (m_grid->HasSelected())
+		if (m_grid->HasAdjacent())
 		{
-			m_grid->Remove(m_grid->GetSelectedCube());
+			m_grid->Add(m_grid->GetAdjacentCube(),true);
 			return true;
 		}
 		return false;
 	};
 
 	bool PlaceTool::OnLeftClick() {
-		if (m_grid->HasAdjacent())
+		if (m_grid->HasSelected())
 		{
-			m_grid->Add(m_grid->GetAdjacentCube());
+			m_grid->Remove(m_grid->GetSelectedCube());
 			return true;
 		}
 		return false;

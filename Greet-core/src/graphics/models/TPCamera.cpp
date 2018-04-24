@@ -22,6 +22,9 @@ namespace Greet {
 		: m_position(position), m_distance(distance), m_height(height), m_rotation(rotation), m_rotationSpeed(rotationSpeed), m_heightSpeed(heightSpeed), m_distanceSpeed(distanceSpeed)
 	{
 		m_rotationWanted = m_rotation;
+		m_distanceWanted = m_distance;
+		m_heightWanted = m_height;
+		m_positionWanted = m_position;
 		m_rotationVector.z = 0;
 		SetDistanceClamp(distanceMin, distanceMax);
 		SetHeightClamp(heightMin, heightMax);
@@ -36,7 +39,12 @@ namespace Greet {
 
 	void TPCamera::Update(float timeElapsed)
 	{
-		m_rotation += (m_rotationWanted - m_rotation) * (timeElapsed * 10.0f); // 0.33 ish
+		float factor1 = (timeElapsed * 10.0f); // 0.33 ish
+		float factor2 = (timeElapsed * 30.0f);
+		m_rotation += (m_rotationWanted - m_rotation) * factor1;
+		m_position += (m_positionWanted - m_position) * factor2;
+		m_distance += (m_distanceWanted - m_distance) * factor1;
+		m_height += (m_heightWanted - m_height) * factor2;
 		CalculateInformation();
 	}
 
@@ -52,33 +60,30 @@ namespace Greet {
 
 	void TPCamera::SetPosition(Vec3 pos)
 	{
-		m_position = pos;
-		CalculateViewMatrix();
+		m_positionWanted = pos;
 	}
 
 	void TPCamera::SetHeight(float height)
 	{
-		m_height = height;
-		Math::Clamp(&m_height, m_heightMin, m_heightMax);
-		if (m_height != height)
+		m_heightWanted = height;
+		Math::Clamp(&m_heightWanted, m_heightMin, m_heightMax);
+		if (m_heightWanted != height)
 		{
 			Log::Warning("Height outside of clamp, clamping.");
 		}
-		CalculateInformation();
 	}
 
 	void TPCamera::SetRotation(float rotation)
 	{
 		//m_rotation = rotation;
 		m_rotationWanted = rotation; // smooth transition
-		CalculateViewMatrix();
 	}
 
 	void TPCamera::SetDistance(float distance)
 	{
-		m_distance = distance;
-		Math::Clamp(&m_distance, m_distanceMin, m_distanceMax);
-		if (m_distance != distance)
+		m_distanceWanted = distance;
+		Math::Clamp(&m_distanceWanted, m_distanceMin, m_distanceMax);
+		if (m_distanceWanted != distance)
 		{
 			Log::Warning("Distance outside of clamp, clamping.");
 		}
@@ -93,15 +98,15 @@ namespace Greet {
 		}
 		m_distanceMin = min < 0 ? 0 : min;
 		m_distanceMax = max < 0 ? 0 : max;
-		if (m_distance < m_distanceMin)
+		if (m_distanceWanted < m_distanceMin)
 		{
 			Log::Info("Distance outside of clamp, reclamping.");
-			m_distance = m_distanceMin;
+			m_distanceWanted = m_distanceMin;
 		}
-		else if (m_distance > m_distanceMax)
+		else if (m_distanceWanted > m_distanceMax)
 		{
 			Log::Info("Distance outside of clamp, reclamping.");
-			m_distance = m_distanceMax;
+			m_distanceWanted = m_distanceMax;
 		}
 	}
 
@@ -116,15 +121,15 @@ namespace Greet {
 		Math::Clamp(&max, -1, 1);
 		m_heightMin = min;
 		m_heightMax = max;
-		if (m_height < m_heightMin)
+		if (m_heightWanted < m_heightMin)
 		{
-			Log::Info("Height outside of clamp, reclamping.");
-			m_height = m_heightMin;
+			Log::Warning("Height outside of clamp, reclamping.");
+			m_heightWanted = m_heightMin;
 		}
-		else if (m_height > m_heightMax)
+		else if (m_heightWanted > m_heightMax)
 		{
-			Log::Info("Height outside of clamp, reclamping.");
-			m_height = m_heightMax;
+			Log::Warning("Height outside of clamp, reclamping.");
+			m_heightWanted = m_heightMax;
 		}
 	}
 
@@ -153,11 +158,11 @@ namespace Greet {
 			//Vec3 worldCoord = inv * Vec3(e.getX(), e.getY(), 1.0f);
 			//Log::info(worldCoord.x," ", worldCoord.y);
 		}
-		if (e.GetButton() == GLFW_MOUSE_BUTTON_3)
+		else if (e.GetButton() == GLFW_MOUSE_BUTTON_3)
 		{
 			m_mouse3 = true;
 		}
-		if (e.GetButton() == GLFW_MOUSE_BUTTON_2)
+		else if (e.GetButton() == GLFW_MOUSE_BUTTON_2)
 		{
 			m_mouse2 = true;
 		}
@@ -170,11 +175,11 @@ namespace Greet {
 		{
 			m_mouse1 = false;
 		}
-		if (e.GetButton() == GLFW_MOUSE_BUTTON_2)
+		else if (e.GetButton() == GLFW_MOUSE_BUTTON_2)
 		{
 			m_mouse2 = false;
 		}
-		if (e.GetButton() == GLFW_MOUSE_BUTTON_3)
+		else if (e.GetButton() == GLFW_MOUSE_BUTTON_3)
 		{
 			m_mouse3 = false;
 		}
@@ -183,27 +188,27 @@ namespace Greet {
 
 	bool TPCamera::OnMoved(const MouseMovedEvent& e) {
 		if (m_mouse3) {
-			m_height += e.GetDY() * m_heightSpeed;
-			Math::Clamp(&m_height, m_heightMin, m_heightMax);
+			m_heightWanted += e.GetDY() * m_heightSpeed;
+			Math::Clamp(&m_heightWanted, m_heightMin, m_heightMax);
 			m_rotationWanted += m_rotationSpeed * e.GetDX();
 		}
 		if (m_mouse2)
 		{
-			m_position.y += e.GetDeltaPosition().y * 0.1f;
+			m_positionWanted.y += e.GetDeltaPosition().y * 0.1f;
 		}
 		else if (m_mouse1)
 		{
 			Vec2 dpos = e.GetDeltaPosition();
 			dpos.Rotate(m_rotation);
-			m_position.x += dpos.y * m_distanceSpeed * m_distance;
-			m_position.z -= dpos.x * m_distanceSpeed * m_distance;
+			m_positionWanted.x += dpos.y * m_distanceSpeed * m_distance;
+			m_positionWanted.z -= dpos.x * m_distanceSpeed * m_distance;
 		}
 		return false;
 	}
 
 	bool TPCamera::OnScroll(const MouseScrollEvent& e) {
-		m_distance -= e.GetScroll();
-		Math::Clamp(&m_distance, m_distanceMin, m_distanceMax);
+		m_distanceWanted -= e.GetScroll();
+		Math::Clamp(&m_distanceWanted, m_distanceMin, m_distanceMax);
 		return false;
 	}
 

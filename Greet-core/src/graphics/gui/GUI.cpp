@@ -9,7 +9,7 @@ namespace Greet {
 	{
 		m_transformationMatrix = Mat3::Translate(m_position);
 		if (m_mask == NULL)
-			m_mask = new Sprite(TextureManager::Get2D("mask2"));
+			m_mask = new Sprite(TextureManager::Get2D("guimask"));
 	}
 	
 	GUI::GUI(const Vec2& position, const Vec2& size, const LTRB& margin)
@@ -17,7 +17,7 @@ namespace Greet {
 	{
 		m_transformationMatrix = Mat3::Translate(m_position);
 		if (m_mask == NULL)
-			m_mask = new Sprite(TextureManager::Get2D("mask2"));
+			m_mask = new Sprite(TextureManager::Get2D("guimask"));
 	}
 
 	GUI::~GUI()
@@ -75,6 +75,10 @@ namespace Greet {
 			if (gui->OnPressed(event, TranslateMouse(relativeMousePos, gui)))
 				return gui;
 		}
+		for (auto it = m_onClickListeners.begin(); it != m_onClickListeners.end();++it)
+		{
+			(*it)->OnClick(this);
+		}
 		return this;
 	}
 
@@ -105,11 +109,13 @@ namespace Greet {
 				OnMouseExit();
 			m_mouseInside = false;
 		}
-
-		for (uint i = 0;i < m_children.size();i++)
+		if (m_mouseInside)
 		{
-			GUI* gui = m_children[i];
-			gui->OnMoved(event, TranslateMouse(relativeMousePos, gui));
+			for (uint i = 0;i < m_children.size();i++)
+			{
+				GUI* gui = m_children[i];
+				gui->OnMoved(event, TranslateMouse(relativeMousePos, gui));
+			}
 		}
 		return m_mouseInside;
 	}
@@ -192,12 +198,16 @@ namespace Greet {
 
 	bool GUI::IsInside(const Vec2& position) const
 	{
-		return position.x >= 0 && position.x < m_size.x && position.y >= 0 && position.y < m_size.y;
-//		return MOUSE_INSIDE_GUI(position, m_size.x, m_size.y);
+		return IsInside(Vec2(0, 0), m_size, position);
 	}
 
 	Vec2 GUI::TranslateMouse(const Vec2& mousePos, GUI* target) const
 	{	
 		return mousePos - target->m_position - Vec2(m_margin.left, m_margin.top);
+	}
+
+	bool GUI::IsInside(const Vec2& pos1, const Vec2& pos2, const Vec2 mouse)
+	{
+		return mouse.x >= pos1.x && mouse.x < pos2.x && mouse.y >= pos1.y && mouse.y < pos2.y;
 	}
 }

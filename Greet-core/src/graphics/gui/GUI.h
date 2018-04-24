@@ -85,5 +85,7 @@ namespace Greet{
 			inline const Vec2& GetSize() const { return m_size;}
 			inline const Vec4& GetBackgroundColor() const {return m_backgroundColor;}
 			inline bool IsRenderBackground() const { return m_renderBackground;}
+
+			static bool IsInside(const Vec2& pos, const Vec2& size, const Vec2 mouse);
 	};
 }

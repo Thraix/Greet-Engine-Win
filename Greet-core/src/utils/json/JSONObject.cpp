@@ -72,6 +72,17 @@ namespace Greet {
 		return it->second;
 	}
 
+	uint JSONObject::GetValueAsUint(const std::string& key) const
+	{
+		auto it = m_values.find(key);
+		if (it == m_values.end())
+		{
+			Log::Error("Key does not exist in JSONObject: ", key);
+			return 0.0f;
+		}
+		return std::stoul(it->second.c_str());
+	}
+
 	float JSONObject::GetValueAsFloat(const std::string& key) const
 	{
 		auto it = m_values.find(key);

@@ -8,11 +8,16 @@
 using namespace Greet;
 namespace vmc 
 {
-	class Core : public App, public KeyListener, public MouseListener
+	class Core : public App, public KeyListener, public MouseListener, public OnClickListener
 	{
 	private:
 		Layer* uilayer;
 		Renderable2D* cursor;
+		GUILayer* guilayer;
+		Button* saveButton;
+		Button* loadButton;
+		Button* exportButton;
+		TextBox* fileNameBox;
 
 		Grid* grid;
 
@@ -32,14 +37,34 @@ namespace vmc
 			// Load Textures and Fonts.
 			TextureManager::Add(new Texture2D("res/textures/cursor.png", "cursor"));
 			TextureManager::Add(new Texture2D("res/textures/mask.png", "mask"));
+			TextureManager::Add(new Texture2D("res/textures/guimask.png", "guimask"));
 			TextureManager::Add(new CubeMap("res/textures/skybox.png", "skybox"));
 			FontManager::Add(new FontContainer("Anonymous Pro.ttf", "anonymous"));
 
-			grid = new Grid();
 			cursor = new Renderable2D(Vec2(0, 0), Vec2(32, 32), 0xffffffff, new Sprite(TextureManager::Get2D("cursor")), new Sprite(TextureManager::Get2D("mask")));
 			uilayer = new Layer(new BatchRenderer(), ShaderFactory::DefaultShader(), Mat3::Orthographic(0.0f, (float)Window::GetWidth(), 0.0f, (float)Window::GetHeight()));
 			uilayer->Add(cursor);
+			guilayer = new GUILayer(new GUIRenderer(), Shader::FromFile("res/shaders/gui.shader"));
+			ColorPicker* colorPicker = new ColorPicker(Vec2(0, 0), 200, 16, 20);
+			fileNameBox = new TextBox(Vec2(0, 210), Vec2(200, 30), false);
+			saveButton = new Button(Vec2(0, 250), Vec2(200, 30), "Save file");
+			saveButton->AddOnClickListener(this);
+			loadButton = new Button(Vec2(0, 290), Vec2(200, 30), "Load file");
+			loadButton->AddOnClickListener(this);
+			exportButton = new Button(Vec2(0, 330), Vec2(200, 30), "Export file");
+			exportButton->AddOnClickListener(this);
+			Frame* frame = new Frame(Vec2(0, 0), Vec2(0, 0), "Menu");
+			fileNameBox->SetText("test.vox");
+			frame->Add(colorPicker);
+			frame->Add(fileNameBox);
+			frame->Add(saveButton);
+			frame->Add(loadButton);
+			frame->Add(exportButton);
+			frame->Pack();
 
+			guilayer->Add(frame);
+
+			grid = new Grid(colorPicker);
 			RenderEngine::AddLayer2d(uilayer, "uilayer");
 		}
 
@@ -52,6 +77,7 @@ namespace vmc
 		void Update(float elapsedTime) override
 		{
 			grid->Update(elapsedTime);
+			guilayer->Update(elapsedTime);
 		}
 
 		bool OnPressed(const KeyPressedEvent& e) override
@@ -89,6 +115,7 @@ namespace vmc
 		void Render() override
 		{
 			grid->Render();
+			guilayer->Render();
 		}
 
 		void WindowResize(int width, int height) override
@@ -99,6 +126,28 @@ namespace vmc
 		void JoystickState(uint joy, bool connected) override
 		{
 
+		}
+
+		void OnClick(GUI* gui)
+		{
+			if (gui == saveButton)
+			{
+				Log::Info("Saving...");
+				grid->SaveModel(fileNameBox->GetText());
+				Log::Info("Done!");
+			}
+			else if (gui == loadButton)
+			{
+				Log::Info("Loading...");
+				grid->LoadModel(fileNameBox->GetText());
+				Log::Info("Done!");
+			}
+			else if(gui == exportButton)
+			{
+				Log::Info("Exporting...");
+				grid->ExportModel(fileNameBox->GetText());
+				Log::Info("Done!");
+			}
 		}
 	};
 }

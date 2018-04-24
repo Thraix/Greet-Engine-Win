@@ -14,10 +14,10 @@ namespace Greet {
 			return JSONObject();
 		}
 		while (IsIndent(file, currentPos));
-		if (currentPos != file.size())
+		//if (currentPos != file.size())
 		{
-			Log::Info("JSONObject ended but there is more in the file.");
-			return JSONObject();
+			//Log::Info("JSONObject ended but there is more in the file.");
+			//return JSONObject();
 		}
 		return obj;
 	}

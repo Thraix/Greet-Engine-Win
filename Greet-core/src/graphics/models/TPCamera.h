@@ -28,6 +28,10 @@ namespace Greet {
 		float m_distance;
 		float m_height;
 		float m_rotation;
+
+		Vec3 m_positionWanted;
+		float m_distanceWanted;
+		float m_heightWanted;
 		float m_rotationWanted;
 
 		// Calculated information
@@ -52,6 +56,11 @@ namespace Greet {
 		float GetHeight() const { return m_height; }
 		float GetRotation() const { return m_rotation; }
 		float GetDistance() const { return m_distance; }
+		float GetMinDistance() const { return m_distanceMin; }
+		float GetMaxDistance() const { return m_distanceMax; }
+		float GetMinHeight() const { return m_heightMin; }
+		float GetMaxHeight() const { return m_heightMax; }
+
 
 		void SetPosition(Vec3 pos);
 		void SetHeight(float height);

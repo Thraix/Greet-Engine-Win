@@ -27,11 +27,25 @@
     <ClCompile Include="src\tools\PlaceTool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ModelExport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GridRenderer3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\ColorTool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\skybox.shader" />
     <None Include="res\shaders\simple.shader" />
     <None Include="res\shaders\voxel.shader" />
+    <None Include="res\shaders\gui.shader" />
+    <None Include="src\ModelExport.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Grid.h">
@@ -53,6 +67,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\tools\ToolBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\ColorTool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
