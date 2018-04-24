@@ -33,21 +33,21 @@ namespace vmc
 		{
 			if (toolBox.OnLeftClick())
 				return true;
+			renderAxis = true;
 		}
 		if (e.GetButton() == GLFW_MOUSE_BUTTON_2)
 		{
 			if (toolBox.OnRightClick())
 				return true;
+			renderAxis = true;
 		}
-
-		renderAxis = true;
 
 		return false;
 	}
 
 	bool Grid::OnReleased(const MouseReleasedEvent& e)
 	{
-		if (e.GetButton() == GLFW_MOUSE_BUTTON_1)
+		if (e.GetButton() == GLFW_MOUSE_BUTTON_1 || e.GetButton() == GLFW_MOUSE_BUTTON_2)
 		{
 			renderAxis = false;
 		}
