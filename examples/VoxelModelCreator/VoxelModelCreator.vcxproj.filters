@@ -36,6 +36,9 @@
     <ClCompile Include="src\GridRenderer3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\tools\ColorTool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\skybox.shader" />
@@ -64,6 +67,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\tools\ToolBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\ColorTool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -79,8 +79,14 @@ namespace Greet
 	
 	void ColorPicker::SetColor(const Vec4& hsvColor)
 	{
+		Log::Info(hsvColor);
 		m_hueSlider->SetValue(hsvColor.x);
 		m_cursorPos = Vec2(hsvColor.z, 1.0 - hsvColor.y) * (m_pickerSize - 1);
+	}
+
+	void ColorPicker::SetColorAsRGB(const Vec4& rgbColor)
+	{
+		SetColor(ColorUtils::RGBtoHSV(rgbColor));
 	}
 
 	Vec4 ColorPicker::GetColor() const

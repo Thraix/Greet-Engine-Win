@@ -61,15 +61,15 @@ namespace Greet { namespace ColorUtils {
 		}
 		else if (cmax == r)
 		{
-			return Vec4((g - b) / delta, s, cmax, a);
+			return Vec4((g - b) / delta*0.16667, s, cmax, a);
 		}
 		else if (cmax == g)
 		{
-			return Vec4((b - r) / delta + 2, s, cmax, a);
+			return Vec4(((b - r) / delta + 2) * 0.16667, s, cmax, a);
 		}
 		else // if (cmax == b)
 		{
-			return Vec4((r - g) / delta + 4, s, cmax, a);
+			return Vec4(((r - g) / delta + 4) * 0.16667, s, cmax, a);
 		}
 	}
 

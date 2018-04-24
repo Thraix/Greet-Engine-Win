@@ -63,6 +63,7 @@ namespace Greet
 		GUI* OnReleased(const MouseReleasedEvent& event, Vec2 relativeMousePos) override;
 		bool OnMoved(const MouseMovedEvent& event, Vec2 relativeMousePos) override;
 		void SetColor(const Vec4& hsvColor);
+		void SetColorAsRGB(const Vec4& rgbColor);
 		Vec4 GetColor() const;
 		void Submit(GUIRenderer* renderer) const override;
 	};

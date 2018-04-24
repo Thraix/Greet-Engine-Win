@@ -24,6 +24,10 @@ namespace vmc
 	{
 		if (e.GetButton() == GLFW_KEY_F5)
 			renderer.UpdateShader();
+		if (e.GetButton() == GLFW_KEY_L)
+			toolBox.NextTool();
+		if (e.GetButton() == GLFW_KEY_H)
+			toolBox.PreviousTool();
 		return false;
 	}
 
@@ -67,12 +71,13 @@ namespace vmc
 		hasAdjacent = false;
 		for (auto it = m_ray.begin(); it != m_ray.end(); ++it)
 		{
-			if (m_grid.count(*it))
+			auto cube = m_gridVisible.find(*it);
+			if (cube != m_gridVisible.end())
 			{
 				hasAdjacent = (*it != *lastIt);
 				hasSelected = true;
 
-				selected = *it;
+				selected = *cube;
 				adjacent = *lastIt;
 				break;
 			}
@@ -119,6 +124,8 @@ namespace vmc
 
 	void Grid::Remove(const Cube& cube)
 	{
+		if (m_grid.size() == 1)
+			return;
 		m_grid.erase(cube);
 		m_gridVisible.erase(cube);
 		auto c = m_grid.find(Cube::Hash(cube.x - 1, cube.y, cube.z));

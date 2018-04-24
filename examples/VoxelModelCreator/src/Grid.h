@@ -57,6 +57,7 @@ namespace vmc {
 		uint GetColor() const { return m_color; }
 		void SetColor(uint color) { m_color = color; }
 		GridRenderer3D* GetRenderer() { return &renderer; }
+		Greet::ColorPicker* GetColorPicker() const { return m_colorPicker; };
 
 		bool HasAdjacent() const { return hasAdjacent; }
 		bool HasSelected() const { return hasSelected; }
