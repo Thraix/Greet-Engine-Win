@@ -83,15 +83,17 @@ namespace vmc
 	void Grid::Render()
 	{
 		renderer.Begin();
-
+		glLineWidth(2.0f);
+		renderer.DrawLineCube(Vec3(-0.5f, -0.5f, -0.5f), Vec3(GRID_SIZE + 1, GRID_SIZE + 1, GRID_SIZE + 1), Vec4(0, 0, 0, 1));
 		GLCall(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
-		renderer.DrawCube(Vec3(-0.5f, -0.5f, -0.5f), Vec3(GRID_SIZE +1, GRID_SIZE + 1, GRID_SIZE + 1), 0xff000000, false);
 		if (hasSelected)
 		{
 			float outline = 0.01f;
-			renderer.DrawCube(selected.GetPosition() - outline, Vec3(1.0f, 1.0f, 1.0f) + outline * 2, 0xff000000, true);
+			renderer.DrawLineCube(selected.GetPosition() - outline, Vec3(1, 1, 1) + outline*2, Vec4(0,0,0,1));
+			//renderer.DrawCube(selected.GetPosition() - outline, Vec3(1.0f, 1.0f, 1.0f) + outline * 2, 0xff000000, true);
 		}
 		GLCall(glPolygonMode(GL_FRONT_AND_BACK, GL_FILL));
+		glLineWidth(1.0f);
 
 		for (auto it = m_gridVisible.begin(); it != m_gridVisible.end(); ++it)
 		{

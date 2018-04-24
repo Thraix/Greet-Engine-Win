@@ -2,38 +2,40 @@
 
 namespace vmc
 {
-	GridRenderer3D::GridRenderer3D(uint w, uint h, Greet::Camera* cam, float fov, float near, float far, Greet::Skybox* skybox)
-		: Greet::Renderer3D(w, h, cam, fov, near, far, skybox)
+	using namespace Greet;
+
+	GridRenderer3D::GridRenderer3D(uint w, uint h, Camera* cam, float fov, float near, float far, Skybox* skybox)
+		: Renderer3D(w, h, cam, fov, near, far, skybox)
 	{
-		meshdata = Greet::MeshFactory::Cube2(0.5f, 0.5f, 0.5f, 1, 1, 1);
-		Greet::Vec2* texCoords = new Greet::Vec2[6 * 4];
+		meshdata = MeshFactory::Cube2(0.5f, 0.5f, 0.5f, 1, 1, 1);
+		Vec2* texCoords = new Vec2[6 * 4];
 		for (int i = 0;i < 6;i++)
 		{
-			texCoords[i * 4 + 0] = Greet::Vec2(0, 0);
-			texCoords[i * 4 + 1] = Greet::Vec2(1, 0);
-			texCoords[i * 4 + 2] = Greet::Vec2(1, 1);
-			texCoords[i * 4 + 3] = Greet::Vec2(0, 1);
+			texCoords[i * 4 + 0] = Vec2(0, 0);
+			texCoords[i * 4 + 1] = Vec2(1, 0);
+			texCoords[i * 4 + 2] = Vec2(1, 1);
+			texCoords[i * 4 + 3] = Vec2(0, 1);
 		}
 
-		meshdata->AddAttribute(new Greet::AttributeData(Greet::ATTRIBUTE_TEXCOORD, (float*)texCoords));
-		mesh = new Greet::Mesh(meshdata);
-		material = new Greet::Material(Greet::Shader::FromFile("res/shaders/voxel.shader"), NULL);
+		meshdata->AddAttribute(new AttributeData(ATTRIBUTE_TEXCOORD, (float*)texCoords));
+		mesh = new Mesh(meshdata);
+		material = new Material(Shader::FromFile("res/shaders/voxel.shader"), NULL);
 		//material->AddUniform<uint>(Uniform1ui("color"));
-		mmodel = new Greet::MaterialModel(mesh, *material);
-		emodel = new Greet::EntityModel(*mmodel, 0, 0, 0, 1, 1, 1, 0, 0, 0);
+		mmodel = new MaterialModel(mesh, *material);
+		emodel = new EntityModel(*mmodel, 0, 0, 0, 1, 1, 1, 0, 0, 0);
 
 
 		// For drawing lines...
-		lineShader = Greet::Shader::FromFile("res/shaders/simple.shader");
+		lineShader = Shader::FromFile("res/shaders/simple.shader");
 		GLCall(glGenVertexArrays(1, &m_vao));
 		GLCall(glGenBuffers(1, &m_vbo));
 
 		GLCall(glBindVertexArray(m_vao));
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_vbo));
 
-		GLCall(glBufferData(GL_ARRAY_BUFFER, 2 * sizeof(Greet::Vec3), NULL, GL_DYNAMIC_DRAW));
+		GLCall(glBufferData(GL_ARRAY_BUFFER, 2 * sizeof(Vec3), NULL, GL_DYNAMIC_DRAW));
 		GLCall(glEnableVertexAttribArray(0));
-		GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Greet::Vec3), 0));
+		GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), 0));
 
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
 
@@ -43,7 +45,7 @@ namespace vmc
 	}
 	void GridRenderer3D::UpdateShader()
 	{
-		material->SetShader(Greet::Shader::FromFile("res/shaders/voxel.shader"));
+		material->SetShader(Shader::FromFile("res/shaders/voxel.shader"));
 	}
 
 	void GridRenderer3D::Begin()
@@ -52,13 +54,13 @@ namespace vmc
 		glLineWidth(1.0f);
 	}
 
-	void GridRenderer3D::DrawCube(const Greet::Vec3& pos, const Greet::Vec3& size, uint color, bool culling)
+	void GridRenderer3D::DrawCube(const Vec3& pos, const Vec3& size, uint color, bool culling)
 	{
 		material->SetColor(color);
 		mesh->SetEnableCulling(false);
 		emodel->SetScale(size);
 		emodel->SetPosition(pos);
-		emodel->SetRotation(Greet::Vec3(0, 0, 0));
+		emodel->SetRotation(Vec3(0, 0, 0));
 		emodel->UpdateTransformation();
 		Render(*emodel);
 	}
@@ -68,16 +70,33 @@ namespace vmc
 		//material->GetUniform<uint>("color").SetValue(cube.color);
 		material->SetColor(cube.color);
 		mesh->SetEnableCulling(true);
-		emodel->SetScale(Greet::Vec3(1, 1, 1));
+		emodel->SetScale(Vec3(1, 1, 1));
 		emodel->SetPosition(cube.GetPosition());
-		emodel->SetRotation(Greet::Vec3(0, 0, 0));
+		emodel->SetRotation(Vec3(0, 0, 0));
 		emodel->UpdateTransformation();
 		Render(*emodel);
 	}
 
-	void GridRenderer3D::DrawLine(const Greet::Vec3& start, const Greet::Vec3& end, const Greet::Vec4& color)
+	void GridRenderer3D::DrawLineCube(const Vec3& pos, const Vec3& size, const Vec4& color)
 	{
-		using namespace Greet;
+		DrawLine(Vec3(pos.x, pos.y, pos.z), Vec3(pos.x + size.x, pos.y, pos.z), color);
+		DrawLine(Vec3(pos.x, pos.y + size.y, pos.z), Vec3(pos.x + size.x, pos.y + size.y, pos.z), color);
+		DrawLine(Vec3(pos.x, pos.y + size.y, pos.z + size.z), Vec3(pos.x + size.x, pos.y + size.y, pos.z + size.z), color);
+		DrawLine(Vec3(pos.x, pos.y, pos.z + size.z), Vec3(pos.x + size.x, pos.y, pos.z + size.z), color);
+
+		DrawLine(Vec3(pos.x, pos.y, pos.z), Vec3(pos.x, pos.y+size.y, pos.z), color);
+		DrawLine(Vec3(pos.x + size.x, pos.y, pos.z), Vec3(pos.x + size.x, pos.y + size.y, pos.z), color);
+		DrawLine(Vec3(pos.x + size.x, pos.y, pos.z + size.z), Vec3(pos.x + size.x, pos.y + size.y, pos.z + size.z), color);
+		DrawLine(Vec3(pos.x, pos.y, pos.z + size.z), Vec3(pos.x, pos.y + size.y, pos.z + size.z), color);
+
+		DrawLine(Vec3(pos.x, pos.y, pos.z), Vec3(pos.x, pos.y, pos.z+size.z), color);
+		DrawLine(Vec3(pos.x, pos.y + size.y, pos.z), Vec3(pos.x, pos.y + size.y, pos.z+size.z), color);
+		DrawLine(Vec3(pos.x + size.x, pos.y + size.y, pos.z), Vec3(pos.x + size.x, pos.y + size.y, pos.z + size.z), color);
+		DrawLine(Vec3(pos.x + size.x, pos.y, pos.z), Vec3(pos.x + size.x, pos.y, pos.z + size.z), color);
+	}
+
+	void GridRenderer3D::DrawLine(const Vec3& start, const Vec3& end, const Vec4& color)
+	{
 		lineShader->Enable();
 		lineShader->SetUniformMat4("projectionMatrix", GetProjectionMatrix());
 		lineShader->SetUniformMat4("viewMatrix", GetCamera().GetViewMatrix());

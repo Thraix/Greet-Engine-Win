@@ -31,6 +31,7 @@ namespace vmc
 		void Begin();
 		void DrawCube(const Greet::Vec3& pos, const Greet::Vec3& size, uint color, bool culling);
 		void Submit(const Cube& cube);
+		void DrawLineCube(const Greet::Vec3& pos, const Greet::Vec3& size, const Greet::Vec4& color);
 		void DrawLine(const Greet::Vec3& start, const Greet::Vec3& end, const Greet::Vec4& color);
 	};
 }
