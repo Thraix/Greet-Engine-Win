@@ -56,10 +56,53 @@ namespace vmc
 
 			// Calculate the squares.
 
+
 			ResetMaps(&colorMapsPos, &buffers);
 			ResetMaps(&colorMapsNeg, &buffers);
 		}
 	}
+
+	void ModelExport::FindAllSquares(bool* pixels, uint width, uint height, std::deque<Square>* squares)
+	{
+		uint* heightBuffer = new uint[width];
+		uint pixelCount = 0;
+
+		while (pixelCount > 0)
+		{
+			Square square = FindBiggestSquare(pixels,width,height, heightBuffer);
+			pixelCount -= (square.p2 - square.p2).x * (square.p2 - square.p2).y; // Area of the square
+			squares->push_back(square);
+		}
+
+		delete heightBuffer;
+	}
+
+	Square ModelExport::FindBiggestSquare(bool* buffer, uint width, uint height, uint* histogram)
+	{
+		// Set the height of the "graphs"
+		for (int x = 0; x < width; x++)
+		{
+			uint y = 0;
+			while (buffer[x+y*width] && y <= height)
+			{
+				histogram[x]++;
+				y++;
+			}
+		}
+		for (int y = 0;y < height;y++)
+		{
+			for (int x = 0; x < width; x++)
+			{
+				uint area = histogram[x];
+				for (int x2 = x + 1;x2 < width;x2++)
+				{
+					
+				}
+			}
+		}
+		return Square();
+	}
+
 
 	void ModelExport::AddCubeSideToMap(uint p1, uint p2, uint color, uint min1, uint min2, uint diff1, uint diff2, std::unordered_map<uint, bool*>* colorMaps, std::deque<bool*>* buffers)
 	{

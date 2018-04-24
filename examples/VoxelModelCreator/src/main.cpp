@@ -38,6 +38,7 @@ namespace vmc
 			TextureManager::Add(new Texture2D("res/textures/cursor.png", "cursor"));
 			TextureManager::Add(new Texture2D("res/textures/mask.png", "mask"));
 			TextureManager::Add(new Texture2D("res/textures/guimask.png", "guimask"));
+			TextureManager::Add(new Texture2D("res/textures/cubeoutlinemask.png", "cubemask"));
 			TextureManager::Add(new CubeMap("res/textures/skybox.png", "skybox"));
 			FontManager::Add(new FontContainer("Anonymous Pro.ttf", "anonymous"));
 
@@ -51,7 +52,7 @@ namespace vmc
 			saveButton->AddOnClickListener(this);
 			loadButton = new Button(Vec2(0, 290), Vec2(200, 30), "Load file");
 			loadButton->AddOnClickListener(this);
-			exportButton = new Button(Vec2(0, 330), Vec2(200, 30), "Load file");
+			exportButton = new Button(Vec2(0, 330), Vec2(200, 30), "Export file");
 			exportButton->AddOnClickListener(this);
 			Frame* frame = new Frame(Vec2(0, 0), Vec2(0, 0), "Menu");
 			fileNameBox->SetText("test.vox");

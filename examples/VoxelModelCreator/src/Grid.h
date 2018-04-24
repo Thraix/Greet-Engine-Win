@@ -20,6 +20,7 @@ namespace vmc {
 		GridRenderer3D renderer;
 		Greet::ColorPicker* m_colorPicker;
 		std::set<Cube, CubeCompare> m_grid;
+		std::set<Cube, CubeCompare> m_gridVisible;
 		std::vector<Cube> m_ray;
 		uint m_color;
 
@@ -48,6 +49,9 @@ namespace vmc {
 		void Remove(const Cube& cube);
 		void Add(uint x, uint y, uint z, uint color);
 		void Add(Cube cube, bool setColor=false);
+		void CheckSurroundingCubes(const Cube& cube);
+		bool CubeVisible(uint x, uint y, uint z);
+		bool CubeVisible(const Cube& cube);
 
 
 		uint GetColor() const { return m_color; }

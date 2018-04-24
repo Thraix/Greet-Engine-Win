@@ -90,6 +90,7 @@
   <ItemGroup>
     <ClCompile Include="src\Cube.cpp" />
     <ClCompile Include="src\Grid.cpp" />
+    <ClCompile Include="src\GridRenderer3D.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ModelExport.cpp" />
     <ClCompile Include="src\Ray.cpp" />

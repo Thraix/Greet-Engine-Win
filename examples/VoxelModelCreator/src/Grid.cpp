@@ -22,6 +22,8 @@ namespace vmc
 
 	bool Grid::OnPressed(const KeyPressedEvent& e)
 	{
+		if (e.GetButton() == GLFW_KEY_F5)
+			renderer.UpdateShader();
 		return false;
 	}
 
@@ -91,7 +93,7 @@ namespace vmc
 		}
 		GLCall(glPolygonMode(GL_FRONT_AND_BACK, GL_FILL));
 
-		for (auto it = m_grid.begin(); it != m_grid.end(); ++it)
+		for (auto it = m_gridVisible.begin(); it != m_gridVisible.end(); ++it)
 		{
 			renderer.Submit(*it);
 		}
@@ -100,9 +102,10 @@ namespace vmc
 		{
 			const TPCamera& cam = (const TPCamera&)renderer.GetCamera();
 			Vec3 pos = cam.GetPosition();
-			renderer.DrawLine(pos, pos + Vec3(10, 0, 0), Vec4(1, 0, 0, 1));
-			renderer.DrawLine(pos, pos + Vec3(0, 10, 0), Vec4(0, 1, 0, 1));
-			renderer.DrawLine(pos, pos + Vec3(0, 0, 10), Vec4(0, 0, 1, 1));
+			float length = cam.GetDistance() * 0.6;
+			renderer.DrawLine(pos, pos + Vec3(length, 0, 0), Vec4(1, 0, 0, 1));
+			renderer.DrawLine(pos, pos + Vec3(0, length, 0), Vec4(0, 1, 0, 1));
+			renderer.DrawLine(pos, pos + Vec3(0, 0, length), Vec4(0, 0, 1, 1));
 		}
 		renderer.End();
 	}
@@ -115,6 +118,25 @@ namespace vmc
 	void Grid::Remove(const Cube& cube)
 	{
 		m_grid.erase(cube);
+		m_gridVisible.erase(cube);
+		auto c = m_grid.find(Cube::Hash(cube.x - 1, cube.y, cube.z));
+		if (c != m_grid.end())
+			m_gridVisible.emplace(*c);
+		c = m_grid.find(Cube::Hash(cube.x + 1, cube.y, cube.z));
+		if (c != m_grid.end())
+			m_gridVisible.emplace(*c);
+		c = m_grid.find(Cube::Hash(cube.x, cube.y-1, cube.z));
+		if (c != m_grid.end())
+			m_gridVisible.emplace(*c);
+		c = m_grid.find(Cube::Hash(cube.x, cube.y+1, cube.z));
+		if (c != m_grid.end())
+			m_gridVisible.emplace(*c);
+		c = m_grid.find(Cube::Hash(cube.x, cube.y, cube.z-1));
+		if (c != m_grid.end())
+			m_gridVisible.emplace(*c);
+		c = m_grid.find(Cube::Hash(cube.x, cube.y, cube.z+1));
+		if (c != m_grid.end())
+			m_gridVisible.emplace(*c);
 	}
 
 	void Grid::Add(uint x, uint y, uint z, uint color)
@@ -132,6 +154,47 @@ namespace vmc
 		if(setColor)
 			cube.color = ColorUtils::Vec4ToColorHex(ColorUtils::HSVtoRGB(m_colorPicker->GetColor()));
 		m_grid.emplace(cube);
+		m_gridVisible.emplace(cube);
+
+		CheckSurroundingCubes(cube);
+	}
+
+	void Grid::CheckSurroundingCubes(const Cube& cube)
+	{
+		if (!CubeVisible(cube.x - 1, cube.y, cube.z))
+			m_gridVisible.erase(Cube(cube.x - 1, cube.y, cube.z));
+		if (!CubeVisible(cube.x + 1, cube.y, cube.z))
+			m_gridVisible.erase(Cube(cube.x + 1, cube.y, cube.z));
+		if (!CubeVisible(cube.x, cube.y - 1, cube.z))
+			m_gridVisible.erase(Cube(cube.x, cube.y - 1, cube.z));
+		if (!CubeVisible(cube.x, cube.y + 1, cube.z))
+			m_gridVisible.erase(Cube(cube.x, cube.y + 1, cube.z));
+		if (!CubeVisible(cube.x, cube.y, cube.z - 1))
+			m_gridVisible.erase(Cube(cube.x, cube.y, cube.z - 1));
+		if (!CubeVisible(cube.x, cube.y, cube.z + 1))
+			m_gridVisible.erase(Cube(cube.x, cube.y, cube.z + 1));
+	}
+
+	bool Grid::CubeVisible(uint x, uint y, uint z)
+	{
+		if (m_grid.count(Cube::Hash(x - 1, y, z)) == 0)
+			return true;
+		if (m_grid.count(Cube::Hash(x + 1, y, z)) == 0)
+			return true;
+		if (m_grid.count(Cube::Hash(x, y - 1, z)) == 0)
+			return true;
+		if (m_grid.count(Cube::Hash(x, y + 1, z)) == 0)
+			return true;
+		if (m_grid.count(Cube::Hash(x, y, z - 1)) == 0)
+			return true;
+		if (m_grid.count(Cube::Hash(x, y, z + 1)) == 0)
+			return true;
+		return false;
+	}
+
+	bool Grid::CubeVisible(const Cube& cube)
+	{
+		return CubeVisible(cube.x, cube.y, cube.z);
 	}
 
 	void Grid::SaveModel(const std::string& filename)
@@ -157,6 +220,7 @@ namespace vmc
 	void Grid::LoadModel(const std::string& filename)
 	{
 		m_grid.clear();
+		m_gridVisible.clear();
 		JSONObject obj = JSONLoader::LoadJSON(filename);
 		JSONArray cubes = obj.GetArray("cubes");
 		for (uint i = 0;i < cubes.Size(); ++i)
