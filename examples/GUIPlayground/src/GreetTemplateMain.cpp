@@ -30,29 +30,24 @@ public:
 
 	}
 
-	bool OnPressed(const KeyPressedEvent& e) override
+	void OnPressed(const KeyPressedEvent& e) override
 	{
-		return false;
 	}
 
-	bool OnReleased(const KeyReleasedEvent& e)  override
+	void OnReleased(const KeyReleasedEvent& e)  override
 	{
-		return false;
 	}
 
-	bool OnTyped(const KeyTypedEvent& e) override
+	void OnTyped(const KeyTypedEvent& e) override
 	{
-		return false;
 	}
 
-	bool OnMoved(const MouseMovedEvent& e) override
+	void OnMoved(const MouseMovedEvent& e) override
 	{
-		return false;
 	}
 
-	bool OnScroll(const MouseScrollEvent& e) override
+	void OnScroll(const MouseScrollEvent& e) override
 	{
-		return false;
 	}
 
 	void Render() override

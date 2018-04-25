@@ -7,20 +7,20 @@ byte Container::RESIZING_RIGHT = BIT(1);
 byte Container::RESIZING_TOP = BIT(2);
 byte Container::RESIZING_BOTTOM = BIT(3);
 
+Container::Container()
+	: leftMargin(10), rightMargin(10), topMargin(10), bottomMargin(10)
+{
+
+}
+
 void Container::Render(GUIRenderer* renderer) const
 {
-	for (auto it = m_contents.begin(); it != m_contents.end(); ++it)
-	{
-		(*it)->Render(renderer);
-	}
+	content->Render(renderer, pos+Vec2(leftMargin,topMargin));
 }
 
 void Container::Update(float timeElapsed)
 {
-	for (auto it = m_contents.begin(); it != m_contents.end(); ++it)
-	{
-		(*it)->Update(timeElapsed);
-	}
+	content->Update(timeElapsed);
 }
 	 
 bool Container::OnPressed(const MousePressedEvent& event)
@@ -34,11 +34,21 @@ bool Container::OnPressed(const MousePressedEvent& event)
 				return true;
 		}
 
-		float yPos = 0;
-		for (auto it = m_contents.rbegin(); it != m_contents.rend(); ++it)
+		if (AABBUtils::PointInsideBox(event.GetPosition(), pos + Vec2(leftMargin, topMargin), size - Vec2(leftMargin + rightMargin, topMargin + bottomMargin)))
 		{
-			yPos += 40 + 10; // 40 Height + 10 margin
-			(*it)->OnPressed(event, Vec2(0,yPos));
+			if (content->OnPressed(event, Vec2(leftMargin, topMargin)) && !hasFocusedContent)
+			{
+				content->OnFocused();
+				hasFocusedContent = true;
+			}
+		}
+		else
+		{
+			if (hasFocusedContent)
+			{
+				content->OnUnfocused();
+				hasFocusedContent = false;
+			}
 		}
 
 		return true;
@@ -52,13 +62,8 @@ void Container::OnReleased(const MouseReleasedEvent& event)
 	{
 		m_resizing = false;
 	}
-
-	float yPos = 0;
-	for (auto it = m_contents.rbegin(); it != m_contents.rend(); ++it)
-	{
-		yPos += 40 + 10; // 40 Height + 10 margin
-		(*it)->OnReleased(event, Vec2(0, yPos));
-	}
+	if(hasFocusedContent)
+		content->OnReleased(event, Vec2(leftMargin, topMargin));
 }
 
 void Container::OnMoved(const MouseMovedEvent& event)
@@ -67,39 +72,32 @@ void Container::OnMoved(const MouseMovedEvent& event)
 	{
 		Resize(event.GetPosition());
 	}
-
-	float yPos = 0;
-	for (auto it = m_contents.rbegin(); it != m_contents.rend(); ++it)
-	{
-		yPos += 40 + 10; // 40 Height + 10 margin
-		(*it)->OnMoved(event, Vec2(0, yPos));
-	}
+	if (hasFocusedContent)
+		content->OnMoved(event, Vec2(leftMargin, topMargin));
 }
 
-bool Container::OnPressed(const KeyPressedEvent& event)
+void Container::OnPressed(const KeyPressedEvent& event)
 {
-	for (auto it = m_contents.rbegin(); it != m_contents.rend(); ++it)
-	{
-		(*it)->OnPressed(event);
-	}
+	if (hasFocusedContent)
+		content->OnPressed(event);
 }
 
-bool Container::OnReleased(const KeyReleasedEvent& event)
+void Container::OnReleased(const KeyReleasedEvent& event)
 {
-	for (auto it = m_contents.rbegin(); it != m_contents.rend(); ++it)
-	{
-		(*it)->OnReleased(event);
-	}
+	if (hasFocusedContent)
+		content->OnReleased(event);
 }
 	 
 void Container::OnFocused()
 {
-	
+	// Change the title to be more light, see other windows applications
 }
 
 void Container::OnUnfocused()
 {
-
+	if (hasFocusedContent)
+		content->OnUnfocused();
+	// Change the title to be more dark, see other windows applications
 }
 
 void Container::CheckResize(const Vec2& mousePos)

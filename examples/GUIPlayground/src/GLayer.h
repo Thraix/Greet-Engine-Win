@@ -9,7 +9,7 @@ class GLayer : public Greet::MouseListener, public Greet::KeyListener
 {
 private:
 	static std::map<std::string, Container*> containers;
-	static GLayer instance;
+	static GLayer* instance;
 	Container* focused;
 
 private:
@@ -19,8 +19,8 @@ public:
 	bool OnPressed(const Greet::MousePressedEvent& event) override;
 	void OnReleased(const Greet::MouseReleasedEvent& event) override;
 	void OnMoved(const Greet::MouseMovedEvent& event) override;
-	bool OnPressed(const Greet::KeyPressedEvent& event) override;
-	bool OnReleased(const Greet::KeyReleasedEvent& event) override;
+	void OnPressed(const Greet::KeyPressedEvent& event) override;
+	void OnReleased(const Greet::KeyReleasedEvent& event) override;
 
 
 	static void CreateInstance();

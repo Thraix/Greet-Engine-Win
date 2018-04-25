@@ -1,7 +1,7 @@
 #include "GLayer.h"
 
 std::map<std::string, Container*> GLayer::containers;
-GLayer GLayer::instance;
+GLayer* GLayer::instance;
 
 using namespace Greet;
 
@@ -14,12 +14,6 @@ GLayer::GLayer()
 
 bool GLayer::OnPressed(const Greet::MousePressedEvent& event)
 {
-	if (focused != NULL)
-	{
-		focused->OnFocused();
-		focused = NULL;
-	}
-
 	for (auto it = containers.rbegin(); it != containers.rend(); ++it)
 	{
 		if (it->second->OnPressed(event))
@@ -27,16 +21,19 @@ bool GLayer::OnPressed(const Greet::MousePressedEvent& event)
 			if (it->second != focused)
 			{
 				focused->OnUnfocused();
+				it->second->OnFocused();
+				focused = it->second;
 			}
-			focused = it->second;
-			return;
+			return true;
 		}
 	}
+
 	if (focused != NULL)
 	{
 		focused->OnUnfocused();
 		focused = NULL;
 	}
+	return false;
 }
 
 void GLayer::OnReleased(const Greet::MouseReleasedEvent& event)
@@ -53,13 +50,13 @@ void GLayer::OnMoved(const Greet::MouseMovedEvent& event)
 	}
 }
 
-bool GLayer::OnPressed(const Greet::KeyPressedEvent& event)
+void GLayer::OnPressed(const Greet::KeyPressedEvent& event)
 {
 	if (focused != NULL)
 		focused->OnPressed(event);
 }
 
-bool GLayer::OnReleased(const Greet::KeyReleasedEvent& event)
+void GLayer::OnReleased(const Greet::KeyReleasedEvent& event)
 {
 	if (focused != NULL)
 		focused->OnReleased(event);
@@ -67,17 +64,17 @@ bool GLayer::OnReleased(const Greet::KeyReleasedEvent& event)
 
 void GLayer::CreateInstance()
 {
-	instance = GLayer();
+	instance = new GLayer();
 }
 
 const GLayer& GLayer::GetInstance()
 {
-	return instance;
+	return *instance;
 }
 
 void GLayer::DestroyInstance()
 {
-	// destroy something?
+	delete instance;
 }
 
 void GLayer::Render(GUIRenderer* renderer)

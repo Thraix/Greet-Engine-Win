@@ -68,25 +68,22 @@ namespace Greet {
 		m_shader->Disable();
 	}
 
-	bool GUILayer::OnPressed(const KeyPressedEvent& e)
+	void GUILayer::OnPressed(const KeyPressedEvent& e)
 	{
 		if(m_focusedGUI!=NULL)
-			return m_focusedGUI->OnPressed(e);
-		return false;
+			m_focusedGUI->OnPressed(e);
 	}
 
-	bool GUILayer::OnReleased(const KeyReleasedEvent& e)
+	void GUILayer::OnReleased(const KeyReleasedEvent& e)
 	{
 		if (m_focusedGUI != NULL)
-			return m_focusedGUI->OnReleased(e);
-		return false;
+			m_focusedGUI->OnReleased(e);
 	}
 
-	bool GUILayer::OnTyped(const KeyTypedEvent& e)
+	void GUILayer::OnTyped(const KeyTypedEvent& e)
 	{
 		if (m_focusedGUI != NULL)
-			return m_focusedGUI->OnTyped(e);
-		return false;
+			m_focusedGUI->OnTyped(e);
 	}
 
 	bool GUILayer::OnPressed(const MousePressedEvent& e)
@@ -118,28 +115,25 @@ namespace Greet {
 		return false;
 	}
 
-	bool GUILayer::OnReleased(const MouseReleasedEvent& e)
+	void GUILayer::OnReleased(const MouseReleasedEvent& e)
 	{
 		for (uint i = 0;i < m_guis.size();i++)
 		{
 			m_guis[i]->OnReleased(e, e.GetPosition() - m_guis[i]->m_position);
 		}
-		return false;
 	}
 
-	bool GUILayer::OnMoved(const MouseMovedEvent& e)
+	void GUILayer::OnMoved(const MouseMovedEvent& e)
 	{
 		bool moved = false;
 		for (uint i = 0;i < m_guis.size();i++)
 		{
-			moved |= m_guis[i]->OnMoved(e, e.GetPosition() - m_guis[i]->m_position);
+			m_guis[i]->OnMoved(e, e.GetPosition() - m_guis[i]->m_position);
 		}
-		return moved;
 	}
 
-	bool GUILayer::OnScroll(const MouseScrollEvent& e)
+	void GUILayer::OnScroll(const MouseScrollEvent& e)
 	{
-		return false;
 	}
 
 	void GUILayer::WindowResize(int width, int height)

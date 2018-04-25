@@ -30,13 +30,13 @@ namespace Greet {
 		void SetProjectionMatrix(Mat3 projectionMatrix);
 
 		// I/O
-		bool OnPressed(const KeyPressedEvent& e) override;
-		bool OnReleased(const KeyReleasedEvent& e) override;
-		bool OnTyped(const KeyTypedEvent& e) override;
+		void OnPressed(const KeyPressedEvent& e) override;
+		void OnReleased(const KeyReleasedEvent& e) override;
+		void OnTyped(const KeyTypedEvent& e) override;
 		bool OnPressed(const MousePressedEvent& e) override;
-		bool OnReleased(const MouseReleasedEvent& e) override;
-		bool OnMoved(const MouseMovedEvent& e) override;
-		bool OnScroll(const MouseScrollEvent& e) override;
+		void OnReleased(const MouseReleasedEvent& e) override;
+		void OnMoved(const MouseMovedEvent& e) override;
+		void OnScroll(const MouseScrollEvent& e) override;
 		void WindowResize(int width, int height) override;
 	};
 

@@ -131,6 +131,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Container.cpp" />
+    <ClCompile Include="src\Content.cpp" />
     <ClCompile Include="src\GLayer.cpp" />
     <ClCompile Include="src\GreetTemplateMain.cpp" />
   </ItemGroup>

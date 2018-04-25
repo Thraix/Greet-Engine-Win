@@ -13,26 +13,32 @@ private:
 	static byte RESIZING_TOP;
 	static byte RESIZING_BOTTOM;
 
-
-	std::vector<Content*> m_contents;
+	Content* content;
+	bool hasFocusedContent;
 
 	bool m_resizable;
 	bool m_resizing;
 	byte m_resizingFlags;
+
+	float leftMargin;
+	float rightMargin;
+	float topMargin;
+	float bottomMargin;
+
 public:
 	bool visible;
-	Vec2 pos;
-	Vec2 size;
+	Greet::Vec2 pos;
+	Greet::Vec2 size;
 public:
-
+	Container();
 	void Render(Greet::GUIRenderer* renderer) const;
 	void Update(float timeElapsed);
 
 	bool OnPressed(const Greet::MousePressedEvent& event);
 	void OnReleased(const Greet::MouseReleasedEvent& event);
 	void OnMoved(const Greet::MouseMovedEvent& event);
-	bool OnPressed(const Greet::KeyPressedEvent& event);
-	bool OnReleased(const Greet::KeyReleasedEvent& event);
+	void OnPressed(const Greet::KeyPressedEvent& event);
+	void OnReleased(const Greet::KeyReleasedEvent& event);
 
 	void OnFocused();
 	void OnUnfocused();
