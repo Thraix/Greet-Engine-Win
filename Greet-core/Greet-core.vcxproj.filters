@@ -120,13 +120,13 @@
     <ClInclude Include="src\math\Quaternion.h" />
     <ClInclude Include="src\graphics\gui\ProgressBarIndicator.h" />
     <ClInclude Include="src\graphics\gui\DefaultProgressBarIndicator.h" />
-    <ClInclude Include="src\graphics\AttributePointer.h" />
     <ClInclude Include="src\graphics\renderers\GUIRenderer.h" />
     <ClInclude Include="src\graphics\layers\Layer.h" />
     <ClInclude Include="src\graphics\shaders\Uniformable.h" />
     <ClInclude Include="src\graphics\shaders\uniforms\Uniform.h" />
     <ClInclude Include="src\utils\ErrorHandle.h" />
     <ClInclude Include="src\graphics\gui\ColorPicker.h" />
+    <ClInclude Include="src\utils\AABBUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\audio\AudioChannel.cpp" />

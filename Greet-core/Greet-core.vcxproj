@@ -123,7 +123,6 @@
     <ClInclude Include="src\graphics\Animation.h" />
     <ClInclude Include="src\graphics\atlas\Atlas.h" />
     <ClInclude Include="src\graphics\atlas\AtlasManager.h" />
-    <ClInclude Include="src\graphics\AttributePointer.h" />
     <ClInclude Include="src\graphics\buffers\BatchIndexBuffer.h" />
     <ClInclude Include="src\graphics\buffers\Buffer.h" />
     <ClInclude Include="src\graphics\buffers\IndexBuffer.h" />
@@ -208,6 +207,7 @@
     <ClInclude Include="src\math\Vec2.h" />
     <ClInclude Include="src\math\Vec3.h" />
     <ClInclude Include="src\math\Vec4.h" />
+    <ClInclude Include="src\utils\AABBUtils.h" />
     <ClInclude Include="src\utils\ColorUtils.h" />
     <ClInclude Include="src\utils\DialogBox.h" />
     <ClInclude Include="src\utils\ErrorHandle.h" />

@@ -95,6 +95,8 @@
 #include <graphics/buffers/BatchIndexBuffer.h>
 #include <graphics/gui/Border.h>
 #include <graphics/gui/Button.h>
+#include <graphics/gui/SliderController.h>
+#include <graphics/gui/Slider.h>
 #include <graphics/gui/ColorPicker.h>
 #include <graphics/gui/ProgressBarIndicator.h>
 #include <graphics/gui/DefaultProgressBarIndicator.h>
@@ -103,8 +105,6 @@
 #include <graphics/gui/Label.h>
 #include <graphics/gui/Panel.h>
 #include <graphics/gui/ProgressBar.h>
-#include <graphics/gui/SliderController.h>
-#include <graphics/gui/Slider.h>
 #include <graphics/gui/TextBox.h>
 #include <graphics/renderers/BatchRenderer.h>
 #include <graphics/layers/Box2DLayer.h>
@@ -117,6 +117,7 @@
 #include <listeners/WindowResize.h>
 #include <logging/LogLevel.h>
 #include <logging/LogStream.h>
+#include <utils/AABBUtils.h>
 #include <utils/DialogBox.h>
 #include <utils/Noise.h>
 #include <utils/json/JSON.h>
