@@ -22,13 +22,13 @@ public:
 	{
 		CreateWindow("GreetTemplateMain", 960, 540);
 		SetFrameCap(144);
-		FontManager::Add(new FontContainer("res/fonts/Anonymous Pro.ttf","anonymous"));
+		FontManager::Add(new FontContainer("res/fonts/Roboto-Black.ttf","roboto"));
 		GLayer::CreateInstance(new GUIRenderer(), Shader::FromFile("res/shaders/gui.shader"));
 		content = new Content();
 		content->SetMargins(0, 0, 0, 0);
-		content->AddContent(new Label("test1", FontManager::Get("anonymous", 24), Vec4(1, 1, 1, 1)));
-		content->AddContent(new Label("test2", FontManager::Get("anonymous", 12), Vec4(1, 1, 1, 1)));
-		container = new FrameContainer(Vec2(50, 50), Vec2(200, 200), content, "Debugjahsdflkjashdflkajshdflaksjdhf");
+		content->AddContent(new Label("test1", FontManager::Get("roboto", 24), Vec4(0.5, 1, 1, 1)));
+		content->AddContent(new Label("test2", FontManager::Get("roboto", 12), Vec4(0.5, 1, 1, 1)));
+		container = new FrameContainer(Vec2(50, 50), Vec2(200, 200), content, "Debug");
 		GLayer::AddContainer(container, "Debug");
 	}
 

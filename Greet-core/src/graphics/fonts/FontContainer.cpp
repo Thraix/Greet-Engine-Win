@@ -30,7 +30,6 @@ namespace Greet{
 		if (it == m_fonts.end())
 		{
 			Font* font = new Font(this,size);
-			Log::Info(size);
 			m_fonts.emplace(font);
 			return font;
 		}

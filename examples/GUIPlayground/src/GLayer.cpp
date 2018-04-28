@@ -12,8 +12,15 @@ GLayer::GLayer(GUIRenderer* renderer, Shader* shader)
 	EventDispatcher::AddKeyListener(100, *this);
 	EventDispatcher::AddMouseListener(100, *this);
 	Window::AddResizeCallback(this);
+
+	GLint texIDs[32];
+	for (int i = 0; i < 32; i++)
+	{
+		texIDs[i] = i;
+	}
 	m_shader->Enable();
 	m_shader->SetUniformMat3("pr_matrix", Mat3::Orthographic(0,Window::GetWidth(), 0, Window::GetHeight()));
+	m_shader->SetUniform1iv("textures", 32, texIDs);
 	m_shader->Disable();
 }
 
