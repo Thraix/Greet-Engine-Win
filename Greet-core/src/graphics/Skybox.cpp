@@ -2,12 +2,12 @@
 
 namespace Greet {
 	
-	Skybox::Skybox(CubeMap* cubemap) : m_map(cubemap) 
+	Skybox::Skybox(CubeMap* cubemap) : m_map(cubemap)
 	{
-		m_shader = ShaderFactory::SkyboxShader();
 		MeshData* data = MeshFactory::Cube(0,0,0, 1,1,1);
 		m_mesh = new Mesh(data);
 		m_mesh->SetClockwiseRender(true);
+		m_shader = ShaderFactory::SkyboxShader();
 		delete data;
 	}
 

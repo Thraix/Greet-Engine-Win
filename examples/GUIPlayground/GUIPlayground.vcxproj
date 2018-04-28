@@ -132,13 +132,20 @@
   <ItemGroup>
     <ClCompile Include="src\Container.cpp" />
     <ClCompile Include="src\Content.cpp" />
+    <ClCompile Include="src\FrameContainer.cpp" />
     <ClCompile Include="src\GLayer.cpp" />
     <ClCompile Include="src\GreetTemplateMain.cpp" />
+    <ClCompile Include="src\Label.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Content.h" />
     <ClInclude Include="src\Container.h" />
+    <ClInclude Include="src\FrameContainer.h" />
     <ClInclude Include="src\GLayer.h" />
+    <ClInclude Include="src\Label.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\gui.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

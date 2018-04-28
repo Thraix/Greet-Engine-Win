@@ -14,6 +14,11 @@ namespace Greet {
 		m_shaderID = Load(vertSrc,fragSrc);
 	}
 
+	Shader::~Shader()
+	{
+		GLCall(glDeleteProgram(m_shaderID));
+	}
+
 	GLuint Shader::Load(const std::string& vertSrc, const std::string& fragSrc)
 	{
 		return Load("", vertSrc, fragSrc, false);
@@ -22,7 +27,6 @@ namespace Greet {
 	GLuint Shader::Load(const std::string& geomSrc, const std::string& vertSrc, const std::string& fragSrc, bool hasGeometry)
 	{
 		GLCall(GLuint program = glCreateProgram());
-
 		uint shader = AttachShader(program, vertSrc, GL_VERTEX_SHADER);
 		if (shader != 0)
 			return shader;
@@ -161,11 +165,6 @@ namespace Greet {
 		GLCall(glUseProgram(0));
 	}
 
-	Shader::~Shader()
-	{
-		GLCall(glDeleteProgram(m_shaderID));
-	}
-
 	Shader* Shader::FromFile(const std::string& shaderPath)
 	{
 		const uint VERTEX = 0;
@@ -175,7 +174,7 @@ namespace Greet {
 		std::ifstream file(shaderPath);
 		if (!file.good())
 		{
-			Log::Info("Shader::FromFile Couldn't find shader in path \'", shaderPath, "\'");
+			Log::Error("Shader::FromFile Couldn't find shader in path \'", shaderPath, "\'");
 			return ShaderFactory::DefaultShader();
 		}
 		std::string line;
@@ -201,7 +200,7 @@ namespace Greet {
 	{	
 		std::string vertSourceString = FileUtils::read_file(vertPath.c_str());
 		std::string fragSourceString = FileUtils::read_file(fragPath.c_str());
-		return new Shader(vertSourceString,fragSourceString); 
+		return new Shader(vertSourceString,fragSourceString);
 	}
 
 
@@ -210,7 +209,7 @@ namespace Greet {
 		std::string vertSourceString = FileUtils::read_file(vertPath.c_str());
 		std::string fragSourceString = FileUtils::read_file(fragPath.c_str());
 		std::string geomSourceString = FileUtils::read_file(geomPath.c_str());
-		return new Shader(geomSourceString, vertSourceString,fragSourceString); 
+		return new Shader(geomSourceString, vertSourceString,fragSourceString);
 	}
 
 	Shader* Shader::FromSource(const std::string& vertSrc, const std::string& fragSrc)

@@ -27,6 +27,12 @@
     <ClCompile Include="src\Content.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Label.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FrameContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GLayer.h">
@@ -38,5 +44,14 @@
     <ClInclude Include="src\Container.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\FrameContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Label.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\gui.shader" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,5 @@
 #include "GUIRenderer.h"
 
-#include <graphics/gui/GUI.h>
 
 namespace Greet
 {
@@ -213,7 +212,7 @@ namespace Greet
 			return m_viewports.top();
 		else
 		{
-			Log::Info("No viewport");
+			Log::Warning("No viewport");
 			Vec4 viewport;;
 			Vec2 temp = GetMatrix() * Vec2(pos1.x, pos1.y);
 			viewport.x = temp.x;

@@ -3,7 +3,7 @@
 using namespace Greet;
 
 Content::Content()
-	: leftMargin(10), rightMargin(10), topMargin(10), bottomMargin(10), xSpacing(10), ySpacing(10)
+	: leftMargin(0), rightMargin(0), topMargin(0), bottomMargin(0), xSpacing(0), ySpacing(0)
 {
 	
 }
@@ -25,6 +25,53 @@ void Content::Update(float timeElapsed)
 		(*it)->Update(timeElapsed);
 	}
 }
+
+void Content::AddContent(Content* content)
+{
+	if (content == NULL)
+	{
+		Log::Warning("Cannot add NULL to content");
+		return;
+	}
+	m_contents.push_back(content);
+}
+
+Content* Content::RemoveContent(uint index)
+{
+	if (index >= m_contents.size())
+	{
+		Log::Warning("Index out of bound.");
+		return NULL;
+	}
+	auto it = m_contents.begin() + index;
+	m_contents.erase(it);
+	return *it;
+}
+
+Content* Content::RemoveContent(Content* content)
+{
+	for (auto it = m_contents.begin(); it != m_contents.end();++it)
+	{
+		if (*it == content)
+		{
+			m_contents.erase(it);
+			return content;
+		}
+	}
+	Log::Warning("Couldn't find content");
+	return NULL;
+}
+
+Content* Content::GetContent(uint index)
+{
+	if (index >= m_contents.size())
+	{
+		Log::Warning("Index out of bound.");
+		return NULL;
+	}
+	return *(m_contents.begin() + index);
+}
+
 
 bool Content::OnPressed(const MousePressedEvent& event, const Vec2& translatedPos)
 {
@@ -149,4 +196,12 @@ float Content::GetHeight() const
 		maxHeight = Math::Max((*it)->GetHeight(), maxHeight);
 	}
 	return maxHeight + topMargin + bottomMargin;
+}
+
+void Content::SetMargins(float left, float right, float top, float bottom)
+{
+	leftMargin = left;
+	rightMargin = right;
+	topMargin = top;
+	bottomMargin = bottom;
 }

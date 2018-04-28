@@ -5,44 +5,50 @@ GLayer* GLayer::instance;
 
 using namespace Greet;
 
-GLayer::GLayer()
+GLayer::GLayer(GUIRenderer* renderer, Shader* shader)
+	: m_renderer(renderer), m_shader(shader)
 {
-	focused = NULL;
+	m_focused = NULL;
 	EventDispatcher::AddKeyListener(100, *this);
 	EventDispatcher::AddMouseListener(100, *this);
+	Window::AddResizeCallback(this);
+	m_shader->Enable();
+	m_shader->SetUniformMat3("pr_matrix", Mat3::Orthographic(0,Window::GetWidth(), 0, Window::GetHeight()));
+	m_shader->Disable();
 }
 
-bool GLayer::OnPressed(const Greet::MousePressedEvent& event)
+bool GLayer::OnPressed(const MousePressedEvent& event)
 {
 	for (auto it = containers.rbegin(); it != containers.rend(); ++it)
 	{
 		if (it->second->OnPressed(event))
 		{
-			if (it->second != focused)
+			if (it->second != m_focused)
 			{
-				focused->OnUnfocused();
+				if(m_focused != NULL)
+					m_focused->OnUnfocused();
 				it->second->OnFocused();
-				focused = it->second;
+				m_focused = it->second;
 			}
 			return true;
 		}
 	}
 
-	if (focused != NULL)
+	if (m_focused != NULL)
 	{
-		focused->OnUnfocused();
-		focused = NULL;
+		m_focused->OnUnfocused();
+		m_focused = NULL;
 	}
 	return false;
 }
 
-void GLayer::OnReleased(const Greet::MouseReleasedEvent& event)
+void GLayer::OnReleased(const MouseReleasedEvent& event)
 {
-	if (focused != NULL)
-		focused->OnReleased(event);
+	if (m_focused != NULL)
+		m_focused->OnReleased(event);
 }
 
-void GLayer::OnMoved(const Greet::MouseMovedEvent& event)
+void GLayer::OnMoved(const MouseMovedEvent& event)
 {
 	for (auto it = containers.begin(); it != containers.end(); ++it)
 	{
@@ -50,26 +56,33 @@ void GLayer::OnMoved(const Greet::MouseMovedEvent& event)
 	}
 }
 
-void GLayer::OnPressed(const Greet::KeyPressedEvent& event)
+void GLayer::OnPressed(const KeyPressedEvent& event)
 {
-	if (focused != NULL)
-		focused->OnPressed(event);
+	if (m_focused != NULL)
+		m_focused->OnPressed(event);
 }
 
-void GLayer::OnReleased(const Greet::KeyReleasedEvent& event)
+void GLayer::OnReleased(const KeyReleasedEvent& event)
 {
-	if (focused != NULL)
-		focused->OnReleased(event);
+	if (m_focused != NULL)
+		m_focused->OnReleased(event);
 }
 
-void GLayer::CreateInstance()
+void GLayer::WindowResize(int width, int height)
 {
-	instance = new GLayer();
+	m_shader->Enable();
+	m_shader->SetUniformMat3("pr_matrix", Mat3::Orthographic(0, Window::GetWidth(), 0, Window::GetHeight()));
+	m_shader->Disable();
 }
 
-const GLayer& GLayer::GetInstance()
+void GLayer::CreateInstance(GUIRenderer* renderer, Shader* shader)
 {
-	return *instance;
+	instance = new GLayer(renderer, shader);
+}
+
+GLayer* GLayer::GetInstance()
+{
+	return instance;
 }
 
 void GLayer::DestroyInstance()
@@ -77,12 +90,21 @@ void GLayer::DestroyInstance()
 	delete instance;
 }
 
-void GLayer::Render(GUIRenderer* renderer)
+void GLayer::Render()
 {
+	GUIRenderer* renderer = GetInstance()->m_renderer;
+	Shader* shader = GetInstance()->m_shader;
+	shader->Enable();
+	renderer->Begin();
 	for (auto it = containers.begin(); it != containers.end(); ++it)
 	{
+		it->second->PreRender(renderer);
 		it->second->Render(renderer);
+		it->second->PostRender(renderer);
 	}
+	renderer->End();
+	renderer->Draw();
+	shader->Disable();
 }
 
 void GLayer::Update(float timeElapsed)
@@ -97,7 +119,7 @@ void GLayer::AddContainer(Container* container, const std::string& name)
 {
 	if (container == NULL)
 	{
-		Greet::Log::Warning("Cannot add NULL to containers");
+		Log::Warning("Cannot add NULL to containers");
 		return;
 	}
 	containers.emplace(name, container);

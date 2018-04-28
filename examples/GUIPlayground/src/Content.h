@@ -6,7 +6,7 @@
 
 class Content
 {
-private:
+protected:
 	std::vector<Content*> m_contents;
 	Content* m_focused;
 	bool isFocused;
@@ -19,18 +19,26 @@ private:
 
 public:
 	Content();
-	void Render(Greet::GUIRenderer* renderer, const Greet::Vec2& position) const;
-	void Update(float timeElapsed);
 
-	bool OnPressed(const Greet::MousePressedEvent& event, const Greet::Vec2& translatedPos);
-	void OnReleased(const Greet::MouseReleasedEvent& event, const Greet::Vec2& translatedPos);
-	void OnMoved(const Greet::MouseMovedEvent& event, const Greet::Vec2& translatedPos);
-	void OnPressed(const Greet::KeyPressedEvent& event);
-	void OnReleased(const Greet::KeyReleasedEvent& event);
+	virtual void Render(Greet::GUIRenderer* renderer, const Greet::Vec2& position) const;
+	virtual void Update(float timeElapsed);
 
-	void OnFocused();
-	void OnUnfocused();
+	void AddContent(Content* content);
+	Content* RemoveContent(uint index);
+	Content* RemoveContent(Content* content);
+	Content* GetContent(uint index);
+
+	virtual bool OnPressed(const Greet::MousePressedEvent& event, const Greet::Vec2& translatedPos);
+	virtual void OnReleased(const Greet::MouseReleasedEvent& event, const Greet::Vec2& translatedPos);
+	virtual void OnMoved(const Greet::MouseMovedEvent& event, const Greet::Vec2& translatedPos);
+	virtual void OnPressed(const Greet::KeyPressedEvent& event);
+	virtual void OnReleased(const Greet::KeyReleasedEvent& event);
+
+	virtual void OnFocused();
+	virtual void OnUnfocused();
 	Greet::Vec2 GetSize() const;
-	float GetWidth() const;
-	float GetHeight() const;
+	virtual float GetWidth() const;
+	virtual float GetHeight() const;
+
+	void SetMargins(float left, float right, float top, float bottom);
 };
