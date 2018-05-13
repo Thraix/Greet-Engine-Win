@@ -4,9 +4,8 @@
 	#define _USE_MATH_DEFINES
 #endif
 
-#include <math.h>
-#include <math/Vec4.h>
 #include <iostream>
+#include <math/Vec4.h>
 
 namespace Greet{
 	

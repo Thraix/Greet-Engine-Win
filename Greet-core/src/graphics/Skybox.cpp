@@ -1,5 +1,9 @@
 #include "Skybox.h"
 
+#include <graphics/models/MeshFactory.h>
+#include <graphics/shaders/ShaderFactory.h>
+
+
 namespace Greet {
 	
 	Skybox::Skybox(CubeMap* cubemap) : m_map(cubemap)

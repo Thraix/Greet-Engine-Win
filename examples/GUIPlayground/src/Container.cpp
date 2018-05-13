@@ -140,6 +140,11 @@ void Container::SetMargins(float left, float right, float top, float bottom)
 	topMargin = top;
 	bottomMargin = bottom;
 }
+
+void Container::SetGUIMouseListener(GUIMouseListener* listener)
+{
+	m_mouseListener = listener;
+}
 	 
 bool Container::OnPressed(const MousePressedEvent& event)
 {
@@ -158,7 +163,7 @@ bool Container::OnPressed(const MousePressedEvent& event)
 
 		if (AABBUtils::PointInsideBox(event.GetPosition(), pos+GetContentPosition(), GetContentSize()))
 		{
-			if (content->OnPressed(event, event.GetPosition() - GetContentPosition()) && !hasFocusedContent)
+			if (content->MousePress(event, event.GetPosition() - GetContentPosition(), *m_mouseListener) && !hasFocusedContent)
 			{
 				content->OnFocused();
 				hasFocusedContent = true;
@@ -185,7 +190,7 @@ void Container::OnReleased(const MouseReleasedEvent& event)
 		m_resizing = false;
 	}
 	if(hasFocusedContent)
-		content->OnReleased(event, Vec2(leftMargin, topMargin));
+		content->MouseRelease(event, Vec2(leftMargin, topMargin), *m_mouseListener);
 }
 
 void Container::OnMoved(const MouseMovedEvent& event)
@@ -195,19 +200,19 @@ void Container::OnMoved(const MouseMovedEvent& event)
 		Resize(event.GetPosition());
 	}
 	if (hasFocusedContent)
-		content->OnMoved(event, Vec2(leftMargin, topMargin));
+		content->MouseMove(event, Vec2(leftMargin, topMargin));
 }
 
 void Container::OnPressed(const KeyPressedEvent& event)
 {
-	if (hasFocusedContent)
-		content->OnPressed(event);
+	//if (hasFocusedContent)
+	//	content->KeyPress(event);
 }
 
 void Container::OnReleased(const KeyReleasedEvent& event)
 {
-	if (hasFocusedContent)
-		content->OnReleased(event);
+	//if (hasFocusedContent)
+	//	content->KeyRelease(event);
 }
 	 
 void Container::OnFocused()

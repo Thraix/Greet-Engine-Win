@@ -10,7 +10,7 @@ FrameContainer::FrameContainer(const Greet::Vec2& pos, const Greet::Vec2& size, 
 	header->SetMargins(0, 0,5, 0);
 	SetMargins(10,10,0,10);
 	headerSize = 30;
-	headerSpacing = 10;
+	headerSpacing = 5;
 	m_movable = true;
 	label->maxWidth = size.x - leftMargin - rightMargin;
 }
@@ -20,7 +20,7 @@ FrameContainer::FrameContainer(const Greet::Vec2& pos, const Greet::Vec2& size, 
 {
 	SetMargins(10, 10, 0, 10);
 	headerSize = header->GetHeight();
-	headerSpacing = 10;
+	headerSpacing = 5;
 	m_movable = true;
 }
 

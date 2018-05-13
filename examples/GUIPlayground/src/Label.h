@@ -19,8 +19,4 @@ public:
 	
 	float GetWidth() const override;
 	float GetHeight() const override;
-
-	// Listeners
-	bool OnPressed(const Greet::MousePressedEvent& event, const Greet::Vec2& translatedPos) override;
-
 };

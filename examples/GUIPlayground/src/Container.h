@@ -3,6 +3,7 @@
 #include <Greet.h>
 #include <vector>
 #include "Content.h"
+#include "GUIMouseListener.h"
 
 class Container
 {
@@ -27,12 +28,14 @@ protected:
 	Greet::Vec2 m_posOrigin;
 	Greet::Vec2 m_sizeOrigin;
 
+	GUIMouseListener* m_mouseListener;
+
+public:
 	float leftMargin;
 	float rightMargin;
 	float topMargin;
 	float bottomMargin;
 
-public:
 	bool visible;
 
 	Greet::Vec2 pos;
@@ -59,6 +62,9 @@ public:
 	virtual Greet::Vec2 GetContentPosition() const { return Greet::Vec2(leftMargin, topMargin); };
 	virtual Greet::Vec2 GetContentSize() const { return size-GetContentPosition() - Greet::Vec2(rightMargin, bottomMargin); }
 	void SetMargins(float left, float right, float top, float bottom);
+
+	// Set listeners
+	void SetGUIMouseListener(GUIMouseListener* listener);
 
 	// Listeners
 	virtual bool OnPressed(const Greet::MousePressedEvent& event);

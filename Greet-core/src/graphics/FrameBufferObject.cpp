@@ -1,5 +1,7 @@
 #include "framebufferobject.h"
 
+#include <graphics/Window.h>
+
 namespace Greet {
 
 	FrameBufferObject::FrameBufferObject(uint width, uint height)

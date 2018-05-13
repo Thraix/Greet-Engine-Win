@@ -1,5 +1,6 @@
 #include "GUIRenderer.h"
 
+#include <algorithm>
 
 namespace Greet
 {

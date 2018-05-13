@@ -1,5 +1,7 @@
 #include "Mat4.h"
 
+#include "MathFunc.h"
+
 #define _0_0 0 
 #define _0_1 1 
 #define _0_2 2 

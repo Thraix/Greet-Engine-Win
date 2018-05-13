@@ -1,14 +1,8 @@
 #pragma once
 
-#include <logging/Log.h>
-#include <internal/GreetGL.h>
+#include <string>
 #include <math/Maths.h>
-#include <utils/FileUtils.h>
-#include <iostream>
-#include <vector>
-#include <utils/ErrorHandle.h>
-#include <sstream>
-#include <fstream>
+#include <internal/GreetGL.h>
 
 namespace Greet {
 	class Shader

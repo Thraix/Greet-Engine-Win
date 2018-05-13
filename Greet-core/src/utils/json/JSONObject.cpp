@@ -1,5 +1,7 @@
 #include "JSONObject.h"
 
+#include <utils/StringUtils.h>
+
 namespace Greet {
 
 	std::string JSONObject::valueNull;

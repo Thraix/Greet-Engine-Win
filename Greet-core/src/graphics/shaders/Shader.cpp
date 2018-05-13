@@ -1,6 +1,12 @@
 #include "Shader.h"
 
-#include "ShaderFactory.h"
+#include <graphics/shaders/ShaderFactory.h>
+#include <utils/ErrorHandle.h>
+#include <utils/FileUtils.h>
+
+#include <fstream>
+#include <sstream>
+
 
 namespace Greet {
 

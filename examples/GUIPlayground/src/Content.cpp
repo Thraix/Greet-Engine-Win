@@ -3,9 +3,9 @@
 using namespace Greet;
 
 Content::Content()
-	: leftMargin(0), rightMargin(0), topMargin(0), bottomMargin(0), xSpacing(0), ySpacing(0)
+	: leftMargin(0), rightMargin(0), topMargin(0), bottomMargin(0), xSpacing(5), ySpacing(5)
 {
-	
+	m_isFocusable = false;
 }
 
 void Content::Render(GUIRenderer* renderer, const Vec2& position) const
@@ -73,31 +73,30 @@ Content* Content::GetContent(uint index)
 }
 
 
-bool Content::OnPressed(const MousePressedEvent& event, const Vec2& translatedPos)
+bool Content::MousePress(const MousePressedEvent& event, const Vec2& translatedPos, const GUIMouseListener& listener)
 {
-	if (AABBUtils::PointInsideBox(event.GetPosition(), Vec2(0,0), GetSize()))
+	float yPos = topMargin;
+	for (auto it = m_contents.rbegin(); it != m_contents.rend(); ++it)
 	{
-		float yPos = topMargin;
-		for (auto it = m_contents.rbegin(); it != m_contents.rend(); ++it)
+		// Translate the mouse.
+		Vec2 translatedPosContent = translatedPos - Vec2(leftMargin, yPos);
+		if ((*it)->IsMouseInside(translatedPosContent))
 		{
-			// Translate the mouse.
-			Vec2 translatedPosContent = translatedPos - Vec2(leftMargin, yPos);
-			if (AABBUtils::PointInsideBox(translatedPosContent, Vec2(0,0), (*it)->GetSize()))
+			// Check if the contents wants focus.
+			(*it)->MousePress(event, translatedPosContent, listener);
+			if ((*it)->IsFocusable())
 			{
-				// Check if the contents wants focus.
-				if ((*it)->OnPressed(event, translatedPosContent))
+				if (*it == m_focused)
 				{
-					if (*it == m_focused)
-					{
-						m_focused->OnUnfocused();
-						(*it)->OnFocused();
-						m_focused = *it;
-					}
-					return true;
+					m_focused->OnUnfocused();
+					(*it)->OnFocused();
+					m_focused = *it;
 				}
+				listener.OnMousePressed(*it);
+				return true;
 			}
-			yPos += (*it)->GetHeight() + ySpacing;
 		}
+		yPos += (*it)->GetHeight() + ySpacing;
 	}
 	if (m_focused != NULL)
 	{
@@ -107,7 +106,7 @@ bool Content::OnPressed(const MousePressedEvent& event, const Vec2& translatedPo
 	return false;
 }
 
-void Content::OnReleased(const MouseReleasedEvent& event, const Vec2& translatedPos)
+void Content::MouseRelease(const MouseReleasedEvent& event, const Vec2& translatedPos, const GUIMouseListener& listener)
 {
 	if (m_focused != NULL)
 	{
@@ -117,44 +116,55 @@ void Content::OnReleased(const MouseReleasedEvent& event, const Vec2& translated
 		{
 			if (m_focused == *it)
 			{
-				m_focused->OnReleased(event, translatedPos - Vec2(leftMargin, yPos));
+				m_focused->MouseRelease(event, translatedPos - Vec2(leftMargin, yPos), listener);
+				listener.OnMouseReleased(m_focused);
+				if (m_focused->IsMouseInside(translatedPos - Vec2(leftMargin, yPos)))
+				{
+					listener.OnMouseClicked(m_focused);
+				}
 			}
 			yPos += (*it)->GetHeight() + ySpacing;
 		}
 	}
 }
 
-void Content::OnMoved(const MouseMovedEvent& event, const Vec2& translatedPos) 
+void Content::MouseMove(const MouseMovedEvent& event, const Vec2& translatedPos) 
 {
-	if (m_focused != NULL)
-	{
 		// Calculate the focused yPos
 		float yPos = topMargin;
 		for (auto it = m_contents.begin(); it != m_contents.end(); ++it)
 		{
 			if (m_focused == *it)
 			{
-				m_focused->OnMoved(event, translatedPos - Vec2(leftMargin, yPos));
+				m_focused->MouseMove(event, translatedPos - Vec2(leftMargin, yPos));
+			}
+			else if (m_focused == NULL)
+			{
+				
 			}
 			yPos += (*it)->GetHeight() + ySpacing;
 		}
-	}
 }
 
-void Content::OnPressed(const KeyPressedEvent& event)
+void Content::OnKeyPressed(const KeyPressedEvent& event)
 {
 	if (m_focused != NULL)
 	{
-		m_focused->OnPressed(event);
+		m_focused->OnKeyPressed(event);
 	}
 }
 
-void Content::OnReleased(const KeyReleasedEvent& event)
+void Content::OnKeyReleased(const KeyReleasedEvent& event)
 {
 	if (m_focused != NULL)
 	{
-		m_focused->OnReleased(event);
+		m_focused->OnKeyReleased(event);
 	}
+}
+
+bool Content::IsMouseInside(const Vec2& mousePos) const
+{
+	return AABBUtils::PointInsideBox(mousePos, Vec2(0, 0), GetSize());
 }
 
 void Content::OnFocused()

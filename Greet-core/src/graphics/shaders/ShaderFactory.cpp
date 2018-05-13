@@ -1,5 +1,6 @@
 #include "Shader.h"
 
+
 namespace Greet { namespace ShaderFactory {
 
 	const std::string default_shader_vert =

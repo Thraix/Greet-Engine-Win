@@ -1,10 +1,6 @@
 #pragma once
 
-#include <logging/Log.h>
-#include <internal/GreetGL.h>
-#include <internal/GreetTypes.h>
-#include <utils/ImageUtils.h>
-#include <FreeImage.h>
+#include <string>
 #include <internal/GreetTypes.h>
 
 namespace Greet {

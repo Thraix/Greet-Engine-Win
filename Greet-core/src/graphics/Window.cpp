@@ -1,5 +1,11 @@
 #include "Window.h"
 
+#include <graphics/fonts/FontManager.h>
+#include <graphics/textures/TextureManager.h>
+#include <audio/SoundManager.h>
+#include <internal/GreetGL.h>
+#include <event/EventDispatcher.h>
+
 namespace Greet {
 
 	std::vector<Joystick> Window::joysticks;

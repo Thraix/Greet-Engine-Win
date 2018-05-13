@@ -1,5 +1,7 @@
 #include "Texture.h"
 
+#include <internal/GreetGL.h>
+
 namespace Greet {
 	
 	Texture::Texture(const std::string& name, uint textureType)

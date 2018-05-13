@@ -6,10 +6,8 @@
 
 #include <iostream>
 #include <Box2D/Common/b2Math.h>
-#include <math.h>
 #include <math/Vec3.h>
 #include <math/Vec4.h>
-#include <logging/Log.h>
 
 namespace Greet{
 	

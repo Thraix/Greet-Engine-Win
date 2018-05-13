@@ -1,4 +1,5 @@
 #include <Greet.h>
+#include "Button.h"
 #include "GLayer.h"
 #include "FrameContainer.h"
 
@@ -28,6 +29,7 @@ public:
 		content->SetMargins(0, 0, 0, 0);
 		content->AddContent(new Label("test1", FontManager::Get("roboto", 24), Vec4(0.5, 1, 1, 1)));
 		content->AddContent(new Label("test2", FontManager::Get("roboto", 12), Vec4(0.5, 1, 1, 1)));
+		content->AddContent(new Button(Vec2(80, 20), "Press me!"));
 		container = new FrameContainer(Vec2(50, 50), Vec2(200, 200), content, "Debug");
 		GLayer::AddContainer(container, "Debug");
 	}
