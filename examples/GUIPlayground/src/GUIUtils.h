@@ -44,25 +44,31 @@ namespace Greet
 			return false;
 		}
 
-		static float CalcXSize(const std::string& size)
+		static Vec4 GetColor(const std::string& str)
 		{
-			float sizeF = atof(size.c_str());
-			if (StringUtils::ends_with(size, "%"))
+			if (str[0] == '#')
 			{
-				return sizeF * Window::GetWidth() * 0.01f; // Convert 100 -> 1
+				std::string color = str.substr(1);
+				if (color.length() != 6 && color.length() != 8)
+				{
+					Log::Error("Invalid length for color: ", str);
+					return Vec4(1,0,1,1); // Invalid color pink since its very visible
+				}
+				if (color.length() == 6)
+					color = "FF" + color; // Add alpha to color
+				uint colori = LogUtils::HexToDec(color);
+				return ColorUtils::ColorHexToVec4(colori);
 			}
-			else // if (StringUtils::ends_with(size, "px")) // if there is no ending it counts as pixels.
-			{
-				return sizeF;
-			}
+			Log::Error("Invalid starting character for  color: ", str);
+			return Vec4(1, 0, 1, 1); // Invalid color pink since its very visible
 		}
 
-		static float CalcYSize(const std::string& size)
+		static float CalcSize(const std::string& size, float parentSize)
 		{
 			float sizeF = atof(size.c_str());
 			if (StringUtils::ends_with(size, "%"))
 			{
-				return sizeF * Window::GetHeight() * 0.01f; // Convert 100 -> 1
+				return sizeF * parentSize * 0.01f; // Convert 100 -> 1
 			}
 			else // if (StringUtils::ends_with(size, "px")) // if there is no ending it counts as pixels.
 			{

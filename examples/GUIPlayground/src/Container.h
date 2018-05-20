@@ -20,7 +20,7 @@ protected:
 	bool m_resizing;
 	byte m_resizableFlags;
 	byte m_resizingFlags;
-	Greet::Vec2 m_minSize;
+	Greet::Vec2 minSize;
 
 	bool m_stayInsideWindow;
 
@@ -36,6 +36,14 @@ public:
 	float marginTop;
 	float marginBottom;
 
+	float borderLeft;
+	float borderRight;
+	float borderTop;
+	float borderBottom;
+
+	Greet::Vec4 backgroundColor;
+	Greet::Vec4 borderColor;
+
 	bool visible;
 
 	Greet::Vec2 pos;
@@ -46,6 +54,7 @@ public:
 	Container();
 	Container(const Greet::XMLObject& object);
 	Container(const Greet::Vec2& pos, const Greet::Vec2& size, Content* content);
+	virtual ~Container();
 	virtual void PreRender(Greet::GUIRenderer* renderer) const;
 	virtual void Render(Greet::GUIRenderer* renderer) const;
 	virtual void PostRender(Greet::GUIRenderer* renderer) const;

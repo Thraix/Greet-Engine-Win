@@ -1,7 +1,8 @@
 <Container 
-  width="200px" 
-  height="100%" 
+  width="200px" height="100%" minWidth="100px"
   resizeTop="false" resizeLeft="false" resizeBottom="false" resizeRight="true"
-  marginTop="10px" marginLeft="10px" marginBottom="10px" marginRight="10px">
+  marginTop="10px" marginLeft="10px" marginBottom="10px" marginRight="10px"
+  borderTop="1px" borderLeft="1px" borderBottom="1px" borderRight="1px"
+  borderColor="#0000ff" backgroundColor="#000077">
     
 </Container>

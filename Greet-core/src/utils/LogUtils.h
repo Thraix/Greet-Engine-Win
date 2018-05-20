@@ -12,29 +12,11 @@ namespace Greet { namespace LogUtils {
 		if (c >= '0' && c <= '9')
 			return (uint)(c - '0');
 		else if (c >= 'a' && c <= 'f')
-			return (uint)(c - 'a');
+			return (uint)(c - 'a' + 10);
+		else if(c >= 'A' && c <= 'F')
+			return (uint)(c - 'A' + 10);
 		Log::Warning("Utils::Hex10ToDec16 couldn't recognize the hex character \'", c, "\'");
 		return 0;
-
-		switch (c)
-		{
-		case '0':case '1':case '2':case '3':case '4':case '5':case '6':case '7':case '8':case '9':
-			return (uint)(c - '0');
-		case 'a':
-			return 10;
-		case 'b':
-			return 11;
-		case 'c':
-			return 12;
-		case 'd':
-			return 13;
-		case 'e':
-			return 14;
-		case 'f':
-			return 15;
-		default:
-			return 0;
-		}
 	}
 
 	inline char Dec16ToHex10(int dec)
@@ -95,7 +77,7 @@ namespace Greet { namespace LogUtils {
 		return s;
 	}
 
-	inline uint HexToDec(std::string hex)
+	inline uint HexToDec(const std::string& hex)
 	{
 		if (hex.length() > 8)
 		{
@@ -108,7 +90,7 @@ namespace Greet { namespace LogUtils {
 			int size = hex.length();
 			for (int i = 0; i < size; i++)
 			{
-				result += Hex10ToDec16(hex[i]) << ((size - i) * 4 - 4);
+				result = (result << 4) | Hex10ToDec16(hex[i]);
 			}
 			return result;
 		}

@@ -21,18 +21,32 @@ Container::Container(const Greet::XMLObject& object)
 	float w = 100, h = 100; // Default size
 	m_resizableFlags = RESIZING_LEFT | RESIZING_RIGHT | RESIZING_TOP | RESIZING_BOTTOM;
 	content = new Content();
+	backgroundColor = Vec4(1, 1, 1, 1);
+	minSize = Vec2(100, 100);
 	marginLeft = 10;
 	marginRight = 10;
 	marginTop = 10;
 	marginBottom = 10;
+	borderTop = 0;
+	borderLeft = 0;
+	borderBottom = 0;
+	borderRight = 0;
 
 	if (object.HasProperty("width"))
 	{
-		w = GUIUtils::CalcXSize(object.GetProperty("width"));
+		w = GUIUtils::CalcSize(object.GetProperty("width"), Window::GetWidth());
 	}
 	if (object.HasProperty("height"))
 	{
-		h = GUIUtils::CalcYSize(object.GetProperty("height"));
+		h = GUIUtils::CalcSize(object.GetProperty("height"), Window::GetHeight());
+	}
+	if (object.HasProperty("minWidth"))
+	{
+		minSize.x = GUIUtils::CalcSize(object.GetProperty("minWidth"), Window::GetWidth());
+	}
+	if (object.HasProperty("minHeight"))
+	{
+		minSize.y = GUIUtils::CalcSize(object.GetProperty("minHeight"), Window::GetHeight());
 	}
 	if (object.HasProperty("resizeLeft"))
 	{
@@ -58,21 +72,44 @@ Container::Container(const Greet::XMLObject& object)
 	}
 	if (object.HasProperty("marginTop"))
 	{
-		marginTop = GUIUtils::CalcYSize(object.GetProperty("marginTop"));
+		marginTop = GUIUtils::CalcSize(object.GetProperty("marginTop"), Window::GetHeight());
 	}
 	if (object.HasProperty("marginLeft"))
 	{
-		marginLeft = GUIUtils::CalcXSize(object.GetProperty("marginLeft"));
+		marginLeft = GUIUtils::CalcSize(object.GetProperty("marginLeft"), Window::GetWidth());
 	}
 	if (object.HasProperty("marginBottom"))
 	{
-		marginBottom = GUIUtils::CalcYSize(object.GetProperty("marginBottom"));
+		marginBottom = GUIUtils::CalcSize(object.GetProperty("marginBottom"), Window::GetHeight());
 	}
 	if (object.HasProperty("marginRight"))
 	{
-		marginRight = GUIUtils::CalcXSize(object.GetProperty("marginRight"));
+		marginRight = GUIUtils::CalcSize(object.GetProperty("marginRight"), Window::GetWidth());
 	}
-	Log::Info(Vec4(marginTop,marginLeft,marginBottom, marginRight));
+	if (object.HasProperty("borderTop"))
+	{
+		borderTop = GUIUtils::CalcSize(object.GetProperty("borderTop"), Window::GetHeight());
+	}
+	if (object.HasProperty("borderLeft"))
+	{
+		borderLeft = GUIUtils::CalcSize(object.GetProperty("borderLeft"), Window::GetWidth());
+	}
+	if (object.HasProperty("borderBottom"))
+	{
+		borderBottom = GUIUtils::CalcSize(object.GetProperty("borderBottom"), Window::GetHeight());
+	}
+	if (object.HasProperty("borderRight"))
+	{
+		borderRight = GUIUtils::CalcSize(object.GetProperty("borderRight"), Window::GetWidth());
+	}
+	if (object.HasProperty("backgroundColor"))
+	{
+		backgroundColor = GUIUtils::GetColor(object.GetProperty("backgroundColor"));
+	}
+	if (object.HasProperty("borderColor"))
+	{
+		borderColor = GUIUtils::GetColor(object.GetProperty("borderColor"));
+	}
 	content->SetMargins(0, 0, 0, 0);
 	size = Vec2(w, h);
 	pos = Vec2(0, 0);
@@ -85,14 +122,19 @@ Container::Container(const Greet::XMLObject& object)
 Container::Container(const Vec2& pos, const Vec2& size, Content* content)
 	: pos(pos), size(size), content(content)
 {
-	// Allow resizing in all directions;
+	// Allow resizing in all directions
 	m_resizableFlags = RESIZING_LEFT | RESIZING_RIGHT | RESIZING_TOP | RESIZING_BOTTOM;
 	m_stayInsideWindow = true;
 	marginLeft = 10;
 	marginRight = 10;
 	marginTop = 10;
 	marginBottom = 10;
-	m_minSize = Vec2(100, 100);
+	minSize = Vec2(100, 100);
+}
+
+Container::~Container()
+{
+	delete content;
 }
 
 void Container::PreRender(GUIRenderer* renderer) const
@@ -103,9 +145,9 @@ void Container::PreRender(GUIRenderer* renderer) const
 void Container::Render(GUIRenderer* renderer) const
 {
 	// Frame around Container
-	renderer->SubmitRect(pos, size, Vec4(0,0,0.5,1), true);
+	renderer->SubmitRect(pos, size, borderColor, false);
 	// Container content
-	renderer->SubmitRect(pos+1,size-2,ColorUtils::GetMaterialColorAsHSV(0.5,5),true);
+	renderer->SubmitRect(pos+Vec2(borderLeft, borderTop),size-Vec2(borderLeft+borderRight, borderTop+borderBottom),backgroundColor,false);
 	// Render the content
 	content->Render(renderer, pos + GetContentPosition());
 }
@@ -153,33 +195,33 @@ void Container::Resize(const Greet::Vec2& mousePos)
 	{
 		pos.x = m_posOrigin.x - (m_clickPos.x - mousePos.x);
 		size.x = m_sizeOrigin.x + (m_clickPos.x - mousePos.x);
-		if (size.x < m_minSize.x)
+		if (size.x < minSize.x)
 		{
-			pos.x = m_posOrigin.x + (m_sizeOrigin.x - m_minSize.x);
-			size.x = m_minSize.x;
+			pos.x = m_posOrigin.x + (m_sizeOrigin.x - minSize.x);
+			size.x = minSize.x;
 		}
 	}
 	else if (m_resizingFlags & RESIZING_RIGHT)
 	{
 		size.x = m_sizeOrigin.x - (m_clickPos.x - mousePos.x);
-		if (size.x < m_minSize.x)
-			size.x = m_minSize.x;
+		if (size.x < minSize.x)
+			size.x = minSize.x;
 	}
 	if (m_resizingFlags & RESIZING_TOP)
 	{
 		pos.y = m_posOrigin.y - (m_clickPos.y - mousePos.y);
 		size.y = m_sizeOrigin.y + (m_clickPos.y - mousePos.y);
-		if (size.y < m_minSize.y)
+		if (size.y < minSize.y)
 		{
-			pos.y = m_posOrigin.y + (m_sizeOrigin.y - m_minSize.y);
-			size.y = m_minSize.y;
+			pos.y = m_posOrigin.y + (m_sizeOrigin.y - minSize.y);
+			size.y = minSize.y;
 		}
 	}
 	else if (m_resizingFlags & RESIZING_BOTTOM)
 	{
 		size.y = m_sizeOrigin.y - (m_clickPos.y - mousePos.y);
-		if (size.y < m_minSize.y)
-			size.y = m_minSize.y;
+		if (size.y < minSize.y)
+			size.y = minSize.y;
 	}
 	ResizeScreenClamp();
 }

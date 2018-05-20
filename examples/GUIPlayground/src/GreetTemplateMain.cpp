@@ -17,7 +17,6 @@ public:
 	{
 		GLayer::DestroyInstance();
 		delete container;
-		delete content;
 	}
 
 	void Init() override
