@@ -12,10 +12,10 @@ protected:
 	std::vector<Content*> m_contents;
 	Content* m_focused;
 	bool isFocused;
-	float leftMargin;
-	float rightMargin;
-	float topMargin;
-	float bottomMargin;
+	float marginLeft;
+	float marginRight;
+	float marginTop;
+	float marginBottom;
 	float xSpacing;
 	float ySpacing;
 

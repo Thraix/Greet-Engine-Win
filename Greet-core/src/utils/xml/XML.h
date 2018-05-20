@@ -2,8 +2,11 @@
 
 #include "XMLObject.h"
 
-struct XML
+namespace Greet
 {
-	static XMLObject FromString(const std::string& string);
-	static XMLObject FromFile(const std::string& fileName);
-};
+	struct XML
+	{
+		static XMLObject FromString(const std::string& string);
+		static XMLObject FromFile(const std::string& fileName);
+	};
+}

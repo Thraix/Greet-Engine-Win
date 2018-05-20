@@ -31,10 +31,10 @@ protected:
 	GUIMouseListener* m_mouseListener;
 
 public:
-	float leftMargin;
-	float rightMargin;
-	float topMargin;
-	float bottomMargin;
+	float marginLeft;
+	float marginRight;
+	float marginTop;
+	float marginBottom;
 
 	bool visible;
 
@@ -43,6 +43,8 @@ public:
 	Content* content;
 
 public:
+	Container();
+	Container(const Greet::XMLObject& object);
 	Container(const Greet::Vec2& pos, const Greet::Vec2& size, Content* content);
 	virtual void PreRender(Greet::GUIRenderer* renderer) const;
 	virtual void Render(Greet::GUIRenderer* renderer) const;
@@ -59,8 +61,8 @@ public:
 	void ResizeScreenClamp();
 
 	// Getters and setters
-	virtual Greet::Vec2 GetContentPosition() const { return Greet::Vec2(leftMargin, topMargin); };
-	virtual Greet::Vec2 GetContentSize() const { return size-GetContentPosition() - Greet::Vec2(rightMargin, bottomMargin); }
+	virtual Greet::Vec2 GetContentPosition() const { return Greet::Vec2(marginLeft, marginTop); };
+	virtual Greet::Vec2 GetContentSize() const { return size-GetContentPosition() - Greet::Vec2(marginRight, marginBottom); }
 	void SetMargins(float left, float right, float top, float bottom);
 
 	// Set listeners

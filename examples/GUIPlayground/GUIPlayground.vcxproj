@@ -145,12 +145,16 @@
     <ClInclude Include="src\FrameContainer.h" />
     <ClInclude Include="src\GLayer.h" />
     <ClInclude Include="src\GUIMouseListener.h" />
+    <ClInclude Include="src\GUIUtils.h" />
     <ClInclude Include="src\Label.h" />
     <ClInclude Include="src\Property.h" />
     <ClInclude Include="src\Theme.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\gui.shader" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="res\guis\gui.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

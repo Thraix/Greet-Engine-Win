@@ -65,8 +65,14 @@
     <ClInclude Include="src\Property.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\GUIUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\gui.shader" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="res\guis\gui.xml" />
   </ItemGroup>
 </Project>

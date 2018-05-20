@@ -84,6 +84,8 @@
     <ClCompile Include="src\utils\json\JSONObject.cpp" />
     <ClCompile Include="src\utils\Noise.cpp" />
     <ClCompile Include="src\utils\UUID.cpp" />
+    <ClCompile Include="src\utils\xml\XML.cpp" />
+    <ClCompile Include="src\utils\xml\XMLObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\audio\AudioChannel.h" />
@@ -198,6 +200,9 @@
     <ClInclude Include="src\utils\Timer.h" />
     <ClInclude Include="src\utils\Utils.h" />
     <ClInclude Include="src\utils\UUID.h" />
+    <ClInclude Include="src\utils\xml\XML.h" />
+    <ClInclude Include="src\utils\xml\XMLException.h" />
+    <ClInclude Include="src\utils\xml\XMLObject.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\graphics\shaders\basiclightshader.frag" />

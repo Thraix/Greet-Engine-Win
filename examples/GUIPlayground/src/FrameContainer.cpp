@@ -12,7 +12,7 @@ FrameContainer::FrameContainer(const Greet::Vec2& pos, const Greet::Vec2& size, 
 	headerSize = 30;
 	headerSpacing = 5;
 	m_movable = true;
-	label->maxWidth = size.x - leftMargin - rightMargin;
+	label->maxWidth = size.x - marginLeft - marginRight;
 }
 
 FrameContainer::FrameContainer(const Greet::Vec2& pos, const Greet::Vec2& size, Content* content, Content* header)
@@ -33,11 +33,11 @@ FrameContainer::~FrameContainer()
 void FrameContainer::Render(GUIRenderer* renderer) const
 {
 	Container::Render(renderer);
-	renderer->PushViewport(pos+Vec2(leftMargin, topMargin), Vec2(size.x-leftMargin-rightMargin, headerSize),false);
+	renderer->PushViewport(pos+Vec2(marginLeft, marginTop), Vec2(size.x-marginLeft-marginRight, headerSize),false);
 	// Container header.
-	renderer->SubmitRect(pos+Vec2(leftMargin, topMargin+headerSize-1), Vec2(size.x-leftMargin-rightMargin, 1), ColorUtils::GetMaterialColorAsHSV(0.5, 2), true);
+	renderer->SubmitRect(pos+Vec2(marginLeft, marginTop+headerSize-1), Vec2(size.x-marginLeft-marginRight, 1), ColorUtils::GetMaterialColorAsHSV(0.5, 2), true);
 	// Title
-	header->Render(renderer, pos+Vec2(leftMargin, topMargin));
+	header->Render(renderer, pos+Vec2(marginLeft, marginTop));
 	renderer->PopViewport();
 }
 

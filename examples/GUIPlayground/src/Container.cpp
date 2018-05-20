@@ -1,5 +1,7 @@
 #include "Container.h"
 
+#include "GUIUtils.h"
+
 using namespace Greet;
 
 byte Container::RESIZING_LEFT = BIT(0);
@@ -8,16 +10,88 @@ byte Container::RESIZING_TOP = BIT(2);
 byte Container::RESIZING_BOTTOM = BIT(3);
 uint Container::RESIZING_MARGIN = 5;
 
+Container::Container()
+	: Container(Vec2(0,0), Vec2(100,100), new Content())
+{
+
+}
+
+Container::Container(const Greet::XMLObject& object)
+{
+	float w = 100, h = 100; // Default size
+	m_resizableFlags = RESIZING_LEFT | RESIZING_RIGHT | RESIZING_TOP | RESIZING_BOTTOM;
+	content = new Content();
+	marginLeft = 10;
+	marginRight = 10;
+	marginTop = 10;
+	marginBottom = 10;
+
+	if (object.HasProperty("width"))
+	{
+		w = GUIUtils::CalcXSize(object.GetProperty("width"));
+	}
+	if (object.HasProperty("height"))
+	{
+		h = GUIUtils::CalcYSize(object.GetProperty("height"));
+	}
+	if (object.HasProperty("resizeLeft"))
+	{
+		if (!GUIUtils::GetBoolean(object.GetProperty("resizeLeft")))
+			m_resizableFlags &= ~RESIZING_LEFT;
+	}
+	if (object.HasProperty("resizeRight"))
+	{
+		if (!GUIUtils::GetBoolean(object.GetProperty("resizeRight")))
+		{
+			m_resizableFlags &= ~RESIZING_RIGHT;
+		}
+	}
+	if (object.HasProperty("resizeTop"))
+	{
+		if (!GUIUtils::GetBoolean(object.GetProperty("resizeTop")))
+			m_resizableFlags &= ~RESIZING_TOP;
+	}
+	if (object.HasProperty("resizeBottom"))
+	{
+		if (!GUIUtils::GetBoolean(object.GetProperty("resizeBottom")))
+			m_resizableFlags &= ~RESIZING_BOTTOM;
+	}
+	if (object.HasProperty("marginTop"))
+	{
+		marginTop = GUIUtils::CalcYSize(object.GetProperty("marginTop"));
+	}
+	if (object.HasProperty("marginLeft"))
+	{
+		marginLeft = GUIUtils::CalcXSize(object.GetProperty("marginLeft"));
+	}
+	if (object.HasProperty("marginBottom"))
+	{
+		marginBottom = GUIUtils::CalcYSize(object.GetProperty("marginBottom"));
+	}
+	if (object.HasProperty("marginRight"))
+	{
+		marginRight = GUIUtils::CalcXSize(object.GetProperty("marginRight"));
+	}
+	Log::Info(Vec4(marginTop,marginLeft,marginBottom, marginRight));
+	content->SetMargins(0, 0, 0, 0);
+	size = Vec2(w, h);
+	pos = Vec2(0, 0);
+	for (int i = 0;i < object.GetObjectCount();i++)
+	{
+		content->AddContent(GUIUtils::GetContent(object.GetObject(i)));
+	}
+}
+
 Container::Container(const Vec2& pos, const Vec2& size, Content* content)
 	: pos(pos), size(size), content(content)
 {
-	
+	// Allow resizing in all directions;
 	m_resizableFlags = RESIZING_LEFT | RESIZING_RIGHT | RESIZING_TOP | RESIZING_BOTTOM;
 	m_stayInsideWindow = true;
-	leftMargin = 10;
-	rightMargin = 10;
-	topMargin = 10;
-	bottomMargin = 10;
+	marginLeft = 10;
+	marginRight = 10;
+	marginTop = 10;
+	marginBottom = 10;
 	m_minSize = Vec2(100, 100);
 }
 
@@ -52,19 +126,19 @@ void Container::Update(float timeElapsed)
 bool Container::CheckResize(const Vec2& mousePos)
 {
 	m_resizingFlags = 0;
-	if (m_resizableFlags | RESIZING_LEFT != 0 && mousePos.x >= pos.x - RESIZING_MARGIN && mousePos.x < pos.x + RESIZING_MARGIN)
+	if ((m_resizableFlags & RESIZING_LEFT) != 0 && mousePos.x >= pos.x - RESIZING_MARGIN && mousePos.x < pos.x + RESIZING_MARGIN)
 	{
 		m_resizingFlags |= RESIZING_LEFT;
 	}
-	else if (m_resizableFlags | RESIZING_RIGHT != 0 && mousePos.x >= pos.x + size.x - RESIZING_MARGIN && mousePos.x < pos.x + size.x + RESIZING_MARGIN)
+	else if ((m_resizableFlags & RESIZING_RIGHT) != 0 && mousePos.x >= pos.x + size.x - RESIZING_MARGIN && mousePos.x < pos.x + size.x + RESIZING_MARGIN)
 	{
 		m_resizingFlags |= RESIZING_RIGHT;
 	}
-	if (m_resizableFlags | RESIZING_TOP != 0 && mousePos.y >= pos.y - RESIZING_MARGIN && mousePos.y < pos.y + RESIZING_MARGIN)
+	if ((m_resizableFlags & RESIZING_TOP) != 0 && mousePos.y >= pos.y - RESIZING_MARGIN && mousePos.y < pos.y + RESIZING_MARGIN)
 	{
 		m_resizingFlags |= RESIZING_TOP;
 	}
-	else if (m_resizableFlags | RESIZING_BOTTOM != 0 && mousePos.y >= pos.y + size.y - RESIZING_MARGIN && mousePos.y < pos.y + size.y + RESIZING_MARGIN)
+	else if ((m_resizableFlags & RESIZING_BOTTOM) != 0 && mousePos.y >= pos.y + size.y - RESIZING_MARGIN && mousePos.y < pos.y + size.y + RESIZING_MARGIN)
 	{
 		m_resizingFlags |= RESIZING_BOTTOM;
 	}
@@ -135,10 +209,10 @@ void Container::ResizeScreenClamp()
 
 void Container::SetMargins(float left, float right, float top, float bottom)
 {
-	leftMargin = left;
-	rightMargin = right;
-	topMargin = top;
-	bottomMargin = bottom;
+	marginLeft = left;
+	marginRight = right;
+	marginTop = top;
+	marginBottom = bottom;
 }
 
 void Container::SetGUIMouseListener(GUIMouseListener* listener)
@@ -190,7 +264,7 @@ void Container::OnReleased(const MouseReleasedEvent& event)
 		m_resizing = false;
 	}
 	if(hasFocusedContent)
-		content->MouseRelease(event, Vec2(leftMargin, topMargin), *m_mouseListener);
+		content->MouseRelease(event, Vec2(marginLeft, marginTop), *m_mouseListener);
 }
 
 void Container::OnMoved(const MouseMovedEvent& event)
@@ -200,7 +274,7 @@ void Container::OnMoved(const MouseMovedEvent& event)
 		Resize(event.GetPosition());
 	}
 	if (hasFocusedContent)
-		content->MouseMove(event, Vec2(leftMargin, topMargin));
+		content->MouseMove(event, Vec2(marginLeft, marginTop));
 }
 
 void Container::OnPressed(const KeyPressedEvent& event)

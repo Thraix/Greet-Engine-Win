@@ -1,212 +1,220 @@
 #include "XMLObject.h"
 
 #include "XMLException.h"
-#include "../utils.h"
+#include <utils/StringUtils.h>
 
-XMLObject::XMLObject(const std::string& string)
+namespace Greet
 {
-	int pos = 0;
-	int line = 1;
-	ReadHead(string, &pos, &line);
-	ReadBodyTail(string, &pos, &line);
-}
-
-XMLObject::XMLObject(const std::string& string, int* pos, int* line)
-{
-	ReadHead(string, pos, line);
-	ReadBodyTail(string, pos, line);
-}
-
-bool XMLObject::HasProperty(const std::string& property) const
-{
-	return properties.find(property) != properties.end();
-}
-
-const std::string& XMLObject::GetProperty(const std::string& property) const
-{
-	auto it = properties.find(property);
-	if (it == properties.end())
-		throw XMLException((std::string("Property could not be found \"") + property + "\".").c_str());
-	return it->second;
-}
-
-const XMLObject& XMLObject::GetObject(unsigned int i) const
-{
-	if(i >= objects.size())
-		throw XMLException((std::string("XML index out of bounds \"") + std::to_string(i) + "\".").c_str());
-
-	return objects[i];
-}
-
-const std::string& XMLObject::GetName() const
-{
-	return name;
-}
-
-const std::string& XMLObject::GetText() const
-{
-	return text;
-}
-
-
-////////////////////////////////////////////////////////////
-//                                                        //
-// Everything below here handles the reading of xml files //
-//                                                        //
-////////////////////////////////////////////////////////////
-
-
-void XMLObject::ReadHead(const std::string& string, int* posPointer, int* linePointer)
-{
-	// Check if the first character is the start of and xml tag.
-	ReadWhiteSpace(string, posPointer, linePointer);
-	if (string[*posPointer] != '<')
-		throw XMLException("Not an XML Object.", *linePointer);
-
-	// Check if there is a closing tag
-	size_t closing = string.find('>');
-	if (closing == std::string::npos)
-		throw XMLException("No enclosing > for opening tag.", *linePointer);
-
-	// Read the name of the tag
-	ReadName(string, posPointer, linePointer);
-
-	//  Read all properties of the xml tag
-	ReadProperties(string, posPointer, linePointer);
-
-	// Read opening tag
-	if (string[*posPointer] == '/')
+	XMLObject::XMLObject(const std::string& string)
 	{
+		int pos = 0;
+		int line = 1;
+		ReadHead(string, &pos, &line);
+		ReadBodyTail(string, &pos, &line);
+	}
+
+	XMLObject::XMLObject(const std::string& string, int* pos, int* line)
+	{
+		ReadHead(string, pos, line);
+		ReadBodyTail(string, pos, line);
+	}
+
+	bool XMLObject::HasProperty(const std::string& property) const
+	{
+		return properties.find(property) != properties.end();
+	}
+
+	const std::string& XMLObject::GetProperty(const std::string& property) const
+	{
+		auto it = properties.find(property);
+		if (it == properties.end())
+			throw XMLException((std::string("Property could not be found \"") + property + "\".").c_str());
+		return it->second;
+	}
+
+	unsigned int XMLObject::GetObjectCount() const
+	{
+		return objects.size();
+	}
+
+	const XMLObject& XMLObject::GetObject(unsigned int i) const
+	{
+		if (i >= objects.size())
+			throw XMLException((std::string("XML index out of bounds \"") + std::to_string(i) + "\".").c_str());
+
+		return objects[i];
+	}
+
+	const std::string& XMLObject::GetName() const
+	{
+		return name;
+	}
+
+	const std::string& XMLObject::GetText() const
+	{
+		return text;
+	}
+
+
+	////////////////////////////////////////////////////////////
+	//                                                        //
+	// Everything below here handles the reading of xml files //
+	//                                                        //
+	////////////////////////////////////////////////////////////
+
+
+	void XMLObject::ReadHead(const std::string& string, int* posPointer, int* linePointer)
+	{
+		// Check if the first character is the start of and xml tag.
+		ReadWhiteSpace(string, posPointer, linePointer);
+		if (string[*posPointer] != '<')
+			throw XMLException("Not an XML Object.", *linePointer);
+
+		// Check if there is a closing tag
+		size_t closing = string.find('>');
+		if (closing == std::string::npos)
+			throw XMLException("No enclosing > for opening tag.", *linePointer);
+
+		// Read the name of the tag
+		ReadName(string, posPointer, linePointer);
+
+		//  Read all properties of the xml tag
+		ReadProperties(string, posPointer, linePointer);
+
+		// Read opening tag
+		if (string[*posPointer] == '/')
+		{
+			ReadWhiteSpace(string, posPointer, linePointer);
+			if (string[*posPointer] != '>')
+				throw XMLException((std::string("Invalid character proceeding / in opening XML Tag \"") + string[*posPointer] + "\".").c_str(), *linePointer);
+			// nothing more to read.
+			return;
+		}
+
 		ReadWhiteSpace(string, posPointer, linePointer);
 		if (string[*posPointer] != '>')
-			throw XMLException((std::string("Invalid character proceeding / in opening XML Tag \"") + string[*posPointer] + "\".").c_str(), *linePointer);
-		// nothing more to read.
-		return;
-	}
-
-	ReadWhiteSpace(string, posPointer, linePointer);
-	if (string[*posPointer] != '>')
-		throw XMLException((std::string("Invalid character proceeding properties in opening XML Tag \"") + string[*posPointer] + "\".").c_str(), *linePointer);
-	(*posPointer)++;
-}
-
-void XMLObject::ReadName(const std::string& string, int* posPointer, int* linePointer)
-{
-	(*posPointer)++;
-	ReadWhiteSpace(string, posPointer, linePointer);
-	if (!Utils::IsLetter(string[*posPointer]))
-		throw XMLException("Invalid XML name. Can only contain letters.", *linePointer);
-	name = Utils::GetWord(string, *posPointer);
-	*posPointer += name.length();
-	ReadWhiteSpace(string, posPointer, linePointer);
-	if (string[*posPointer] != '/' && string[*posPointer] != '>' && Utils::IsWhiteSpace(string[*posPointer]))
-	{
-		throw XMLException((std::string("Invalid character proceeding name in XML Tag \"") + string[*posPointer] + "\".").c_str(), *linePointer);
-	}
-}
-
-void XMLObject::ReadProperties(const std::string& string, int* posPointer, int* linePointer)
-{
-	ReadWhiteSpace(string, posPointer, linePointer);
-
-	while (string[*posPointer] != '>' && string[*posPointer] != '/')
-	{
-		ReadProperty(string, posPointer, linePointer);
-	}
-}
-
-void XMLObject::ReadProperty(const std::string& string, int* posPointer, int* linePointer)
-{
-
-	std::string property = Utils::GetWord(string, *posPointer);
-	if (property.length() == 0)
-		throw XMLException((std::string("Invalid character proceeding name \"") + string[*posPointer] +"\".").c_str(), *linePointer);
-	if (properties.count(property) > 0)
-		throw XMLException((std::string("Duplicate property in XML tag \"") + property + "\".").c_str(), *linePointer);
-	*posPointer += property.length();
-	ReadWhiteSpace(string, posPointer, linePointer);
-	if (string[*posPointer] != '=')
-		throw XMLException((std::string("Invalid character proceeding property name in XML Tag \"") + string[*posPointer] + "\".").c_str(), *linePointer);
-	(*posPointer)++;
-	ReadWhiteSpace(string, posPointer, linePointer);
-	if (string[*posPointer] != '\"')
-		throw XMLException("XML property value is not inside enclosing quotes.", *linePointer);
-	(*posPointer)++;
-	int valueStart = *posPointer;
-	while (string[*posPointer] != '\"' || string[*posPointer - 1] == '\\') (*posPointer)++;
-	std::string value = string.substr(valueStart, (*posPointer) - valueStart);
-	Utils::StringReplace(value, "\\\"", "\"");
-	(*posPointer)++;
-	properties.emplace(property, value);
-	ReadWhiteSpace(string, posPointer, linePointer);
-}
-
-void XMLObject::ReadBodyTail(const std::string& string, int* posPointer, int* linePointer)
-{
-
-	ReadWhiteSpace(string, posPointer, linePointer);
-	if (string[*posPointer] != '<')
-	{
-		ReadText(string, posPointer, linePointer);
-		ReadWhiteSpace(string, posPointer, linePointer);
-		std::string closeTag = GetClosingTag(string, posPointer, linePointer);
-		if (closeTag.length() == 0)
-			throw XMLException("Tag after XML Test was not a closing tag. XMLObject doesn't support text and other XMLObjects at the same time.", *linePointer);
-		return;
-	}
-	// Check if we can read the closing tag.
-	std::string closeTag = GetClosingTag(string, posPointer, linePointer);
-	while (closeTag.length() == 0)
-	{
-		XMLObject object = XMLObject(string, posPointer, linePointer);
-		objects.push_back(object);
-		ReadWhiteSpace(string, posPointer, linePointer);
-		closeTag = GetClosingTag(string, posPointer, linePointer);
-	}
-}
-
-void XMLObject::ReadText(const std::string& string, int* posPointer, int* linePointer)
-{
-	int startPos = *posPointer;
-	while (string[*posPointer] != '<' || string[(*posPointer) - 1] == '\\') (*posPointer)++;
-	text = string.substr(startPos, (*posPointer) - startPos);
-}
-
-void XMLObject::ReadWhiteSpace(const std::string& string, int* posPointer, int* linePointer)
-{
-	while (Utils::IsWhiteSpace(string[*posPointer])) {
-		if (string[*posPointer] == '\n')
-			(*linePointer)++;
+			throw XMLException((std::string("Invalid character proceeding properties in opening XML Tag \"") + string[*posPointer] + "\".").c_str(), *linePointer);
 		(*posPointer)++;
 	}
-}
+
+	void XMLObject::ReadName(const std::string& string, int* posPointer, int* linePointer)
+	{
+		(*posPointer)++;
+		ReadWhiteSpace(string, posPointer, linePointer);
+		if (!StringUtils::IsLetter(string[*posPointer]))
+			throw XMLException("Invalid XML name. Can only contain letters.", *linePointer);
+		name = StringUtils::GetWord(string, *posPointer);
+		*posPointer += name.length();
+		ReadWhiteSpace(string, posPointer, linePointer);
+		if (string[*posPointer] != '/' && string[*posPointer] != '>' && StringUtils::IsWhiteSpace(string[*posPointer]))
+		{
+			throw XMLException((std::string("Invalid character proceeding name in XML Tag \"") + string[*posPointer] + "\".").c_str(), *linePointer);
+		}
+	}
+
+	void XMLObject::ReadProperties(const std::string& string, int* posPointer, int* linePointer)
+	{
+		ReadWhiteSpace(string, posPointer, linePointer);
+
+		while (string[*posPointer] != '>' && string[*posPointer] != '/')
+		{
+			ReadProperty(string, posPointer, linePointer);
+		}
+	}
+
+	void XMLObject::ReadProperty(const std::string& string, int* posPointer, int* linePointer)
+	{
+
+		std::string property = StringUtils::GetWord(string, *posPointer);
+		if (property.length() == 0)
+			throw XMLException((std::string("Invalid character proceeding name \"") + string[*posPointer] + "\".").c_str(), *linePointer);
+		if (properties.count(property) > 0)
+			throw XMLException((std::string("Duplicate property in XML tag \"") + property + "\".").c_str(), *linePointer);
+		*posPointer += property.length();
+		ReadWhiteSpace(string, posPointer, linePointer);
+		if (string[*posPointer] != '=')
+			throw XMLException((std::string("Invalid character proceeding property name in XML Tag \"") + string[*posPointer] + "\".").c_str(), *linePointer);
+		(*posPointer)++;
+		ReadWhiteSpace(string, posPointer, linePointer);
+		if (string[*posPointer] != '\"')
+			throw XMLException("XML property value is not inside enclosing quotes.", *linePointer);
+		(*posPointer)++;
+		int valueStart = *posPointer;
+		while (string[*posPointer] != '\"' || string[*posPointer - 1] == '\\') (*posPointer)++;
+		std::string value = string.substr(valueStart, (*posPointer) - valueStart);
+		StringUtils::replace_all(value, "\\\"", "\"");
+		(*posPointer)++;
+		properties.emplace(property, value);
+		ReadWhiteSpace(string, posPointer, linePointer);
+	}
+
+	void XMLObject::ReadBodyTail(const std::string& string, int* posPointer, int* linePointer)
+	{
+
+		ReadWhiteSpace(string, posPointer, linePointer);
+		if (string[*posPointer] != '<')
+		{
+			ReadText(string, posPointer, linePointer);
+			ReadWhiteSpace(string, posPointer, linePointer);
+			std::string closeTag = GetClosingTag(string, posPointer, linePointer);
+			if (closeTag.length() == 0)
+				throw XMLException("Tag after XML Test was not a closing tag. XMLObject doesn't support text and other XMLObjects at the same time.", *linePointer);
+			return;
+		}
+		// Check if we can read the closing tag.
+		std::string closeTag = GetClosingTag(string, posPointer, linePointer);
+		while (closeTag.length() == 0)
+		{
+			XMLObject object = XMLObject(string, posPointer, linePointer);
+			objects.push_back(object);
+			ReadWhiteSpace(string, posPointer, linePointer);
+			closeTag = GetClosingTag(string, posPointer, linePointer);
+		}
+	}
+
+	void XMLObject::ReadText(const std::string& string, int* posPointer, int* linePointer)
+	{
+		int startPos = *posPointer;
+		while (string[*posPointer] != '<' || string[(*posPointer) - 1] == '\\') (*posPointer)++;
+		text = string.substr(startPos, (*posPointer) - startPos);
+	}
+
+	void XMLObject::ReadWhiteSpace(const std::string& string, int* posPointer, int* linePointer)
+	{
+		while (StringUtils::IsWhiteSpace(string[*posPointer])) {
+			if (string[*posPointer] == '\n')
+				(*linePointer)++;
+			(*posPointer)++;
+		}
+	}
 
 
-std::string XMLObject::GetClosingTag(const std::string& string, int* posPointer, int* linePointer)
-{
-	int startPos = *posPointer;
-	int startLine = *linePointer;
-	if (string[(*posPointer)++] != '<')
+	std::string XMLObject::GetClosingTag(const std::string& string, int* posPointer, int* linePointer)
 	{
-		*posPointer = startPos;
-		*linePointer = startLine;
-		return "";
+		int startPos = *posPointer;
+		int startLine = *linePointer;
+		if (string[(*posPointer)++] != '<')
+		{
+			*posPointer = startPos;
+			*linePointer = startLine;
+			return "";
+		}
+		ReadWhiteSpace(string, posPointer, linePointer);
+		if (string[(*posPointer)++] != '/')
+		{
+			*posPointer = startPos;
+			*linePointer = startLine;
+			return "";
+		}
+		ReadWhiteSpace(string, posPointer, linePointer);
+		std::string tag = StringUtils::GetWord(string, *posPointer);
+		if (tag != name)
+			throw XMLException((std::string("Invalid closing tag \"") + tag + "\".").c_str(), 0);
+		*posPointer += tag.length();
+		ReadWhiteSpace(string, posPointer, linePointer);
+		if (string[*posPointer] != '>')
+			throw XMLException((std::string("Invalid character in closing tag \"") + string[*posPointer] + "\".").c_str(), 0);
+		(*posPointer)++;
+		return string.substr(startPos, (*posPointer) - startPos);
 	}
-	ReadWhiteSpace(string, posPointer, linePointer);
-	if (string[(*posPointer)++] != '/')
-	{
-		*posPointer = startPos;
-		*linePointer = startLine;
-		return "";
-	}
-	ReadWhiteSpace(string, posPointer, linePointer);
-	std::string tag = Utils::GetWord(string, *posPointer);
-	if (tag != name)
-		throw XMLException((std::string("Invalid closing tag \"") + tag + "\".").c_str(), 0);
-	*posPointer += tag.length();
-	ReadWhiteSpace(string, posPointer, linePointer);
-	if (string[*posPointer] != '>')
-		throw XMLException((std::string("Invalid character in closing tag \"") + string[*posPointer] + "\".").c_str(), 0);
-	(*posPointer)++;
-	return string.substr(startPos, (*posPointer) - startPos);
 }

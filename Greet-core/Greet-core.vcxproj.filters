@@ -113,6 +113,9 @@
     <ClInclude Include="src\utils\ErrorHandle.h" />
     <ClInclude Include="src\utils\AABBUtils.h" />
     <ClInclude Include="src\utils\LogUtils.h" />
+    <ClInclude Include="src\utils\xml\XML.h" />
+    <ClInclude Include="src\utils\xml\XMLException.h" />
+    <ClInclude Include="src\utils\xml\XMLObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\audio\AudioChannel.cpp" />
@@ -188,6 +191,8 @@
     <ClCompile Include="src\math\Quaternion.cpp" />
     <ClCompile Include="src\utils\ErrorHandle.cpp" />
     <ClCompile Include="src\graphics\renderers\GUIRenderer.cpp" />
+    <ClCompile Include="src\utils\xml\XML.cpp" />
+    <ClCompile Include="src\utils\xml\XMLObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\graphics\shaders\basiclightshader.frag" />

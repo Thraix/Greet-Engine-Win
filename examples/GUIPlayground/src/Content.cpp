@@ -3,19 +3,20 @@
 using namespace Greet;
 
 Content::Content()
-	: leftMargin(0), rightMargin(0), topMargin(0), bottomMargin(0), xSpacing(5), ySpacing(5)
+	: marginLeft(0), marginRight(0), marginTop(0), marginBottom(0), xSpacing(5), ySpacing(5)
 {
 	m_isFocusable = false;
 }
 
 void Content::Render(GUIRenderer* renderer, const Vec2& position) const
 {
-	float yPos = topMargin;
+	float yPos = marginTop;
 	for (auto it = m_contents.begin(); it != m_contents.end(); ++it)
 	{
-		(*it)->Render(renderer, position+Vec2(leftMargin,yPos));
+		(*it)->Render(renderer, position+Vec2(marginLeft,yPos));
 		yPos += (*it)->GetHeight() + ySpacing;
 	}
+	renderer->SubmitRect(position, Vec2(100,100), Vec4(0,1,1,1), true);
 }
 
 void Content::Update(float timeElapsed)
@@ -75,11 +76,11 @@ Content* Content::GetContent(uint index)
 
 bool Content::MousePress(const MousePressedEvent& event, const Vec2& translatedPos, const GUIMouseListener& listener)
 {
-	float yPos = topMargin;
+	float yPos = marginTop;
 	for (auto it = m_contents.rbegin(); it != m_contents.rend(); ++it)
 	{
 		// Translate the mouse.
-		Vec2 translatedPosContent = translatedPos - Vec2(leftMargin, yPos);
+		Vec2 translatedPosContent = translatedPos - Vec2(marginLeft, yPos);
 		if ((*it)->IsMouseInside(translatedPosContent))
 		{
 			// Check if the contents wants focus.
@@ -111,14 +112,14 @@ void Content::MouseRelease(const MouseReleasedEvent& event, const Vec2& translat
 	if (m_focused != NULL)
 	{
 		// Calculate the focused yPos
-		float yPos = topMargin;
+		float yPos = marginTop;
 		for (auto it = m_contents.begin(); it != m_contents.end(); ++it)
 		{
 			if (m_focused == *it)
 			{
-				m_focused->MouseRelease(event, translatedPos - Vec2(leftMargin, yPos), listener);
+				m_focused->MouseRelease(event, translatedPos - Vec2(marginLeft, yPos), listener);
 				listener.OnMouseReleased(m_focused);
-				if (m_focused->IsMouseInside(translatedPos - Vec2(leftMargin, yPos)))
+				if (m_focused->IsMouseInside(translatedPos - Vec2(marginLeft, yPos)))
 				{
 					listener.OnMouseClicked(m_focused);
 				}
@@ -131,12 +132,12 @@ void Content::MouseRelease(const MouseReleasedEvent& event, const Vec2& translat
 void Content::MouseMove(const MouseMovedEvent& event, const Vec2& translatedPos) 
 {
 		// Calculate the focused yPos
-		float yPos = topMargin;
+		float yPos = marginTop;
 		for (auto it = m_contents.begin(); it != m_contents.end(); ++it)
 		{
 			if (m_focused == *it)
 			{
-				m_focused->MouseMove(event, translatedPos - Vec2(leftMargin, yPos));
+				m_focused->MouseMove(event, translatedPos - Vec2(marginLeft, yPos));
 			}
 			else if (m_focused == NULL)
 			{
@@ -188,7 +189,7 @@ Vec2 Content::GetSize() const
 
 float Content::GetWidth() const
 {
-	float width = leftMargin + rightMargin;
+	float width = marginLeft + marginRight;
 	for (auto it = m_contents.begin(); it != m_contents.end(); ++it)
 	{
 		if (it != m_contents.begin())
@@ -205,13 +206,13 @@ float Content::GetHeight() const
 	{
 		maxHeight = Math::Max((*it)->GetHeight(), maxHeight);
 	}
-	return maxHeight + topMargin + bottomMargin;
+	return maxHeight + marginTop + marginBottom;
 }
 
 void Content::SetMargins(float left, float right, float top, float bottom)
 {
-	leftMargin = left;
-	rightMargin = right;
-	topMargin = top;
-	bottomMargin = bottom;
+	marginLeft = left;
+	marginRight = right;
+	marginTop = top;
+	marginBottom = bottom;
 }

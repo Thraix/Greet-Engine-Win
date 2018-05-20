@@ -1,0 +1,7 @@
+<Container 
+  width="200px" 
+  height="100%" 
+  resizeTop="false" resizeLeft="false" resizeBottom="false" resizeRight="true"
+  marginTop="10px" marginLeft="10px" marginBottom="10px" marginRight="10px">
+    
+</Container>

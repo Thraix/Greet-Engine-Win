@@ -36,7 +36,7 @@ public:
 	void MoveScreenClamp();
 
 	// Getters and setters
-	Greet::Vec2 GetContentPosition() const override { return Greet::Vec2(leftMargin, topMargin + headerSize + headerSpacing); };
+	Greet::Vec2 GetContentPosition() const override { return Greet::Vec2(marginLeft, marginTop + headerSize + headerSpacing); };
 
 	// Listeners
 	bool OnPressed(const Greet::MousePressedEvent& event) override;
