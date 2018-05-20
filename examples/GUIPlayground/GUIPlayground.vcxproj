@@ -146,6 +146,7 @@
     <ClInclude Include="src\GLayer.h" />
     <ClInclude Include="src\GUIMouseListener.h" />
     <ClInclude Include="src\Label.h" />
+    <ClInclude Include="src\Property.h" />
     <ClInclude Include="src\Theme.h" />
   </ItemGroup>
   <ItemGroup>
