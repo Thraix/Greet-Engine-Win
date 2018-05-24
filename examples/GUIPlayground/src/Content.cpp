@@ -3,9 +3,27 @@
 using namespace Greet;
 
 Content::Content()
-	: marginLeft(0), marginRight(0), marginTop(0), marginBottom(0), xSpacing(5), ySpacing(5)
+	: marginLeft(0), marginRight(0), marginTop(0), marginBottom(0), ySpacing(5), size(Vec2(100,100)), xmlObject(XMLObject())
 {
 	m_isFocusable = false;
+}
+
+Content::Content(const XMLObject& object, Content* parent)
+	: parent(parent), xmlObject(object.GetStrippedXMLObject())
+{
+	size = Vec2(0, 0);
+	if (object.HasProperty("width"))
+	{
+		size.w = GUIUtils::CalcSize(object.GetProperty("width"), parent->GetPotentialWidth());
+	}
+	if (object.HasProperty("height"))
+	{
+		size.h = GUIUtils::CalcSize(object.GetProperty("height"), parent->GetPotentialHeight());
+	}
+	if (object.HasProperty("backgroundColor"))
+	{
+		backgroundColor = GUIUtils::GetColor(object.GetProperty("backgroundColor"));
+	}
 }
 
 void Content::Render(GUIRenderer* renderer, const Vec2& position) const
@@ -16,7 +34,8 @@ void Content::Render(GUIRenderer* renderer, const Vec2& position) const
 		(*it)->Render(renderer, position+Vec2(marginLeft,yPos));
 		yPos += (*it)->GetHeight() + ySpacing;
 	}
-	renderer->SubmitRect(position, Vec2(100,100), Vec4(0,1,1,1), true);
+	if (xmlObject.HasProperty("backgroundColor"))
+		renderer->SubmitRect(position, GetSize(), backgroundColor, false);
 }
 
 void Content::Update(float timeElapsed)
@@ -182,31 +201,118 @@ void Content::OnUnfocused()
 	}
 }
 
+void Content::SetSpacing(float spacing)
+{
+	ySpacing = spacing;
+}
+
+float Content::GetSpacing() const
+{
+	return ySpacing;
+}
+
 Vec2 Content::GetSize() const
 {
 	return Vec2(GetWidth(), GetHeight());
 }
 
+void Content::SetSize(const Greet::Vec2& size)
+{
+	this->size = size;
+}
+
 float Content::GetWidth() const
 {
-	float width = marginLeft + marginRight;
-	for (auto it = m_contents.begin(); it != m_contents.end(); ++it)
+	if (xmlObject.HasProperty("width"))
 	{
-		if (it != m_contents.begin())
-			width += xSpacing;
-		width += (*it)->GetWidth();
+		const std::string& w = xmlObject.GetProperty("width");
+		if (!GUIUtils::IsStaticSize(w))
+		{
+			return GUIUtils::CalcSize(w, parent->GetPotentialWidth());
+		}
+		return size.w;
 	}
-	return width;
+	else if (parent == NULL)
+	{
+		return size.w;
+	}
+	else
+	{
+		float maxWidth = 0;
+		for (auto it = m_contents.begin(); it != m_contents.end(); ++it)
+		{
+			maxWidth = Math::Max((*it)->GetWidth(), maxWidth);
+		}
+		return maxWidth + marginLeft + marginRight;
+	}
 }
 
 float Content::GetHeight() const
 {
-	float maxHeight = 0;
-	for (auto it = m_contents.begin(); it != m_contents.end(); ++it)
+	if (xmlObject.HasProperty("height"))
 	{
-		maxHeight = Math::Max((*it)->GetHeight(), maxHeight);
+		const std::string& h = xmlObject.GetProperty("height");
+		if (!GUIUtils::IsStaticSize(h))
+		{
+			return GUIUtils::CalcSize(h, parent->GetPotentialHeight());
+		}
+		return size.h;
 	}
-	return maxHeight + marginTop + marginBottom;
+	else if (parent == NULL)
+	{
+		return size.h;
+	}
+	else
+	{
+		float height = marginTop + marginBottom;
+		for (auto it = m_contents.begin(); it != m_contents.end(); ++it)
+		{
+			if (it != m_contents.begin())
+				height += ySpacing;
+			height += (*it)->GetHeight();
+		}
+		return height;
+	}
+}
+
+float Content::GetPotentialWidth() const
+{
+	if (xmlObject.HasProperty("width"))
+	{
+		const std::string& w = xmlObject.GetProperty("width");
+		if (GUIUtils::IsStaticSize(w))
+		{
+			return size.w;
+		}
+		else
+		{
+			// No need to check for parent since the top parent doesn't have an xml object.
+			return GUIUtils::CalcSize(w, parent->GetPotentialWidth());
+		}
+	}
+	if (parent == NULL)
+		return size.w;
+	return parent->GetPotentialWidth();
+}
+
+float Content::GetPotentialHeight() const
+{
+	if (xmlObject.HasProperty("height"))
+	{
+		const std::string& h = xmlObject.GetProperty("height");
+		if (GUIUtils::IsStaticSize(h))
+		{
+			return size.h;
+		}
+		else
+		{
+			// No need to check for parent since the top parent doesn't have an xml object.
+			return GUIUtils::CalcSize(h, parent->GetPotentialHeight());
+		}
+	}
+	if (parent == NULL)
+		return size.h;
+	return parent->GetPotentialHeight();
 }
 
 void Content::SetMargins(float left, float right, float top, float bottom)

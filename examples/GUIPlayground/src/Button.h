@@ -10,6 +10,7 @@ public:
 	Greet::Vec2 size;
 
 public:
+	Button(const Greet::XMLObject& object);
 	Button(const Greet::Vec2& size, const std::string& text);
 	Button(const Greet::Vec2& size, Content* content);
 	virtual ~Button();

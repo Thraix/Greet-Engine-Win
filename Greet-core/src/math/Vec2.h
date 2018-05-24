@@ -14,7 +14,21 @@ namespace Greet{
 	struct Vec2
 	{
 	public:
-		float x, y;
+		union
+		{
+			struct
+			{
+				float x, y;
+			};
+			struct
+			{
+				float w, h;
+			};
+			struct
+			{
+				float s, t;
+			};
+		};
 		Vec2();
 		Vec2(float x, float y);
 		Vec2(const Vec3& vec3);

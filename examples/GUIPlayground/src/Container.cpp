@@ -17,28 +17,25 @@ Container::Container()
 }
 
 Container::Container(const Greet::XMLObject& object)
+	: xmlObject(object.GetStrippedXMLObject())
 {
-	float w = 100, h = 100; // Default size
 	m_resizableFlags = RESIZING_LEFT | RESIZING_RIGHT | RESIZING_TOP | RESIZING_BOTTOM;
 	content = new Content();
 	backgroundColor = Vec4(1, 1, 1, 1);
-	minSize = Vec2(100, 100);
-	marginLeft = 10;
-	marginRight = 10;
-	marginTop = 10;
-	marginBottom = 10;
-	borderTop = 0;
-	borderLeft = 0;
-	borderBottom = 0;
-	borderRight = 0;
-
+	minSize = size = Vec2(100, 100);
+	marginTop = marginLeft = marginBottom = marginRight = 10;
+	borderTop = borderLeft = borderBottom = borderRight = 0;
+	if (object.HasProperty("spacing"))
+	{
+		content->SetSpacing(GUIUtils::CalcSize(object.GetProperty("spacing"), Window::GetHeight()));
+	}
 	if (object.HasProperty("width"))
 	{
-		w = GUIUtils::CalcSize(object.GetProperty("width"), Window::GetWidth());
+		size.w = GUIUtils::CalcSize(object.GetProperty("width"), Window::GetWidth());
 	}
 	if (object.HasProperty("height"))
 	{
-		h = GUIUtils::CalcSize(object.GetProperty("height"), Window::GetHeight());
+		size.h = GUIUtils::CalcSize(object.GetProperty("height"), Window::GetHeight());
 	}
 	if (object.HasProperty("minWidth"))
 	{
@@ -111,16 +108,16 @@ Container::Container(const Greet::XMLObject& object)
 		borderColor = GUIUtils::GetColor(object.GetProperty("borderColor"));
 	}
 	content->SetMargins(0, 0, 0, 0);
-	size = Vec2(w, h);
+	content->SetSize(GetContentSize());
 	pos = Vec2(0, 0);
 	for (int i = 0;i < object.GetObjectCount();i++)
 	{
-		content->AddContent(GUIUtils::GetContent(object.GetObject(i)));
+		content->AddContent(GUIUtils::GetContent(object.GetObject(i),content));
 	}
 }
 
 Container::Container(const Vec2& pos, const Vec2& size, Content* content)
-	: pos(pos), size(size), content(content)
+	: pos(pos), size(size), content(content), xmlObject(XMLObject())
 {
 	// Allow resizing in all directions
 	m_resizableFlags = RESIZING_LEFT | RESIZING_RIGHT | RESIZING_TOP | RESIZING_BOTTOM;
@@ -224,6 +221,7 @@ void Container::Resize(const Greet::Vec2& mousePos)
 			size.y = minSize.y;
 	}
 	ResizeScreenClamp();
+	content->SetSize(GetContentSize());
 }
 
 void Container::ResizeScreenClamp()
@@ -261,7 +259,28 @@ void Container::SetGUIMouseListener(GUIMouseListener* listener)
 {
 	m_mouseListener = listener;
 }
-	 
+
+void Container::OnWindowResize(int width, int height)
+{
+	if (xmlObject.HasProperty("width"))
+	{
+		const std::string& w = xmlObject.GetProperty("width");
+		if (!GUIUtils::IsStaticSize(w))
+		{
+			size.w = GUIUtils::CalcSize(w, width);
+		}
+	}
+	if (xmlObject.HasProperty("height"))
+	{
+		const std::string& h = xmlObject.GetProperty("height");
+		if (!GUIUtils::IsStaticSize(h))
+		{
+			size.h = GUIUtils::CalcSize(h, height);
+		}
+	}
+	content->SetSize(GetContentSize());
+}
+
 bool Container::OnPressed(const MousePressedEvent& event)
 {
 	if (AABBUtils::PointInsideBox(event.GetPosition(), pos - RESIZING_MARGIN, size + 2 * RESIZING_MARGIN))

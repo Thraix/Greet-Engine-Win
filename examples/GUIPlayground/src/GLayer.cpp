@@ -80,6 +80,10 @@ void GLayer::WindowResize(int width, int height)
 	m_shader->Enable();
 	m_shader->SetUniformMat3("pr_matrix", Mat3::Orthographic(0, Window::GetWidth(), 0, Window::GetHeight()));
 	m_shader->Disable();
+	for (auto it = containers.begin(); it != containers.end(); ++it)
+	{
+		it->second->OnWindowResize(width,height);
+	}
 }
 
 void GLayer::CreateInstance(GUIRenderer* renderer, Shader* shader)

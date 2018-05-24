@@ -1,8 +1,9 @@
 #pragma once
 
 #include "GUIMouseListener.h"
+#include "GUIUtils.h"
 
-#include<vector>
+#include <vector>
 #include <Greet.h>
 
 class Content
@@ -16,11 +17,17 @@ protected:
 	float marginRight;
 	float marginTop;
 	float marginBottom;
-	float xSpacing;
+	Greet::XMLObject xmlObject;
+
 	float ySpacing;
+
+	Greet::Vec2 size;
+	Content* parent;
+	Greet::Vec4 backgroundColor;
 
 public:
 	Content();
+	Content(const Greet::XMLObject& object, Content* parent);
 
 	virtual void Render(Greet::GUIRenderer* renderer, const Greet::Vec2& position) const;
 	virtual void Update(float timeElapsed);
@@ -48,11 +55,16 @@ public:
 	virtual void OnFocused();
 	virtual void OnUnfocused();
 	virtual bool IsFocusable() const { return m_isFocusable; };
-	Greet::Vec2 GetSize() const;
 
+	void SetSpacing(float spacing);
+	float GetSpacing() const;
 	bool IsMouseInside(const Greet::Vec2& mousePos) const;
+	Greet::Vec2 GetSize() const;
+	void SetSize(const Greet::Vec2& size);
 	virtual float GetWidth() const;
 	virtual float GetHeight() const;
+	virtual float GetPotentialWidth() const;
+	virtual float GetPotentialHeight() const;
 
 	void SetMargins(float left, float right, float top, float bottom);
 };

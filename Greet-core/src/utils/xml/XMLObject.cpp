@@ -19,6 +19,18 @@ namespace Greet
 		ReadBodyTail(string, pos, line);
 	}
 
+	XMLObject::XMLObject(const std::string& name, const std::map<std::string, std::string> properties, const std::string& text)
+		:name(name), properties(properties), text(text)
+	{
+	
+	}
+
+	XMLObject::XMLObject(const std::string& name, const std::map<std::string, std::string> properties, const std::vector<XMLObject> objects)
+		: name(name), properties(properties), objects(objects)
+	{
+	
+	}
+
 	bool XMLObject::HasProperty(const std::string& property) const
 	{
 		return properties.find(property) != properties.end();
@@ -55,6 +67,13 @@ namespace Greet
 		return text;
 	}
 
+	XMLObject XMLObject::GetStrippedXMLObject() const
+	{
+		if(text == "")
+			return XMLObject(name, properties, objects);
+		else
+			return XMLObject(name, properties, text);
+	}
 
 	////////////////////////////////////////////////////////////
 	//                                                        //

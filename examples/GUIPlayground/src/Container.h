@@ -27,6 +27,7 @@ protected:
 	Greet::Vec2 m_clickPos;
 	Greet::Vec2 m_posOrigin;
 	Greet::Vec2 m_sizeOrigin;
+	Greet::XMLObject xmlObject;
 
 	GUIMouseListener* m_mouseListener;
 
@@ -70,14 +71,15 @@ public:
 	void ResizeScreenClamp();
 
 	// Getters and setters
-	virtual Greet::Vec2 GetContentPosition() const { return Greet::Vec2(marginLeft, marginTop); };
-	virtual Greet::Vec2 GetContentSize() const { return size-GetContentPosition() - Greet::Vec2(marginRight, marginBottom); }
+	virtual Greet::Vec2 GetContentPosition() const { return Greet::Vec2(marginLeft+borderLeft, marginTop + borderTop); };
+	virtual Greet::Vec2 GetContentSize() const { return size-GetContentPosition() - Greet::Vec2(marginRight+borderRight, marginBottom+borderBottom); }
 	void SetMargins(float left, float right, float top, float bottom);
 
 	// Set listeners
 	void SetGUIMouseListener(GUIMouseListener* listener);
 
 	// Listeners
+	virtual void OnWindowResize(int width, int height);
 	virtual bool OnPressed(const Greet::MousePressedEvent& event);
 	virtual void OnReleased(const Greet::MouseReleasedEvent& event);
 	virtual void OnMoved(const Greet::MouseMovedEvent& event);

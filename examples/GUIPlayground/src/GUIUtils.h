@@ -2,40 +2,21 @@
 
 #include <graphics/Window.h>
 #include <utils/StringUtils.h>
+#include <utils/ColorUtils.h>
+#include <utils/xml/XML.h>
 
-#include "Button.h"
 
+class Content;
+class Container;
 
 namespace Greet
 {
 	class GUIUtils
 	{
 	public:
-
-		static Container* GetContainer(const XMLObject& object)
-		{
-			if (object.GetName() == "Container")
-			{
-				return new Container(object);
-			}
-			else if (object.GetName() == "FrameContainer")
-			{
-
-			}
-
-			return new Container();
-		}
-
-
-		static Content* GetContent(const XMLObject& object)
-		{
-			if (object.GetName() == "Button")
-			{
-				//return new Button(object);
-			}
-			Log::Warning("Could not read XML object ", object.GetName(), ".");
-			return new Content(); // Return plain content to avoid crash.
-		}
+		
+		static Container* GetContainer(const XMLObject& object);
+		static Content* GetContent(const XMLObject& object, Content* parent);
 
 		static bool GetBoolean(const std::string& str)
 		{
@@ -61,6 +42,16 @@ namespace Greet
 			}
 			Log::Error("Invalid starting character for  color: ", str);
 			return Vec4(1, 0, 1, 1); // Invalid color pink since its very visible
+		}
+
+		static bool IsPercentageSize(const std::string& size)
+		{
+			return StringUtils::ends_with(size, "%");
+		}
+
+		static bool IsStaticSize(const std::string& size)
+		{
+			return !StringUtils::ends_with(size, "%") || StringUtils::ends_with(size, "s%");
 		}
 
 		static float CalcSize(const std::string& size, float parentSize)
