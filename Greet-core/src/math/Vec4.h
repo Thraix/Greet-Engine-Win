@@ -10,7 +10,18 @@ namespace Greet{
 	
 	struct Vec4
 	{
-		float x, y, z, w;
+		union
+		{
+			struct {
+				float x, y, z, w;
+			};
+			struct {
+				float r, g, b, a;
+			};
+			struct {
+				float h, s, v, a;
+			};
+		};
 		Vec4();
 		//Vec4(const Vec4& copy);
 		Vec4(float x, float y, float z, float w);
