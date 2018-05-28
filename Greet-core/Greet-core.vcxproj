@@ -65,6 +65,7 @@
     <ClCompile Include="src\graphics\Window.cpp" />
     <ClCompile Include="src\input\Joystick.cpp" />
     <ClCompile Include="src\internal\App.cpp" />
+    <ClCompile Include="src\internal\OpenGLObjectHandler.cpp" />
     <ClCompile Include="src\logging\Log.cpp" />
     <ClCompile Include="src\logging\Logger.cpp" />
     <ClCompile Include="src\logging\LogLevel.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="src\internal\App.h" />
     <ClInclude Include="src\internal\GreetGL.h" />
     <ClInclude Include="src\internal\GreetTypes.h" />
+    <ClInclude Include="src\internal\OpenGLObjectHandler.h" />
     <ClInclude Include="src\listeners\JoystickState.h" />
     <ClInclude Include="src\listeners\OnClickListener.h" />
     <ClInclude Include="src\listeners\WindowFocus.h" />

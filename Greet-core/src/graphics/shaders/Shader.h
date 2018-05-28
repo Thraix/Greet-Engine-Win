@@ -18,9 +18,12 @@ namespace Greet {
 
 		Shader(const std::string& geomSrc, const std::string& vertSrc, const std::string& fragSrc);
 		Shader(const std::string& vertSrc, const std::string& fragSrc);
-	public:
 
+	public:
+		Shader(const Shader& shader); // Copy constructor
 		virtual ~Shader();
+
+		Shader& operator=(const Shader& shader);
 		void Enable() const;
 		static void Disable();
 		void BindAttributeOutput(uint attachmentId, const std::string& name);

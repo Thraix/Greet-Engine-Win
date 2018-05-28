@@ -89,6 +89,7 @@ public:
 
 int main()
 {
+	//XMLObject obj = XML::FromFile("projtest.xml");
 	Core game;
 	game.Start();
 }

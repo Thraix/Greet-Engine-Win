@@ -1,5 +1,4 @@
 #include "Font.h"
-#include <direct.h>
 #include <graphics/fonts/FontContainer.h>
 
 namespace Greet{
@@ -12,7 +11,7 @@ namespace Greet{
 
 	void Font::Init()
 	{
-		m_atlas = ftgl::texture_atlas_new(512,512,2);
+		m_atlas = ftgl::texture_atlas_new(512,512,4);
 		if (m_container->GetData() == NULL)
 		{
 			m_font = ftgl::texture_font_new_from_file(m_atlas, m_size, m_container->GetFileName().c_str());

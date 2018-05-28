@@ -7,6 +7,8 @@
 #include <fstream>
 #include <sstream>
 
+#include <internal/OpenGLObjectHandler.h>
+
 
 namespace Greet {
 
@@ -20,9 +22,26 @@ namespace Greet {
 		m_shaderID = Load(vertSrc,fragSrc);
 	}
 
+	Shader::Shader(const Shader& shader)
+		: Shader(shader)
+	{
+		OpenGLObjectHandler::CopyOpenGLObject(OpenGLType::SHADER, m_shaderID);
+	}
+
 	Shader::~Shader()
 	{
 		GLCall(glDeleteProgram(m_shaderID));
+	}
+
+	Shader& Shader::operator=(const Shader& shader)
+	{
+		if (this != &shader)
+		{
+			OpenGLObjectHandler::CopyOpenGLObject(OpenGLType::SHADER, m_shaderID);
+			Shader::operator=(shader);
+		}
+
+		return *this;
 	}
 
 	GLuint Shader::Load(const std::string& vertSrc, const std::string& fragSrc)

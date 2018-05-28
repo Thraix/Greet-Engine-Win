@@ -1,6 +1,7 @@
 #include "Texture2D.h"
 
 #include <internal/GreetGL.h>
+#include <internal/OpenGLObjectHandler.h>
 
 namespace Greet {
 

@@ -9,13 +9,13 @@ namespace Greet
 	{
 		int pos = 0;
 		int line = 1;
-		ReadHead(string, &pos, &line);
-		ReadBodyTail(string, &pos, &line);
+		if(!ReadHead(string, &pos, &line))
+			ReadBodyTail(string, &pos, &line);
 	}
 
 	XMLObject::XMLObject(const std::string& string, int* pos, int* line)
 	{
-		ReadHead(string, pos, line);
+		if (!ReadHead(string, pos, line))
 		ReadBodyTail(string, pos, line);
 	}
 
@@ -82,7 +82,7 @@ namespace Greet
 	////////////////////////////////////////////////////////////
 
 
-	void XMLObject::ReadHead(const std::string& string, int* posPointer, int* linePointer)
+	bool XMLObject::ReadHead(const std::string& string, int* posPointer, int* linePointer)
 	{
 		// Check if the first character is the start of and xml tag.
 		ReadWhiteSpace(string, posPointer, linePointer);
@@ -103,17 +103,20 @@ namespace Greet
 		// Read opening tag
 		if (string[*posPointer] == '/')
 		{
+			(*posPointer)++;
 			ReadWhiteSpace(string, posPointer, linePointer);
 			if (string[*posPointer] != '>')
 				throw XMLException((std::string("Invalid character proceeding / in opening XML Tag \"") + string[*posPointer] + "\".").c_str(), *linePointer);
+			(*posPointer)++;
 			// nothing more to read.
-			return;
+			return true;
 		}
 
 		ReadWhiteSpace(string, posPointer, linePointer);
 		if (string[*posPointer] != '>')
 			throw XMLException((std::string("Invalid character proceeding properties in opening XML Tag \"") + string[*posPointer] + "\".").c_str(), *linePointer);
 		(*posPointer)++;
+		return false;
 	}
 
 	void XMLObject::ReadName(const std::string& string, int* posPointer, int* linePointer)

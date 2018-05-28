@@ -34,8 +34,8 @@ namespace Greet
 
 	private:
 		std::string GetClosingTag(const std::string& string, int* posPointer, int* linePointer);
-
-		void ReadHead(const std::string& string, int* posPointer, int* linePointer);
+		// Returns true if the head contained closing tag.
+		bool ReadHead(const std::string& string, int* posPointer, int* linePointer);
 		void ReadName(const std::string& string, int* posPointer, int* linePointer);
 		void ReadProperty(const std::string& string, int* posPointer, int* linePointer);
 		void ReadProperties(const std::string& string, int* posPointer, int* linePointer);

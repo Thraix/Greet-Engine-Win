@@ -116,6 +116,7 @@
     <ClInclude Include="src\utils\xml\XML.h" />
     <ClInclude Include="src\utils\xml\XMLException.h" />
     <ClInclude Include="src\utils\xml\XMLObject.h" />
+    <ClInclude Include="src\internal\OpenGLObjectHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\audio\AudioChannel.cpp" />
@@ -193,6 +194,7 @@
     <ClCompile Include="src\graphics\renderers\GUIRenderer.cpp" />
     <ClCompile Include="src\utils\xml\XML.cpp" />
     <ClCompile Include="src\utils\xml\XMLObject.cpp" />
+    <ClCompile Include="src\internal\OpenGLObjectHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\graphics\shaders\basiclightshader.frag" />
