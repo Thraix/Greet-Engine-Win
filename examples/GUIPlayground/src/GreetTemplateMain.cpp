@@ -24,7 +24,7 @@ public:
 		CreateWindow("GreetTemplateMain", 960, 540);
 		SetFrameCap(144);
 		FontManager::Add(new FontContainer("res/fonts/Roboto-Black.ttf","roboto"));
-		GLayer::CreateInstance(new GUIRenderer(), Shader::FromFile("res/shaders/gui.shader"));
+		GLayer::CreateInstance(new GUIRenderer(), Shader(Shader::FromFile("res/shaders/gui.shader")));
 		content = new Content();
 		content->SetMargins(0, 0, 0, 0);
 		content->AddContent(new Label("test1", FontManager::Get("roboto", 24), Vec4(0.5, 1, 1, 1)));
@@ -89,7 +89,10 @@ public:
 
 int main()
 {
-	//XMLObject obj = XML::FromFile("projtest.xml");
-	Core game;
-	game.Start();
+	{
+		//XMLObject obj = XML::FromFile("projtest.xml");
+		Core game;
+		game.Start();
+	}
+	Log::Info("Game closed, hope you had fun :)");
 }

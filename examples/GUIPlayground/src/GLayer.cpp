@@ -5,7 +5,7 @@ GLayer* GLayer::instance;
 
 using namespace Greet;
 
-GLayer::GLayer(GUIRenderer* renderer, Shader* shader)
+GLayer::GLayer(GUIRenderer* renderer, const Shader& shader)
 	: m_renderer(renderer), m_shader(shader)
 {
 	m_focused = NULL;
@@ -18,10 +18,10 @@ GLayer::GLayer(GUIRenderer* renderer, Shader* shader)
 	{
 		texIDs[i] = i;
 	}
-	m_shader->Enable();
-	m_shader->SetUniformMat3("pr_matrix", Mat3::Orthographic(0,Window::GetWidth(), 0, Window::GetHeight()));
-	m_shader->SetUniform1iv("textures", 32, texIDs);
-	m_shader->Disable();
+	m_shader.Enable();
+	m_shader.SetUniformMat3("pr_matrix", Mat3::Orthographic(0,Window::GetWidth(), 0, Window::GetHeight()));
+	m_shader.SetUniform1iv("textures", 32, texIDs);
+	m_shader.Disable();
 }
 
 bool GLayer::OnPressed(const MousePressedEvent& event)
@@ -77,16 +77,16 @@ void GLayer::OnReleased(const KeyReleasedEvent& event)
 
 void GLayer::WindowResize(int width, int height)
 {
-	m_shader->Enable();
-	m_shader->SetUniformMat3("pr_matrix", Mat3::Orthographic(0, Window::GetWidth(), 0, Window::GetHeight()));
-	m_shader->Disable();
+	m_shader.Enable();
+	m_shader.SetUniformMat3("pr_matrix", Mat3::Orthographic(0, Window::GetWidth(), 0, Window::GetHeight()));
+	m_shader.Disable();
 	for (auto it = containers.begin(); it != containers.end(); ++it)
 	{
 		it->second->OnWindowResize(width,height);
 	}
 }
 
-void GLayer::CreateInstance(GUIRenderer* renderer, Shader* shader)
+void GLayer::CreateInstance(GUIRenderer* renderer, const Shader& shader)
 {
 	instance = new GLayer(renderer, shader);
 }
@@ -104,8 +104,8 @@ void GLayer::DestroyInstance()
 void GLayer::Render()
 {
 	GUIRenderer* renderer = GetInstance()->m_renderer;
-	Shader* shader = GetInstance()->m_shader;
-	shader->Enable();
+	const Shader& shader = GetInstance()->m_shader;
+	shader.Enable();
 	renderer->Begin();
 	for (auto it = containers.begin(); it != containers.end(); ++it)
 	{
@@ -115,7 +115,7 @@ void GLayer::Render()
 	}
 	renderer->End();
 	renderer->Draw();
-	shader->Disable();
+	shader.Disable();
 }
 
 void GLayer::Update(float timeElapsed)

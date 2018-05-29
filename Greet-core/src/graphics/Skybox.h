@@ -11,7 +11,7 @@ namespace Greet {
 	{
 	private:
 		CubeMap* m_map;
-		Shader* m_shader;
+		Shader m_shader;
 		Mesh* m_mesh;
 	public:
 		Skybox(CubeMap* map);

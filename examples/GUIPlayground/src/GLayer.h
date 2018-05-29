@@ -12,10 +12,10 @@ private:
 	static GLayer* instance;
 	Container* m_focused;
 	Greet::GUIRenderer* m_renderer;
-	Greet::Shader* m_shader;
+	Greet::Shader m_shader;
 
 private:
-	GLayer(Greet::GUIRenderer* renderer, Greet::Shader* shader);
+	GLayer(Greet::GUIRenderer* renderer, const Greet::Shader& shader);
 public:
 
 	bool OnPressed(const Greet::MousePressedEvent& event) override;
@@ -26,7 +26,7 @@ public:
 	void WindowResize(int width, int height) override;
 
 
-	static void CreateInstance(Greet::GUIRenderer* renderer, Greet::Shader* shader);
+	static void CreateInstance(Greet::GUIRenderer* renderer, const Greet::Shader& shader);
 	static GLayer* GetInstance();
 	static void DestroyInstance();
 
