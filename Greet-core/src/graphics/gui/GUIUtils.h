@@ -5,16 +5,15 @@
 #include <utils/ColorUtils.h>
 #include <utils/xml/XML.h>
 
+namespace Greet {
 
-class Content;
-class Container;
+	class Content;
+	class Container;
 
-namespace Greet
-{
 	class GUIUtils
 	{
 	public:
-		
+
 		static Container* GetContainer(const XMLObject& object);
 		static Content* GetContent(const XMLObject& object, Content* parent);
 
@@ -33,7 +32,7 @@ namespace Greet
 				if (color.length() != 6 && color.length() != 8)
 				{
 					Log::Error("Invalid length for color: ", str);
-					return Vec4(1,0,1,1); // Invalid color pink since its very visible
+					return Vec4(1, 0, 1, 1); // Invalid color pink since its very visible
 				}
 				if (color.length() == 6)
 					color = "FF" + color; // Add alpha to color

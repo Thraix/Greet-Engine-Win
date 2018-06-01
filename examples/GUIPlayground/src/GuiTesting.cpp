@@ -1,8 +1,4 @@
 #include <Greet.h>
-#include "Button.h"
-#include "GLayer.h"
-#include "FrameContainer.h"
-#include "GUIUtils.h"
 
 using namespace Greet;
 

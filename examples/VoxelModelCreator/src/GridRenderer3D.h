@@ -9,7 +9,6 @@ namespace vmc
 	class GridRenderer3D : public Greet::Renderer3D
 	{
 	private:
-		Greet::Shader* simpleShader;
 
 		Greet::EntityModel* emodel;
 		Greet::MaterialModel* mmodel;
@@ -18,7 +17,7 @@ namespace vmc
 		Greet::MeshData* meshdata;
 
 
-		Greet::Shader* lineShader;
+		Greet::Shader lineShader;
 		uint m_vao;
 		uint m_vbo;
 		uint m_ibo;

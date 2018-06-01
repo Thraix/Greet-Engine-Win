@@ -1,6 +1,5 @@
 #include <Greet.h>
 
-#include <graphics/renderers/GUIRenderer.h>
 #include <random>
 
 #include "Grid.h"
@@ -13,11 +12,13 @@ namespace vmc
 	private:
 		Layer* uilayer;
 		Renderable2D* cursor;
+		/*
 		GUILayer* guilayer;
 		Button* saveButton;
 		Button* loadButton;
 		Button* exportButton;
 		TextBox* fileNameBox;
+		*/
 
 		Grid* grid;
 
@@ -44,6 +45,7 @@ namespace vmc
 			cursor = new Renderable2D(Vec2(0, 0), Vec2(32, 32), 0xffffffff, new Sprite(TextureManager::Get2D("cursor")), new Sprite(TextureManager::Get2D("mask")));
 			uilayer = new Layer(new BatchRenderer(), ShaderFactory::DefaultShader(), Mat3::Orthographic(0.0f, (float)Window::GetWidth(), 0.0f, (float)Window::GetHeight()));
 			uilayer->Add(cursor);
+			/*
 			guilayer = new GUILayer(new GUIRenderer(), Shader::FromFile("res/shaders/gui.shader"));
 			ColorPicker* colorPicker = new ColorPicker(Vec2(0, 0), 200, 16, 20);
 			fileNameBox = new TextBox(Vec2(0, 210), Vec2(200, 30), false);
@@ -63,8 +65,8 @@ namespace vmc
 			frame->Pack();
 
 			guilayer->Add(frame);
-
-			grid = new Grid(colorPicker);
+			*/
+			grid = new Grid();//colorPicker);
 			RenderEngine::AddLayer2d(uilayer, "uilayer");
 		}
 
@@ -77,45 +79,40 @@ namespace vmc
 		void Update(float elapsedTime) override
 		{
 			grid->Update(elapsedTime);
-			guilayer->Update(elapsedTime);
+			//guilayer->Update(elapsedTime);
 		}
 
-		bool OnPressed(const KeyPressedEvent& e) override
+		void OnPressed(const KeyPressedEvent& e) override
 		{
 			if (e.GetButton() == GLFW_KEY_F10)
 			{
 				Utils::Screenshot(Window::GetWidth(), Window::GetHeight());
 			}
-			return false;
 		}
 
-		bool OnReleased(const KeyReleasedEvent& e)  override
+		void OnReleased(const KeyReleasedEvent& e)  override
 		{
-			return false;
 		}
 
-		bool OnTyped(const KeyTypedEvent& e) override
+		void OnTyped(const KeyTypedEvent& e) override
 		{
-			return false;
 		}
 
-		bool OnMoved(const MouseMovedEvent& e) override
+		void OnMoved(const MouseMovedEvent& e) override
 		{
 			cursor->SetPosition(Vec2(e.GetX(), e.GetY()));
-			return false;
 		}
 
-		bool OnScroll(const MouseScrollEvent& e) override
+		void OnScroll(const MouseScrollEvent& e) override
 		{
 			d -= e.GetScroll();
-			return false;
 		}
 
 		bool screenshot = false;
 		void Render() override
 		{
 			grid->Render();
-			guilayer->Render();
+			//guilayer->Render();
 		}
 
 		void WindowResize(int width, int height) override
@@ -130,6 +127,7 @@ namespace vmc
 
 		void OnClick(GUI* gui)
 		{
+			/*
 			if (gui == saveButton)
 			{
 				Log::Info("Saving...");
@@ -148,6 +146,7 @@ namespace vmc
 				grid->ExportModel(fileNameBox->GetText());
 				Log::Info("Done!");
 			}
+			*/
 		}
 	};
 }

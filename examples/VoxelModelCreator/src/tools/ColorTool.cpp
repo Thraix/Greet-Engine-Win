@@ -8,7 +8,7 @@ namespace vmc {
 		if (m_grid->HasSelected())
 		{
 			Vec4 color = ColorUtils::ColorHexToVec4(m_grid->GetSelectedCube().color);
-			m_grid->GetColorPicker()->SetColorAsRGB(color);
+			//m_grid->GetColorPicker()->SetColorAsRGB(color);
 			return true;
 		}
 		return false;
@@ -18,7 +18,7 @@ namespace vmc {
 		if (m_grid->HasSelected())
 		{
 			Vec4 color = ColorUtils::ColorHexToVec4(m_grid->GetSelectedCube().color);
-			m_grid->GetColorPicker()->SetColorAsRGB(color);
+			//m_grid->GetColorPicker()->SetColorAsRGB(color);
 			return true;
 		}
 		return false;

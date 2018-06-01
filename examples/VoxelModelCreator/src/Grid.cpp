@@ -6,10 +6,9 @@ namespace vmc
 
 	const uint Grid::GRID_SIZE = 100;
 
-	Grid::Grid(ColorPicker* colorPicker)
+	Grid::Grid()//ColorPicker* colorPicker)
 		: renderer(Window::GetWidth(), Window::GetHeight(), new TPCamera(Vec3(GRID_SIZE / 2+0.5f, GRID_SIZE / 2 + 0.5f, GRID_SIZE / 2 + 0.5f), 15, 0, 0, 1, 80, -0.8, 0.8f), 90, 0.1, 1000.0f, new Skybox(TextureManager::Get3D("skybox"))),
-		toolBox(this),
-		m_colorPicker(colorPicker)
+		toolBox(this)//,m_colorPicker(colorPicker)
 
 	{
 		EventDispatcher::AddKeyListener(1, *this);
@@ -20,7 +19,7 @@ namespace vmc
 		hasAdjacent = false;
 	}
 
-	bool Grid::OnPressed(const KeyPressedEvent& e)
+	void Grid::OnPressed(const KeyPressedEvent& e)
 	{
 		if (e.GetButton() == GLFW_KEY_F5)
 			renderer.UpdateShader();
@@ -28,7 +27,6 @@ namespace vmc
 			toolBox.NextTool();
 		if (e.GetButton() == GLFW_KEY_H)
 			toolBox.PreviousTool();
-		return false;
 	}
 
 	bool Grid::OnPressed(const MousePressedEvent& e)
@@ -49,13 +47,12 @@ namespace vmc
 		return false;
 	}
 
-	bool Grid::OnReleased(const MouseReleasedEvent& e)
+	void Grid::OnReleased(const MouseReleasedEvent& e)
 	{
 		if (e.GetButton() == GLFW_MOUSE_BUTTON_1 || e.GetButton() == GLFW_MOUSE_BUTTON_2)
 		{
 			renderAxis = false;
 		}
-		return false;
 	}
 
 	void Grid::Update(float timeElapsed)
@@ -160,8 +157,8 @@ namespace vmc
 			Greet::Log::Error("Cube already exists");
 			return;
 		}
-		if(setColor)
-			cube.color = ColorUtils::Vec4ToColorHex(ColorUtils::HSVtoRGB(m_colorPicker->GetColor()));
+		if (setColor)
+			cube.color = 0xffffffff;//ColorUtils::Vec4ToColorHex(ColorUtils::HSVtoRGB(m_colorPicker->GetColor()));
 		m_grid.emplace(cube);
 		m_gridVisible.emplace(cube);
 

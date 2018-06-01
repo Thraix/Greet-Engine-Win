@@ -18,7 +18,7 @@ namespace vmc {
 	{
 	private:
 		GridRenderer3D renderer;
-		Greet::ColorPicker* m_colorPicker;
+		//Greet::ColorPicker* m_colorPicker;
 		std::set<Cube, CubeCompare> m_grid;
 		std::set<Cube, CubeCompare> m_gridVisible;
 		std::vector<Cube> m_ray;
@@ -35,11 +35,11 @@ namespace vmc {
 	public:
 		static const uint GRID_SIZE;
 	public:
-		Grid(Greet::ColorPicker* colorPicker);
+		Grid();//Greet::ColorPicker* colorPicker);
 
-		bool OnPressed(const Greet::KeyPressedEvent& e) override;
+		void OnPressed(const Greet::KeyPressedEvent& e) override;
 		bool OnPressed(const Greet::MousePressedEvent& e) override;
-		bool OnReleased(const Greet::MouseReleasedEvent& e) override;
+		void OnReleased(const Greet::MouseReleasedEvent& e) override;
 
 		void Update(float timeElapsed);
 		// Render the grid
@@ -57,7 +57,7 @@ namespace vmc {
 		uint GetColor() const { return m_color; }
 		void SetColor(uint color) { m_color = color; }
 		GridRenderer3D* GetRenderer() { return &renderer; }
-		Greet::ColorPicker* GetColorPicker() const { return m_colorPicker; };
+		//Greet::ColorPicker* GetColorPicker() const { return m_colorPicker; };
 
 		bool HasAdjacent() const { return hasAdjacent; }
 		bool HasSelected() const { return hasSelected; }

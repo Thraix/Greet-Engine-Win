@@ -10,7 +10,6 @@ using namespace Greet;
 class Core : public App, public KeyListener, public MouseListener
 {
 private:
-	Shader* blurShader;
 	BatchRenderer3D* renderer3d;
 	Material* modelMaterial;
 	Material* terrainMaterial;
@@ -33,10 +32,6 @@ private:
 	TPCamera* camera;
 	Layer* scene3d;
 	Layer* uilayer;
-	GUILayer* guilayer;
-	Slider* slider;
-	Slider* slider2;
-	Frame* frame;
 	Button* button;
 	Label* fps;
 	Renderable2D* cursor;
@@ -44,7 +39,6 @@ private:
 	Renderable2D* fboScene;
 
 public:
-	
 	Core::~Core()
 	{
 		delete modelMaterial;
@@ -55,7 +49,6 @@ public:
 		delete tetrahedron;
 		delete renderer3d;
 		delete uilayer;
-		delete guilayer;
 		delete movement;
 		delete rotation;
 	}
@@ -85,10 +78,10 @@ public:
 		Skybox* skybox = new Skybox(TextureManager::Get3D("skybox"));
 		renderer3d = new BatchRenderer3D(Window::GetWidth(), Window::GetHeight(), camera,90,0.1f,1000.0f, skybox);
 
-		Shader* modelShader = Shader::FromFile("res/shaders/3dshader.shader");
-		Shader* terrainShader = Shader::FromFile("res/shaders/terrain.shader");
-		Shader* stallShader = Shader::FromFile("res/shaders/3dshader.shader");
-		blurShader = Shader::FromFile("res/shaders/default2dshader.vert","res/shaders/guassianblur.frag");
+		Shader modelShader = Shader::FromFile("res/shaders/3dshader.shader");
+		Shader terrainShader = Shader::FromFile("res/shaders/terrain.shader");
+		Shader stallShader = Shader::FromFile("res/shaders/3dshader.shader");
+		Shader blurShader = Shader::FromFile("res/shaders/default2dshader.vert","res/shaders/guassianblur.frag");
 
 		modelMaterial = new Material(modelShader, NULL);
 		stallMaterial = new Material(stallShader, TextureManager::Get("stall"));
@@ -138,17 +131,18 @@ public:
 		//}
 
 		Light* l = new Light(Vec3(0, 0,10), 0xffffffff);
-		modelShader->Enable();
-		l->SetToUniform(modelShader, "light");
-		modelShader->Disable();
+		modelShader.Enable();
+		l->SetToUniform(&modelShader, "light");
+		modelShader.Disable();
 	
 		delete l;
 
 		uilayer = new Layer(new BatchRenderer(), ShaderFactory::DefaultShader(), Mat3::Orthographic(0.0f, (float)Window::GetWidth(), 0.0f, (float)Window::GetHeight()));
 		Vec4 colorPink = ColorUtils::GetMaterialColorAsHSV(300 /360.0f, 3);
-		fps = new Label("144 fps", Vec2(50, 300), "roboto", 72, ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColorAsRGB(120 / 360.0f, 9)));
 		cursor = new Renderable2D(Vec2(0,0),Vec2(32,32),0xffffffff, new Sprite(TextureManager::Get2D("cursor")), new Sprite(TextureManager::Get2D("mask")));
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(driverTest->m_position.x, -20, 0.5f, true, new drivers::DriverAdapter()));
+		/* Keeping this for reference later.
+		fps = new Label("144 fps", Vec2(50, 300), "roboto", 72, ColorUtils::Vec3ToColorHex(ColorUtils::GetMaterialColorAsRGB(120 / 360.0f, 9)));
 		guilayer = new GUILayer(new GUIRenderer(),Shader::FromFile("res/shaders/gui.shader"));
 		std::vector<std::string> labels{ "Babymode", "Softcore",  "Easy", "Medium", "Hard", "Hardcore", "Expert" };
 		slider = new Slider(Vec2(0, 0), Vec2(200, 30), 0, 255, 1);
@@ -182,6 +176,7 @@ public:
 		frame->Pack();
 		//frame->Add(sliderVertical);
 		guilayer->Add(frame);
+		*/
 		uilayer->Add(cursor);
 
 		//drivers::DriverDispatcher::addDriver(new drivers::LinearDriver(frame->m_position.x, 100, 5, true, new drivers::DriverAdapter()));
@@ -294,7 +289,7 @@ public:
 	void Tick() override
 	{
 		std::string s = StringUtils::to_string(GetFPS()) + " fps | " + StringUtils::to_string(GetUPS())+ " ups";
-		fps->text = s;
+		//fps->text = s;
 		Window::SetTitle("Best Game Ever | " + s);
 	}
 
@@ -304,7 +299,7 @@ public:
 
 	void Update(float elapsedTime) override
 	{
-		guilayer->Update(elapsedTime);
+		//guilayer->Update(elapsedTime);
 		progressFloat++;
 		if (progressFloat > 1000)
 			progressFloat = 0;
@@ -364,19 +359,19 @@ public:
 		//cursor->setPosition(vec2(p.x, p.y));
 	}
 
-	bool OnPressed(const KeyPressedEvent& e) override
+	void OnPressed(const KeyPressedEvent& e) override
 	{
 		if (e.GetButton() == GLFW_KEY_F5)
 		{
-			Shader* terrainShader = Shader::FromFile("res/shaders/terrain.vert", "res/shaders/terrain.frag");
-			Shader* modelShader = Shader::FromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
+			Shader terrainShader = Shader::FromFile("res/shaders/terrain.vert", "res/shaders/terrain.frag");
+			Shader modelShader = Shader::FromFile("res/shaders/3dshader.vert", "res/shaders/3dshader.frag");
 			modelMaterial->SetShader(modelShader);
 			terrainMaterial->SetShader(terrainShader);
 			Light* l = new Light(Vec3(25, 25, 12.5), 0xffffffff);
 
-			modelShader->Enable();
-			l->SetToUniform(modelShader, "light");
-			modelShader->Disable();
+			modelShader.Enable();
+			l->SetToUniform(&modelShader, "light");
+			modelShader.Disable();
 			//terrainShader->enable();
 			//l->setToUniform(terrainShader, "light");
 			//terrainShader->disable();
@@ -411,10 +406,9 @@ public:
 		{
 			velocityPos.y = 0.2;
 		}
-		return false;
 	}
 
-	bool OnReleased(const KeyReleasedEvent& e)  override
+	void OnReleased(const KeyReleasedEvent& e)  override
 	{
 		movement->onInput(e.GetButton(),false);
 		rotation->onInput(e.GetButton(),false);
@@ -426,12 +420,10 @@ public:
 		{ 
 			velocityPos.y = 0;
 		}
-		return false;
 	}
 
-	bool OnTyped(const KeyTypedEvent& e) override
+	void OnTyped(const KeyTypedEvent& e) override
 	{
-		return false;
 	}
 
 	bool OnPressed(const MousePressedEvent& e)  override
@@ -439,20 +431,17 @@ public:
 		return false;
 	}
 
-	bool OnReleased(const MouseReleasedEvent& e) override
+	void OnReleased(const MouseReleasedEvent& e) override
 	{
-		return false;
 	}
 
-	bool OnMoved(const MouseMovedEvent& e) override
+	void OnMoved(const MouseMovedEvent& e) override
 	{
 		cursor->SetPosition(Vec2(e.GetX(), e.GetY()));
-		return false;
 	}
 
-	bool OnScroll(const MouseScrollEvent& e) override
+	void OnScroll(const MouseScrollEvent& e) override
 	{
-		return false;
 	}
 
 	bool screenshot = false;
@@ -460,7 +449,7 @@ public:
 	{
 		//guirenderer->SubmitString("test", Vec2(100, 100), FontManager::Get("roboto",24), 0xff00ff);
 		//guirenderer->SubmitRect(Vec2(0, 0), Vec2(1, 1), 0xffffff00);
-		guilayer->Render();
+		//guilayer->Render();
 	}
 	
 	void WindowResize(int width, int height) override

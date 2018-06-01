@@ -85,6 +85,15 @@
 #include <graphics/buffers/VertexArray.h>
 #include <graphics/fonts/FontContainer.h>
 #include <graphics/fonts/FontManager.h>
+#include <graphics/gui/Button.h>
+#include <graphics/gui/Container.h>
+#include <graphics/gui/Content.h>
+#include <graphics/gui/FrameContainer.h>
+#include <graphics/gui/GLayer.h>
+#include <graphics/gui/GUIMouseListener.h>
+#include <utils/xml/XML.h>
+#include <graphics/gui/GUIUtils.h>
+#include <graphics/gui/Label.h>
 #include <graphics/renderers/BatchRenderer.h>
 #include <graphics/layers/Box2DLayer.h>
 #include <graphics/layers/Group.h>
@@ -99,6 +108,7 @@
 #include <graphics/shaders/ShaderFactory.h>
 #include <utils/Timer.h>
 #include <internal/App.h>
+#include <internal/OpenGLObjectHandler.h>
 #include <listeners/OnClickListener.h>
 #include <listeners/WindowFocus.h>
 #include <listeners/WindowResize.h>
@@ -111,6 +121,5 @@
 #include <utils/json/JSONArrayObject.h>
 #include <utils/json/JSONObject.h>
 #include <utils/json/JSONLoader.h>
-#include <utils/xml/XML.h>
 #include <utils/xml/XMLException.h>
 #include <utils/xml/XMLObject.h>

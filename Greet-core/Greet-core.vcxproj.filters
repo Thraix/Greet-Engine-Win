@@ -117,6 +117,14 @@
     <ClInclude Include="src\utils\xml\XMLException.h" />
     <ClInclude Include="src\utils\xml\XMLObject.h" />
     <ClInclude Include="src\internal\OpenGLObjectHandler.h" />
+    <ClInclude Include="src\graphics\gui\Button.h" />
+    <ClInclude Include="src\graphics\gui\Container.h" />
+    <ClInclude Include="src\graphics\gui\Content.h" />
+    <ClInclude Include="src\graphics\gui\FrameContainer.h" />
+    <ClInclude Include="src\graphics\gui\GLayer.h" />
+    <ClInclude Include="src\graphics\gui\GUIMouseListener.h" />
+    <ClInclude Include="src\graphics\gui\GUIUtils.h" />
+    <ClInclude Include="src\graphics\gui\Label.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\audio\AudioChannel.cpp" />
@@ -195,6 +203,13 @@
     <ClCompile Include="src\utils\xml\XML.cpp" />
     <ClCompile Include="src\utils\xml\XMLObject.cpp" />
     <ClCompile Include="src\internal\OpenGLObjectHandler.cpp" />
+    <ClCompile Include="src\graphics\gui\Button.cpp" />
+    <ClCompile Include="src\graphics\gui\Container.cpp" />
+    <ClCompile Include="src\graphics\gui\Content.cpp" />
+    <ClCompile Include="src\graphics\gui\FrameContainer.cpp" />
+    <ClCompile Include="src\graphics\gui\GLayer.cpp" />
+    <ClCompile Include="src\graphics\gui\GUIUtils.cpp" />
+    <ClCompile Include="src\graphics\gui\Label.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\graphics\shaders\basiclightshader.frag" />

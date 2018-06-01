@@ -16,7 +16,7 @@ namespace Greet {
 
 
 	public:
-		Box2DLayer(Shader* shader, Mat3 projectionMatrix, b2World* world);
+		Box2DLayer(const Shader& shader, Mat3 projectionMatrix, b2World* world);
 
 		void Update(float timeElapsed) override;
 

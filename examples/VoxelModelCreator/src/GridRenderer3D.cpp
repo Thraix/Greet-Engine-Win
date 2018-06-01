@@ -5,7 +5,7 @@ namespace vmc
 	using namespace Greet;
 
 	GridRenderer3D::GridRenderer3D(uint w, uint h, Camera* cam, float fov, float near, float far, Skybox* skybox)
-		: Renderer3D(w, h, cam, fov, near, far, skybox)
+		: Renderer3D(w, h, cam, fov, near, far, skybox), lineShader(Shader::FromFile("res/shaders/simple.shader"))
 	{
 		meshdata = MeshFactory::Cube2(0.5f, 0.5f, 0.5f, 1, 1, 1);
 		Vec2* texCoords = new Vec2[6 * 4];
@@ -24,9 +24,6 @@ namespace vmc
 		mmodel = new MaterialModel(mesh, *material);
 		emodel = new EntityModel(*mmodel, 0, 0, 0, 1, 1, 1, 0, 0, 0);
 
-
-		// For drawing lines...
-		lineShader = Shader::FromFile("res/shaders/simple.shader");
 		GLCall(glGenVertexArrays(1, &m_vao));
 		GLCall(glGenBuffers(1, &m_vbo));
 
@@ -97,10 +94,10 @@ namespace vmc
 
 	void GridRenderer3D::DrawLine(const Vec3& start, const Vec3& end, const Vec4& color)
 	{
-		lineShader->Enable();
-		lineShader->SetUniformMat4("projectionMatrix", GetProjectionMatrix());
-		lineShader->SetUniformMat4("viewMatrix", GetCamera().GetViewMatrix());
-		lineShader->SetUniform4f("mat_color", color);
+		lineShader.Enable();
+		lineShader.SetUniformMat4("projectionMatrix", GetProjectionMatrix());
+		lineShader.SetUniformMat4("viewMatrix", GetCamera().GetViewMatrix());
+		lineShader.SetUniform4f("mat_color", color);
 
 		Vec3* buffer = NULL;
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_vbo));
@@ -121,6 +118,6 @@ namespace vmc
 		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo));
 		GLCall(glBindVertexArray(0));
 
-		lineShader->Disable();
+		lineShader.Disable();
 	}
 }

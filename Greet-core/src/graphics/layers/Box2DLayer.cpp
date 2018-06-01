@@ -2,7 +2,7 @@
 
 namespace Greet {
 
-	Box2DLayer::Box2DLayer(Shader* shader, Mat3 projectionMatrix, b2World* world)
+	Box2DLayer::Box2DLayer(const Shader& shader, Mat3 projectionMatrix, b2World* world)
 		:Layer(new BatchRenderer(),shader,projectionMatrix), m_world(world)
 	{
 		for (b2Body* b = m_world->GetBodyList();b;b = b->GetNext())
